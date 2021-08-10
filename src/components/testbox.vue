@@ -5,8 +5,8 @@
     </div>
   </VueWinBox>
   <div class="button">
-    <button id="snap" v-on:click="capture()">Snap Photo</button>
-    <button id="snap" v-on:click="stopCapture()">Snap Photo</button>
+    <button id="capture" v-on:click="capture()">capture</button>
+    <button id="stop" v-on:click="stopCapture()">stop</button>
   </div>
 </template>
 
@@ -79,14 +79,18 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   width: 350px;
-  height: auto;
+  height: 210px;
+  overflow: hidden;
+}
+.wb-body {
+  overflow: hidden;
 }
 
 div.button {
   position: fixed;
 }
 
-#video {
+video#video {
   border: 1px solid rgb(0, 0, 0);
   width: 350px;
   height: 210px;

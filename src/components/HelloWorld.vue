@@ -62,8 +62,6 @@ export default {
 #video {
   border: 1px solid #999;
   width: 98%;
-  max-width: 350px;
-  max-height: 175px;
 }
 
 h3 {
