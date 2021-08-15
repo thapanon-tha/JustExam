@@ -4,19 +4,14 @@
       <video id="vdo" autoplay></video>
     </div>
   </VueWinBox>
-  <div class="button">
-    <button id="capture" v-on:click="capture()">capture</button>
-    <button id="stop" v-on:click="stopCapture()">stop</button>
-  </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import VueWinBox from "vue-winbox";
-// import HelloWorld from './HelloWorld.vue'
+import { defineComponent, ref } from 'vue';
+import VueWinBox from 'vue-winbox';
 
 export default defineComponent({
-  name: "Box",
+  name: 'Box',
   props: {
     msg: String,
   },
@@ -25,13 +20,13 @@ export default defineComponent({
   },
   methods: {
     capture() {
-      const meda = document.getElementById("vdo");
+      const meda = document.getElementById('vdo');
       navigator.mediaDevices
         .getDisplayMedia({
           video: {
             width: { max: 350 },
             height: { max: 210 },
-            cursor: "always",
+            cursor: 'always',
           },
           audio: false,
         })
@@ -46,8 +41,8 @@ export default defineComponent({
         });
     },
     stopCapture() {
-      const videoElem = document.getElementById("vdo");
-      let tracks = videoElem.srcObject.getTracks();
+      const videoElem = document.getElementById('vdo');
+      const tracks = videoElem.srcObject.getTracks();
       tracks.forEach((track) => track.stop());
       videoElem.srcObject = null;
     },
@@ -55,13 +50,13 @@ export default defineComponent({
   setup() {
     const winboxRef = ref();
     const options = {
-      title: "YourScreen",
-      width: "350",
-      height: "210",
-      class: ["no-full", "no-close", "no-max", "no-resize"],
-      x: "right",
-      y: "bottom",
-      background: "black",
+      title: 'YourScreen',
+      width: '350',
+      height: '210',
+      class: ['no-full', 'no-close', 'no-max', 'no-resize'],
+      x: 'right',
+      y: 'bottom',
+      background: 'black',
     };
     return {
       options,

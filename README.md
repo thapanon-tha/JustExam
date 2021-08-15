@@ -1,4 +1,4 @@
-# JustExam Frontend
+# test
 
 ## Project setup
 ```

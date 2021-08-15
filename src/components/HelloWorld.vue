@@ -1,38 +1,40 @@
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-    <div id="screen">
-      <video id="vdo" autoplay></video>
-      <div>
-        <button id="snap" v-on:click="capture()">Snap Photo</button>
-        <button id="snap" v-on:click="stopCapture()">Snap Photo</button>
+  <v-container>
+    <v-btn color="accent" outlined @click="capture()"> <v-icon>{{ iconScreen }}</v-icon></v-btn>
+    <VueWinBox class="rounded-lg" ref="winboxRef" :options="options">
+      <div id="screen">
+        <video id="vdo" autoplay></video>
       </div>
-    </div>
-  </div>
+    </VueWinBox>
+  </v-container>
 </template>
 
 <script>
+import VueWinBox from 'vue-winbox';
+import { mdiMonitorShare } from '@mdi/js';
+
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
-  data: function () {
-    return {
-      email: null,
-      password: null,
-      error: 1,
-    };
-  },
+  components: { VueWinBox },
+  data: () => ({
+    iconScreen: mdiMonitorShare,
+    options: {
+      title: 'YourScreen',
+      width: '350',
+      height: '210',
+      class: ['no-full', 'no-close', 'no-max', 'no-resize'],
+      x: 'right',
+      y: 'bottom',
+    },
+  }),
   methods: {
     capture() {
-      const meda = document.getElementById("vdo");
+      const meda = document.getElementById('vdo');
       navigator.mediaDevices
         .getDisplayMedia({
           video: {
-            width: { ideal: 500, max: 720 },
-            height: { ideal: 500, max: 720 },
-            cursor: "always",
+            width: { max: 350 },
+            height: { max: 210 },
+            cursor: 'always',
           },
           audio: false,
         })
@@ -47,35 +49,33 @@ export default {
         });
     },
     stopCapture() {
-      const videoElem = document.getElementById("vdo");
-      let tracks = videoElem.srcObject.getTracks();
+      const videoElem = document.getElementById('vdo');
+      const tracks = videoElem.srcObject.getTracks();
       tracks.forEach((track) => track.stop());
       videoElem.srcObject = null;
     },
   },
-  computed: {},
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-#video {
-  border: 1px solid #999;
-  width: 98%;
+<style>
+#screen {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  width: 350px;
+  height: 210px;
+  overflow: hidden;
+}
+.wb-body {
+  overflow: hidden;
 }
 
-h3 {
-  margin: 0px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 0px;
-}
-a {
-  color: #42b983;
+video#video {
+  border: 1px solid rgb(0, 0, 0);
+  width: 350px;
+  height: 210px;
 }
 </style>
