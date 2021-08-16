@@ -1,39 +1,57 @@
 <template>
   <v-container>
-    <v-btn color="accent" outlined @click="capture()"> <v-icon>{{ iconScreen }}</v-icon></v-btn>
-    <VueWinBox class="rounded-lg" ref="winboxRef" :options="options">
-      <div id="screen">
-        <video id="vdo" autoplay></video>
+    <v-footer
+      fixed
+      :padless="false"
+      class="align-center justify-center"
+    >
+    <div >
+    <VueWinBox class="rounded-lg align-center justify-center" ref="winboxRef" :options="options">
+      <div class="align-center" id="screen">
+        <video id="selfScreen" autoplay></video>
       </div>
     </VueWinBox>
+      <v-btn class="rounded-xl" color="light-green lighten-2" outlined @click="capture()">
+        <v-icon>{{ iconScreen }}</v-icon>
+      </v-btn>
+      <v-btn class="rounded-xl" color="red darken-3"  outlined @click="stopCapture()">
+        <v-icon>{{ callClose }}</v-icon>
+      </v-btn>
+      <v-btn class="rounded-xl" color="red darken-3"  outlined @click="stopCapture()">
+        <v-icon>{{ camera }}</v-icon>
+      </v-btn>
+    </div>
+    </v-footer>
   </v-container>
+
 </template>
 
 <script>
 import VueWinBox from 'vue-winbox';
-import { mdiMonitorShare } from '@mdi/js';
+import { mdiMonitorShare, mdiPhoneHangup, mdiCameraAccount } from '@mdi/js';
 
 export default {
   components: { VueWinBox },
   data: () => ({
     iconScreen: mdiMonitorShare,
+    callClose: mdiPhoneHangup,
+    camera: mdiCameraAccount,
     options: {
       title: 'YourScreen',
-      width: '350',
-      height: '210',
+      width: '20%',
+      height: '25%',
       class: ['no-full', 'no-close', 'no-max', 'no-resize'],
       x: 'right',
       y: 'bottom',
+      max: 0,
     },
   }),
   methods: {
     capture() {
-      const meda = document.getElementById('vdo');
+      const meda = document.getElementById('selfScreen');
       navigator.mediaDevices
         .getDisplayMedia({
           video: {
-            width: { max: 350 },
-            height: { max: 210 },
             cursor: 'always',
           },
           audio: false,
@@ -49,7 +67,7 @@ export default {
         });
     },
     stopCapture() {
-      const videoElem = document.getElementById('vdo');
+      const videoElem = document.getElementById('selfScreen');
       const tracks = videoElem.srcObject.getTracks();
       tracks.forEach((track) => track.stop());
       videoElem.srcObject = null;
@@ -64,18 +82,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  width: 350px;
-  height: 210px;
-  overflow: hidden;
 }
 .wb-body {
   overflow: hidden;
+  background: black;
 }
 
-video#video {
-  border: 1px solid rgb(0, 0, 0);
-  width: 350px;
-  height: 210px;
+#selfScreen {
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height:100%;
 }
 </style>
