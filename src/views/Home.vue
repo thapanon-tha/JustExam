@@ -1,6 +1,6 @@
 <template>
 <v-container>
-<h1>Eye Edition<h1>
+<h1>Eye Edition</h1>
     <HelloWorld/>
   <v-row
     class="d-flex"
