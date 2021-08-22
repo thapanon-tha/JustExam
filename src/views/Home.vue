@@ -1,6 +1,10 @@
 <template>
 <v-container>
+<<<<<<< HEAD
     <h1>Eye Edition</h1>
+=======
+<h1>Eye Edition</h1>
+>>>>>>> main
     <HelloWorld/>
   <v-row
     class="d-flex"
