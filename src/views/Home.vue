@@ -1,5 +1,9 @@
 <template>
 <v-container>
+    <h1>Eye Edition</h1>
+<router-link :to="{ name: 'About'}">
+<h1>About</h1>
+</router-link>
     <HelloWorld/>
   <v-row
     class="d-flex"

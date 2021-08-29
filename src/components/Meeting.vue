@@ -1,42 +1,17 @@
 <template>
   <v-container>
-    <v-footer
-      fixed
-      :padless="false"
-      class="align-center justify-center"
-    >
-    <div >
-    <VueWinBox class="rounded-lg align-center justify-center" ref="winboxRef" :options="options">
-      <div class="align-center" id="screen">
-        <video ref="mediaDisplay" id="selfScreen" autoplay></video>
-      </div>
-    </VueWinBox>
-      <v-btn class="rounded-xl" color="light-green lighten-2" outlined @click="capture()">
-        <v-icon>{{ iconScreen }}</v-icon>
-      </v-btn>
-      <v-btn class="rounded-xl" color="red darken-3"  outlined @click="stopCapture()">
-        <v-icon>{{ callClose }}</v-icon>
-      </v-btn>
-      <v-btn class="rounded-xl" color="red darken-3"  outlined @click="stopCapture()">
-        <v-icon>{{ camera }}</v-icon>
-      </v-btn>
-    </div>
-    </v-footer>
+    <Video></Video>
   </v-container>
-
 </template>
 
 <script>
-import VueWinBox from 'vue-winbox';
-import { mdiMonitorShare, mdiPhoneHangup, mdiCameraAccount } from '@mdi/js';
+import Video from './video/Video.vue';
 
 export default {
-  components: { VueWinBox },
+  name: 'Meeting',
+  components: { Video },
   data: () => ({
     mediaDisplay: {},
-    iconScreen: mdiMonitorShare,
-    callClose: mdiPhoneHangup,
-    camera: mdiCameraAccount,
     options: {
       title: 'YourScreen',
       width: '20%',
