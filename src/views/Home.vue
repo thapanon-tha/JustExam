@@ -1,10 +1,5 @@
 <template>
 <v-container>
-<<<<<<< HEAD
-    <h1>Eye Edition</h1>
-=======
-<h1>Eye Edition</h1>
->>>>>>> main
     <HelloWorld/>
   <v-row
     class="d-flex"
@@ -16,7 +11,7 @@
           color="teal"
           size="67"
         >
-        Hi {{item}}
+        Class {{item}}
         </v-avatar>
       </v-card>
     </v-item>
