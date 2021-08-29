@@ -1,23 +1,8 @@
 <template>
-<v-container>
-<h1>Eye Edition</h1>
+  <div class="home">
+    <h1 class="hello">JustExam</h1>
     <HelloWorld/>
-  <v-row
-    class="d-flex"
-    justify="center"
-  >
-    <v-item v-for="item in items" :key="item">
-      <v-card id="anathor" class="align-center justify-center rounded-lg">
-        <v-avatar
-          color="teal"
-          size="67"
-        >
-        Hi {{item}}
-        </v-avatar>
-      </v-card>
-    </v-item>
-  </v-row>
-</v-container>
+  </div>
 </template>
 
 <script>
@@ -28,16 +13,16 @@ export default {
   components: {
     HelloWorld,
   },
-  data: () => ({
-    items: [1, 2, 3, 4, 5],
-  }),
-
 };
 </script>
 
 <style scoped>
-#anathor {
-  min-width: 100px;
-  min-height: 100px;
+.home{
+  background-color:#5e5ef0;
+  height:750px;
+}
+.hello{
+  color:#dce3eb;
+  text-align: center;
 }
 </style>
