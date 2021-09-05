@@ -62,8 +62,9 @@ export default {
         .then((resolve) => {
           this.$refs.mediaDisplay.onloadmetadata = resolve;
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((e) => {
+          this.alert(e);
+          // console.log(error);
         });
     },
     stopCapture() {
@@ -75,7 +76,7 @@ export default {
   },
   watch: {
     mediaDisplay() {
-      console.log(this.mediaDisplay);
+      // console.log(this.mediaDisplay);
     },
   },
 };
