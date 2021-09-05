@@ -7,7 +7,6 @@
         md-mode="indeterminate">
       </md-progress-spinner>
     </div>
-
     <AudioVideoControls
         v-if="displayControls"
         :pauseVideo="pauseVideo"
@@ -20,9 +19,9 @@
         v-if="muted">
     </video>
     <video
-        :id="videoId"
-        autoplay="true"
-        v-if="!muted">
+      :id="videoId"
+      autoplay="true"
+      v-if="!muted">
     </video>
   </div>
 </template>
