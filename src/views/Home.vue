@@ -1,9 +1,6 @@
 <template>
 <v-container>
-    <h1>Eye Edition</h1>
-    <router-link :to="{ name: 'About'}">
-      <h1>About</h1>
-    </router-link>
+<Navbar/>
     <HelloWorld/>
   <v-row
     class="d-flex"
@@ -25,11 +22,13 @@
 
 <script>
 import HelloWorld from '../components/HelloWorld.vue';
+import Navbar from '../components/navbar.vue';
 
 export default {
   name: 'Home',
   components: {
     HelloWorld,
+    Navbar,
   },
   data: () => ({
     items: [1, 2, 3, 4, 5],
