@@ -1,6 +1,19 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
-  }
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "CPE401 Project",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
 }
