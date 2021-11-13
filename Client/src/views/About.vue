@@ -68,6 +68,10 @@ export default {
     // });
   },
   methods: {
+    async createPeerConnection() {
+      awit axioxasdasd
+      this.pc = new RTCPeerConnection(this.configuration);
+    },
     createPeerConnection() {
       this.pc = new RTCPeerConnection(this.configuration);
     },

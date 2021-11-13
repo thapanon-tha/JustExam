@@ -7,7 +7,7 @@
     justify="center"
   >
     <v-item v-for="item in items" :key="item">
-      <v-card id="anathor" class="align-center justify-center rounded-lg">
+      <v-card id="anathor" class="align-center justify-center rounded-lg" onClick="soemFn()">
         <v-avatar
           color="teal"
           size="67"
