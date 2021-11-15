@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: always
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE:
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    restart: always
+    volumes:
+      - upload:/app/data/upload
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      DB_HOST:
+      DB_NAME:
+      DB_USERNAME:
+      DB_PASSWORD:
+volumes:
+  database:
+  upload:

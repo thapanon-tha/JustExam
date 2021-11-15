@@ -1,0 +1,160 @@
+version: "3.4"
+
+x-logging: &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+
+services:
+  db:
+    image: mariadb:10.5.10-focal
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    env_file: ./.env
+    networks:
+      - network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: always
+
+  server:
+    build: ./Server
+    image: "je-test/server"
+    volumes:
+      - upload:/app/data/upload
+      - log:/app/log
+      - ./server/src:/app/src
+    depends_on:
+      - db
+    env_file: ./.env
+    networks:
+      - network
+    restart: always
+
+  nginx:
+    image: nginx:1.21.0-alpine
+    volumes:
+      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    command: ["nginx", "-g", "daemon off;"]
+    # depends_on:
+    #   - client
+    networks:
+      - network
+    ports:
+      - "${EXPOSE_PORT}:80"
+
+  # server:
+  #   build: ./Server
+  #   image: "jebuild.azurecr.io/server"
+  #   volumes:
+  #     - upload:/app/data/upload
+  #     - log:/app/log
+  #     - ./server/src:/app/src
+  #   # depends_on:
+  #   #   - db
+  #   env_file: ./.env
+  #   networks:
+  #     - network
+  #   restart: always
+
+  # server2:
+  #   build: ./Server
+  #   image: "jebuild.azurecr.io/server2"
+  #   volumes:
+  #     - upload:/app/data/upload
+  #     - log:/app/log
+  #     - ./server/src:/app/src
+  #   # depends_on:
+  #   #   - db
+  #   env_file: ./.env
+  #   networks:
+  #     - network
+  #   restart: always
+
+  # server3:
+  #   build: ./Server
+  #   image: "jebuild.azurecr.io/server3"
+  #   volumes:
+  #     - upload:/app/data/upload
+  #     - log:/app/log
+  #     - ./server/src:/app/src
+  #   # depends_on:
+  #   #   - db
+  #   env_file: ./.env
+  #   networks:
+  #     - network
+  #   restart: always
+
+  # client:
+  #   build: ./devlab-client
+  #   image: "devlab/client"
+  #   depends_on:
+  #     - server
+  #   env_file: ./.env
+  #   networks:
+  #     - devlab-network
+
+  # judge0_server:
+  #   image: judge0/judge0:1.13.0
+  #   volumes:
+  #     - ./judge0/judge0.conf:/judge0.conf:ro
+  #   privileged: true
+  #   <<: *default-logging
+  #   restart: always
+  #   networks:
+  #     - devlab-network
+
+  # judge0_workers:
+  #   image: judge0/judge0:1.13.0
+  #   command: ["./scripts/workers"]
+  #   volumes:
+  #     - ./judge0/judge0.conf:/judge0.conf:ro
+  #   privileged: true
+  #   <<: *default-logging
+  #   restart: always
+  #   networks:
+  #     - devlab-network
+
+  # judge0_db:
+  #   image: postgres:13.0
+  #   env_file: ./judge0/judge0.conf
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data/
+  #   <<: *default-logging
+  #   restart: always
+  #   ports:
+  #     - "5433:5432"
+  #   networks:
+  #     - devlab-network
+
+  # judge0_redis:
+  #   image: redis:6.0
+  #   command:
+  #     [
+  #       "bash",
+  #       "-c",
+  #       'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"',
+  #     ]
+  #   env_file: ./judge0/judge0.conf
+  #   volumes:
+  #     - redis-data:/data
+  #   <<: *default-logging
+  #   restart: always
+  #   networks:
+  #     - devlab-network
+
+volumes:
+  database:
+  upload:
+  log:
+  postgres-data:
+  redis-data:
+
+networks:
+  network:

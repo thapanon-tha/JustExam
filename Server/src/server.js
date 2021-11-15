@@ -5,7 +5,7 @@ const express = require('express');
 
 require('dotenv').config({ path: '../.env' });
 
-const port = process.env.PORT;
+const port = process.env.EXPOSE_PORT;
 
 const app = express();
 
@@ -14,8 +14,13 @@ const logger = require('./middlewares/auth/index');
 
 app.use('/api', api);
 
+//! Database sync
+const db = require('./models/db');
+
+db.sequelize.sync({ alter: true });
+
 app.get('/', logger, (req, res) => {
-  res.send('Hello World');
+  res.send(new Date());
 });
 
 app.use((req, res) => {
