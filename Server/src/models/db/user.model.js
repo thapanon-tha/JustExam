@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     'user',
     {
       userid: {
-        type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'userid',
+        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'userid',
       },
       name: { type: Sequelize.STRING(128), allowNull: false, field: 'name' },
       surname: { type: Sequelize.STRING(128), allowNull: false, field: 'surname' },

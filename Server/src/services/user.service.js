@@ -19,12 +19,13 @@ const medthods = {
     });
   },
 
-  async findByEmailOrCreate(name, surname, email, loginBy, role) {
+  async findByEmailOrCreate(userid, name, surname, email, loginBy, role) {
     return User.findOrCreate({
       attributes: ['userid', 'name', 'surname',
         'email', 'role'],
       where: { email },
       defaults: {
+        userid,
         name,
         surname,
         email,

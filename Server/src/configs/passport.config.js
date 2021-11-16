@@ -65,7 +65,7 @@ passport.use(new GoogleStrategy({
   } else if (role === 'student' || role === 'teacher') {
     // console.log('Crate');
     // console.log(profile);
-    [user, created] = await userService.findByEmailOrCreate(profile.given_name, profile.family_name, profile.email, 'Google', role);
+    [user, created] = await userService.findByEmailOrCreate(profile.id, profile.given_name, profile.family_name, profile.email, 'Google', role);
     // console.log(user);
     if (!created) {
       user = { errMessage: 'Your email alrady have account' };

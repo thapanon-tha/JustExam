@@ -8,5 +8,6 @@ router.get('/login/google', (req, res) => {
 
 router.use('/auth', require('../router/auth'));
 router.use('/user', require('../router/user'));
+router.use('/exam', require('../router/exam'));
 
 module.exports = router;

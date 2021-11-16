@@ -27,5 +27,62 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require('./db/user.model')(sequelize, Sequelize);
+db.tags = require('./db/tags.model')(sequelize, Sequelize);
+db.exam = require('./db/exam.model')(sequelize, Sequelize);
+db.examTags = require('./db/examTags.model')(sequelize, Sequelize);
+db.section = require('./db/section.model')(sequelize, Sequelize);
+db.questions = require('./db/questions.model')(sequelize, Sequelize);
+db.choices = require('./db/choices.model')(sequelize, Sequelize);
+
+db.user.hasMany(
+  db.exam,
+  {
+    foreignKey: { name: 'owner', field: 'owner' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.exam.belongsTo(db.user, { foreignKey: 'owner' });
+
+db.exam.hasMany(
+  db.section,
+  {
+    foreignKey: { name: 'examId', field: 'examId' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.section.belongsTo(db.exam, { foreignKey: 'examId' });
+
+db.section.hasMany(
+  db.questions,
+  {
+    foreignKey: { name: 'sectionId', field: 'sectionId' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questions.belongsTo(db.section, { foreignKey: 'sectionId' });
+
+db.questions.hasMany(
+  db.choices,
+  {
+    foreignKey: { name: 'questionId', field: 'questionId' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.choices.belongsTo(db.questions, { foreignKey: 'questionId' });
+
+db.tags.belongsToMany(db.exam, {
+  through: db.examTags,
+  foreignKey: 'tagId',
+  otherKey: 'examId',
+});
+db.exam.belongsToMany(db.tags, {
+  through: db.examTags,
+  foreignKey: 'examId',
+  otherKey: 'tagId',
+});
 
 module.exports = db;

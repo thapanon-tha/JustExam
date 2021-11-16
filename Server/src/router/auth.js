@@ -25,7 +25,6 @@ router.get('/google/callback',
   passport.authenticate('google', { session: false }),
   (req, res) => {
     const { user } = req;
-    // console.log(req.user);
     if (user.errMassage !== false) {
       return res.status(401).send(user);
     } if (user) {
