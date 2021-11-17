@@ -17,7 +17,6 @@ router.get('/google', passport.authenticate('google', { scope: ['email', 'profil
 
 router.get('/google/createAccount', (req, res, next) => {
   req.session.role = req.query.role;
-  // console.log(req.query.role);
   next();
 }, passport.authenticate('google', { scope: ['email', 'profile'] }));
 

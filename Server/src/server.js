@@ -6,20 +6,18 @@ const express = require('express');
 // const https = require('https');
 const cors = require('cors');
 /// ///////////////////////////////////////////
-//! google login Oauth2
 const session = require('express-session');
 const passport = require('passport');
+
 const jwtChecker = require('./middlewares/jwt');
 
 const app = express();
-
+const port = process.env.EXPOSE_PORT;
 require('./configs/passport.config');
 
-app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-const port = process.env.EXPOSE_PORT;
 
 const api = require('./apis/index.api');
 

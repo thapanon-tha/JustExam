@@ -8,10 +8,11 @@ const JWTStrategy = passportJWT.Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
+const HttpsProxyAgent = require('https-proxy-agent');
 const userService = require('../services/user.service');
 
 // LOCAL LOGIN AUTHENTICATION
-passport.use(new LocalStrategy({
+const local = new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 },
@@ -40,13 +41,22 @@ async (email, password, cb) => {
   } else {
     cb(null, false, { message: 'Incorrect email or password.' });
   }
+});
+
+const azure = new AzureAdOAuth2Strategy({
+  clientID: process.env.OUTLOOK_CLIENT_ID,
+  clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
+  callbackURL: '/api/auth/azure/callback',
+},
+((accessToken, refresh_token, params, profile, done) => {
+  const waadProfile = jwt.decode(params.id_token);
+  done(null, waadProfile);
 }));
 
-// GOOGLE API AUTHENTICATION
-passport.use(new GoogleStrategy({
+const google = new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:80/api/auth/google/callback',
+  callbackURL: '/api/auth/google/callback',
   passReqToCallback: true,
 },
 (async (request, accessToken, refreshToken, profile, done) => {
@@ -77,27 +87,9 @@ passport.use(new GoogleStrategy({
     done(null, user);
   }
   done(null, { ...user, errMassage: false });
-})));
+}));
 
-/// /////////////////////////////////////////////////////
-
-passport.use(new AzureAdOAuth2Strategy({
-  clientID: process.env.OUTLOOK_CLIENT_ID,
-  clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
-  callbackURL: 'http://localhost:80/api/auth/azure/callback',
-},
-((accessToken, refresh_token, params, profile, done) => {
-  console.log(params);
-  const waadProfile = jwt.decode(params.id_token);
-  console.log('-----------------------');
-  console.log(waadProfile);
-  console.log('--------------------');
-  done(null, waadProfile);
-})));
-
-/// ////////////////////////////////////////////////
-//! JWT UNPACK
-passport.use(new JWTStrategy({
+const JWT = new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET,
 },
@@ -116,4 +108,10 @@ async (jwtPayload, cb) => {
   } catch (error) {
     return cb(error, false);
   }
-}));
+});
+
+// GOOGLE API AUTHENTICATION
+passport.use(local);
+passport.use(google);
+passport.use(azure);
+passport.use(JWT);
