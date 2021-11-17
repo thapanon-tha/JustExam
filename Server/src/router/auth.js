@@ -42,4 +42,12 @@ router.get('/google/callback',
     return res.status(422).json(user);
   });
 
+router.get('/azure', passport.authenticate('azure_ad_oauth2'));
+
+router.get('/azure/callback', passport.authenticate('azure_ad_oauth2', { session: false }),
+  (req, res) => {
+  // Successful authentication, redirect home.
+    res.status(200).send('OKKKKKKK');
+  });
+
 module.exports = router;

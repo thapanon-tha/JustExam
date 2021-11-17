@@ -42,6 +42,10 @@ app.get('/test', jwtChecker, (req, res) => {
   res.status(200).json(req?.user);
 });
 
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.use((req, res) => {
   res.status(501).send('incorrect path');
 });
