@@ -2,15 +2,15 @@ module.exports = (sequelize, Sequelize) => {
   const user = sequelize.define(
     'user',
     {
-      userid: {
-        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'userid',
+      uid: {
+        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'uid',
       },
-      name: { type: Sequelize.STRING(128), allowNull: false, field: 'name' },
+      firstname: { type: Sequelize.STRING(128), allowNull: false, field: 'firstname' },
       surname: { type: Sequelize.STRING(128), allowNull: false, field: 'surname' },
       email: { type: Sequelize.STRING(128), allowNull: false, field: 'email' },
       password: { type: Sequelize.STRING(255), allowNull: true, field: 'password' },
-      role: { type: Sequelize.ENUM('admin', 'student', 'teacher'), allowNull: false, field: 'role' },
-      loginBy: { type: Sequelize.ENUM('Google', 'Justexam'), allowNull: false, field: 'loginBy' },
+      type: { type: Sequelize.ENUM('admin', 'student', 'teacher'), allowNull: false, field: 'type' },
+      provider: { type: Sequelize.ENUM('Google', 'Justexam'), allowNull: false, field: 'provider' },
     },
     { tableName: 'user' },
   );

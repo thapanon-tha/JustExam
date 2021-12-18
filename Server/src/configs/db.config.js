@@ -7,7 +7,6 @@ module.exports = {
   DB_NAME: process.env.MYSQL_DATABASE,
   DB_DIALECT: 'mariadb',
   DB_DEFINE: {
-    timestamps: false,
     charset: 'utf8',
     dialectOptions: {
       collate: 'utf8_general_ci',
