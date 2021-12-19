@@ -42,6 +42,145 @@ db.option = require('./db/option.model')(sequelize, Sequelize);
 db.channel = require('./db/channel.model')(sequelize, Sequelize);
 db.role = require('./db/role.model')(sequelize, Sequelize);
 db.member = require('./db/member.model')(sequelize, Sequelize);
+db.examChannel = require('./db/examChannel.model')(sequelize, Sequelize);
+db.sectionExamTimeChannel = require('./db/sectionExamTimeChannel.model')(sequelize, Sequelize);
+db.questionExamChannel = require('./db/questionExamChannel.model')(sequelize, Sequelize);
+db.questionAnswerCChannel = require('./db/questionAnswerCChannel.model')(sequelize, Sequelize);
+db.questionAnswerMChannel = require('./db/questionAnswerMChannel.model')(sequelize, Sequelize);
+db.questionAnswerMCChannel = require('./db/questionAnswerMCChannel.model')(sequelize, Sequelize);
+db.questionAnswerSAChannel = require('./db/questionAnswerSAChannel.model')(sequelize, Sequelize);
+db.questionAnswerTFChannel = require('./db/questionAnswerTFChannel.model')(sequelize, Sequelize);
+db.answerQuestionScore = require('./db/answerQuestionScore.model')(sequelize, Sequelize);
+
+db.questionExamChannel.hasMany(
+  db.questionAnswerSAChannel,
+  {
+    foreignKey: { name: 'qecid', field: 'qecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questionAnswerSAChannel.belongsTo(db.questionExamChannel, { foreignKey: 'qecid' });
+
+db.questionExamChannel.hasMany(
+  db.questionAnswerTFChannel,
+  {
+    foreignKey: { name: 'qecid', field: 'qecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questionAnswerTFChannel.belongsTo(db.questionExamChannel, { foreignKey: 'qecid' });
+
+db.questionExamChannel.hasMany(
+  db.questionAnswerMCChannel,
+  {
+    foreignKey: { name: 'qecid', field: 'qecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questionAnswerMCChannel.belongsTo(db.questionExamChannel, { foreignKey: 'qecid' });
+
+db.questionExamChannel.hasMany(
+  db.questionAnswerMChannel,
+  {
+    foreignKey: { name: 'qecid', field: 'qecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questionAnswerMChannel.belongsTo(db.questionExamChannel, { foreignKey: 'qecid' });
+
+db.questionExamChannel.hasMany(
+  db.questionAnswerCChannel,
+  {
+    foreignKey: { name: 'qecid', field: 'qecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.questionAnswerCChannel.belongsTo(db.questionExamChannel, { foreignKey: 'qecid' });
+
+db.examChannel.hasMany(
+  db.answerQuestionScore,
+  {
+    foreignKey: { name: 'ecid', field: 'ecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.answerQuestionScore.belongsTo(db.examChannel, { foreignKey: 'ecid' });
+
+db.member.hasOne(
+  db.answerQuestionScore,
+  {
+    foreignKey: { name: 'mid', field: 'mid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.answerQuestionScore.belongsTo(db.member, { foreignKey: 'mid' });
+
+db.questionType.hasMany(
+  db.questionExamChannel,
+  {
+    foreignKey: { name: 'qtid', field: 'qtid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.questionExamChannel.belongsTo(db.questionType, { foreignKey: 'qtid' });
+
+db.examChannel.hasMany(
+  db.questionExamChannel,
+  {
+    foreignKey: { name: 'ecid', field: 'ecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.questionExamChannel.belongsTo(db.examChannel, { foreignKey: 'ecid' });
+
+db.examChannel.hasMany(
+  db.sectionExamTimeChannel,
+  {
+    foreignKey: { name: 'ecid', field: 'ecid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+);
+db.sectionExamTimeChannel.belongsTo(db.examChannel, { foreignKey: 'ecid' });
+
+db.channel.hasOne(
+  db.examChannel,
+  {
+    foreignKey: { name: 'cid', field: 'cid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.examChannel.belongsTo(db.channel, { foreignKey: 'cid' });
+
+db.user.hasMany(
+  db.examChannel,
+  {
+    foreignKey: { name: 'uid', field: 'uid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.examChannel.belongsTo(db.channel, { foreignKey: 'uid' });
+
+db.exam.hasOne(
+  db.examChannel,
+  {
+    foreignKey: { name: 'eid', field: 'eid' },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+);
+db.examChannel.belongsTo(db.exam, { foreignKey: 'eid' });
 
 db.role.hasMany(
   db.member,
