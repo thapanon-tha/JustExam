@@ -3,7 +3,9 @@ const User = require('../services/user.service');
 
 module.exports = {
 
-  addInventory(req, res, next, body) {
+  userLogin(req, res) {
+    const { body } = req;
+
     User.addInventory(body)
       .then((response) => {
         utils.writeJson(res, response);
@@ -13,7 +15,19 @@ module.exports = {
       });
   },
 
-  userRegisterPOST(req, res, next, body) {
+  userRegister(req, res) {
+    const { body } = req;
+    User.userRegisterPOST(body)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
+
+  update(req, res) {
+    const { body } = req;
     User.userRegisterPOST(body)
       .then((response) => {
         utils.writeJson(res, response);

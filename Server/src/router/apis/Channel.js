@@ -3,18 +3,18 @@ const controller = require('../../controllers/Channel.controller');
 router.use('/:id/members', require('./Member'));
 
 // all user
-router.get('/', controller.channelsGET);
+router.get('/', controller.getChannel);
 
 // teacher only
-router.post('/', controller.delete_channel);
+router.post('/', controller.addChannel);
 
 // owner(teacher) & member(student) only
-router.get('/:id', controller.get_channel);
+router.get('/:id', controller.getChannelById);
 
 // owner(teacher) only
-router.put('/:id', controller.post_channel);
+router.put('/:id', controller.updateChannel);
 
 // owner(teacher) only
-router.delete('/:id', controller.put_channel);
+router.delete('/:id', controller.deleteChannel);
 
 module.exports = router;

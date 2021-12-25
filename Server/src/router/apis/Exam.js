@@ -3,18 +3,18 @@ const controller = require('../../controllers/Exam.controller');
 router.use('/:id/questions', require('./Question'));
 
 // owner (teacher)
-router.get('/', controller.create_new_exam);
+router.get('/', controller.getAllExam);
 
 // teacher
-router.post('/', controller.delete_exam);
+router.post('/', controller.addExam);
 
 // all if share || owner (teacher)
-router.get('/:id', controller.get_all_exam);
+router.get('/:id', controller.getExam);
 
 // owner (teacher)
-router.put('/:id', controller.get_exam);
+router.put('/:id', controller.updateExam);
 
 // owner (teacher)
-router.delete('/:id', controller.update_exam);
+router.delete('/:id', controller.deleteExam);
 
 module.exports = router;

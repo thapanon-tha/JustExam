@@ -2,7 +2,9 @@ const utils = require('sequelize');
 const Exam = require('../services/exam.service');
 
 module.exports = {
-  create_new_exam(req, res, next, body) {
+
+  addExam(req, res) {
+    const { body } = req;
     Exam.create_new_exam(body)
       .then((response) => {
         utils.writeJson(res, response);
@@ -12,17 +14,7 @@ module.exports = {
       });
   },
 
-  delete_exam(req, res, next, eid) {
-    Exam.delete_exam(eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
-
-  get_all_exam(req, res, next) {
+  getAllExam(req, res) {
     Exam.get_all_exam()
       .then((response) => {
         utils.writeJson(res, response);
@@ -32,7 +24,8 @@ module.exports = {
       });
   },
 
-  get_exam(req, res, next, eid) {
+  getExam(req, res) {
+    const { eid } = req.params;
     Exam.get_exam(eid)
       .then((response) => {
         utils.writeJson(res, response);
@@ -42,7 +35,9 @@ module.exports = {
       });
   },
 
-  update_exam(req, res, next, body, eid) {
+  updateExam(req, res) {
+    const { eid } = req.params;
+    const { body } = req;
     Exam.update_exam(body, eid)
       .then((response) => {
         utils.writeJson(res, response);
@@ -51,4 +46,16 @@ module.exports = {
         utils.writeJson(res, response);
       });
   },
+
+  deleteExam(req, res) {
+    const { eid } = req.params;
+    Exam.delete_exam(eid)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
+
 };

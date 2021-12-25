@@ -2,17 +2,10 @@ const utils = require('sequelize');
 const Member = require('../services/member.service');
 
 module.exports = {
-  delete_member(req, res, next, cid, mid) {
-    Member.delete_member(cid, mid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
 
-  get_all_member(req, res, next, cid) {
+  getMember(req, res) {
+    const { cid } = req.query;
+
     Member.get_all_member(cid)
       .then((response) => {
         utils.writeJson(res, response);
@@ -22,8 +15,22 @@ module.exports = {
       });
   },
 
-  put_member(req, res, next, body, cid, mid) {
+  updateMember(req, res) {
+    const { body } = req;
+    const { cid, mid } = req.query;
     Member.put_member(body, cid, mid)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
+
+  deleteMember(req, res) {
+    const { cid, mid } = req.query;
+
+    Member.delete_member(cid, mid)
       .then((response) => {
         utils.writeJson(res, response);
       })
