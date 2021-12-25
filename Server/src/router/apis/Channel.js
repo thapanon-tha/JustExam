@@ -1,6 +1,8 @@
 const router = require('express').Router({ mergeParams: true });
 const controller = require('../../controllers/Channel.controller');
-router.use('/:id/members', require('./Member'));
+router.use('/:cid/members', require('./Member'));
+router.use('/:cid/options', require('./Option'));
+router.use('/:cid/exams', require('./ExamChannel'));
 
 // all user
 router.get('/', controller.getChannel);
@@ -9,12 +11,18 @@ router.get('/', controller.getChannel);
 router.post('/', controller.addChannel);
 
 // owner(teacher) & member(student) only
-router.get('/:id', controller.getChannelById);
+router.get('/:cid', controller.getChannelById);
 
 // owner(teacher) only
-router.put('/:id', controller.updateChannel);
+router.put('/:cid', controller.updateChannel);
 
 // owner(teacher) only
-router.delete('/:id', controller.deleteChannel);
+router.delete('/:cid', controller.deleteChannel);
+
+// student member only
+router.get('/:cid/startExam', controller.startExam);
+
+// student member only
+router.get('/:cid/submitExam', controller.submitExam);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const router = require('express').Router({ mergeParams: true });
 const controller = require('../../controllers/Exam.controller');
-router.use('/:id/questions', require('./Question'));
+router.use('/:eid/questions', require('./Question'));
 
 // owner (teacher)
 router.get('/', controller.getAllExam);
@@ -9,12 +9,12 @@ router.get('/', controller.getAllExam);
 router.post('/', controller.addExam);
 
 // all if share || owner (teacher)
-router.get('/:id', controller.getExam);
+router.get('/:eid', controller.getExam);
 
 // owner (teacher)
-router.put('/:id', controller.updateExam);
+router.put('/:eid', controller.updateExam);
 
 // owner (teacher)
-router.delete('/:id', controller.deleteExam);
+router.delete('/:eid', controller.deleteExam);
 
 module.exports = router;

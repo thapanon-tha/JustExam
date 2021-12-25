@@ -1,5 +1,5 @@
 const router = require('express').Router({ mergeParams: true });
-const controller = require('../../controllers/Question.controller');
+const controller = require('../../controllers/QuestionExamChannel.controller');
 
 // all if share || owner (teacher)
 router.get('/', controller.getQuestion);
@@ -7,7 +7,5 @@ router.get('/', controller.getQuestion);
 router.post('/', controller.addQuestion);
 // owner (teacher)
 router.put('/:qid', controller.updateQueation);
-// owner (teacher)
-router.delete('/:qid', controller.deleteQuestion);
 
 module.exports = router;

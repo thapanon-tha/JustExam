@@ -1,22 +1,11 @@
 const utils = require('sequelize');
-const Channel = require('../services/channel.service');
+const Exam = require('../services/exam.service');
 
 module.exports = {
 
-  getChannel(req, res) {
-    const { inviteCode } = req.query;
-    Channel.channelsGET(inviteCode)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
-
-  addChannel(req, res) {
+  getAllExamChannel(req, res) {
     const { body } = req;
-    Channel.post_channel(body)
+    Exam.create_new_exam(body)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -25,9 +14,8 @@ module.exports = {
       });
   },
 
-  getChannelById(req, res) {
-    const cid = req.params;
-    Channel.get_channel(cid)
+  addExamChannel(req, res) {
+    Exam.get_all_exam()
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -36,11 +24,21 @@ module.exports = {
       });
   },
 
-  updateChannel(req, res) {
-    const { cid } = req.params;
+  getExamChannel(req, res) {
+    const { eid } = req.params;
+    Exam.get_exam(eid)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
+
+  updateExamChannel(req, res) {
+    const { eid } = req.params;
     const { body } = req;
-
-    Channel.put_channel(body, cid)
+    Exam.update_exam(body, eid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -49,9 +47,9 @@ module.exports = {
       });
   },
 
-  deleteChannel(req, res) {
-    const { cid } = req.params;
-    Channel.delete_channel(cid)
+  deleteExamChannel(req, res) {
+    const { eid } = req.params;
+    Exam.delete_exam(eid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -60,20 +58,9 @@ module.exports = {
       });
   },
 
-  startExam(req, res) {
-    const { cid } = req.params;
-    Channel.delete_channel(cid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
-
-  submitExam(req, res) {
-    const { cid } = req.params;
-    Channel.delete_channel(cid)
+  totalPointChannel(req, res) {
+    const { eid } = req.params;
+    Exam.delete_exam(eid)
       .then((response) => {
         utils.writeJson(res, response);
       })

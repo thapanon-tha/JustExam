@@ -3,7 +3,7 @@ const Score = require('../services/score.service');
 
 module.exports = {
 
-  getTable(req, res) {
+  getSectionTime(req, res) {
     const { cid, mid } = req.query;
     Score.get_score(cid, mid)
       .then((response) => {
@@ -14,7 +14,7 @@ module.exports = {
       });
   },
 
-  getSummary(req, res) {
+  addSectionTime(req, res) {
     const { cid } = req.query;
 
     Score.get_summary_score(cid)
@@ -24,6 +24,27 @@ module.exports = {
       .catch((response) => {
         utils.writeJson(res, response);
       });
+  },
+
+  updateSectionTime(req, res) {
+    const { cid } = req.query;
+
+    Score.get_summary_score(cid)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
+
+  deleteSectionTime(req, res) {
+    const {
+      setcid,
+      ecid,
+      cid,
+    } = req.params;
+    res.status(200).json({ massage: `delete section time od id : ${setcid} of exam id ${ecid} of channel ${cid}` });
   },
 
 };

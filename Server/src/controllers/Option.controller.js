@@ -3,10 +3,8 @@ const Member = require('../services/member.service');
 
 module.exports = {
 
-  getMember(req, res) {
-    const { cid } = req.query;
-
-    Member.get_all_member(cid)
+  getOption(req, res) {
+    Member.get_all_member()
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -15,7 +13,7 @@ module.exports = {
       });
   },
 
-  addMember(req, res) {
+  addOption(req, res) {
     const { body } = req;
     const { cid } = req.query;
     Member.put_member(body, cid)
@@ -27,7 +25,7 @@ module.exports = {
       });
   },
 
-  updateMember(req, res) {
+  updateOption(req, res) {
     const { body } = req;
     const { cid, mid } = req.query;
     Member.put_member(body, cid, mid)
@@ -39,7 +37,7 @@ module.exports = {
       });
   },
 
-  deleteMember(req, res) {
+  deleteOption(req, res) {
     const { cid, mid } = req.query;
 
     Member.delete_member(cid, mid)

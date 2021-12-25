@@ -1,12 +1,11 @@
 const utils = require('sequelize');
-const Member = require('../services/member.service');
+const Question = require('../services/queation.service');
 
 module.exports = {
 
-  getMember(req, res) {
-    const { cid } = req.query;
-
-    Member.get_all_member(cid)
+  getQuestionType(req, res) {
+    const { eid } = req.params;
+    Question.get_exam_question(eid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -15,10 +14,9 @@ module.exports = {
       });
   },
 
-  addMember(req, res) {
+  addQuestionType(req, res) {
     const { body } = req;
-    const { cid } = req.query;
-    Member.put_member(body, cid)
+    Question.create_exam_question(body)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -27,10 +25,10 @@ module.exports = {
       });
   },
 
-  updateMember(req, res) {
+  updateQuestionType(req, res) {
+    const { qtid } = req.params;
     const { body } = req;
-    const { cid, mid } = req.query;
-    Member.put_member(body, cid, mid)
+    Question.update_exam_queation(qtid, body)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -39,10 +37,9 @@ module.exports = {
       });
   },
 
-  deleteMember(req, res) {
-    const { cid, mid } = req.query;
-
-    Member.delete_member(cid, mid)
+  deleteQuestionType(req, res) {
+    const { qtid } = req.params;
+    Question.delete_exam_question(qtid)
       .then((response) => {
         utils.writeJson(res, response);
       })

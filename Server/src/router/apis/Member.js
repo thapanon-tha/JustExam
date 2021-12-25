@@ -4,10 +4,13 @@ const controller = require('../../controllers/Member.controller');
 // owner (teacher) || member (student)
 router.get('/', controller.getMember);
 
+// student join
+router.post('/:mid', controller.addMember);
+
 // owner (teacher)
-router.put('/:id', controller.updateMember);
+router.put('/:mid', controller.updateMember);
 
 // owner (teacher) || self (student)
-router.delete('/:id', controller.deleteMember);
+router.delete('/:mid', controller.deleteMember);
 
 module.exports = router;

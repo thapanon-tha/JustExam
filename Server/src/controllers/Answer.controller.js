@@ -2,7 +2,7 @@ const errorStd = require('./stdError');
 
 module.exports = {
 
-  getAllCategory(req, res) {
+  getAnswer(req, res) {
     // Category.findAll();
     const err = {};
     errorStd.Unauthorized(err, res);
@@ -10,26 +10,14 @@ module.exports = {
     //    res.status(500).json();
   },
 
-  addCategory(req, res) {
+  updateAnswer(req, res) {
     res.status(200).json();
     //    res.status(404).json();
     //    res.status(500).json();
   },
 
-  getCategory(req, res) {
+  deleteAnswer(req, res) {
     // const { cid } = req.params;
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
-  },
-
-  updateCategory(req, res) {
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
-  },
-
-  deleteCategory(req, res) {
     res.status(200).json();
     //    res.status(404).json();
     //    res.status(500).json();
