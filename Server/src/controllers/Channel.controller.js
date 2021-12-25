@@ -1,9 +1,10 @@
 const utils = require('sequelize');
-const Exam = require('../services/exam.service');
+const Channel = require('../services/channel.service');
 
 module.exports = {
-  create_new_exam(req, res, next, body) {
-    Exam.create_new_exam(body)
+
+  channelsGET(req, res, next, inviteCode) {
+    Channel.channelsGET(inviteCode)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -12,8 +13,8 @@ module.exports = {
       });
   },
 
-  delete_exam(req, res, next, eid) {
-    Exam.delete_exam(eid)
+  delete_channel(req, res, next, cid) {
+    Channel.delete_channel(cid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -22,8 +23,8 @@ module.exports = {
       });
   },
 
-  get_all_exam(req, res, next) {
-    Exam.get_all_exam()
+  get_channel(req, res, next, cid) {
+    Channel.get_channel(cid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -32,8 +33,8 @@ module.exports = {
       });
   },
 
-  get_exam(req, res, next, eid) {
-    Exam.get_exam(eid)
+  post_channel(req, res, next, body) {
+    Channel.post_channel(body)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -42,8 +43,8 @@ module.exports = {
       });
   },
 
-  update_exam(req, res, next, body, eid) {
-    Exam.update_exam(body, eid)
+  put_channel(req, res, next, body, cid) {
+    Channel.put_channel(body, cid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -51,4 +52,5 @@ module.exports = {
         utils.writeJson(res, response);
       });
   },
+
 };

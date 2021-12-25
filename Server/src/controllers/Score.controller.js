@@ -1,9 +1,9 @@
 const utils = require('sequelize');
-const Exam = require('../services/exam.service');
+const Score = require('../services/score.service');
 
 module.exports = {
-  create_new_exam(req, res, next, body) {
-    Exam.create_new_exam(body)
+  get_score(req, res, next, cid, mid) {
+    Score.get_score(cid, mid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -12,8 +12,8 @@ module.exports = {
       });
   },
 
-  delete_exam(req, res, next, eid) {
-    Exam.delete_exam(eid)
+  get_summary_score(req, res, next, cid) {
+    Score.get_summary_score(cid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -22,8 +22,8 @@ module.exports = {
       });
   },
 
-  get_all_exam(req, res, next) {
-    Exam.get_all_exam()
+  post_score(req, res, next, body, cid, mid) {
+    Score.post_score(body, cid, mid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -32,8 +32,8 @@ module.exports = {
       });
   },
 
-  get_exam(req, res, next, eid) {
-    Exam.get_exam(eid)
+  put_score(req, res, next, body, cid, mid) {
+    Score.put_score(body, cid, mid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -42,13 +42,4 @@ module.exports = {
       });
   },
 
-  update_exam(req, res, next, body, eid) {
-    Exam.update_exam(body, eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
 };

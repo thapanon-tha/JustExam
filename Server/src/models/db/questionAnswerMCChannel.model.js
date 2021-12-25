@@ -7,6 +7,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       textA: { type: Sequelize.STRING(255), allowNull: false, field: 'textA' },
       correct: { type: Sequelize.BOOLEAN, allowNull: false, field: 'correct' },
+      pointQ: {
+        type: Sequelize.FLOAT, allowNull: false, defaultValue: 0, field: 'pointQ',
+      },
     },
     { tableName: 'questionAnswerMCChannel' },
   );

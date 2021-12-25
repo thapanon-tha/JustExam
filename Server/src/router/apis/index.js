@@ -6,8 +6,10 @@ router.get('/login/google', (req, res) => {
   <a href="/api/auth/google/createAccount?role=teacher">create  with Google to be teacher</a>`);
 });
 
-router.use('/auth', require('../router/auth'));
-router.use('/user', require('../router/user'));
-router.use('/exam', require('../router/exam'));
+// router.use('/user', require('./User'));
+// router.use('/exams', require('./Exam'));
+// router.use('/channels', require('./Channel'));
+// router.use('/score', require('./Score'));
+router.use('/categorys', require('./Category'));
 
 module.exports = router;

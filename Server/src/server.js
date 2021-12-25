@@ -19,7 +19,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize());
 app.use(passport.session());
 
-const api = require('./apis/index.api');
+const api = require('./router/index');
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -35,6 +35,9 @@ app.use('/api', api);
 const db = require('./models/db');
 
 db.sequelize.sync({ alter: true });
+const complieLangList = require('./models/Instances/complieLang');
+
+db.complieLang.bulkCreate(complieLangList, { ignoreDuplicates: ['id'] });
 
 app.get('/test', jwtChecker, (req, res) => {
   res.status(200).json(req?.user);

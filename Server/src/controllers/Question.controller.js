@@ -1,9 +1,9 @@
 const utils = require('sequelize');
-const Exam = require('../services/exam.service');
+const Question = require('../services/queation.service');
 
 module.exports = {
-  create_new_exam(req, res, next, body) {
-    Exam.create_new_exam(body)
+  create_exam_question(req, res, next, body, eid) {
+    Question.create_exam_question(body, eid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -12,8 +12,8 @@ module.exports = {
       });
   },
 
-  delete_exam(req, res, next, eid) {
-    Exam.delete_exam(eid)
+  delete_exam_question(req, res, next, eid, qid) {
+    Question.delete_exam_question(eid, qid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -22,8 +22,8 @@ module.exports = {
       });
   },
 
-  get_all_exam(req, res, next) {
-    Exam.get_all_exam()
+  get_exam_question(req, res, next, eid) {
+    Question.get_exam_question(eid)
       .then((response) => {
         utils.writeJson(res, response);
       })
@@ -32,18 +32,8 @@ module.exports = {
       });
   },
 
-  get_exam(req, res, next, eid) {
-    Exam.get_exam(eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
-
-  update_exam(req, res, next, body, eid) {
-    Exam.update_exam(body, eid)
+  update_exam_queation(req, res, next, body, qid, eid) {
+    Question.update_exam_queation(body, qid, eid)
       .then((response) => {
         utils.writeJson(res, response);
       })

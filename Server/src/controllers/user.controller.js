@@ -1,35 +1,26 @@
-const userService = require('../services/user.service');
+const utils = require('sequelize');
+const User = require('../services/user.service');
 
-const methods = {
+module.exports = {
 
-  async getByUserId(req, res) {
-    const uid = req.user;
-    let result;
-    try {
-      result = await userService.findByEmail(uid.email);
-      res.status(200).json(result);
-    } catch (error) {
-      res.status(500).send({
-        message: error.message,
+  addInventory(req, res, next, body) {
+    User.addInventory(body)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
       });
-    }
   },
 
-  // async getByUserId(req, res) {
-  //   const uid = req.user.ID;
-  //   const { verified } = req.query;
-  //   let result;
-  //   try {
-  //     if (verified === undefined) result = await certificateService.getCertByUid(uid);
-  //     else result = await certificateService.getCertByVerifiedId(verified);
-  //     res.status(200).json(result);
-  //   } catch (error) {
-  //     res.status(500).send({
-  //       message: error.message,
-  //     });
-  //   }
-  // },
+  userRegisterPOST(req, res, next, body) {
+    User.userRegisterPOST(body)
+      .then((response) => {
+        utils.writeJson(res, response);
+      })
+      .catch((response) => {
+        utils.writeJson(res, response);
+      });
+  },
 
 };
-
-module.exports = { ...methods };
