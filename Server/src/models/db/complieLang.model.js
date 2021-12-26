@@ -2,8 +2,8 @@ module.exports = (sequelize, Sequelize) => {
   const complieLang = sequelize.define(
     'complieLang',
     {
-      clid: {
-        type: Sequelize.INTEGER, primaryKey: true, field: 'clid',
+      ctid: {
+        type: Sequelize.INTEGER, primaryKey: true, field: 'ctid',
       },
       name: { type: Sequelize.STRING(255), allowNull: false, field: 'name' },
     },

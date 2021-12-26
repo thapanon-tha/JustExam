@@ -35,8 +35,25 @@ app.use('/api', api);
 const db = require('./models/db');
 
 db.sequelize.sync({ alter: true });
+
 const complieLangList = require('./models/Instances/complieLang');
 
+db.category.create({
+  ctid: 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940',
+  name: 'testname',
+}, { ignoreDuplicates: ['id'] });
+
+db.user.create({
+  uid: 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940',
+  firstname: 'Thapanon',
+  surname: 'Sodngam',
+  email: 'thapanon.sod@gmail.com',
+  type: 'student',
+  provider: 'Google',
+}, { ignoreDuplicates: ['id'] });
+db.category.create({
+  name: 'testCategory',
+});
 db.complieLang.bulkCreate(complieLangList, { ignoreDuplicates: ['id'] });
 
 app.get('/test', jwtChecker, (req, res) => {

@@ -2,8 +2,8 @@ module.exports = (sequelize, Sequelize) => {
   const category = sequelize.define(
     'category',
     {
-      cid: {
-        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'cid',
+      ctid: {
+        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'ctid',
       },
       name: { type: Sequelize.STRING(128), allowNull: false, field: 'name' },
     },

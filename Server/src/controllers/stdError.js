@@ -1,14 +1,33 @@
+/* eslint-disable no-param-reassign */
 module.exports = {
+
+  querySuccess(data, res) {
+    // console.error(err.message);
+    const statusCode = 200;
+    res.status(statusCode).json(data);
+  },
+
+  Success(res) {
+    // console.error(err.message);
+    const statusCode = 200;
+    res.status(statusCode).send();
+  },
+
+  Created(data, res) {
+    // console.error(err.message);
+    const statusCode = 201;
+    res.status(statusCode).json(data);
+  },
   Unexpected(err, res) {
     // console.error(err.message);
     if (!err.statusCode) err.statusCode = 500;
-    res.status(err.statusCode).send(err.message);
+    res.status(err.statusCode).json({ type: 'Internal Server Error', statusCode: err.statusCode, message: err.message });
   },
 
   NotFound(err, res) {
     // console.error(err.message);
     if (!err.statusCode) err.statusCode = 404;
-    res.status(err.statusCode).send(err.message);
+    res.status(err.statusCode).json({ type: 'Not Found Error', statusCode: err.statusCode, message: err.message });
   },
 
   NotAcceptable(err, res) {
@@ -25,7 +44,7 @@ module.exports = {
 
   Unauthorized(err, res) {
     // console.error(err.message);
-    if (!err.statusCode) err.statusCode = 401; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+    if (!err.statusCode) err.statusCode = 401;
     res.status(err.statusCode).send(err.message);
   },
 };

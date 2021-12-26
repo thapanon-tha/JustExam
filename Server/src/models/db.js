@@ -264,11 +264,11 @@ db.user.hasMany(db.exam, {
 db.exam.belongsTo(db.user, { foreignKey: 'uid' });
 
 db.category.hasMany(db.exam, {
-  foreignKey: { name: 'cid', field: 'cid' },
+  foreignKey: { name: 'ctid', field: 'ctid' },
   onUpdate: 'CASCADE',
   onDelete: 'SET NULL',
 });
-db.exam.belongsTo(db.user, { foreignKey: 'cid' });
+db.exam.belongsTo(db.user, { foreignKey: 'ctid' });
 
 db.complieLang.hasMany(db.questionAnswerC, {
   foreignKey: { name: 'clid', field: 'clid' },

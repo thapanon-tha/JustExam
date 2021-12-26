@@ -7,10 +7,15 @@ module.exports = (sequelize, Sequelize) => {
       },
       title: { type: Sequelize.STRING(128), allowNull: false, field: 'title' },
       description: { type: Sequelize.STRING(128), allowNull: true, field: 'description' },
-      share: {
-        type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false, field: 'share',
+      shareQ: {
+        type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false, field: 'shareQ',
       },
-
+      shareQA: {
+        type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false, field: 'shareQA',
+      },
+      uid: {
+        type: Sequelize.UUID, allowNull: false, field: 'uid',
+      },
     },
     { tableName: 'exam' },
   );
