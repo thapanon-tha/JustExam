@@ -19,6 +19,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize());
 app.use(passport.session());
 
+const stdCode = require('./controllers/stdError');
 const api = require('./router/index');
 
 const corsOptions = {
@@ -36,7 +37,20 @@ const db = require('./models/db');
 
 db.sequelize.sync({ alter: true });
 
+app.use((req, res) => {
+  stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+});
+
+app.listen(port, () => {
+  console.log(`server run on port ${port}`);
+});
+
+// * create inttance
+// ! create inttance
+// ? create inttance
 const complieLangList = require('./models/Instances/complieLang');
+const questionType = require('./models/Instances/questionTypes');
+const role = require('./models/Instances/role');
 
 db.category.create({
   ctid: 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940',
@@ -51,23 +65,11 @@ db.user.create({
   type: 'student',
   provider: 'Google',
 }, { ignoreDuplicates: ['id'] });
+
 db.category.create({
   name: 'testCategory',
-});
+}, { ignoreDuplicates: ['id'] });
+
+db.questionType.bulkCreate(questionType, { ignoreDuplicates: ['id'] });
 db.complieLang.bulkCreate(complieLangList, { ignoreDuplicates: ['id'] });
-
-app.get('/test', jwtChecker, (req, res) => {
-  res.status(200).json(req?.user);
-});
-
-app.get('/', (req, res) => {
-  res.sendStatus(200);
-});
-
-app.use((req, res) => {
-  res.status(501).send('incorrect path');
-});
-
-app.listen(port, () => {
-  console.log(`server run on port ${port}`);
-});
+db.role.bulkCreate(role, { ignoreDuplicates: ['id'] });

@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 module.exports = {
-
+  inCurrectPath(req) {
+    return ({ message: `wrong path: ${req.originalUrl}` });
+  },
   querySuccess(data, res) {
     // console.error(err.message);
     const statusCode = 200;

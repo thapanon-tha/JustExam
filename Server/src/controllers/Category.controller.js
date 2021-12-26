@@ -1,38 +1,54 @@
-const errorStd = require('./stdError');
+const stdCode = require('./stdError');
+const Category = require('../services/category.service');
+const db = require('../models/db');
 
 module.exports = {
 
-  getAllCategory(req, res) {
-    // Category.findAll();
-    const err = {};
-    errorStd.Unauthorized(err, res);
-    //    res.status(404).json();
-    //    res.status(500).json();
+  async getAllCategory(req, res) {
+    try {
+      const data = await Category.getAll();
+      if (data.length) { stdCode.querySuccess(data, res); } else stdCode.NotFound(data, res);
+    } catch (e) {
+      stdCode.Unexpected(e, res);
+    }
   },
 
-  addCategory(req, res) {
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
+  async addCategory(req, res) {
+    const { name } = req.body.data;
+    let transaction;
+    try {
+      transaction = await db.sequelize.transaction();
+      if (!name.length) stdCode.Validation({ message: `invalid name: ${name}` }, res);
+      const [data, created] = await Category.add(name, transaction);
+      if (created) {
+        await transaction.commit();
+        stdCode.Created(data, res);
+      } else {
+        await transaction.rollback();
+        stdCode.Validation({ message: `this Category name: ${name} already have` }, res);
+      }
+    } catch (e) {
+      await transaction.rollback();
+      stdCode.Unexpected(e, res);
+    }
   },
 
-  getCategory(req, res) {
-    // const { cid } = req.params;
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
+  async getCategory(req, res) {
+    const { ctid } = req.params;
+    try {
+      const data = await Category.getById(ctid);
+      if (data.length) { stdCode.querySuccess(data, res); } else stdCode.NotFound(data, res);
+    } catch (e) {
+      stdCode.Unexpected(e, res);
+    }
   },
 
   updateCategory(req, res) {
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
+    stdCode.Unauthorized(stdCode.inCurrectPath(req), res);
   },
 
   deleteCategory(req, res) {
-    res.status(200).json();
-    //    res.status(404).json();
-    //    res.status(500).json();
+    stdCode.Unauthorized(stdCode.inCurrectPath(req), res);
   },
 
 };

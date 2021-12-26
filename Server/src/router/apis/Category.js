@@ -8,12 +8,12 @@ router.get('/', controller.getAllCategory);
 router.post('/', controller.addCategory);
 
 // all
-router.get('/:cid', controller.getCategory);
+router.get('/:ctid', controller.getCategory);
 
 // all
-router.put('/:cid', controller.updateCategory);
+router.put('/:ctid', controller.updateCategory);
 
 // no one
-router.delete('/:cid', controller.deleteCategory);
+router.delete('/:ctid', controller.deleteCategory);
 
 module.exports = router;
