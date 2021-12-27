@@ -44,11 +44,11 @@ module.exports = {
   },
 
   updateCategory(req, res) {
-    stdCode.Unauthorized(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   deleteCategory(req, res) {
-    stdCode.Unauthorized(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
 };

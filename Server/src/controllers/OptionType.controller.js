@@ -1,61 +1,30 @@
-const utils = require('sequelize');
-const Member = require('../services/member.service');
+const stdCode = require('./stdError');
+const optionType = require('../services/optionType.service');
 
 module.exports = {
 
-  getAllOptionType(req, res) {
-    Member.get_all_member()
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async getAllOptionType(req, res) {
+    try {
+      const data = await optionType.getAllOptionType();
+      if (data.length) { stdCode.querySuccess(data, res); } else { stdCode.NotFound({}, res); }
+    } catch (e) {
+      stdCode.Unexpected(e, res);
+    }
   },
 
   addOptionType(req, res) {
-    const { body } = req;
-    const { cid } = req.query;
-    Member.put_member(body, cid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   getOptionType(req, res) {
-    Member.get_all_member()
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   updateOptionType(req, res) {
-    const { body } = req;
-    const { cid, mid } = req.query;
-    Member.put_member(body, cid, mid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   deleteOptionType(req, res) {
-    const { cid, mid } = req.query;
-
-    Member.delete_member(cid, mid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 };

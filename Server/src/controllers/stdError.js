@@ -49,4 +49,10 @@ module.exports = {
     if (!err.statusCode) err.statusCode = 401;
     res.status(err.statusCode).send(err.message);
   },
+
+  NotImplemented(err, res) {
+    // console.error(err.message);
+    if (!err.statusCode) err.statusCode = 501;
+    res.status(err.statusCode).json({ type: 'Not Implemented Error', statusCode: err.statusCode, message: err.message });
+  },
 };

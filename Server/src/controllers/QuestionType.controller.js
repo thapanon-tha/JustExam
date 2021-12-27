@@ -13,14 +13,14 @@ module.exports = {
   },
 
   addQuestionType(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   updateQuestionType(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   deleteQuestionType(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 };

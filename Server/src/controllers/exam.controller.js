@@ -5,6 +5,7 @@ const db = require('../models/db');
 module.exports = {
 
   async addExam(req, res) {
+    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
     const { body } = req;
     let transaction;
     try {
@@ -14,7 +15,6 @@ module.exports = {
         shareQ,
         shareQA,
       } = body.data;
-      const uid = body.data?.uid;
       const ctid = body.data?.ctid;
       const title = body.data?.title;
 
@@ -91,7 +91,7 @@ module.exports = {
       }
     } catch (e) {
       if (transaction) { await transaction.rollback(); }
-      stdCode.Unauthorized(e, res);
+      stdCode.Unexpected(e, res);
     }
   },
 

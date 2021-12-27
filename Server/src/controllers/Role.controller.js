@@ -13,14 +13,14 @@ module.exports = {
   },
 
   addRole(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   updateRole(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 
   deleteRole(req, res) {
-    stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+    stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
   },
 };

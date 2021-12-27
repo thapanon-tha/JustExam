@@ -38,7 +38,7 @@ const db = require('./models/db');
 db.sequelize.sync({ alter: true });
 
 app.use((req, res) => {
-  stdCode.Unexpected(stdCode.inCurrectPath(req), res);
+  stdCode.NotImplemented(stdCode.inCurrectPath(req), res);
 });
 
 app.listen(port, () => {
@@ -51,6 +51,7 @@ app.listen(port, () => {
 const complieLangList = require('./models/Instances/complieLang');
 const questionType = require('./models/Instances/questionTypes');
 const role = require('./models/Instances/role');
+const optionType = require('./models/Instances/optionType');
 
 db.category.create({
   ctid: 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940',
@@ -66,10 +67,7 @@ db.user.create({
   provider: 'Google',
 }, { ignoreDuplicates: ['id'] });
 
-db.category.create({
-  name: 'testCategory',
-}, { ignoreDuplicates: ['id'] });
-
 db.questionType.bulkCreate(questionType, { ignoreDuplicates: ['id'] });
 db.complieLang.bulkCreate(complieLangList, { ignoreDuplicates: ['id'] });
 db.role.bulkCreate(role, { ignoreDuplicates: ['id'] });
+db.optionType.bulkCreate(optionType, { ignoreDuplicates: ['id'] });
