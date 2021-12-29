@@ -1,7 +1,6 @@
-const { response } = require('express');
 const db = require('../models/db');
 const Member = require('../services/member.service');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 module.exports = {
 
@@ -10,7 +9,7 @@ module.exports = {
     try {
       const data = await Member.findByCid(cid);
       if (data.length !== 0) {
-        stdCode.querySuccess(cid, res);
+        stdCode.querySuccess(data, res);
       } else {
         stdCode.NotFound({ message: `Member in cid : ${cid} Not Found` }, res);
       }
@@ -27,11 +26,11 @@ module.exports = {
     try {
       transaction = await db.sequelize.transaction();
       const data = await Member.create(uid, 'NOT ATTENDANT', '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5', cid, sid, transaction);
-      if (data) {
+      if (data[1]) {
         await transaction.commit();
         stdCode.querySuccess(data, res);
       } else {
-        throw Error('something wrong can\'t update');
+        throw Error('You are Member of This Channel or Student ID already exits');
       }
     } catch (error) {
       if (transaction) await transaction.rollback();

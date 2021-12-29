@@ -1,6 +1,6 @@
 const db = require('../models/db');
 const Channel = require('../services/channel.service');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 const status = ['pending', 'coming', 'process', 'finish'];
 
@@ -132,7 +132,6 @@ module.exports = {
     try {
       transaction = await db.sequelize.transaction();
       const data = await Channel.delete(cid, uid, transaction);
-      console.log(data);
       if (data) {
         await transaction.commit();
         stdCode.Success(res);
@@ -140,7 +139,6 @@ module.exports = {
         stdCode.NotFound({ message: `cid: ${cid} Not Found or uid Incorrect` }, res);
       }
     } catch (e) {
-      console.log(e);
       if (transaction) await transaction.rollback();
       stdCode.Unexpected(e, res);
     }

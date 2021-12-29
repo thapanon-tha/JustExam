@@ -1,5 +1,5 @@
 const queationType = require('../services/queationType.service');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 module.exports = {
 

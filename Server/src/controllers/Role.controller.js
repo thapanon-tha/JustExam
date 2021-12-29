@@ -1,5 +1,5 @@
 const Role = require('../services/role.service');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 module.exports = {
 

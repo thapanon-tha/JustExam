@@ -19,7 +19,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize());
 app.use(passport.session());
 
-const stdCode = require('./controllers/stdError');
+const stdCode = require('./controllers/stdCode');
 const api = require('./router/index');
 
 const corsOptions = {

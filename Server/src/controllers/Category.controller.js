@@ -1,4 +1,4 @@
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 const Category = require('../services/category.service');
 const db = require('../models/db');
 

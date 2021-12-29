@@ -1,5 +1,5 @@
 const Exam = require('../services/exam.service');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 const db = require('../models/db');
 
 module.exports = {
@@ -35,7 +35,6 @@ module.exports = {
     const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
     try {
       const data = await Exam.getExamByOwner(uid);
-      // console.log(data.length);
       if (data.length) { stdCode.querySuccess(data, res); } else stdCode.NotFound(data, res);
     } catch (e) {
       stdCode.Unexpected(e, res);

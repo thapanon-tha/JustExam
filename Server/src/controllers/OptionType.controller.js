@@ -1,4 +1,4 @@
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 const optionType = require('../services/optionType.service');
 
 module.exports = {

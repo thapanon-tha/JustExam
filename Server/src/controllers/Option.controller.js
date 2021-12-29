@@ -1,7 +1,6 @@
 const db = require('../models/db');
 const Option = require('../services/option.service');
-const stdError = require('./stdError');
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 module.exports = {
 
@@ -11,9 +10,9 @@ module.exports = {
     try {
       const data = await Option.getOption(cid, uid);
       if (data.length !== 0) {
-        stdError.querySuccess(data, res);
+        stdCode.querySuccess(data, res);
       } else {
-        stdError.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
+        stdCode.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
@@ -28,7 +27,7 @@ module.exports = {
       transaction = await db.sequelize.transaction();
       const response = await Option.createMany(data.map((arr) => ({ cid, otid: arr.otid })), transaction);
       await transaction.commit();
-      stdError.querySuccess(response, res);
+      stdCode.querySuccess(response, res);
     } catch (error) {
       if (transaction) await transaction.rollback();
       stdCode.Unexpected(error, res);
@@ -44,10 +43,10 @@ module.exports = {
       const response = await Promise.all([Option.deleteAllByCid(cid, transaction), Option.createMany(data, transaction)]);
       if (response.length !== 0) {
         await transaction.commit();
-        stdError.querySuccess(response[1].map((resp) => resp[0]), res);
+        stdCode.querySuccess(response[1].map((resp) => resp[0]), res);
       } else {
         if (transaction) await transaction.rollback();
-        stdError.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
+        stdCode.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
       }
     } catch (error) {
       if (transaction) await transaction.rollback();
@@ -63,7 +62,7 @@ module.exports = {
       const data = await Option.deleteById(oid, transaction);
       if (data) {
         await transaction.commit();
-        stdError.Success(res);
+        stdCode.Success(res);
       } else {
         throw Error('somethong worng');
       }

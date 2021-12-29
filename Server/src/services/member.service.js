@@ -1,6 +1,7 @@
+const { Op } = require('sequelize');
 const db = require('../models/db');
 
-const { channel, member } = db;
+const { member } = db;
 
 const medthods = {
   async findByCid(cid) {
@@ -16,9 +17,20 @@ const medthods = {
   },
 
   async create(uid, state, rid, cid, sid, transaction) {
-    return member.create({
-      uid, state, rid, cid, sid,
-    }, { transaction });
+    return member.findOrCreate({
+      where: {
+
+        cid,
+        [Op.or]: [
+          { uid },
+          { sid },
+        ],
+      },
+      defaults: {
+        uid, state, rid, cid, sid,
+      },
+      transaction,
+    });
   },
 
   async getByMid(mid) {

@@ -1,9 +1,8 @@
-const utils = require('sequelize');
 const db = require('../models/db');
 const Question = require('../services/queation.service');
 const Answer = require('../services/answer.service');
 
-const stdCode = require('./stdError');
+const stdCode = require('./stdCode');
 
 module.exports = {
   async getQuestion(req, res) {
@@ -86,7 +85,7 @@ module.exports = {
           if (response.dataValues.questionAnswerSAs.length !== 0) { finalData.questionAnswer = response.dataValues.questionAnswerSAs; }
           if (response.dataValues.questionAnswerTFs.length !== 0) { finalData.questionAnswer = response.dataValues.questionAnswerTFs; }
           if (response.dataValues.questionAnswerMs.length !== 0) { finalData.questionAnswer = response.dataValues.questionAnswerMs; }
-          console.log(finalData);
+
           return finalData;
         }));
         stdCode.querySuccess(data[0], res);
@@ -106,7 +105,6 @@ module.exports = {
     try {
       transaction = await db.sequelize.transaction();
       const response = await Question.deleteQuestion(eid, qid, uid, transaction);
-      console.log(response);
       if (response) {
         await transaction.commit();
         stdCode.Success(res);

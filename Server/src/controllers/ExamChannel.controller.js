@@ -1,72 +1,101 @@
-const utils = require('sequelize');
-const Exam = require('../services/exam.service');
+const db = require('../models/db');
+const examChannel = require('../services/examChannel.service');
+const stdCode = require('./stdCode');
 
 module.exports = {
 
-  getAllExamChannel(req, res) {
-    const { body } = req;
-    Exam.create_new_exam(body)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async getExamChannel(req, res) {
+    const { cid } = req.params;
+    try {
+      const data = await examChannel.getExamChannel(cid);
+      if (data) {
+        stdCode.querySuccess(data, res);
+      } else {
+        stdCode.NotFound({ message: `Exam for cid: ${cid} Not Found` }, res);
+      }
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 
-  addExamChannel(req, res) {
-    Exam.get_all_exam()
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async addExamChannel(req, res) {
+    const { cid } = req.params;
+    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    let transaction;
+    const { title, description, eid } = req.body.data;
+    try {
+      transaction = await db.sequelize.transaction();
+      const data = await examChannel.deleteByCid(cid, transaction)
+        .then(() => examChannel.addExam(uid, cid, title, description, eid, transaction));
+      if (data) {
+        await transaction.commit();
+        stdCode.querySuccess(data, res);
+      } else {
+        throw Error('Something Worng');
+      }
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 
-  getExamChannel(req, res) {
-    const { eid } = req.params;
-    Exam.get_exam(eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async updateExamChannel(req, res) {
+    const { ecid, cid } = req.params;
+    const {
+      title,
+      description,
+    } = req.body.data;
+    let transaction;
+    try {
+      transaction = await db.sequelize.transaction();
+      const data = await examChannel.updateExamChannel(ecid, cid, title, description, transaction)
+        .then(((response) => {
+          if (response[0]) {
+            return examChannel.getExamChannel(cid);
+          } return 0;
+        }));
+      if (data) {
+        await transaction.commit();
+        stdCode.querySuccess(data, res);
+      } else {
+        throw Error(`Can't Update ecid: ${ecid}`);
+      }
+    } catch (error) {
+      if (transaction) await transaction.rollback();
+      stdCode.Unexpected(error, res);
+    }
   },
 
-  updateExamChannel(req, res) {
-    const { eid } = req.params;
-    const { body } = req;
-    Exam.update_exam(body, eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async deleteExamChannel(req, res) {
+    const { cid, ecid } = req.params;
+    let transaction;
+    try {
+      transaction = await db.sequelize.transaction();
+
+      const data = await examChannel.delete(cid, ecid, transaction);
+      if (data) {
+        await transaction.commit();
+        stdCode.Success(res);
+      } else {
+        throw Error(`Can't Delete ecid: ${ecid}`);
+      }
+    } catch (error) {
+      if (transaction) await transaction.rollback();
+      stdCode.Unexpected(error, res);
+    }
   },
 
-  deleteExamChannel(req, res) {
-    const { eid } = req.params;
-    Exam.delete_exam(eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
-  },
-
-  totalPointChannel(req, res) {
-    const { eid } = req.params;
-    Exam.delete_exam(eid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+  async totalPointChannel(req, res) {
+    const { cid } = req.params;
+    try {
+      const data = await examChannel.totalPointChannel(cid);
+      if (data[0].dataValues.totalPoint) {
+        stdCode.querySuccess(data[0], res);
+      } else {
+        stdCode.querySuccess({ totalPoint: 0 }, res);
+      }
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 
 };

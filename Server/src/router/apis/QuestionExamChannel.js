@@ -6,6 +6,6 @@ router.get('/', controller.getQuestion);
 // owner (teacher)
 router.post('/', controller.addQuestion);
 // owner (teacher)
-router.put('/:qid', controller.updateQueation);
+router.put('/', controller.updateQueation);
 
 module.exports = router;
