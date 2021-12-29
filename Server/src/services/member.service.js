@@ -1,38 +1,36 @@
 const db = require('../models/db');
 
-const User = db.user;
+const { channel, member } = db;
 
 const medthods = {
-  async findByEmail(email) {
-    return User.findOne({
-      attributes: ['userid', 'name', 'surname',
-        'email', 'role'],
-      where: { email },
+  async findByCid(cid) {
+    return member.findAll({
+      where: { cid },
     });
   },
 
-  async findByEmailLogin(email) {
-    return User.findOne({
-      attributes: ['userid', 'name', 'surname',
-        'email', ['password', 'hash'], 'role'],
-      where: { email },
+  async update(mid, rid, transaction) {
+    return member.update({
+      rid,
+    }, { where: { mid } }, { transaction });
+  },
+
+  async create(uid, state, rid, cid, sid, transaction) {
+    return member.create({
+      uid, state, rid, cid, sid,
+    }, { transaction });
+  },
+
+  async getByMid(mid) {
+    return member.findOne({
+      where: { mid },
     });
   },
 
-  async findByEmailOrCreate(userid, name, surname, email, loginBy, role) {
-    return User.findOrCreate({
-      attributes: ['userid', 'name', 'surname',
-        'email', 'role'],
-      where: { email },
-      defaults: {
-        userid,
-        name,
-        surname,
-        email,
-        loginBy,
-        role,
-      },
-    });
+  async deleteById(mid, cid, transaction) {
+    return member.destroy({
+      where: { mid, cid },
+    }, { transaction });
   },
 };
 

@@ -1,11 +1,13 @@
 const router = require('express').Router({ mergeParams: true });
 const controller = require('../../controllers/Member.controller');
 
+//* create middleware only Owner of Channel can use this API
+
 // owner (teacher) || member (student)
 router.get('/', controller.getMember);
 
 // student join
-router.post('/:mid', controller.addMember);
+router.post('/', controller.addMember);
 
 // owner (teacher)
 router.put('/:mid', controller.updateMember);

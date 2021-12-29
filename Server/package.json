@@ -17,6 +17,7 @@
     "express-session": "^1.17.2",
     "https-proxy-agent": "^5.0.0",
     "install": "^0.13.0",
+    "invite-code": "^0.0.2",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.5.5",
     "nodemon": "^2.0.15",
