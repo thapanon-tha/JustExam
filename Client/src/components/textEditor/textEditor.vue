@@ -6,27 +6,27 @@
 </template>
 
 <script>
-import { quillEditor, Quill } from "vue-quill-editor";
-import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
-import katex from "katex";
-import "katex/dist/katex.min.css";
+import { quillEditor, Quill } from 'vue-quill-editor';
+import { container, ImageExtend, QuillWatch } from 'quill-image-extend-module';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 export default {
   components: { quillEditor },
   data() {
     return {
-      content: "",
+      content: '',
       editorOption: {
         readOnly: true,
         modules: {
           toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
             [{ color: [] }, { background: [] }],
-            [{ align: [] }, { list: "ordered" }, { list: "bullet" }],
-            ["formula", "image", "video", "link"],
-            ["clean"],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['formula', 'image', 'video', 'link'],
+            ['clean'],
           ],
         },
       },
