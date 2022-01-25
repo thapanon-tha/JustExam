@@ -1,37 +1,22 @@
 <template>
   <v-app>
-    <navigation-bar></navigation-bar>
     <v-main>
+      <Navbar />
       <router-view/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import NavigationBar from '@/components/nav/NavigationBar';
+import Navbar from '@/components/Navbar/Navbar.vue';
 
 export default {
-  components: {
-    NavigationBar
-  },
   name: 'App',
+  components: {
+    Navbar,
+  },
   data: () => ({
     //
   }),
 };
 </script>
-
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: sans-serif;
-}
-
-body {
-  margin: 0;
-}
-</style>

@@ -6,8 +6,7 @@
 </template>
 
 <script>
-import { quillEditor, Quill } from 'vue-quill-editor';
-import { container, ImageExtend, QuillWatch } from 'quill-image-extend-module';
+import { quillEditor } from 'vue-quill-editor';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 

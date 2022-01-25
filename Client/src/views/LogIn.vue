@@ -1,13 +1,13 @@
 <template>
   <div>
-    Home
+    Login
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Home',
+  name: 'Login',
   data() {
     return {};
   },
