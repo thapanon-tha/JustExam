@@ -22,18 +22,18 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/LogIn.vue'),
   },
   {
     path: '/signup',
     name: 'SignUp',
     component: () => import('@/views/SignUp.vue'),
   },
-  {
-    path: '/textEditer',
-    name: 'About',
-    component: () => import('@/views/TextEditer.vue'),
-  },
+  // {
+  //   path: '/textEditer',
+  //   name: 'About',
+  //   component: () => import('@/views/TextEditer.vue'),
+  // },
 ];
 
 const router = new VueRouter({
