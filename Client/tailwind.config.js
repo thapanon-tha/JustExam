@@ -12,6 +12,7 @@ module.exports = {
         amber: colors.amber,
         mainColor: '#EF7F4C',
         subColor: '#FFFBFA',
+        footerColor: '#3F454C',
       },
     },
   },

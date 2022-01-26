@@ -1,13 +1,30 @@
 <template>
-    <li>
-        <h1>{{ topicName }}</h1>
+    <li class="text-left">
+        <h3 class="text-5xl text-semibold font-medium text-gray-900 pt-20 pb-5">{{ topicName }}</h3>
         <p>{{ description }}</p>
-        <button>Read more</button>
+        <p v-if="detailsAreVisible">{{ text }}</p>
+        <button @click="toggleDetails()">
+            <div class="bg-subColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-mainColor">
+                Read {{ detailsAreVisible ? 'less' : 'more' }}
+            </div>
+        </button>
     </li>
 </template>
 
 <script>
 export default {
-    props: ['id', 'topicName', 'description'],
+    data() {
+        return {
+            detailsAreVisible: false,
+        };
+    },
+    methods: {
+        toggleDetails() {
+            this.detailsAreVisible = !this.detailsAreVisible;
+    },
+    },
+    props: ['id', 'topicName', 'description', 'text'],
+    // emits: ['reveal-text'],
+    
 };
 </script>

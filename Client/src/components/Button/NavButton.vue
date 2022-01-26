@@ -1,7 +1,7 @@
 <template>
     <button @click="onClick(to)" >
-        <div class=" bg-transparent font-semibold
-                     mt-4 mb-4 px-10 py-3
+        <div class=" bg-transparent font-medium
+                     mt-2 mb-4 px-10 py-3 text-l
                      hover:text-white hover:bg-mainColor rounded border-orange-200"
              :class="{ [`border-l-2`]: borderLeft,
                        [`border-r-2`]: borderRight,

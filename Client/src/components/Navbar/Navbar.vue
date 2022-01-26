@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-subColor shadow-sm flex flex-row justify-between">
+  <div class="bg-subColor shadow-sm flex flex-row justify-between h-16">
     <div class="flex flex-row">
       <img
-        class="p-5 mr-10 "
+        class="p-3 mr-8"
         src="@/assets/logo.svg"
         alt="logo" />
       <NavButton
