@@ -21,10 +21,9 @@ export default {
         {
           id: 'justexam',
           title: 'Just Exam',
-          description: 'A Web Application For Online Exam.',
+          description: 'A Web Application For An Online Exam.',
           fullText:
-            `Vue is a great framework and it has a couple of key concepts: Data binding, events, 
-            components and reactivity - that should tell you something!`,
+            `Just Exam is a web application for an online exam that helps a teacher arrang an exam and helps a student take an exam remotely.`,
         },
       ],
       topics2: [

@@ -10,14 +10,14 @@ const routes = [
     component: () => import('@/views/Home.vue'),
   },
   {
-    path: '/aboutus',
-    name: 'AboutUs',
-    component: () => import('@/views/AboutUs.vue'),
+    path: '/contactus',
+    name: 'ContactUs',
+    component: () => import('@/views/ContactUs.vue'),
   },
   {
-    path: '/tour',
-    name: 'TakeATour',
-    component: () => import('@/views/TakeATour.vue'),
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: () => import('@/views/Tutorial.vue'),
   },
   {
     path: '/login',

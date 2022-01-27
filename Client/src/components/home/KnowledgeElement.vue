@@ -1,7 +1,9 @@
 <template>
     <li class="text-left">
         <h3 class="text-5xl text-semibold font-medium text-gray-900 pt-20 pb-5">{{ topicName }}</h3>
-        <p>{{ description }}</p>
+        <div class="font-medium">
+            <p>{{ description }}</p>
+        </div>
         <p v-if="detailsAreVisible">{{ text }}</p>
         <button @click="toggleDetails()">
             <div class="bg-subColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-mainColor">

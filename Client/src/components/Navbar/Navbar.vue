@@ -10,14 +10,14 @@
         to='Home'
         />
       <NavButton
-        name='Take a tour'
+        name='Tutorial'
         :borderLeft=true
         :borderRight=true
-        to='TakeATour'
+        to='Tutorial'
         />
       <NavButton
-        name='Abous Us'
-        to='AboutUs'
+        name='Contact Us'
+        to='ContactUs'
         />
     </div>
     <div>
