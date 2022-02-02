@@ -13,6 +13,7 @@ module.exports = {
         mainColor: '#EF7F4C',
         subColor: '#FFFBFA',
         footerColor: '#3F454C',
+        outlineColor: '#EF7F4E',
       },
     },
   },

@@ -2,7 +2,6 @@
   <div>
     <knowledge-grid
     ></knowledge-grid>
-    
   </div>
   
 </template>
@@ -30,7 +29,7 @@ export default {
         {
           id: 'teacher',
           title: 'For Teacher',
-          description: 'All features on Just Exam.',
+          description: 'All features for teacher on Just Exam.',
           fullText:
             `Vue is a great framework and it has a couple of key concepts: Data binding, 
             events, components and reactivity - that should tell you something!`,
@@ -40,7 +39,7 @@ export default {
         {
           id: 'student',
           title: 'For Student',
-          description: 'All features on Just Exam.',
+          description: 'All features for student on Just Exam.',
           fullText:
             `Vue is a great framework and it has a couple of key concepts: Data binding, 
             events, components and reactivity - that should tell you something!`,

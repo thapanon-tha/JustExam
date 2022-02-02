@@ -10,7 +10,7 @@
 
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
-import Footer from '@/components/footer/Footer';
+import Footer from '@/components/footer/Footer.vue';
 
 export default {
   name: 'App',
@@ -23,3 +23,9 @@ export default {
   }),
 };
 </script>
+
+<style>
+html {
+  font-family: sans-serif;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-40 mb-96">
     Tutorial
   </div>
 </template>

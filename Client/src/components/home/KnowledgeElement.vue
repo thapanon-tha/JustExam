@@ -1,6 +1,6 @@
 <template>
-    <li class="text-left">
-        <h3 class="text-5xl text-semibold font-medium text-gray-900 pt-20 pb-5">{{ topicName }}</h3>
+    <ul class="text-left">
+        <h3 class="text-5xl font-medium text-gray-900 pt-20 pb-5">{{ topicName }}</h3>
         <div class="font-medium">
             <p>{{ description }}</p>
         </div>
@@ -10,7 +10,7 @@
                 Read {{ detailsAreVisible ? 'less' : 'more' }}
             </div>
         </button>
-    </li>
+    </ul>
 </template>
 
 <script>
