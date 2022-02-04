@@ -12,7 +12,7 @@
       </div>
       <div>
         <p>Rungwigrai Payakkanuwat</p>
-        <p>Email: rung69@gmail.com</p>
+        <p>Email: nahee@gmail.com</p>
       </div>
     </div>
   </div>
