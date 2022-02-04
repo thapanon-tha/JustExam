@@ -1,7 +1,11 @@
 <template>
   <div>
+<<<<<<< HEAD
     <knowledge-grid
     ></knowledge-grid>
+=======
+    <h1>HELLO Game Na hee</h1>
+>>>>>>> b641fa0fd8ed667b827f6ba71c5d7197f6d20609
   </div>
   
 </template>

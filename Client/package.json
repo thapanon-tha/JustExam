@@ -25,17 +25,21 @@
   "devDependencies": {
     "@linusborg/vue-simple-portal": "^0.1.5",
     "@mdi/js": "^5.9.55",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.1.1",
+    "@vue/cli-plugin-router": "3.12.1",
+    "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "eslint": "^8.7.0",
     "eslint-plugin-import": "^2.20.2",
+<<<<<<< HEAD
     "eslint-plugin-vue": "^6.2.2",
     "postcss": "^7",
+=======
+    "eslint-plugin-vue": "^8.3.0",
+>>>>>>> b641fa0fd8ed667b827f6ba71c5d7197f6d20609
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
