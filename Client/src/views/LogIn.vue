@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row justify-between">
-    <section class="ml-56 mt-28 mb-40 ">
+    <form class="ml-56 mt-28 mb-40 ">
       <h1 class="text-4xl">Login to your account</h1>
       <div class="mt-10">
         <InputForm
@@ -27,7 +27,7 @@
         class="flex-auto w-5/6"
         />
       </div>
-    </section>
+    </form>
     <section class="box-border mt-28 ml-48 mr-52 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/book.svg" class="w-80 h-80 ml-20">
@@ -37,7 +37,6 @@
         />
       </v-container>
     </section>
-    <!-- <img src="@/assets/book.svg" width="240px"> -->
   
     
   </div>
