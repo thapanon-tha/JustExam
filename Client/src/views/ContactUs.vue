@@ -19,13 +19,9 @@
 </template>
 
 <script>
-import KnowledgeElement from '@/components/home/KnowledgeElement.vue';
 
 export default {
   name: 'ContactUs',
-  components: {
-    KnowledgeElement,
-  },
   data() {
     return {
       //

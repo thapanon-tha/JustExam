@@ -1,17 +1,12 @@
 <template>
   <div>
-<<<<<<< HEAD
-    <knowledge-grid
-    ></knowledge-grid>
-=======
-    <h1>HELLO Game Na hee</h1>
->>>>>>> b641fa0fd8ed667b827f6ba71c5d7197f6d20609
+    <knowledge-grid />
   </div>
-  
+
 </template>
 
 <script>
-import KnowledgeGrid from '@/components/home/KnowledgeGrid';
+import KnowledgeGrid from '@/components/home/KnowledgeGrid.vue';
 
 export default {
   components: {
@@ -26,7 +21,7 @@ export default {
           title: 'Just Exam',
           description: 'A Web Application For An Online Exam.',
           fullText:
-            `Just Exam is a web application for an online exam that helps a teacher arrang an exam and helps a student take an exam remotely.`,
+            'Just Exam is a web application for an online exam that helps a teacher arrang an exam and helps a student take an exam remotely.',
         },
       ],
       topics2: [
@@ -55,14 +50,14 @@ export default {
     return {
       topics: this.topics,
       topics2: this.topics2,
-      topics3: this.topics3
+      topics3: this.topics3,
     };
   },
   methods: {
     //
   },
   mounted() {
-    // 
+    //
   },
 };
 </script>

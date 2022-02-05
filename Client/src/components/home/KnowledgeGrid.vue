@@ -45,18 +45,18 @@
             src="https://images.pexels.com/photos/4144531/pexels-photo-4144531.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             />
         </div>
-        
+
     </ul>
 </template>
 
 <script>
-import KnowledgeElement from '@/components/home/KnowledgeElement';
+import KnowledgeElement from '@/components/home/KnowledgeElement.vue';
 
 export default {
-    components: {
-        KnowledgeElement
-    },
-    inject: ['topics', 'topics2', 'topics3'],
-    // emits: ['reveal-text'],
+  components: {
+    KnowledgeElement,
+  },
+  inject: ['topics', 'topics2', 'topics3'],
+  // emits: ['reveal-text'],
 };
 </script>

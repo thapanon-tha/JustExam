@@ -30,8 +30,7 @@
             type="password"
             />
         </div>
-        
-        
+
     </form>
 </template>
 
@@ -39,9 +38,9 @@
 import InputForm from '@/components/Form/InputForm.vue';
 
 export default {
-    name: 'SignUpForm',
-    components: {
-        InputForm,
-    },
+  name: 'SignUpForm',
+  components: {
+    InputForm,
+  },
 };
 </script>

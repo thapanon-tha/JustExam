@@ -18,9 +18,9 @@ export default {
     Navbar,
     Footer,
   },
-  data: () => ({
-    //
-  }),
+  mounted() {
+    this.$store.dispatch({ type: 'restoreLogin' });
+  },
 };
 </script>
 

@@ -1,6 +1,7 @@
 <template>
     <footer>
-        <div class="flex flex-row justify-start bg-footerColor text-white h-44 font-normal text-base">
+        <div class="flex flex-row justify-start bg-footerColor
+                     text-white h-44 font-normal text-base">
             <div class="pl-28 pt-10">Privacy & Legal</div>
             <div class="pl-28 pt-10">Cookie & Setting</div>
             <div class="pl-28 pt-10">Sitemap</div>
@@ -10,7 +11,7 @@
 
 <script>
 export default {
-    name: 'Footer',
+  name: 'Footer',
 };
 
 </script>

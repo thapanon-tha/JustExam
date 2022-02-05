@@ -6,7 +6,8 @@
         </div>
         <p v-if="detailsAreVisible">{{ text }}</p>
         <button @click="toggleDetails()">
-            <div class="bg-subColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-mainColor">
+            <div class="bg-subColor border-orange-200 border
+                        rounded-lg px-8 py-3 font-medium text-mainColor">
                 Read {{ detailsAreVisible ? 'less' : 'more' }}
             </div>
         </button>
@@ -15,18 +16,18 @@
 
 <script>
 export default {
-    data() {
-        return {
-            detailsAreVisible: false,
-        };
+  data() {
+    return {
+      detailsAreVisible: false,
+    };
+  },
+  methods: {
+    toggleDetails() {
+      this.detailsAreVisible = !this.detailsAreVisible;
     },
-    methods: {
-        toggleDetails() {
-            this.detailsAreVisible = !this.detailsAreVisible;
-    },
-    },
-    props: ['id', 'topicName', 'description', 'text'],
-    // emits: ['reveal-text'],
-    
+  },
+  props: ['id', 'topicName', 'description', 'text'],
+  // emits: ['reveal-text'],
+
 };
 </script>
