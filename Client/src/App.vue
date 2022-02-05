@@ -10,7 +10,7 @@
 
 <script>
 import Navbar from '@/components/Navbar/Navbar.vue';
-import Footer from '@/components/footer/Footer.vue';
+import Footer from '@/components/Footer/Footer.vue';
 
 export default {
   name: 'App',

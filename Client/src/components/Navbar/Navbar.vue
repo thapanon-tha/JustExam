@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-subColor shadow-sm flex flex-row justify-between h-16">
+  <div class="bg-subColor shadow-md flex flex-row justify-between h-16">
     <div class="flex flex-row">
       <img
         class="p-3 mr-8"
@@ -25,31 +25,36 @@
       <NavButton
         name='Exam channel'
         to='ContactUs'
-        v-if='$store.getters.getIsAuth && $store.getters.getIsTeacher'
+        v-if='$store.getters.getIsAuth
+              && ($store.getters.getIsTeacher ||
+              $store.getters.getIsStudent)'
       />
       <NavButton
         name='Your exam'
         to='ContactUs'
         :borderLeft=true
         :borderRight=true
-        v-if='$store.getters.getIsAuth && $store.getters.getIsTeacher'
+        v-if='$store.getters.getIsAuth
+              && $store.getters.getIsTeacher'
       />
       <NavButton
         name='Exam hub'
         to='ContactUs'
-        v-if='$store.getters.getIsAuth && $store.getters.getIsTeacher'
+        v-if='$store.getters.getIsAuth
+              && ($store.getters.getIsTeacher ||
+              $store.getters.getIsStudent)'
       />
     </div>
-    <div>
+    <div class="flex flex-row-reverse">
+      <NavButton
+        name='Sign up'
+        to='SignUp'
+        v-if='!$store.getters.getIsAuth'
+      />
       <NavButton
         name='Login'
         :borderRight=true
         to='Login'
-        v-if='!$store.getters.getIsAuth'
-      />
-      <NavButton
-        name='Sign up'
-        to='SignUp'
         v-if='!$store.getters.getIsAuth'
       />
       <NavButtonAction
@@ -58,6 +63,9 @@
         :onClick="onClick"
         v-if='$store.getters.getIsAuth'
       />
+      <div class="my-5 mr-10 text-mainColor">
+        <h3>{{ $store.getters.getName }}</h3>
+      </div>
     </div>
   </div>
 </template>

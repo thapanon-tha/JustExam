@@ -9,6 +9,7 @@ export default new Vuex.Store({
     isStudent: false,
     isTeacher: false,
     isAuth: false,
+    name: '',
   },
   getters: {
     getIsStudent(state) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     getIsAuth(state) {
       return state.isAuth;
     },
+    getName(state) {
+      return state.name;
+    },
   },
   mutations: {
     SET_IS_AUTH(state, value) {
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     SET_IS_STUDENT(state, value) {
       state.isAuth = value;
+    },
+    SET_NAME(state, valeu) {
+      state.name = valeu;
     },
   },
   actions: {
@@ -46,10 +53,14 @@ export default new Vuex.Store({
         return;
       }
 
+      const name = auth.getName();
+      console.log(name);
+
       // User is student
       if (auth.getToken() && auth.getRole() === 'STUDENT') {
         commit('SET_IS_AUTH', true);
         commit('SET_IS_STUDENT', true);
+        commit('SET_NAME', name);
         return;
       }
 
@@ -57,14 +68,17 @@ export default new Vuex.Store({
       if (auth.getToken() && auth.getRole() === 'TEACHER') {
         commit('SET_IS_AUTH', true);
         commit('SET_IS_TEACHER', true);
+        commit('SET_NAME', name);
       }
     },
     doLogout({ commit }) {
       auth.removeToken();
       auth.removeRole();
+      auth.removeName();
       commit('SET_IS_AUTH', false);
       commit('SET_IS_TEACHER', false);
       commit('SET_IS_STUDENT', false);
+      commit('SET_NAME', '');
     },
   },
 });
