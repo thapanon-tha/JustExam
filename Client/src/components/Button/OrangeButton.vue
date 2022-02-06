@@ -1,8 +1,8 @@
 <template>
     <button @click="clickButton(to)">
-        <div 
-        class="bg-mainColor border-orange-200 
-        border rounded-lg px-8 py-3 
+        <div
+        class="bg-mainColor border-orange-200
+        border rounded-lg px-8 py-3
         font-medium text-white"
         >
             {{ name }}
@@ -13,21 +13,21 @@
 <script>
 
 export default {
-    name: 'OrangeButton',
-    props: {
-        name: {
-            type: String,
-            default: 'Button',
-        },
-        to: {
-            type: String,
-            default: ''
-        },
+  name: 'OrangeButton',
+  props: {
+    name: {
+      type: String,
+      default: 'Button',
     },
-    methods: {
-        clickButton(pageName) {
-            this.$router.push({ name: pageName }).catch(() => {});
-        },
+    to: {
+      type: String,
+      default: '',
     },
+  },
+  methods: {
+    clickButton(pageName) {
+      this.$router.push({ name: pageName }).catch(() => {});
+    },
+  },
 };
 </script>

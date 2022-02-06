@@ -4,7 +4,7 @@
         type="checkbox"
          class="h-4 w-4"
         />
-        <label 
+        <label
         class="ml-2 font-light text-grey-700"
         >{{ textCheckbox }}</label>
     </div>
@@ -12,12 +12,12 @@
 
 <script>
 export default {
-    name: 'CheckboxForm',
-    props: {
-        textCheckbox: {
-            type: String,
-            default: 'text'
-        },
+  name: 'CheckboxForm',
+  props: {
+    textCheckbox: {
+      type: String,
+      default: 'text',
     },
+  },
 };
 </script>
