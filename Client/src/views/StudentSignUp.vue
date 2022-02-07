@@ -14,12 +14,12 @@
         textCheckbox="I agree to all the term, Privacy Policy ."
         class="mt-3"
         />
-      </div>        
+      </div>
       <div>
-        <MainButton
-        class="mt-3 flex-auto w-80"
-        name="Create Account"
-        to="Login"
+        <ActionButton
+          class="mt-3 flex-auto w-80"
+          name="Create Account"
+          to="Login"
         />
       </div>
     </section>
@@ -27,19 +27,19 @@
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/kid.svg" class="w-80 h-80 ml-20">
         <OrangeButton
-        name="Sign up with Google account"
-        class="mb-5 mt-5"
+          name="Sign up with Google account"
+          class="mb-5 mt-5"
         />
       </v-container>
     </section>
   </div>
-  
+
 </template>
 
 <script>
 import SignUpForm from '@/components/signup/SignUpForm.vue';
 import CheckboxForm from '@/components/Form/CheckboxForm.vue';
-import MainButton from '@/components/Button/MainButton.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
 import OrangeButton from '@/components/Button/OrangeButton.vue';
 
 export default {
@@ -47,15 +47,14 @@ export default {
   components: {
     SignUpForm,
     CheckboxForm,
-    MainButton,
+    ActionButton,
     OrangeButton,
-
   },
   data() {
     return {};
   },
   mounted() {
-    // 
+    //
   },
 
 };

@@ -4,27 +4,27 @@
       <h1 class="text-4xl">Login to your account</h1>
       <div class="mt-10">
         <InputForm
-        input_label="Email"
-        type="email"
-        
+          inputLabel="Email"
+          type="email"
+          v-model="loginFormData.email"
         />
       </div>
       <div class="mt-6">
         <InputForm
-        input_label="Password"
-        type="password"
+          inputLabel="Password"
+          type="password"
+          v-model="loginFormData.password"
         />
       </div>
       <div class="mt-6">
         <CheckboxForm
-        textCheckbox="Remember me"
+          textCheckbox="Remember me"
         />
       </div>
       <div class="mt-6">
-        <MainButton
-        name="Login"
-        to="ExamChannelTeacher"
-        class="flex-auto w-5/6"
+        <ActionButton
+          name="Login"
+          :onClick="onSubmit"
         />
       </div>
     </form>
@@ -32,36 +32,48 @@
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/book.svg" class="w-80 h-80 ml-20">
         <OrangeButton
-        name="Login with Google account"
-        class="mb-5 mt-5"
+          name="Login with Google account"
+          class="mb-5 mt-5"
         />
       </v-container>
     </section>
-  
-    
+
   </div>
 </template>
 
 <script>
-import LoginElement from '@/components/login/LoginElement.vue';
 import InputForm from '@/components/Form/InputForm.vue';
 import CheckboxForm from '@/components/Form/CheckboxForm.vue';
-import MainButton from '@/components/Button/MainButton.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
 import OrangeButton from '@/components/Button/OrangeButton.vue';
-// import book from '@/assets/book.svg';
+import api from '@/services/apis';
+import auth from '@/services/authentications';
 
 export default {
   name: 'Login',
   components: {
-    LoginElement,
     InputForm,
     CheckboxForm,
-    MainButton,
+    ActionButton,
     OrangeButton,
   },
   data() {
-    return {};
+    return {
+      loginFormData: {
+        email: '',
+        password: '',
+      },
+    };
   },
-  mounted() {},
+  methods: {
+    onSubmit() {
+      const data = api.login(this.loginFormData);
+
+      // Can refactor it to query from API
+      auth.setToken(data.token);
+      auth.setRole(data.role);
+      auth.setName(data.name);
+    },
+  },
 };
 </script>

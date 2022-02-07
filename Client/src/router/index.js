@@ -40,10 +40,20 @@ const routes = [
     component: () => import('@/views/StudentSignUp.vue'),
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    path: '/examchannel',
+    name: 'ExamChannelTeacher',
+    component: () => import('@/views/Teacher/ExamChannelTeacher.vue'),
   },
+  {
+    path: '/trytextediter',
+    name: 'TextEditor',
+    component: () => import('@/views/TextEditor.vue'),
+  },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: () => import('@/views/Login.vue'),
+  // },
   // {
   //   path: '/textEditer',
   //   name: 'About',

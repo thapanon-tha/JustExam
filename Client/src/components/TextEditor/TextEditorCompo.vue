@@ -1,7 +1,7 @@
 <template>
   <div class="quill-wrap">
     <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"> </quill-editor>
-    <dev>{{ content }}</dev>
+    <!-- <dev>{{ content }}</dev> -->
   </div>
 </template>
 

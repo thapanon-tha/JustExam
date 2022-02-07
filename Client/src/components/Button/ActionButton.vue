@@ -1,9 +1,9 @@
 <template>
-    <button @click="clickButton(to)">
+    <button @click="onClick(to)">
         <div
-        class="bg-mainColor border-orange-200
-        border rounded-lg px-8 py-3
-        font-medium text-white"
+          class="bg-subColor border-orange-200
+          border rounded-lg px-8 py-3
+          font-medium text-mainColor"
         >
             {{ name }}
         </div>
@@ -13,7 +13,7 @@
 <script>
 
 export default {
-  name: 'OrangeButton',
+  name: 'ActionButton',
   props: {
     name: {
       type: String,
@@ -21,11 +21,15 @@ export default {
     },
     to: {
       type: String,
-      default: '',
+      // default: 'Home',
+    },
+    onClick: {
+      type: Function,
+      default: () => true,
     },
   },
   methods: {
-    clickButton(pageName) {
+    onClick(pageName) {
       this.$router.push({ name: pageName }).catch(() => {});
     },
   },

@@ -12,20 +12,16 @@
       </div>
       <div>
         <p>Rungwigrai Payakkanuwat</p>
-        <p>Email: nahee@gmail.com</p>
+        <p>Email: newrung@gmail.com</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import KnowledgeElement from '@/components/home/KnowledgeElement.vue';
 
 export default {
   name: 'ContactUs',
-  components: {
-    KnowledgeElement,
-  },
   data() {
     return {
       //

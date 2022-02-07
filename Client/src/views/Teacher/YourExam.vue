@@ -1,13 +1,13 @@
 <template>
   <div class="mt-40 mb-96">
-    ExamChannel
+    YourExam
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ExamChannelTeacher',
+  name: 'YourExam',
   data() {
     return {};
   },

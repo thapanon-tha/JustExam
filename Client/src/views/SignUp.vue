@@ -3,11 +3,11 @@
     <h1 class="text-6xl font-light">Sign up</h1>
     <role-grid></role-grid>
   </div>
-  
+
 </template>
 
 <script>
-import RoleGrid from '../components/signup/RoleGrid.vue';
+import RoleGrid from '@/components/signup/RoleGrid.vue';
 
 export default {
   components: {
@@ -42,7 +42,7 @@ export default {
     //
   },
   mounted() {
-    // 
+    //
   },
 };
 </script>
