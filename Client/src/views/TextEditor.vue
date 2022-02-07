@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-20 ml-40 mr-20 mb-40">
+  <div>
     <text-editor-compo
     ></text-editor-compo>
   </div>
@@ -30,12 +30,13 @@ export default {
             ['formula', 'image', 'video', 'link'],
             ['clean'],
           ],
+          theme: 'snow',
         },
       },
     };
   },
-  mounted() {
-    window.katex = katex;
-  },
+  // mounted() {
+  //   window.katex = katex;
+  // },
 };
 </script>

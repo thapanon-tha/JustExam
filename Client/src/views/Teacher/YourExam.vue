@@ -1,16 +1,26 @@
 <template>
-  <div class="mt-40 mb-96">
-    YourExam
+  <div>
+    <multiple-choice></multiple-choice>
+    <short-answer></short-answer>
+    <paragraph></paragraph>
   </div>
 </template>
 
 <script>
+import MultipleChoice from '@/components/Form/MultipleChoice.vue';
+import ShortAnswer from '@/components/Form/ShortAnswer.vue';
+import Paragraph from '@/components/Form/Paragraph.vue';
 
 export default {
   name: 'YourExam',
-  data() {
-    return {};
+  components: {
+    MultipleChoice,
+    ShortAnswer,
+    Paragraph,
   },
-  mounted() {},
+  mounted() {
+    //
+  },
 };
+
 </script>

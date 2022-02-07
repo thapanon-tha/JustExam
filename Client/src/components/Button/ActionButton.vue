@@ -3,7 +3,7 @@
         <div
           class="bg-subColor border-orange-200
           border rounded-lg px-8 py-3
-          font-medium text-mainColor"
+          font-semilight text-mainColor"
         >
             {{ name }}
         </div>

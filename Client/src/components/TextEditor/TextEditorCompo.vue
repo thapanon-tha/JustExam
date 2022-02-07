@@ -1,6 +1,11 @@
 <template>
   <div class="quill-wrap">
-    <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption"> </quill-editor>
+    <quill-editor 
+    v-model="content" 
+    ref="myQuillEditor" 
+    :options="editorOption" 
+    class="bg-white"
+    > </quill-editor>
     <!-- <dev>{{ content }}</dev> -->
   </div>
 </template>
@@ -19,14 +24,19 @@ export default {
         readOnly: true,
         modules: {
           toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
-            ['formula', 'image', 'video', 'link'],
-            ['clean'],
-          ],
+              ['bold', 'italic', 'underline', 'strike'],
+              ['blockquote', 'code-block'],
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'script': 'sub' }, { 'script': 'super' }],
+              [{ 'indent': '-1' }, { 'indent': '+1' }],
+              [{ 'direction': 'rtl' }],
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              [{ 'font': [] }],
+              [{ 'color': [] }, { 'background': [] }],
+              [{ 'align': [] }],
+              ['clean'],
+              ['link', 'image', 'video'],
+            ],
         },
       },
     };
@@ -36,3 +46,4 @@ export default {
   },
 };
 </script>
+

@@ -31,7 +31,7 @@
       />
       <NavButton
         name='Your exam'
-        to='TextEditor'
+        to='YourExam'
         :borderLeft=true
         :borderRight=true
         v-if='$store.getters.getIsAuth

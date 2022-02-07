@@ -45,9 +45,9 @@ const routes = [
     component: () => import('@/views/Teacher/ExamChannelTeacher.vue'),
   },
   {
-    path: '/trytextediter',
-    name: 'TextEditor',
-    component: () => import('@/views/TextEditor.vue'),
+    path: '/yourexam',
+    name: 'YourExam',
+    component: () => import('@/views/Teacher/YourExam.vue'),
   },
   // {
   //   path: '/login',
