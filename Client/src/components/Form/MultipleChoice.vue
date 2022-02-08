@@ -4,17 +4,20 @@
         <h1 class="mr-5 mb-5 text-xl font-semilight text-mainColor">Ex Multiple Choice</h1>
         <div class="flex flex-row  justify-center mb-5">
           <div>
-            <text-editor-compo></text-editor-compo>
+            <text-editor-compo>
+              <h1>Question</h1>
+              
+            </text-editor-compo>
           </div>
           <div class="ml-5">
             <select-question></select-question>
           </div>
         </div>
         <div>
-          <ActionButton
+          <!-- <ActionButton
           name="+ Add an option"
           :onClick="addOption"
-        />
+          /> -->
         </div>
       </div>
       

@@ -1,12 +1,12 @@
 <template>
   <div class="quill-wrap">
     <quill-editor 
-    v-model="content" 
+    v-model="content"
     ref="myQuillEditor" 
-    :options="editorOption" 
+    :options="editorOption"
     class="bg-white"
-    > </quill-editor>
-    <!-- <dev>{{ content }}</dev> -->
+    ></quill-editor>
+    <dev>{{ content }}</dev>
   </div>
 </template>
 
@@ -14,7 +14,6 @@
 import { quillEditor } from 'vue-quill-editor';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-
 export default {
   components: { quillEditor },
   data() {
@@ -24,20 +23,16 @@ export default {
         readOnly: true,
         modules: {
           toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              ['blockquote', 'code-block'],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-              [{ 'script': 'sub' }, { 'script': 'super' }],
-              [{ 'indent': '-1' }, { 'indent': '+1' }],
-              [{ 'direction': 'rtl' }],
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'font': [] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'align': [] }],
-              ['clean'],
-              ['link', 'image', 'video'],
-            ],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ color: [] }, { background: [] }],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['formula', 'image', 'video', 'link'],
+            ['clean'],
+          ],
         },
+        placeholder: 'Type The Question Here',
       },
     };
   },
@@ -46,4 +41,3 @@ export default {
   },
 };
 </script>
-
