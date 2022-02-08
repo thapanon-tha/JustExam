@@ -39,10 +39,6 @@ export default {
       type: String,
       default: 'text',
     },
-    // inputValue: {
-    //   type: String,
-    //   default: '',
-    // },
   },
   data() {
     return {

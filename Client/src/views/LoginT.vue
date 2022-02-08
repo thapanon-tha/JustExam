@@ -24,7 +24,7 @@
       <div class="mt-6">
         <ActionButton
           name="Login"
-          :onClick="onSubmit"
+          @onClick="onSubmit"
         />
       </div>
     </form>
@@ -73,6 +73,8 @@ export default {
       auth.setToken(data.token);
       auth.setRole(data.role);
       auth.setName(data.name);
+
+      this.$router.push({ name: 'Home' }).catch(() => {});
     },
   },
 };

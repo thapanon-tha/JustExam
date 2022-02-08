@@ -1,5 +1,5 @@
 <template>
-    <button @click="onClick(to)">
+    <button @click="onClick()">
         <div
           class="bg-subColor border-orange-200
           border rounded-lg px-8 py-3
@@ -26,11 +26,6 @@ export default {
     onClick: {
       type: Function,
       default: () => true,
-    },
-  },
-  methods: {
-    onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
     },
   },
 };

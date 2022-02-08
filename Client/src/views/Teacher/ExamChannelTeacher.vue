@@ -1,11 +1,8 @@
 <template>
-  <div class="mt-40 mb-96">
-    ExamChannel
-  </div>
+  <div class="mt-40 mb-96">ExamChannel</div>
 </template>
 
 <script>
-
 export default {
   name: 'ExamChannelTeacher',
   data() {
