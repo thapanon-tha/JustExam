@@ -7,9 +7,8 @@ import vuetify from "./plugins/vuetify";
 import store from "./store"
 import VueQuillEditor from "vue-quill-editor";
 
+
 // require styles
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import './index.css'
 
@@ -25,4 +24,5 @@ new Vue({
 Vue.use(VuePortal, {
   name: "portal", // optional, use to rename component
 });
+
 Vue.use(VueQuillEditor /* { default global options } */);

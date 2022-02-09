@@ -5,7 +5,8 @@
                      hover:text-white hover:bg-mainColor rounded border-orange-200"
              :class="{ [`border-l-2`]: borderLeft,
                        [`border-r-2`]: borderRight,
-                       [`text-mainColor`]: to==$route.name }">
+                       [`text-mainColor`]: to==$route.name }"
+                       >
             {{ name }}
         </div>
     </button>
