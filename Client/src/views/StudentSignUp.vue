@@ -6,18 +6,20 @@
       <div>
         <CheckboxForm
         textCheckbox="Yes, I am a student."
-        class="mt-3"
+        class="mt-5"
         />
       </div>
       <div>
         <CheckboxForm
         textCheckbox="I agree to all the term, Privacy Policy ."
-        class="mt-3"
+        class="mt-5"
         />
       </div>
       <div>
         <ActionButton
-          class="mt-3 flex-auto w-80"
+          class="mt-3 flex-auto w-80 bg-subColor border-orange-200
+                border border-solid rounded-lg px-10 py-3
+                font-semilight text-mainColor"
           name="Create Account"
           to="Login"
         />

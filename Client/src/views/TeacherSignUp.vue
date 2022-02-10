@@ -17,7 +17,9 @@
       </div>
       <div>
         <ActionButton
-        class="mt-3 flex-auto w-80"
+        class="mt-3 flex-auto w-80 bg-subColor border-orange-200
+                border border-solid rounded-lg px-10 py-3
+                font-semilight text-mainColor"
         name="Create Account"
         to="Login"
         />

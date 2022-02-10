@@ -21,8 +21,11 @@
           textCheckbox="Remember me"
         />
       </div>
-      <div class="mt-6">
+      <div class="mt-6 ml-2">
         <ActionButton
+          class="bg-subColor border-orange-200
+                border border-solid rounded-lg px-10 py-3 w-4/5
+                font-semilight text-mainColor"
           name="Login"
           @onClick="onSubmit"
         />

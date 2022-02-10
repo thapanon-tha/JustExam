@@ -1,11 +1,11 @@
 <template>
     <button @click="clickButton(to)">
         <div
-        class="bg-mainColor border-orange-200
-        border rounded-lg px-8 py-3
-        font-medium text-white"
+          class="bg-mainColor border-orange-200
+          border rounded-lg px-8 py-3
+          font-medium text-white"
         >
-            {{ name }}
+          {{ name }}
         </div>
     </button>
 </template>

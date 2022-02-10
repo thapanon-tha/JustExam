@@ -2,8 +2,8 @@
     <div>
       <select 
       id="type" name="type" v-model="type" 
-      class="border rounded-lg border-solid border-mainColor border-opacity-40
-           bg-white 
+      class="border rounded-md border-solid border-mainColor border-opacity-40
+           bg-white
            px-8 py-3
            text-mainColor font-semilight">
         <option value="multi">Multiple Choice</option>

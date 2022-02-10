@@ -5,11 +5,11 @@
       <div class="flex justify-center gap-5 mb-20">
         <div class="border-l-4 border-mainColor h-10">
           <QuillTextEditor
-            placeholder="Question"
+            placeholder="Main Question"
             theme="snow"
             width="8/9"
             height="40"
-            v-model="data.question"
+            v-model="data.mainquestion"
           />
         </div>
         <div class="flex flex-col">
@@ -33,11 +33,21 @@
         <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
           <QuillTextEditor
             class="bg-mainColor"
-            :placeholder="`Key answer ${index + 1}`"
+            :placeholder="`Sub-question ${index + 1}`"
             theme="bubble"
             width="80"
             height="2/4"
-            v-model="data.keys[index]"
+            v-model="data.subquestion[index]"
+        />
+        </div>
+        <div class="shadow-sm border-mainColor border-l-4 ml-10 mb-3">
+          <QuillTextEditor
+            class="bg-mainColor"
+            :placeholder="`Matched Answer ${index + 1}`"
+            theme="bubble"
+            width="80"
+            height="2/4"
+            v-model="data.matchanswer[index]"
         />
         </div>
         <div class="ml-20">
@@ -48,7 +58,7 @@
         class="mt-3 bg-subColor border-orange-200
                 border border-solid rounded-lg px-3 py-2
                 font-semilight text-mainColor"
-        name="+ Add a key answer"
+        name="+ Add a match"
         :onClick="onClickAdd"
       />
     </div>
@@ -58,22 +68,25 @@
 
 <script>
 import QuillTextEditor from '@/components/TextEditor/QuillTextEditor';
-import SelectQuestion from '@/components/Form/QuestionForm/SelectQuestion.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
+import CheckboxForm from '@/components/Form/CheckboxForm.vue';
+import SelectQuestion from '@/components/Form/QuestionForm/SelectQuestion.vue';
 
 export default {
-  name: 'ShortAnswer',
+  name: 'Matching',
   components: {
     QuillTextEditor,
-    SelectQuestion,
     ActionButton,
+    CheckboxForm,
+    SelectQuestion,
   },
   data() {
     return {
-      loop: 1,
+      loop: 3,
       data: {
-        question: '',
-        keys: [],
+        mainquestion: '',
+        subquestion: [],
+        matchanswer: [],
       },
     };
   },
@@ -86,4 +99,6 @@ export default {
     },
   },
 };
+
 </script>
+

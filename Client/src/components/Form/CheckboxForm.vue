@@ -5,7 +5,7 @@
          class="h-4 w-4"
         />
         <label
-          class="ml-2 font-light text-grey-700"
+          class="ml-2 font-semilight text-grey-700"
         >
           {{ textCheckbox }}
         </label>

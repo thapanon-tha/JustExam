@@ -9,8 +9,11 @@
               :description="topic.description"
               ></role-element>
               <ActionButton
+                class="bg-subColor border-orange-200
+                border border-solid rounded-lg px-10 py-3
+                font-semilight text-mainColor"
                 name='Sign up for teacher'
-                to="TeacherSignUp"
+                @onClick="onClick('TeacherSignUp')"
               />
         </div>
         <div>
@@ -22,8 +25,11 @@
               :description="topic.description"
               ></role-element>
               <ActionButton
+                class="bg-subColor border-orange-200
+                border border-solid rounded-lg px-10 py-3
+                font-semilight text-mainColor"
                 name='Sign up for student'
-                to="StudentSignUp"
+                @onClick="onClick('StudentSignUp')"
               />
         </div>
     </ul>
@@ -40,5 +46,10 @@ export default {
   },
   inject: ['topics', 'topics2'],
   // emits: ['reveal-text'],
+  methods: {
+    onClick(to) {
+       this.$router.push({ name: to }).catch(() => {});
+    },
+  },
 };
 </script>

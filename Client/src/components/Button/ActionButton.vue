@@ -1,12 +1,8 @@
 <template>
-    <button @click="onClick()">
-        <div
-          class="bg-subColor border-orange-200
-          border rounded-lg px-8 py-3
-          font-semilight text-mainColor"
-        >
-            {{ name }}
-        </div>
+    <button @click="onClick">
+      <div>
+        {{ name }}
+      </div>
     </button>
 </template>
 
@@ -19,14 +15,17 @@ export default {
       type: String,
       default: 'Button',
     },
-    to: {
-      type: String,
-      // default: 'Home',
-    },
-    onClick: {
-      type: Function,
-      default: () => true,
+    icons: {
     },
   },
+  methods: {
+    onClick() {
+      this.$emit('onClick');
+  },
+  }
 };
+
+//  class="bg-subColor border-orange-200
+//       border rounded-lg px-8 py-3
+//       font-semilight text-mainColor"
 </script>
