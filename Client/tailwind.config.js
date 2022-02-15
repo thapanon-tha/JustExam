@@ -15,6 +15,7 @@ module.exports = {
         footerColor: '#3F454C',
         outlineColor: '#EF7F4E',
         editorColor: '#F9CCB7',
+        grayColor: '#3F454C'
       },
       width: {
         '156': '72rem',

@@ -15,12 +15,10 @@ export default {
       type: String,
       default: 'Button',
     },
-    icons: {
-    },
   },
   methods: {
     onClick() {
-      this.$emit('onClick');
+      this.$emit('on-click');
   },
   }
 };

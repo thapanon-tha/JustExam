@@ -49,7 +49,7 @@
                 border border-solid rounded-lg px-3 py-2
                 font-semilight text-mainColor"
         name="+ Add a key answer"
-        :onClick="onClickAdd"
+        :on-click="onClickAdd"
       />
     </div>
     </form>

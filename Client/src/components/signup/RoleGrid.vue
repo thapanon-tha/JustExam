@@ -13,7 +13,7 @@
                 border border-solid rounded-lg px-10 py-3
                 font-semilight text-mainColor"
                 name='Sign up for teacher'
-                @onClick="onClick('TeacherSignUp')"
+                @on-click="onClick('TeacherSignUp')"
               />
         </div>
         <div>
@@ -29,7 +29,7 @@
                 border border-solid rounded-lg px-10 py-3
                 font-semilight text-mainColor"
                 name='Sign up for student'
-                @onClick="onClick('StudentSignUp')"
+                @on-click="onClick('StudentSignUp')"
               />
         </div>
     </ul>

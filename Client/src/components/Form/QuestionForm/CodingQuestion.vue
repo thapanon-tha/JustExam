@@ -93,7 +93,7 @@
                     border border-solid rounded-lg px-3 py-2
                     font-semilight text-mainColor"
             name="+ Add an option"
-            :onClick="onClickAdd"
+            :on-click="onClickAdd"
             />
         </div>
     </form>
@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-        loop: 1,
+        loop: 0,
         data: {
             codehere: '',
             question: [],
@@ -133,6 +133,7 @@ export default {
     },
     onClickAdd() {
       console.log(this.data);
+      
     },
   },
 };

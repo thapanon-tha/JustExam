@@ -1,10 +1,17 @@
 <template>
-  <div class="mt-40 mb-96">ExamChannel</div>
+  <div>
+    <Header/>
+  </div>
 </template>
 
 <script>
+import Header from '@/components/Header/Header';
+
 export default {
   name: 'ExamChannelTeacher',
+  components: {
+    Header,
+  },
   data() {
     return {};
   },
