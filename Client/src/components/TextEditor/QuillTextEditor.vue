@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="quill-wrap flex flex-row">
-      <div></div>
       <quill-editor
         class="bg-white"
         :class="{[`w-${width}`]: width,
                  [`h-${height}`]: height}"
         ref="myQuillEditor"
         :options="editorOption"
-        @change="onChange($event)"
+        v-model="content"
+        @change="onChange()"
       />
     </div>
   </div>
@@ -64,8 +64,10 @@ export default {
     window.katex = katex;
   },
   methods: {
-    onChange(event) {
-      this.$emit('input', event.html);
+    onChange() {
+      this.$emit('input', this.content);
+      // this.$emit('input', content.html);
+
     },
   },
 };
