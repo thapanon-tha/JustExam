@@ -1,47 +1,46 @@
 <template>
-    <div class="flex justify-center">
-        <section class="bg-white shadow-sm border rounded-xl border-editorColor flex justify-center">
-            <div class="flex flex-col ml-10 mr-10 mt-10 mb-10 "> 
-                <h1 class="text-mainColor font-semilight text-l mb-3">{{ no }}</h1>
-                <div class="flex flex-row">
-                    <div>
-                        <div v-if="type === 'multi'">
-                            <MultipleChoice/>
-                        </div>
-                        <div v-else-if="type === 'short'">
-                            <ShortAnswer/>
-                        </div>
-                        <div v-else-if="type === 'para'">
-                            <Paragraph/>
-                        </div>
-                        <div v-else-if="type === 'tf'">
-                            <TrueFalse/>
-                        </div>
-                        <div v-else-if="type === 'match'">
-                            <Matching/>
-                        </div>
-                        <div v-else-if="type === 'code'">
-                            <CodingQuestion/>
-                        </div>
-                        
-                    </div>
-                    <div class="flex justify-center mb-20 ml-10">
-                        <div class="flex flex-col">
+    <div class="flex justify-center flex-col bg-subColor border rounded-xl border-solid border-editorColor ml-56 mr-56">
+        <div class="flex justify-center ">
+            <div>
+                <div  v-for="(item, index) in qlist" :key="index" class="bg-white shadow-sm border rounded-xl border-editorColor mt-10">
+                    <div class="flex flex-row mt-5 ml-10 mr-10 mb-10">
+                        <div>
+                            <h1 class="text-mainColor font-semilight text-l mb-3">Question</h1>
                             <div>
-                                <select 
-                                    class="border rounded-md border-solid border-mainColor 
-                                            border-opacity-40 bg-white px-8 py-3
-                                            text-mainColor font-semilight"
-                                    id="type" name="type" v-model="type" @click="clickSelect()"
-                                >
-                                    <option value="multi">Multiple Choice</option>
-                                    <option value="short">Short Answer</option>
-                                    <option value="para">Paragraph</option>
-                                    <option value="tf">True/False</option>
-                                    <option value="match">Matching</option>
-                                    <option value="code">Coding</option>
-                                </select>
-                            </div>
+                                <div v-if="type === 'multi'">
+                                    <MultipleChoice/>
+                                </div>
+                                <div v-else-if="type === 'short'">
+                                    <ShortAnswer/>
+                                </div>
+                                <div v-else-if="type === 'para'">
+                                    <Paragraph/>
+                                </div>
+                                <div v-else-if="type === 'tf'">
+                                    <TrueFalse/>
+                                </div>
+                                <div v-else-if="type === 'match'">
+                                    <Matching/>
+                                </div>
+                                <div v-else-if="type === 'code'">
+                                    <CodingQuestion/>
+                                </div>
+                                    
+                                </div>
+                        </div> 
+                        <div class="flex flex-col ml-10 mt-10">
+                            <select 
+                                class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white px-8 py-3
+                                    text-mainColor font-semilight"
+                                id="type" name="type" v-model="type" @click="clickSelect()"
+                            >
+                                <option value="multi" >Multiple Choice</option>
+                                <option value="short">Short Answer</option>
+                                <option value="para">Paragraph</option>
+                                <option value="tf">True/False</option>
+                                <option value="match">Matching</option>
+                                <option value="code">Coding</option>
+                            </select>
                             <ActionButton
                                 class="mt-3 bg-white border-orange-200
                                     border border-solid rounded-lg px-3 py-3
@@ -51,17 +50,22 @@
                             />
                             <ActionButton
                                 class="mt-3 bg-white border-orange-200
-                                    border border-solid rounded-lg px-4 py-3
-                                    font-semilight text-mainColor"
+                                        border border-solid rounded-lg px-4 py-3
+                                        font-semilight text-mainColor"
                                 name="Delete"
-                                @on-cick="$emit('delete')"
+                                @on-cick="deleteQuestion(index)"
                             />
                         </div>
                     </div>
                 </div>
-                
             </div>
-        </section>
+        </div>
+        <action-button
+            class="mt-10 ml-13 mr-13 mb-10 bg-white border-orange-200 border border-solid rounded-lg px-3 py-2 font-semilight text-mainColor"
+            name="+ Add a question"
+            @on-click="addQuestion"
+        ></action-button>
+        
     </div>
 </template>
 
@@ -92,11 +96,21 @@ export default {
     emits: ['delete'],
     data() {
         return {
-            type: 'multi'
+            type: 'multi',
+            qlist: []
         };
     },
     methods: {
-        //
+        addQuestion() {
+            this.qlist.push(
+                {
+                
+                }
+            );
+        },
+        deleteQuestion(index) {
+            this.qlist.splice(index, 1);
+    }
     },
 };
 

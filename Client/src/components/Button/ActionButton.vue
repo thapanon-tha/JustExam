@@ -19,8 +19,8 @@ export default {
   methods: {
     onClick() {
       this.$emit('on-click');
+    },
   },
-  }
 };
 
 //  class="bg-subColor border-orange-200

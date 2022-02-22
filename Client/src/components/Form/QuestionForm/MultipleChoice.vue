@@ -12,7 +12,7 @@
       </div>    
     </div>
     <div  class="flex flex-row ml-3" v-for="(item, index) in answers" :key="item.id" :option="item.option">
-      <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
+      <div class="shadow-sm border-mainColor border-l-4 mb-3">
         <QuillTextEditor
           class="bg-mainColor"
           :placeholder="`Option ${index + 1}`"

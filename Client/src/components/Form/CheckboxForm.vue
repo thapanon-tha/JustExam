@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <input
-        type="checkbox"
-         class="h-4 w-4"
-        />
-        <label
-          class="ml-2 font-semilight text-grey-700"
-        >
-          {{ textCheckbox }}
-        </label>
-    </div>
+  <div>
+    <input
+      type="checkbox"
+      class="h-4 w-4"
+    />
+    <label
+      class="ml-2 font-semilight text-grey-700"
+    >
+      {{ textCheckbox }}
+    </label>
+  </div>
 </template>
 
 <script>
@@ -18,7 +18,11 @@ export default {
   props: {
     textCheckbox: {
       type: String,
-      default: 'text',
+      default: '',
+    },
+    textRight: {
+      type: String,
+      default: '',
     },
   },
 };

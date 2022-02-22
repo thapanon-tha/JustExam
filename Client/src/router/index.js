@@ -45,20 +45,26 @@ const routes = [
     component: () => import('@/views/Teacher/ExamChannelTeacher.vue'),
   },
   {
+    path: '/examchannel/new_channel',
+    name: 'NewChannelTeacher',
+    component: () => import('@/views/Teacher/NewChannelTeacher.vue'),
+  },
+  {
     path: '/yourexam',
     name: 'YourExam',
     component: () => import('@/views/Teacher/YourExam.vue'),
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: () => import('@/views/Login.vue'),
-  // },
-  // {
-  //   path: '/textEditer',
-  //   name: 'About',
-  //   component: () => import('@/views/TextEditer.vue'),
-  // },
+  {
+    path: '/yourexam/new_exam',
+    name: 'NewExam',
+    component: () => import('@/views/Teacher/NewExam.vue'),
+  },
+  {
+    path: '/examhub',
+    name: 'ExamHubTeacher',
+    component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
+  },
+  
 ];
 
 const router = new VueRouter({

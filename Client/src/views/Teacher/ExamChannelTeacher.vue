@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Header/>
+  <div class="mb-96">
+    <Header main="Exam channel" name="+  New channel" to="NewChannelTeacher" />
   </div>
 </template>
 
@@ -14,6 +14,9 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    addChannel() {},
   },
   mounted() {},
 };

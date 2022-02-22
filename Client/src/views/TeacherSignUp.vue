@@ -30,7 +30,9 @@
         <img src="@/assets/kid.svg" class="w-80 h-80 ml-20">
         <OrangeButton
           name="Sign up with Google account"
-          class="mb-5 mt-5"
+          class="mb-5 mt-5 bg-mainColor border-orange-200
+          border rounded-lg px-8 py-3
+          font-medium text-white"
         />
       </v-container>
     </section>
