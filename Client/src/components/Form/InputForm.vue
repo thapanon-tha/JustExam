@@ -14,7 +14,7 @@
                 @input="onInput($event)"
                 class="
                     form-control flex w-5/6
-                    px-3 py-3 text-base font-light
+                    px-3 py-3 text-base font-semilight
                     text-gray-700 bg-subColor bg-clip-padding
                     border border-solid border-mainColor border-opacity-40
                     rounded-md transition ease-in-out

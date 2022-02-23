@@ -2,7 +2,7 @@
   <div class="mb-96">
     <Header main="Exam channel" current=" > New channel" name="Back" to="ExamChannelTeacher" />
     <div class="mt-20  flex flex-row justify-center">
-      <form> 
+      <form id="channel-info"> 
         <div class="flex flex-col gap-5">
           <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
           <InputForm
@@ -13,17 +13,15 @@
             inputLabel="Channel Description"
             type="text"
           />
-          <InputForm
-            inputLabel="Schedule"
-            type="text"
+          <DatePicker
           />
-          <InputForm
-            inputLabel="Time"
-            type="text"
+          <TimePicker labelText="Time" 
           />
+
+          
         </div>
       </form>
-      <form>
+      <form id="exam-options">
         <div class="flex flex-col justify-center gap-5 ml-32">
           <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
           <Checkbox2
@@ -54,7 +52,7 @@
     />
     
 
-    <div class="flex justify-end mb-60 mr-56">
+    <div class="flex justify-end mr-56">
       <OrangeButton
         class=" bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
         name="Cancel"
@@ -75,7 +73,8 @@ import OrangeButton from '@/components/Button/OrangeButton.vue';
 import Header from '@/components/Header/Header';
 import InputForm from '@/components/Form/InputForm';
 import Checkbox2 from '@/components/Form/Checkbox2';
-import CheckboxForm from '@/components/Form/CheckboxForm';
+import DatePicker from '@/components/Form/DatePicker';
+import TimePicker from '@/components/Form/TimePicker';
 
 export default {
   name: 'NewChannelTeacher',
@@ -85,7 +84,8 @@ export default {
     Header,
     InputForm,
     Checkbox2,
-    CheckboxForm,
+    DatePicker,
+    TimePicker,
   },
   data() {
     return {};
