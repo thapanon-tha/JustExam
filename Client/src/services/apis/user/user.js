@@ -1,6 +1,7 @@
 const login = (rawData) => {
   // Call login api here
   const data = JSON.parse(JSON.stringify(rawData));
+  console.log(data);
   return {
     token: 'token',
     role: 'TEACHER',
@@ -8,11 +9,7 @@ const login = (rawData) => {
   };
 };
 
-const logout = () => {
-  // Call login api here
-  console.log('logout');
-  return '';
-};
+const logout = () => '';
 
 export default {
   login,
