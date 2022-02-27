@@ -11,18 +11,14 @@
 
                 </div>
                 <div class="mr-13 mt-10 text-right">
-                    <button @click="onClick(to)" class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor">
-                        <div>
-                            {{ button }}
-                        </div>
+                    <button
+                      @click="onClick(to)"
+                      class="mt-3 bg-white border-orange-200
+                             border border-solid rounded-lg px-8
+                             py-3 font-semilight text-mainColor"
+                    >
+                      {{ button }}
                     </button>
-                    <!-- <ActionButton
-                    class="mt-3 bg-white border-orange-200
-                    border border-solid rounded-lg px-4 py-3
-                    font-semilight text-mainColor"
-                    name="Preview exam"
-                    :on-cick="previewExam"
-                    /> -->
                 </div>
             </div>
         </header>
@@ -31,13 +27,9 @@
 </template>
 
 <script>
-import ActionButton from '@/components/Button/ActionButton';
 
 export default {
   name: 'Header',
-  components: {
-    ActionButton,
-  },
   props: {
     button: {
       type: String,

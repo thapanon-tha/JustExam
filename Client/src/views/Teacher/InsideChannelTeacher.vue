@@ -2,7 +2,7 @@
   <div class="mb-96">
     <Header main="Exam channel" current="> Gen301" button="Member" to="ChannelMember" />
     <div class="mt-20">
-      <form> 
+      <form>
         <div class="flex flex-row justify-center gap-40">
           <div >
             <div class="flex flex-col gap-5">
@@ -23,11 +23,11 @@
               </div>
               <div class="form-control">
                 <DatePicker
-                
+
                 />
               </div>
               <div class="form-control">
-                <TimePicker labelText="Time" 
+                <TimePicker labelText="Time"
 
                 />
               </div>
@@ -67,7 +67,7 @@
                 />
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </form>
     </div>
@@ -75,11 +75,11 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header';
-import InputForm from '@/components/Form/InputForm';
-import Checkbox2 from '@/components/Form/Checkbox2';
-import DatePicker from '@/components/Form/DatePicker';
-import TimePicker from '@/components/Form/TimePicker';
+import Header from '@/components/Header/Header.vue';
+import InputForm from '@/components/Form/InputForm.vue';
+import DatePicker from '@/components/Form/DatePicker.vue';
+import TimePicker from '@/components/Form/TimePicker.vue';
+import Checkbox2 from '@/components/Form/Checkbox2.vue';
 
 export default {
   name: 'InsideChannelTeacher',
@@ -90,14 +90,5 @@ export default {
     InputForm,
     Checkbox2,
   },
-  data() {
-    return {
-      //
-    };
-  },
-  methods: {
-    //
-  },
-  mounted() {},
 };
 </script>

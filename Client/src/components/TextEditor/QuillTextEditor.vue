@@ -38,6 +38,10 @@ export default {
       type: String,
       default: undefined,
     },
+    onChangeFunc: {
+      type: Function,
+      default: () => true,
+    },
   },
   data() {
     return {
@@ -66,7 +70,7 @@ export default {
   methods: {
     onChange() {
       this.$emit('input', this.content);
-      // this.$emit('input', content.html);
+      this.onChangeFunc();
     },
   },
 };

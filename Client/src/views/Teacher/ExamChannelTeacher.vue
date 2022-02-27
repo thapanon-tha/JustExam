@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header';
-import CardChannel from '@/components/Card/CardChannel';
+import Header from '@/components/Header/Header.vue';
+import CardChannel from '@/components/Card/CardChannel.vue';
 
 export default {
   name: 'ExamChannelTeacher',
@@ -26,11 +26,6 @@ export default {
     };
   },
   methods: {
-    addChannel() {},
-    onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
-    },
-    
   },
   mounted() {
     //

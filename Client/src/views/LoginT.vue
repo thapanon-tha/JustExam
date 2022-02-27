@@ -33,12 +33,17 @@
     </form>
     <section class="box-border mt-28 ml-48 mr-52 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
-        <img src="@/assets/book.svg" class="w-80 h-80 ml-20">
-        <OrangeButton
-          name="Login with Google account"
+        <img
+          src="@/assets/book.svg"
+          class="w-80 h-80 ml-20"
+          alt="book"
+        >
+        <ActionButton
           class="mb-5 mt-5 bg-mainColor border-orange-200
-          border rounded-lg px-8 py-3
-          font-medium text-white"
+                 border rounded-lg px-8 py-3
+                 font-medium text-white"
+          name="Login with Google account"
+          @on-click="onClickLoginWithGoogle"
         />
       </v-container>
     </section>
@@ -50,7 +55,6 @@
 import InputForm from '@/components/Form/InputForm.vue';
 import CheckboxForm from '@/components/Form/CheckboxForm.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
-import OrangeButton from '@/components/Button/OrangeButton.vue';
 import api from '@/services/apis';
 import auth from '@/services/authentications';
 
@@ -60,7 +64,6 @@ export default {
     InputForm,
     CheckboxForm,
     ActionButton,
-    OrangeButton,
   },
   data() {
     return {
@@ -78,8 +81,10 @@ export default {
       auth.setToken(data.token);
       auth.setRole(data.role);
       auth.setName(data.name);
-
-      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => {});
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
+    },
+    onClickLoginWithGoogle() {
+      console.log('Login with google');
     },
   },
 };

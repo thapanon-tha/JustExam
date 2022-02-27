@@ -3,12 +3,13 @@
     <input
       type="checkbox"
       class="h-4 w-4"
-      :value="modelValue"
+      :value="value"
+      @change="onChange()"
     />
     <label
       class="ml-2 font-semilight text-grey-700 text-md"
     >
-      {{ textCheckbox }}
+      {{ label }}
     </label>
   </div>
 </template>
@@ -17,16 +18,19 @@
 export default {
   name: 'CheckboxForm',
   props: {
-    textCheckbox: {
+    label: {
       type: String,
       default: '',
     },
-    textRight: {
-      type: String,
-      default: '',
-    },
-    modelValue: {
-      type: String,
+  },
+  data() {
+    return {
+      value: true,
+    };
+  },
+  methods: {
+    onChange() {
+      this.$emit('input', this.value);
     },
   },
 };

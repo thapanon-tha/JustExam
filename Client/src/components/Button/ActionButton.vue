@@ -1,5 +1,5 @@
 <template>
-    <button @click="onClick">
+    <button :type=type @click="onClick">
       <div>
         {{ name }}
       </div>
@@ -15,6 +15,10 @@ export default {
       type: String,
       default: 'Button',
     },
+    type: {
+      type: String,
+      default: 'Button',
+    },
   },
   methods: {
     onClick() {
@@ -22,8 +26,4 @@ export default {
     },
   },
 };
-
-//  class="bg-subColor border-orange-200
-//       border rounded-lg px-8 py-3
-//       font-semilight text-mainColor"
 </script>

@@ -7,11 +7,14 @@
           theme="snow"
           width="8/9"
           height="40"
-          v-model="question"
+          v-model="questionData.question"
+          :onChangeFunc=onChange
         />
       </div>
     </div>
-    <div  class="flex flex-row ml-3" v-for="(item, index) in answers" :key="item.id" :option="item.option">
+    <div v-for="(item, index) in questionData.answers" :key="item.id"
+      class="flex flex-row ml-3"
+    >
       <div class="shadow-sm border-mainColor border-l-4 mb-3">
         <QuillTextEditor
           class="bg-mainColor"
@@ -19,13 +22,16 @@
           theme="bubble"
           width="96"
           height="2/4"
-          :name="`answers[${index}][option]`"
-          v-model="item.option"
+          :name="`answers[${index}][optionData]`"
+          v-model="item.optionData"
+          @change="onChange()"
+          :onChangeFunc=onChange
         />
       </div>
       <div class="ml-20">
         <CheckboxForm
-          textCheckbox="correct"
+          v-model=item.correct
+          label="correct"
         />
       </div>
       <div class="ml-20">
@@ -58,41 +64,36 @@ export default {
     ActionButton,
     CheckboxForm,
   },
-  props: {
-    no: {
-      type: String,
-      default: 'no',
-    },
-  },
-  emits: ['delete'],
   data() {
     return {
-      question: '',
-      answers: [
-        {
-          id: 1,
-          option: 'A',
-        },
-      ],
-      nextChoiceId: 2,
+      questionData: {
+        question: '',
+        answers: [
+          {
+            id: 1,
+            optionData: '',
+            correct: false,
+          },
+        ],
+      },
     };
   },
   methods: {
     addChoice() {
-      this.answers.push(
+      this.questionData.answers.push(
         {
-          id: this.answers.length,
-          option: this.option,
+          id: this.questionData.answers.length + 1,
+          optionData: '',
+          correct: false,
         },
       );
     },
     deleteChoice(index) {
-      console.log('Delete this index', index);
-      console.log(this.answers);
-      console.log('Deleting value', this.answers[index]);
-      this.answers.splice(index, 1);
+      this.questionData.answers.splice(index, 1);
     },
-
+    onChange() {
+      this.$emit('input', this.questionData);
+    },
   },
 
 };

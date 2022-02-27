@@ -7,12 +7,14 @@
           theme="snow"
           width="8/9"
           height="40"
-          v-model="mainquestion"
+          v-model="questionData.question"
+          :onChangeFunc=onChange
         />
       </div>
     </div>
-    <div class= "mb-5 ml-3" v-for="(item, index) in match" :key="item.id" :subquestion="item.subquestion" 
-          :matchanswer="item.matchanswer"
+    <div
+      v-for="(item, index) in questionData.matchs" :key="item.id"
+      class= "mb-5 ml-3"
     >
       <div class="flex justify-start">
         <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
@@ -23,7 +25,8 @@
             height="2/4"
             :name="`match[${index}][subquestion]`"
             v-model="item.subquestion"
-          /> 
+            :onChangeFunc=onChange
+          />
         </div>
         <div class="ml-20">
           <ActionButton
@@ -31,7 +34,7 @@
             name="x"
             @on-click="deleteMatch(index)"
           />
-      </div>
+        </div>
       </div>
       <div class="flex justify-start">
         <div class="shadow-sm border-mainColor border-l-4 mb-3">
@@ -42,7 +45,8 @@
             height="2/4"
             :name="`match[${index}][matchanswer]`"
             v-model="item.matchanswer"
-          /> 
+            :onChangeFunc=onChange
+          />
         </div>
       </div>
     </div>
@@ -57,59 +61,53 @@
 </template>
 
 <script>
-import QuillTextEditor from '@/components/TextEditor/QuillTextEditor';
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
-import CheckboxForm from '@/components/Form/CheckboxForm.vue';
 
 export default {
   name: 'Matching',
   components: {
     QuillTextEditor,
     ActionButton,
-    CheckboxForm,
   },
   props: {
-
     no: {
-          type: String,
-          default: 'no'
-        },
+      type: String,
+      default: 'no',
+    },
   },
-  emits: ['delete'],
   data() {
     return {
-      mainquestion: '',
-      match: [
-        {
-          id: 1,
-          subquestion: "A",
-          matchanswer: "A",
-        },
-      ],
-      nextChoiceId: 2,
+      questionData: {
+        question: '',
+        matchs: [
+          {
+            id: 1,
+            subquestion: '',
+            matchanswer: '',
+          },
+        ],
+      },
     };
   },
   methods: {
     addMatch() {
-      this.match.push(
+      this.questionData.matchs.push(
         {
-          id: this.nextChoiceId++,
-          subquestion: this.subquestion,
-          matchanswer: this.matchanswer,
-        }
+          id: this.questionData.matchs.length + 1,
+          subquestion: '',
+          matchanswer: '',
+        },
       );
     },
     deleteMatch(index) {
-      console.log('Delete this index', index);
-      console.log(this.match);   
-      console.log('Deleting value', this.match[index]);  
-      this.match.splice(index, 1);
+      this.questionData.matchs.splice(index, 1);
     },
-
-    
+    onChange() {
+      this.$emit('input', this.questionData);
+    },
   },
 
 };
 
 </script>
-

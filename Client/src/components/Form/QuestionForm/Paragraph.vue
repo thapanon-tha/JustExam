@@ -8,6 +8,7 @@
           width="8/9"
           height="40"
           v-model="question"
+          :onChangeFunc=onChange
         />
       </div>
     </div>
@@ -15,22 +16,22 @@
 </template>
 
 <script>
-import QuillTextEditor from '@/components/TextEditor/QuillTextEditor';
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
 
 export default {
   name: 'Paragraph',
   components: {
     QuillTextEditor,
   },
-
-  emits: ['delete'],
   data() {
     return {
       question: '',
     };
   },
   methods: {
-    //
+    onChange() {
+      this.$emit('input', this.questionData);
+    },
   },
 };
 </script>
