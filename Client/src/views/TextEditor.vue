@@ -1,16 +1,19 @@
 <template>
-  <TextEditer> </TextEditer>
+  <div>
+    <text-editor-compo
+    ></text-editor-compo>
+  </div>
 </template>
 
 <script>
 import { Quill } from 'vue-quill-editor';
 import { ImageExtend } from 'quill-image-extend-module';
-import katex from 'katex';
-import TextEditer from '../components/textEditor.vue';
+import TextEditorCompo from '@/components/TextEditor/TextEditorCompo.vue';
 
 Quill.register('modules/ImageExtend', ImageExtend);
 export default {
-  components: { TextEditer },
+  name: 'TextEditor',
+  components: { TextEditorCompo },
   data() {
     return {
       content: '',
@@ -26,12 +29,13 @@ export default {
             ['formula', 'image', 'video', 'link'],
             ['clean'],
           ],
+          theme: 'snow',
         },
       },
     };
   },
-  mounted() {
-    window.katex = katex;
-  },
+  // mounted() {
+  //   window.katex = katex;
+  // },
 };
 </script>

@@ -1,12 +1,10 @@
 <template>
-    <button @click="onClick(to)" >
+    <button @click="onClick()" >
         <div class=" bg-transparent font-medium
                      mt-2 mb-2 px-10 py-3 text-l
                      hover:text-white hover:bg-mainColor rounded border-orange-200"
              :class="{ [`border-l-2`]: borderLeft,
-                       [`border-r-2`]: borderRight,
-                       [`text-mainColor`]: to==$route.name }"
-                       >
+                       [`border-r-2`]: borderRight }">
             {{ name }}
         </div>
     </button>
@@ -15,15 +13,15 @@
 <script>
 
 export default {
-  name: 'NavButton',
+  name: 'NavButtonAction',
   props: {
     name: {
       type: String,
       default: 'Button',
     },
-    to: {
-      type: String,
-      default: 'Home',
+    onClick: {
+      type: Function,
+      default: () => true,
     },
     borderLeft: {
       type: Boolean,
@@ -32,11 +30,6 @@ export default {
     borderRight: {
       type: Boolean,
       default: false,
-    },
-  },
-  methods: {
-    onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
     },
   },
 };

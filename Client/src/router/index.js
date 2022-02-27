@@ -10,19 +10,19 @@ const routes = [
     component: () => import('@/views/Home.vue'),
   },
   {
-    path: '/aboutus',
-    name: 'AboutUs',
-    component: () => import('@/views/AboutUs.vue'),
+    path: '/contactus',
+    name: 'ContactUs',
+    component: () => import('@/views/ContactUs.vue'),
   },
   {
-    path: '/tour',
-    name: 'TakeATour',
-    component: () => import('@/views/TakeATour.vue'),
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: () => import('@/views/Tutorial.vue'),
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/LoginT.vue'),
   },
   {
     path: '/signup',
@@ -30,10 +30,51 @@ const routes = [
     component: () => import('@/views/SignUp.vue'),
   },
   {
-    path: '/textEditer',
-    name: 'About',
-    component: () => import('@/views/TextEditer.vue'),
+    path: '/signup/teacher',
+    name: 'TeacherSignUp',
+    component: () => import('@/views/TeacherSignUp.vue'),
   },
+  {
+    path: '/signup/student',
+    name: 'StudentSignUp',
+    component: () => import('@/views/StudentSignUp.vue'),
+  },
+  {
+    path: '/examchannel',
+    name: 'ExamChannelTeacher',
+    component: () => import('@/views/Teacher/ExamChannelTeacher.vue'),
+  },
+  {
+    path: '/examchannel/new-channel',
+    name: 'NewChannelTeacher',
+    component: () => import('@/views/Teacher/NewChannelTeacher.vue'),
+  },
+  {
+    path: '/examchannel/test-channel-1',
+    name: 'InsideChannelTeacher',
+    component: () => import('@/views/Teacher/InsideChannelTeacher.vue'),
+  },
+  {
+    path: '/yourexam',
+    name: 'YourExam',
+    component: () => import('@/views/Teacher/YourExam.vue'),
+  },
+  {
+    path: '/yourexam/new-exam',
+    name: 'NewExam',
+    component: () => import('@/views/Teacher/NewExam.vue'),
+  },
+  {
+    path: '/yourexam/test-exam-inside',
+    name: 'InsideYourExam',
+    component: () => import('@/views/Teacher/InsideYourExam.vue'),
+  },
+  {
+    path: '/examhub',
+    name: 'ExamHubTeacher',
+    component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
+  },
+
 ];
 
 const router = new VueRouter({

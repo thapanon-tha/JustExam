@@ -1,13 +1,13 @@
 <template>
-  <div>
-    Take A Tour
+  <div class="mt-40 mb-96">
+    Tutorial
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'TakeATour',
+  name: 'Tutorial',
   data() {
     return {};
   },
