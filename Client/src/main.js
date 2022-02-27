@@ -6,9 +6,10 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import store from "./store"
 import VueQuillEditor from "vue-quill-editor";
-
+import VueTimepicker from 'vue2-timepicker';
 
 // require styles
+import 'vue2-timepicker/dist/VueTimepicker.css';
 import "quill/dist/quill.bubble.css";
 import "quill/dist/quill.snow.css";
 import './index.css'
@@ -26,4 +27,4 @@ Vue.use(VuePortal, {
   name: "portal", // optional, use to rename component
 });
 
-Vue.use(VueQuillEditor /* { default global options } */);
+Vue.use(VueQuillEditor, VueTimepicker /* { default global options } */);

@@ -10,11 +10,11 @@
             </label>
             <input
                 :type=type
-                :value="value"
-                @input="onInput($event)"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
                 class="
                     form-control flex w-5/6
-                    px-3 py-3 text-base font-light
+                    px-3 py-3 text-base font-semilight
                     text-gray-700 bg-subColor bg-clip-padding
                     border border-solid border-mainColor border-opacity-40
                     rounded-md transition ease-in-out
@@ -39,16 +39,18 @@ export default {
       type: String,
       default: 'text',
     },
+    modelValue: {
+      type: String,
+    },
   },
   data() {
     return {
-      value: '',
+      //
     };
   },
   methods: {
-    onInput(event) {
-      this.$emit('input', event.target.value);
-    },
+    //
   },
+  emits: ['update:modelValue']
 };
 </script>

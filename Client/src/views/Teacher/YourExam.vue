@@ -1,64 +1,41 @@
 <template>
-  <div>
-    <Header/>
-    <NewExamStepper/>
-    <section class="flex flex-col bg-subColor border rounded-xl border-solid
-                  border-editorColor mt-20 ml-60 mr-60 mb-56">
-      <div v-for="(item, index) in questions" :key="index">
-        <MultipleChoice
-          :no="`Question ${index + 1}`"
-          @delete="deleteQuestion(index)"
+  <div class="mb-96">
+    <Header main="Your exam" button="+ New exam" to="NewExam" />
+    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
+      <div @click="onClick('InsideYourExam')" v-for="box in boxlist" :key="box">
+        <CardExam
         />
       </div>
-          <!-- <short-answer></short-answer>
-          <paragraph></paragraph>
-          <matching></matching>
-          <true-false></true-false>
-          <coding-question></coding-question> -->
-      <action-button
-      class="mt-3 ml-10 mr-10 bg-white border-orange-200
-                  border border-solid rounded-lg px-3 py-2
-                  font-semilight text-mainColor"
-      name="+ Add a question"
-      @on-click="addQuestion"
-      ></action-button>
-    </section>
+    </div>
   </div>
-
 </template>
 
 <script>
-import MultipleChoice from '@/components/Form/QuestionForm/MultipleChoice.vue';
-import ActionButton from '@/components/Button/ActionButton.vue';
+
+// import ActionButton from '@/components/Button/ActionButton.vue';
 import Header from '@/components/Header/Header.vue';
-import NewExamStepper from '@/components/Form/YourExamForm/NewExamStepper.vue';
+// import QuestionList from '@/components/Form/QuestionForm/QuestionList.vue';
+// import SectionForm from '@/components/Form/YourExamForm/SectionForm.vue';
+import CardExam from '@/components/Card/CardExam.vue';
 
 export default {
   name: 'YourExam',
   components: {
-    MultipleChoice,
-    ActionButton,
+    // QuestionList,
+    // SectionForm,
+    // ActionButton,
+    CardExam,
     Header,
-    NewExamStepper,
   },
   data() {
     return {
-      questions: [],
+      qlist: [],
+      boxlist: 4,
     };
   },
   methods: {
-    addQuestion() {
-      // const newQuestion = {
-      //   index: new Date().toISOString(),
-      //   // no: no,
-      // };
-      // this.questions.push(newQuestion);
-      this.questions += 1;
-    },
-    deleteQuestion(index) {
-      // this.questions = this.questions.filter(item => item.index !== questionId);
-      this.questions.splice(index, 1);
-      console.log('Delete');
+    onClick(pageName) {
+      this.$router.push({ name: pageName }).catch(() => {});
     },
   },
   mounted() {

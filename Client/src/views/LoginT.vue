@@ -26,7 +26,7 @@
           class="bg-subColor border-orange-200
                 border border-solid rounded-lg px-10 py-3 w-4/5
                 font-semilight text-mainColor"
-          name="Login"
+          name="Log in"
           @on-click="onSubmit"
         />
       </div>
@@ -36,7 +36,9 @@
         <img src="@/assets/book.svg" class="w-80 h-80 ml-20">
         <OrangeButton
           name="Login with Google account"
-          class="mb-5 mt-5"
+          class="mb-5 mt-5 bg-mainColor border-orange-200
+          border rounded-lg px-8 py-3
+          font-medium text-white"
         />
       </v-container>
     </section>
@@ -77,7 +79,7 @@ export default {
       auth.setRole(data.role);
       auth.setName(data.name);
 
-      this.$router.push({ name: 'Home' }).catch(() => {});
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => {});
     },
   },
 };

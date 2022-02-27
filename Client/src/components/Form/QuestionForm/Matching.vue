@@ -1,68 +1,58 @@
 <template>
-  <div class="flex justify-center">
-    <form class="bg-white shadow-sm border rounded-xl border-editorColor mt-10">
-    <div class="ml-10 mr-10 mt-10 mb-10"> 
-      <div class="flex justify-center gap-5 mb-20">
-        <div class="border-l-4 border-mainColor h-10">
-          <QuillTextEditor
-            placeholder="Main Question"
-            theme="snow"
-            width="8/9"
-            height="40"
-            v-model="data.mainquestion"
-          />
-        </div>
-        <div class="flex flex-col">
-          <SelectQuestion
-          />
-          <ActionButton
-            class="mt-3 bg-white border-orange-200
-                  border border-solid rounded-lg px-4 py-3
-                  font-semilight text-mainColor"
-            name="Copy exam"
-          />
-          <ActionButton
-            class="mt-3 bg-white border-orange-200
-                  border border-solid rounded-lg px-4 py-3
-                  font-semilight text-mainColor"
-            name="Delete"
-          />
-        </div>
+  <div>
+    <div class="flex justify-center mb-52">
+      <div class="border-l-4 border-mainColor h-10">
+        <QuillTextEditor
+          placeholder="Main Question"
+          theme="snow"
+          width="8/9"
+          height="40"
+          v-model="mainquestion"
+        />
       </div>
-      <div  class="flex flex-row" v-for="(item, index) in loop" :key="index">
+    </div>
+    <div class= "mb-5 ml-3" v-for="(item, index) in match" :key="item.id" :subquestion="item.subquestion" 
+          :matchanswer="item.matchanswer"
+    >
+      <div class="flex justify-start">
         <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
           <QuillTextEditor
-            class="bg-mainColor"
             :placeholder="`Sub-question ${index + 1}`"
             theme="bubble"
-            width="80"
+            width="96"
             height="2/4"
-            v-model="data.subquestion[index]"
-        />
-        </div>
-        <div class="shadow-sm border-mainColor border-l-4 ml-10 mb-3">
-          <QuillTextEditor
-            class="bg-mainColor"
-            :placeholder="`Matched Answer ${index + 1}`"
-            theme="bubble"
-            width="80"
-            height="2/4"
-            v-model="data.matchanswer[index]"
-        />
+            :name="`match[${index}][subquestion]`"
+            v-model="item.subquestion"
+          /> 
         </div>
         <div class="ml-20">
-          <button @click="onClickDelete" class="text-mainColor">x</button>
+          <ActionButton
+            class="text-mainColor"
+            name="x"
+            @on-click="deleteMatch(index)"
+          />
+      </div>
+      </div>
+      <div class="flex justify-start">
+        <div class="shadow-sm border-mainColor border-l-4 mb-3">
+          <QuillTextEditor
+            :placeholder="`Matched Answer ${index + 1}`"
+            theme="bubble"
+            width="96"
+            height="2/4"
+            :name="`match[${index}][matchanswer]`"
+            v-model="item.matchanswer"
+          /> 
         </div>
       </div>
-      <ActionButton
-        class="mt-3 bg-subColor border-orange-200
-                border border-solid rounded-lg px-3 py-2
-                font-semilight text-mainColor"
-        name="+ Add a match"
-        :on-click="onClickAdd"
-      />
     </div>
-    </form>
+    <ActionButton
+      class="mt-3 ml-3 bg-subColor border-orange-200
+            border border-solid rounded-lg px-3 py-2
+            font-semilight text-mainColor"
+      name="+ Add a match"
+      @on-click="addMatch"
+    />
   </div>
 </template>
 
@@ -70,7 +60,6 @@
 import QuillTextEditor from '@/components/TextEditor/QuillTextEditor';
 import ActionButton from '@/components/Button/ActionButton.vue';
 import CheckboxForm from '@/components/Form/CheckboxForm.vue';
-import SelectQuestion from '@/components/Form/QuestionForm/SelectQuestion.vue';
 
 export default {
   name: 'Matching',
@@ -78,26 +67,48 @@ export default {
     QuillTextEditor,
     ActionButton,
     CheckboxForm,
-    SelectQuestion,
   },
+  props: {
+
+    no: {
+          type: String,
+          default: 'no'
+        },
+  },
+  emits: ['delete'],
   data() {
     return {
-      loop: 3,
-      data: {
-        mainquestion: '',
-        subquestion: [],
-        matchanswer: [],
-      },
+      mainquestion: '',
+      match: [
+        {
+          id: 1,
+          subquestion: "A",
+          matchanswer: "A",
+        },
+      ],
+      nextChoiceId: 2,
     };
   },
   methods: {
-    onClickDelete() {
-      console.log('Delete');
+    addMatch() {
+      this.match.push(
+        {
+          id: this.nextChoiceId++,
+          subquestion: this.subquestion,
+          matchanswer: this.matchanswer,
+        }
+      );
     },
-    onClickAdd() {
-      console.log(this.data);
+    deleteMatch(index) {
+      console.log('Delete this index', index);
+      console.log(this.match);   
+      console.log('Deleting value', this.match[index]);  
+      this.match.splice(index, 1);
     },
+
+    
   },
+
 };
 
 </script>

@@ -39,7 +39,7 @@
       />
       <NavButton
         name='Exam hub'
-        to='ContactUs'
+        to='ExamHubTeacher'
         v-if='$store.getters.getIsAuth
               && ($store.getters.getIsTeacher ||
               $store.getters.getIsStudent)'
