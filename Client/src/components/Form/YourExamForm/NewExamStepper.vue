@@ -8,8 +8,8 @@
       </v-stepper-step>
 
       <v-stepper-content step="1">
-        <div class="mb-5"> 
-          <input type="text" 
+        <div class="mb-5">
+          <input type="text"
           class="border border-solid border-outlineColor border-opacity-40 bg-subColor
                 px-3 py-2 text-base font-light
               text-gray-700 bg-clip-padding
@@ -46,19 +46,19 @@
       </v-stepper-step>
 
       <v-stepper-content step="2">
-        <div class="mb-5"> 
+        <div class="mb-5">
           <input type="text" class="border border-solid border-outlineColor border-opacity-40 bg-subColor
           form-control flex w-11/12
                     px-3 py-3 text-base font-light
                     text-gray-700 bg-clip-padding
-            
+
                     rounded-md transition ease-in-out
                     m-0focus:text-black focus:bg-subColor focus:mainColor
                     focus:border-opacity-100 focus:outline-none
           "
           />
         </div>
-        
+
         <!-- <v-card
           color="grey lighten-1"
           class="mb-12 border rounded-lg shadow-none border-subColor"
@@ -81,12 +81,12 @@
       </v-stepper-step>
 
       <v-stepper-content step="3">
-        <div class="mb-5"> 
+        <div class="mb-5">
           <input type="text" class="border border-solid border-outlineColor border-opacity-40 bg-subColor
           form-control flex w-11/12
                     px-3 py-3 text-base font-light
                     text-gray-700 bg-clip-padding
-            
+
                     rounded-md transition ease-in-out
                     m-0focus:text-black focus:bg-subColor focus:mainColor
                     focus:border-opacity-100 focus:outline-none
@@ -108,12 +108,12 @@
         Publish option
       </v-stepper-step>
       <v-stepper-content step="4">
-        <div class="mb-5"> 
+        <div class="mb-5">
           <input type="text" class="border border-solid border-outlineColor border-opacity-40 bg-subColor
           form-control flex w-11/12
                     px-3 py-3 text-base font-light
                     text-gray-700 bg-clip-padding
-            
+
                     rounded-md transition ease-in-out
                     m-0focus:text-black focus:bg-subColor focus:mainColor
                     focus:border-opacity-100 focus:outline-none
@@ -131,20 +131,20 @@
         </v-btn>
       </v-stepper-content>
       </div>
-      
+
     </v-stepper>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'NewExamStepper',
-    data () {
-      return {
-        e6: 1,
-      }
-    },
-  };
+export default {
+  name: 'NewExamStepper',
+  data() {
+    return {
+      e6: 1,
+    };
+  },
+};
 </script>
 
 <style scoped>

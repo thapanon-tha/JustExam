@@ -8,30 +8,29 @@
                         <h2 class="text-sm ml-2 text-grayColor text-opacity-50">Your exam  ></h2>
                         <h3 class="text-mainColor text-sm">New exam</h3>
                     </div>
-                    
+
                 </div>
-                <div class="mr-13 mt-10 text-right"> 
+                <div class="mr-13 mt-10 text-right">
                     <ActionButton
                     class="mt-3 bg-white border-orange-200
                     border border-solid rounded-lg px-4 py-3
                     font-semilight text-mainColor"
                     name="Preview exam"
-                    :on-cick="previewExam"
                     />
                 </div>
             </div>
         </header>
-        
+
     </div>
 </template>
 
 <script>
-import ActionButton from '@/components/Button/ActionButton';
+import ActionButton from '@/components/Button/ActionButton.vue';
 
 export default {
-    name: 'Header',
-    components: {
-        ActionButton,
-    },
+  name: 'Header',
+  components: {
+    ActionButton,
+  },
 };
 </script>

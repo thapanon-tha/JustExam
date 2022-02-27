@@ -8,7 +8,6 @@
 <script>
 import { Quill } from 'vue-quill-editor';
 import { ImageExtend } from 'quill-image-extend-module';
-import katex from 'katex';
 import TextEditorCompo from '@/components/TextEditor/TextEditorCompo.vue';
 
 Quill.register('modules/ImageExtend', ImageExtend);

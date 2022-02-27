@@ -28,7 +28,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'snow'
+      default: 'snow',
     },
     width: {
       type: String,
