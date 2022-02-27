@@ -1,6 +1,6 @@
 <template>
   <div class="mb-96">
-    <Header main="Exam channel" current=" > New channel" button="Back" to="ExamChannelTeacher" />
+    <Header main="Exam channel" current="> Gen301" button="Member" to="ChannelMember" />
     <div class="mt-20">
       <form> 
         <div class="flex flex-row justify-center gap-40">
@@ -71,31 +71,10 @@
         </div>
       </form>
     </div>
-    <ActionButton
-        class="ml-56 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-        name="+ Add your exam"
-        @on-cick="Add"
-    />
-    
-
-    <div class="flex justify-end mr-56">
-      <OrangeButton
-        class=" bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
-        name="Cancel"
-        to="ExamChannelTeacher"
-      />
-      <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-        name="Create"
-        @on-cick="submitForm"
-      />
-    </div>
   </div>
 </template>
 
 <script>
-import ActionButton from '@/components/Button/ActionButton.vue';
-import OrangeButton from '@/components/Button/OrangeButton.vue';
 import Header from '@/components/Header/Header';
 import InputForm from '@/components/Form/InputForm';
 import Checkbox2 from '@/components/Form/Checkbox2';
@@ -103,41 +82,21 @@ import DatePicker from '@/components/Form/DatePicker';
 import TimePicker from '@/components/Form/TimePicker';
 
 export default {
-  name: 'NewChannelTeacher',
+  name: 'InsideChannelTeacher',
   components: {
-    ActionButton,
-    OrangeButton,
+    DatePicker,
+    TimePicker,
     Header,
     InputForm,
     Checkbox2,
-    DatePicker,
-    TimePicker,
   },
   data() {
     return {
-      title: '',
-      description: '',
-
+      //
     };
   },
-  props: {
-    title: {
-      type: String,
-      default: 'Title'
-    },
-    description: {
-      type: String,
-      default: 'Description'
-    },
-  },
   methods: {
-    submitForm() {
-      console.log('Title: ' + this.userName);
-      this.title = ''; 
-      console.log('Description: ' + this.description);
-      this.description = '';
-      alert('Create Channel Successdul!');
-    },
+    //
   },
   mounted() {},
 };

@@ -1,8 +1,8 @@
 <template>
   <div class="mb-96">
-    <Header main="Exam hub" name="Search" />
+    <Header main="Exam hub" button="Search" />
     <div>
-      <h1>Hello</h1>
+      <h1></h1>
     </div>
   </div>
 </template>

@@ -6,8 +6,8 @@
           {{ textRight }}
         </label>
         <input
-        type="checkbox"
-         class="h-4 w-4"
+          type="checkbox"
+          class="h-4 w-4"
         />
        
     </div>
@@ -21,6 +21,12 @@ export default {
       type: String,
       default: '',
     },
+  },
+  data() {
+    return {
+      for: '',
+      id: ''
+    };
   },
 };
 </script>

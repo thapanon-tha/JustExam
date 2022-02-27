@@ -3,9 +3,10 @@
     <input
       type="checkbox"
       class="h-4 w-4"
+      :value="modelValue"
     />
     <label
-      class="ml-2 font-semilight text-grey-700"
+      class="ml-2 font-semilight text-grey-700 text-md"
     >
       {{ textCheckbox }}
     </label>
@@ -23,6 +24,9 @@ export default {
     textRight: {
       type: String,
       default: '',
+    },
+    modelValue: {
+      type: String,
     },
   },
 };

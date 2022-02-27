@@ -1,8 +1,8 @@
 <template>
-    <div class="flex justify-center flex-col bg-subColor border rounded-xl border-solid border-editorColor ml-56 mr-56">
+    <div class="flex justify-center flex-col bg-subColor border rounded-xl border-solid border-editorColor ml-48 mr-48">
         <div class="flex justify-center ">
             <div>
-                <div  v-for="(item, index) in qlist" :key="index" class="bg-white shadow-sm border rounded-xl border-editorColor mt-10">
+                <div  v-for="(item, index) in qlist" :key="index" class="bg-white shadow-sm border rounded-xl border-editorColor mt-10 ml-10 mr-10">
                     <div class="flex flex-row mt-5 ml-10 mr-10 mb-10">
                         <div>
                             <h1 class="text-mainColor font-semilight text-l mb-3">Question</h1>
@@ -104,7 +104,9 @@ export default {
         addQuestion() {
             this.qlist.push(
                 {
-                
+                    id: this.qlist + 1,
+                    type: 'multi',
+                    
                 }
             );
         },

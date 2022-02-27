@@ -50,6 +50,11 @@ const routes = [
     component: () => import('@/views/Teacher/NewChannelTeacher.vue'),
   },
   {
+    path: '/examchannel/test_channel_1',
+    name: 'InsideChannelTeacher',
+    component: () => import('@/views/Teacher/InsideChannelTeacher.vue'),
+  },
+  {
     path: '/yourexam',
     name: 'YourExam',
     component: () => import('@/views/Teacher/YourExam.vue'),
@@ -60,10 +65,16 @@ const routes = [
     component: () => import('@/views/Teacher/NewExam.vue'),
   },
   {
+    path: '/yourexam/test_exam_inside',
+    name: 'InsideYourExam',
+    component: () => import('@/views/Teacher/InsideYourExam.vue'),
+  },
+  {
     path: '/examhub',
     name: 'ExamHubTeacher',
     component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
   },
+  
   
 ];
 

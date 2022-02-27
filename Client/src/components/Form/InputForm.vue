@@ -10,8 +10,8 @@
             </label>
             <input
                 :type=type
-                :value="value"
-                @input="onInput($event)"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
                 class="
                     form-control flex w-5/6
                     px-3 py-3 text-base font-semilight
@@ -39,16 +39,18 @@ export default {
       type: String,
       default: 'text',
     },
+    modelValue: {
+      type: String,
+    },
   },
   data() {
     return {
-      value: '',
+      //
     };
   },
   methods: {
-    onInput(event) {
-      this.$emit('input', event.target.value);
-    },
+    //
   },
+  emits: ['update:modelValue']
 };
 </script>

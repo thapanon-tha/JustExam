@@ -33,7 +33,7 @@ import SectionForm from '@/components/Form/YourExamForm/SectionForm.vue';
 import ExamInfoForm from '@/components/Form/YourExamForm/ExamInfoForm';
 
 export default {
-  name: 'NewExam',
+  name: 'InsideYourExam',
   components: {
     QuestionList,
     SectionForm,
