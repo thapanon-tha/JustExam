@@ -2,7 +2,7 @@
   <div class="mb-96">
     <Header main="Exam channel" current=" > New channel" button="Back" to="ExamChannelTeacher" />
     <div class="mt-20">
-      <form> 
+      <form>
         <div class="flex flex-row justify-center gap-40">
           <div >
             <div class="flex flex-col gap-5">
@@ -23,11 +23,11 @@
               </div>
               <div class="form-control">
                 <DatePicker
-                
+
                 />
               </div>
               <div class="form-control">
-                <TimePicker labelText="Time" 
+                <TimePicker labelText="Time"
 
                 />
               </div>
@@ -67,27 +67,32 @@
                 />
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </form>
     </div>
     <ActionButton
-        class="ml-56 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+        class="ml-56 mt-10 bg-white border-orange-200
+               border border-solid rounded-lg px-6 py-4
+               font-semilight text-mainColor"
         name="+ Add your exam"
         @on-cick="Add"
     />
-    
 
     <div class="flex justify-end mr-56">
-      <OrangeButton
-        class=" bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
+      <ActionButton
+        class="bg-white border-orange-200 border
+                 border-solid rounded-lg px-8 py-3
+                 font-semilight text-grayColor"
         name="Cancel"
-        to="ExamChannelTeacher"
+        @on-click="onClickCancel"
       />
       <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+        class="ml-10 bg-white border-orange-200 border
+               border-solid rounded-lg px-6 py-4 font-semilight
+               text-mainColor"
         name="Create"
-        @on-cick="submitForm"
+        @on-click="submitForm"
       />
     </div>
   </div>
@@ -95,18 +100,16 @@
 
 <script>
 import ActionButton from '@/components/Button/ActionButton.vue';
-import OrangeButton from '@/components/Button/OrangeButton.vue';
-import Header from '@/components/Header/Header';
-import InputForm from '@/components/Form/InputForm';
-import Checkbox2 from '@/components/Form/Checkbox2';
-import DatePicker from '@/components/Form/DatePicker';
-import TimePicker from '@/components/Form/TimePicker';
+import Header from '@/components/Header/Header.vue';
+import InputForm from '@/components/Form/InputForm.vue';
+import Checkbox2 from '@/components/Form/Checkbox2.vue';
+import DatePicker from '@/components/Form/DatePicker.vue';
+import TimePicker from '@/components/Form/TimePicker.vue';
 
 export default {
   name: 'NewChannelTeacher',
   components: {
     ActionButton,
-    OrangeButton,
     Header,
     InputForm,
     Checkbox2,
@@ -120,25 +123,14 @@ export default {
 
     };
   },
-  props: {
-    title: {
-      type: String,
-      default: 'Title'
-    },
-    description: {
-      type: String,
-      default: 'Description'
-    },
-  },
   methods: {
     submitForm() {
-      console.log('Title: ' + this.userName);
-      this.title = ''; 
-      console.log('Description: ' + this.description);
+      this.title = '';
       this.description = '';
-      alert('Create Channel Successdul!');
+    },
+    onClickCancel() {
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
   },
-  mounted() {},
 };
 </script>

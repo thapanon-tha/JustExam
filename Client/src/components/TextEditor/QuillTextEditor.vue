@@ -28,7 +28,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'snow'
+      default: 'snow',
     },
     width: {
       type: String,
@@ -37,6 +37,10 @@ export default {
     height: {
       type: String,
       default: undefined,
+    },
+    onChangeFunc: {
+      type: Function,
+      default: () => true,
     },
   },
   data() {
@@ -66,8 +70,7 @@ export default {
   methods: {
     onChange() {
       this.$emit('input', this.content);
-      // this.$emit('input', content.html);
-
+      this.onChangeFunc();
     },
   },
 };

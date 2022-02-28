@@ -9,7 +9,7 @@
           type="checkbox"
           class="h-4 w-4"
         />
-       
+
     </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       for: '',
-      id: ''
+      id: '',
     };
   },
 };

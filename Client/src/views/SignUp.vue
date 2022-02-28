@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import RoleGrid from '@/components/signup/RoleGrid.vue';
+import RoleGrid from '@/components/Element/RoleGrid.vue';
 
 export default {
   components: {
@@ -37,12 +37,6 @@ export default {
       topics: this.topics,
       topics2: this.topics2,
     };
-  },
-  methods: {
-    //
-  },
-  mounted() {
-    //
   },
 };
 </script>

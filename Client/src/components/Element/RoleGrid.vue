@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import RoleElement from '@/components/signup/RoleElement.vue';
+import RoleElement from '@/components/Element/RoleElement.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
 
 export default {
@@ -45,10 +45,9 @@ export default {
     ActionButton,
   },
   inject: ['topics', 'topics2'],
-  // emits: ['reveal-text'],
   methods: {
     onClick(to) {
-       this.$router.push({ name: to }).catch(() => {});
+      this.$router.push({ name: to }).catch(() => true);
     },
   },
 };

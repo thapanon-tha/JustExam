@@ -8,58 +8,50 @@
                         <h2 class="text-sm ml-2 text-grayColor text-opacity-50">{{ main }}</h2>
                         <h3 class="text-mainColor text-sm">{{ current }}</h3>
                     </div>
-                    
+
                 </div>
-                <div class="mr-13 mt-10 text-right"> 
-                    <button @click="onClick(to)" class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor">
-                        <div>
-                            {{ button }}
-                        </div>
+                <div class="mr-13 mt-10 text-right">
+                    <button
+                      @click="onClick(to)"
+                      class="mt-3 bg-white border-orange-200
+                             border border-solid rounded-lg px-8
+                             py-3 font-semilight text-mainColor"
+                    >
+                      {{ button }}
                     </button>
-                    <!-- <ActionButton
-                    class="mt-3 bg-white border-orange-200
-                    border border-solid rounded-lg px-4 py-3
-                    font-semilight text-mainColor"
-                    name="Preview exam"
-                    :on-cick="previewExam"
-                    /> -->
                 </div>
             </div>
         </header>
-        
+
     </div>
 </template>
 
 <script>
-import ActionButton from '@/components/Button/ActionButton';
 
 export default {
-    name: 'Header',
-    components: {
-        ActionButton,
+  name: 'Header',
+  props: {
+    button: {
+      type: String,
+      default: 'Button',
     },
-    props: {
-        button: {
-            type: String,
-            default: 'Button',
-        },
-        to: {
-            type: String,
-            default: 'Home',
-        },
-        main: {
-            type: String,
-            default: '',
-        },
-        current: {
-            type: String,
-            default: '',
-        },
+    to: {
+      type: String,
+      default: 'Home',
     },
-    methods: {
-        onClick(pageName) {
-            this.$router.push({name: pageName}).catch(() => {});
-        },
+    main: {
+      type: String,
+      default: '',
     },
+    current: {
+      type: String,
+      default: '',
+    },
+  },
+  methods: {
+    onClick(pageName) {
+      this.$router.push({ name: pageName }).catch(() => {});
+    },
+  },
 };
 </script>
