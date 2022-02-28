@@ -18,7 +18,8 @@
       </div>
       <div class="mt-6">
         <CheckboxForm
-          textCheckbox="Remember me"
+          label="Remember me"
+          class="ml-2 font-light text-grey-700 text-sm"
         />
       </div>
       <div class="mt-6 ml-2">
@@ -31,11 +32,11 @@
         />
       </div>
     </form>
-    <section class="box-border mt-28 ml-48 mr-52 flex flex-col">
+    <section class="box-border mt-28 ml-48 mr-48 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img
           src="@/assets/book.svg"
-          class="w-80 h-80 ml-20"
+          class="w-80 h-80 ml-8"
           alt="book"
         >
         <ActionButton

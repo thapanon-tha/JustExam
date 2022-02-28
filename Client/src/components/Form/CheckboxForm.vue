@@ -2,13 +2,11 @@
   <div>
     <input
       type="checkbox"
-      class="h-4 w-4"
+      class="h-3 w-3 mr-2"
       :value="value"
       @change="onChange()"
     />
-    <label
-      class="ml-2 font-semilight text-grey-700 text-md"
-    >
+    <label>
       {{ label }}
     </label>
   </div>

@@ -1,23 +1,20 @@
 <template>
-  <div class="flex flex-col justify-center w-3/5">
-    <div
-      class="flex flex-col justify-center bg-subColor
-             border rounded-xl border-solid border-editorColor"
-    >
-      <div class="flex flex-col justify-center ">
+  <div class="flex flex-col justify-center">
+    <div class="flex flex-col justify-center bg-subColor border rounded-xl border-solid border-editorColor md:w-156">
+      <div class="flex flex-col justify-center">
         <div
           v-for="(item, index) in qlist" :key="index"
           class="bg-white shadow-sm border rounded-xl
-                  border-editorColor mt-10 ml-10 mr-10"
+                  border-editorColor w-auto ml-20 mr-20 mt-10"
         >
-          <div class="flex flex-row justify-center mt-5 ml-10 mr-10 mb-10">
+          <div class="flex flex-row justify-center mt-10 mb-10">
             <MultipleChoice v-model="item.data" v-if="item.type === 'mc'"/>
             <ShortAnswer v-model="item.data" v-if="item.type === 'sa'" />
             <Paragraph v-model="item.data" v-if="item.type === 'pa'" />
             <TrueFalse v-model="item.data" v-if="item.type === 'tf'"/>
             <Matching v-model="item.data" v-if="item.type === 'ma'"/>
             <CodingQuestion v-model="item.data" v-if="item.type === 'ca'"/>
-            <div class="flex flex-col ml-10 mt-10">
+            <div class="flex flex-col ml-10 ">
               <select
                 class=" border rounded-md border-solid border-mainColor
                         border-opacity-40 bg-white px-8 py-3
@@ -52,7 +49,7 @@
         </div>
       </div>
       <ActionButton
-        class="  mt-10 ml-13 mr-13 mb-10 bg-white
+        class="  mt-10 ml-20 mr-20 mb-10 bg-white
                 border-orange-200 border border-solid
                 rounded-lg px-3 py-2 font-semilight
                 text-mainColor"
@@ -151,7 +148,7 @@ export default {
       console.log(this.qlist[index]);
     },
     deleteQuestion(index) {
-      this.qlist.splice(index, 1);
+      this.qlist.splice(index, 1);  
     },
     onClickCancel() {
       this.$router.push({ name: 'YourExam' }).catch(() => true);
