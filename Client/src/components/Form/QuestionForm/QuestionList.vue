@@ -2,60 +2,57 @@
   <div class="flex flex-col justify-center">
     <div class="flex flex-row mt-5 justify-center">
       <div
-        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor px-5 py-2 ml-3
-        hover:text-white hover:bg-mainColor"
-        v-for="(section, index) in sectionlist" :key="index"
+        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor px-5 py-2 ml-3 hover:text-white hover:bg-mainColor"
+        v-for="(section, index) in sectionlist"
+        :key="index"
         @click="onClickSelectSection(section.id)"
       >
-        <h1>Section {{ index + 1 }} </h1>
+        <h1>Section {{ index + 1 }}</h1>
       </div>
       <ActionButton
-        class=" bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white px-4 py-2 ml-3"
-        name="+" 
+        class="bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white px-4 py-2 ml-3"
+        name="+"
         @on-click="addSection"
       />
     </div>
-    <div class="flex flex-col justify-center bg-subColor border rounded-xl border-solid border-editorColor shadow-sm md:w-156">
+    <div
+      class="flex flex-col justify-center bg-subColor border rounded-xl border-solid border-editorColor shadow-sm md:w-156"
+    >
       <div class="flex flex-col justify-center">
         <div
-          v-for="(item, index) in questionList" :key="index"
-          class="bg-white border rounded-xl
-                  border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
+          v-for="(item, index) in questionList"
+          :key="item.id"
+          class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
           <div class="flex flex-row justify-center mt-10 mb-10">
-            <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'"/>
+            <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
             <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
             <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
-            <TrueFalse v-model="item.questionData" v-if="item.type === 'tf'"/>
-            <Matching v-model="item.questionData" v-if="item.type === 'ma'"/>
-            <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'"/>
-            <div class="flex flex-col ml-10 ">
+            <TrueFalse v-model="item.questionData" v-if="item.type === 'tf'" />
+            <Matching v-model="item.questionData" v-if="item.type === 'ma'" />
+            <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'" />
+            <div class="flex flex-col ml-10">
               <select
-                class=" border rounded-md border-solid border-mainColor
-                        border-opacity-40 bg-white px-8 py-3
-                      text-mainColor font-semilight"
+                class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white px-8 py-3 text-mainColor font-semilight"
                 id="type"
                 name="type"
                 v-model="item.type"
               >
                 <option
-                  v-for="(item, indexO) in questionTypeOptionList" :key="indexO"
+                  v-for="(item, indexO) in questionTypeOptionList"
+                  :key="indexO"
                   :value="item.value"
                 >
-                  {{item.name}}
+                  {{ item.name }}
                 </option>
               </select>
               <ActionButton
-                class="mt-3 bg-white border-orange-200
-                    border border-solid rounded-lg px-3 py-3
-                    font-semilight text-mainColor"
+                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-3 py-3 font-semilight text-mainColor"
                 name="Copy exam"
                 @on-click="copyQuestion(index)"
               />
               <ActionButton
-                class="mt-3 bg-white border-orange-200
-                        border border-solid rounded-lg px-4 py-3
-                        font-semilight text-mainColor"
+                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
                 name="Delete"
                 @on-click="deleteQuestion(index)"
               />
@@ -63,9 +60,7 @@
           </div>
         </div>
         <ActionButton
-          class="  mt-10 ml-20 mr-20 mb-10 bg-white border-orange-200 border border-solid
-                  rounded-lg px-3 py-2 font-semilight text-mainColor shadow-md
-                  hover:text-white hover:bg-mainColor"
+          class="mt-10 ml-20 mr-20 mb-10 bg-white border-orange-200 border border-solid rounded-lg px-3 py-2 font-semilight text-mainColor shadow-md hover:text-white hover:bg-mainColor"
           name="+ Add a question"
           @on-click="addQuestion"
         />
@@ -73,14 +68,12 @@
     </div>
     <div class="flex flex-row-reverse gap-10 mt-10">
       <ActionButton
-        class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-4
-                font-semilight text-grayColor hover:text-white hover:bg-mainColor "
+        class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-grayColor hover:text-white hover:bg-mainColor"
         name="Cancle"
         @on-click="onClickCancel()"
       />
       <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6
-              py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
+        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
         name="Create"
         @on-click="onClickCreate()"
       />
@@ -89,17 +82,16 @@
 </template>
 
 <script>
-
-import ActionButton from '@/components/Button/ActionButton.vue';
-import MultipleChoice from '@/components/Form/QuestionForm/MultipleChoice.vue';
-import ShortAnswer from '@/components/Form/QuestionForm/ShortAnswer.vue';
-import Paragraph from '@/components/Form/QuestionForm/Paragraph.vue';
-import Matching from '@/components/Form/QuestionForm/Matching.vue';
-import TrueFalse from '@/components/Form/QuestionForm/TrueFalse.vue';
-import CodingQuestion from '@/components/Form/QuestionForm/CodingQuestion.vue';
+import ActionButton from "@/components/Button/ActionButton.vue";
+import MultipleChoice from "@/components/Form/QuestionForm/MultipleChoice.vue";
+import ShortAnswer from "@/components/Form/QuestionForm/ShortAnswer.vue";
+import Paragraph from "@/components/Form/QuestionForm/Paragraph.vue";
+import Matching from "@/components/Form/QuestionForm/Matching.vue";
+import TrueFalse from "@/components/Form/QuestionForm/TrueFalse.vue";
+import CodingQuestion from "@/components/Form/QuestionForm/CodingQuestion.vue";
 
 export default {
-  name: 'QuestionList',
+  name: "QuestionList",
   components: {
     MultipleChoice,
     ShortAnswer,
@@ -115,20 +107,20 @@ export default {
       sectionlist: [
         {
           id: 1,
-          sectionName: 'Section 1',
+          sectionName: "Section 1",
         },
       ],
       qlist: [
         {
           id: 1,
-          type: 'mc',
+          type: "mc",
           sectionId: 1,
           questionData: {
-            question: '',
+            question: "",
             answers: [
               {
                 id: 1,
-                optionData: '',
+                optionData: "",
                 correct: false,
               },
             ],
@@ -137,64 +129,69 @@ export default {
       ],
       questionTypeOptionList: [
         {
-          name: 'Multiple Choice',
-          value: 'mc',
+          name: "Multiple Choice",
+          value: "mc",
         },
         {
-          name: 'Short Answer',
-          value: 'sa',
+          name: "Short Answer",
+          value: "sa",
         },
         {
-          name: 'Paragraph Answer',
-          value: 'pa',
+          name: "Paragraph Answer",
+          value: "pa",
         },
         {
-          name: 'True/Falsee',
-          value: 'tf',
+          name: "True/Falsee",
+          value: "tf",
         },
         {
-          name: 'Matching',
-          value: 'ma',
+          name: "Matching",
+          value: "ma",
         },
         {
-          name: 'Code',
-          value: 'ca',
+          name: "Code",
+          value: "ca",
         },
       ],
     };
   },
- 
   methods: {
     addQuestion() {
-      this.qlist.push(
-        {
-          id: this.qlist.length + 1,
-          sectionId: this.selectedSectionId,
-          type: 'mc',
-          data: '',
+      this.qlist.push({
+        id: this.qlist.length + 1,
+        sectionId: this.selectedSectionId,
+        type: "mc",
+        data: "",
+        questionData: {
+          question: "",
+          answers: [
+            {
+              id: 1,
+              optionData: "",
+              correct: false,
+            },
+          ],
         },
-      );
+      });
     },
     addSection() {
-      this.sectionlist.push(
-        {
-          id: this.sectionlist.length + 1,
-          sectionName: `Section ${this.sectionlist.length + 1}`,
-        },
-      );
+      this.sectionlist.push({
+        id: this.sectionlist.length + 1,
+        sectionName: `Section ${this.sectionlist.length + 1}`,
+      });
     },
     onClickSelectSection(id) {
-      this.selectedSectionId = id
+      this.selectedSectionId = id;
       console.log(this.selectedSectionId);
     },
     copyQuestion(index) {
       console.log(this.qlist[index]);
     },
     deleteQuestion(index) {
-      this.qlist.splice(index, 1);  
+      this.qlist.splice(index, 1);
     },
     onClickCancel() {
-      this.$router.push({ name: 'YourExam' }).catch(() => true);
+      this.$router.push({ name: "YourExam" }).catch(() => true);
     },
     onClickCreate() {
       // Integrate with API with form validator
@@ -204,8 +201,7 @@ export default {
   computed: {
     questionList() {
       return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
-    }
-  }
+    },
+  },
 };
-
 </script>
