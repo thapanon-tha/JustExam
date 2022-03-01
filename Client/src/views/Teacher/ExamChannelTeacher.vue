@@ -1,9 +1,19 @@
 <template>
   <div class="mb-96">
-    <Header main="Exam channel" button="+  New channel" to="NewChannelTeacher" />
+    <Header main="Exam channel">
+      <button
+        @click="onClick('NewChannelTeacher')"
+        class="mt-3 bg-white border-orange-200
+                             border border-solid rounded-lg px-8
+                             py-3 font-semilight text-mainColor"
+      >
+        +  New channel
+      </button>
+    </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
-      <div @click="onClick('InsideChannelTeacher')" v-for="box in boxlist" :key="box">
+      <div  v-for="box in boxlist" :key="box">
         <CardChannel
+        
         />
       </div>
     </div>
@@ -26,6 +36,9 @@ export default {
     };
   },
   methods: {
+    onClick(pageName) {
+      this.$router.push({ name: pageName }).catch(() => {});
+    },
   },
   mounted() {
     //

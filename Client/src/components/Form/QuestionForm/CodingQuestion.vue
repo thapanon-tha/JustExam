@@ -109,21 +109,10 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
+  prop: ['value'],
   data() {
     return {
-      questionData: {
-        code: '',
-        question: '',
-        input: '',
-        output: '',
-        example: [
-          {
-            id: 1,
-            xampleinput: '',
-            xampleoutput: '',
-          },
-        ],
-      },
+      questionData: this.value
     };
   },
   methods: {

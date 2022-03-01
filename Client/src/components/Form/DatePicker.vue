@@ -10,7 +10,7 @@
     </div>
     <div class="flex w-5/6">
       <v-menu
-        v-model="menu2"
+        v-model="menu"
         :close-on-content-click="false"
         transition="scale-transition"
         offset-y
@@ -32,7 +32,7 @@
           <v-date-picker
             v-model="date"
             no-title
-            @input="menu2 = false"
+            @input="menu = false"
             color="orange darken-2"
           ></v-date-picker>
       </v-menu>
@@ -44,8 +44,8 @@
   export default { ////"MM/DD/YYYY"
     data: vm => ({
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
-      menu2: false,
+      // dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
+      menu: false,
     }),
 
     computed: {
@@ -54,11 +54,11 @@
       },
     },
 
-    watch: {
-      date (val) {
-        this.dateFormatted = this.formatDate(this.date)
-      },
-    },
+    // watch: {
+    //   date (val) {
+    //     this.dateFormatted = this.formatDate(this.date)
+    //   },
+    // },
 
     methods: {
       formatDate (date) {
@@ -67,12 +67,8 @@
         const [year, month, day] = date.split('-')
         return `${month}/${day}/${year}`
       },
-      parseDate (date) {
-        if (!date) return null
-
-        const [month, day, year] = date.split('/')
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}` 
-      },
+      
     },
+    props: ['computedDateFormatted'],
   }
 </script>

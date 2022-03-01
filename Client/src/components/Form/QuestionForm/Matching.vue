@@ -70,24 +70,10 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  props: {
-    no: {
-      type: String,
-      default: 'no',
-    },
-  },
+  prop: ['value'],
   data() {
     return {
-      questionData: {
-        question: '',
-        matchs: [
-          {
-            id: 1,
-            subquestion: '',
-            matchanswer: '',
-          },
-        ],
-      },
+      questionData: this.value
     };
   },
   methods: {

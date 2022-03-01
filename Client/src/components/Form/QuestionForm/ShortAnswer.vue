@@ -53,18 +53,10 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  emits: ['delete'],
+  prop: ['value'],
   data() {
     return {
-      questionData: {
-        question: '',
-        keyans: [
-          {
-            id: 1,
-            ans: '',
-          },
-        ],
-      },
+      questionData: this.value
     };
   },
   methods: {

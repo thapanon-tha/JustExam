@@ -38,12 +38,10 @@ export default {
     QuillTextEditor,
     CheckboxForm,
   },
+  prop: ['value'],
   data() {
     return {
-      questionData: {
-        question: '',
-        correct: false,
-      },
+      questionData: this.value
     };
   },
   methods: {

@@ -18,7 +18,7 @@
                     text-gray-700 bg-subColor bg-clip-padding
                     border border-solid border-mainColor border-opacity-40
                     rounded-md transition ease-in-out
-                    m-0focus:text-black focus:bg-subColor focus:mainColor
+                    m-0 focus:text-black focus:bg-subColor focus:mainColor
                     focus:border-opacity-100 focus:outline-none"
                 :placeholder=inputLabel
             />

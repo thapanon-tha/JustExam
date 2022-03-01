@@ -67,18 +67,15 @@ export default {
   data() {
     return {
       questionData: {
-        question: '',
-        answers: [
-          {
-            id: 1,
-            optionData: '',
-            correct: false,
-          },
-        ],
+        question: this.value,
+        answers: [],
       },
     };
   },
   methods: {
+    handleInput (e) {
+      this.$emit('input', this.question)
+    },
     addChoice() {
       this.questionData.answers.push(
         {
@@ -95,6 +92,7 @@ export default {
       this.$emit('input', this.questionData);
     },
   },
+  prop: ['value'],
 
 };
 

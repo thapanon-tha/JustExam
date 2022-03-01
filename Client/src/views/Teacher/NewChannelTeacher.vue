@@ -4,33 +4,31 @@
     <div class="mt-20">
       <form>
         <div class="flex flex-row justify-center gap-40">
-          <div >
-            <div class="flex flex-col gap-5">
-              <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
-              <div class="form-control">
-                <InputForm
-                  inputLabel="Channel Title"
-                  type="text"
-                  v-model="title"
-                />
-              </div>
-              <div class="form-control">
-                <InputForm
-                  inputLabel="Channel Description"
-                  type="text"
-                  v-model="description"
-                />
-              </div>
-              <div class="form-control">
-                <DatePicker
+          <div class="flex flex-col gap-5">
+            <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
+            <div class="form-control">
+              <InputForm
+                inputLabel="Channel Title"
+                type="text"
+                v-model="title"
+              />
+            </div>
+            <div class="form-control">
+              <InputForm
+                inputLabel="Channel Description"
+                type="text"
+                v-model="description"
+              />
+            </div>
+            <div class="form-control">
+              <DatePicker
 
-                />
-              </div>
-              <div class="form-control">
-                <TimePicker labelText="Time"
+              />
+            </div>
+            <div class="form-control">
+              <TimePicker labelText="Time"
 
-                />
-              </div>
+              />
             </div>
           </div>
           <div class="form-control">
@@ -39,33 +37,40 @@
               <div>
                 <Checkbox2
                   textRight="Random sections"
+                  v-model="examsetting"
                 />
               </div>
               <div>
                 <Checkbox2
                   textRight="Random questions in section"
+                  v-model="examsetting"
                 />
               </div>
               <div>
                 <Checkbox2
                   textRight="Shuffle choices"
+                  v-model="examsetting"
                 />
               </div>
               <div>
                 <Checkbox2
                   textRight="Show correct answers after submit the exam"
+                  v-model="examsetting"
                 />
               </div>
               <div>
                 <Checkbox2
                   textRight="Show total scores after submit the exam"
+                  v-model="examsetting"
                 />
               </div>
               <div>
                 <Checkbox2
                   textRight="Cannot submit the exam if there are missed answers"
+                  v-model="examsetting"
                 />
               </div>
+              <div> {{ examsetting }} </div>
             </div>
           </div>
         </div>
@@ -76,7 +81,7 @@
                border border-solid rounded-lg px-6 py-4
                font-semilight text-mainColor"
         name="+ Add your exam"
-        @on-cick="Add"
+        
     />
 
     <div class="flex justify-end mr-56">
@@ -120,6 +125,8 @@ export default {
     return {
       title: '',
       description: '',
+      examsetting: [],
+      
 
     };
   },

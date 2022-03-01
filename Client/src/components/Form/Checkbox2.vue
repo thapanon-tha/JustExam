@@ -8,6 +8,8 @@
         <input
           type="checkbox"
           class="h-4 w-4"
+          :value="value"
+          @change="onChange()"
         />
 
     </div>
@@ -24,9 +26,13 @@ export default {
   },
   data() {
     return {
-      for: '',
-      id: '',
+      value: true,
     };
+  },
+  methods: {
+    onChange() {
+      this.$emit('input', this.value);
+    },
   },
 };
 </script>

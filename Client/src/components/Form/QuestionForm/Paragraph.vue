@@ -23,11 +23,10 @@ export default {
   components: {
     QuillTextEditor,
   },
-
-  emits: ['delete'],
+  prop: ['value'],
   data() {
     return {
-      question: '',
+      questionData: this.value
     };
   },
   methods: {

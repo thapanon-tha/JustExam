@@ -1,19 +1,34 @@
 <template>
   <div class="flex flex-col justify-center">
-    <div class="flex flex-col justify-center bg-subColor border rounded-xl border-solid border-editorColor md:w-156">
+    <div class="flex flex-row mt-5 justify-center">
+      <div
+        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor px-5 py-2 ml-3
+        hover:text-white hover:bg-mainColor"
+        v-for="(section, index) in sectionlist" :key="index"
+        @click="onClickSelectSection(section.id)"
+      >
+        <h1>Section {{ index + 1 }} </h1>
+      </div>
+      <ActionButton
+        class=" bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white px-4 py-2 ml-3"
+        name="+" 
+        @on-click="addSection"
+      />
+    </div>
+    <div class="flex flex-col justify-center bg-subColor border rounded-xl border-solid border-editorColor shadow-sm md:w-156">
       <div class="flex flex-col justify-center">
         <div
-          v-for="(item, index) in qlist" :key="index"
-          class="bg-white shadow-sm border rounded-xl
-                  border-editorColor w-auto ml-20 mr-20 mt-10"
+          v-for="(item, index) in questionList" :key="index"
+          class="bg-white border rounded-xl
+                  border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
           <div class="flex flex-row justify-center mt-10 mb-10">
-            <MultipleChoice v-model="item.data" v-if="item.type === 'mc'"/>
-            <ShortAnswer v-model="item.data" v-if="item.type === 'sa'" />
-            <Paragraph v-model="item.data" v-if="item.type === 'pa'" />
-            <TrueFalse v-model="item.data" v-if="item.type === 'tf'"/>
-            <Matching v-model="item.data" v-if="item.type === 'ma'"/>
-            <CodingQuestion v-model="item.data" v-if="item.type === 'ca'"/>
+            <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'"/>
+            <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
+            <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
+            <TrueFalse v-model="item.questionData" v-if="item.type === 'tf'"/>
+            <Matching v-model="item.questionData" v-if="item.type === 'ma'"/>
+            <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'"/>
             <div class="flex flex-col ml-10 ">
               <select
                 class=" border rounded-md border-solid border-mainColor
@@ -47,28 +62,25 @@
             </div>
           </div>
         </div>
+        <ActionButton
+          class="  mt-10 ml-20 mr-20 mb-10 bg-white border-orange-200 border border-solid
+                  rounded-lg px-3 py-2 font-semilight text-mainColor shadow-md
+                  hover:text-white hover:bg-mainColor"
+          name="+ Add a question"
+          @on-click="addQuestion"
+        />
       </div>
-      <ActionButton
-        class="  mt-10 ml-20 mr-20 mb-10 bg-white
-                border-orange-200 border border-solid
-                rounded-lg px-3 py-2 font-semilight
-                text-mainColor"
-        name="+ Add a question"
-        @on-click="addQuestion"
-      />
     </div>
     <div class="flex flex-row-reverse gap-10 mt-10">
       <ActionButton
-        class="bg-white border-orange-200
-                border border-solid rounded-lg px-6 py-4
-                font-semilight text-grayColor"
+        class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-4
+                font-semilight text-grayColor hover:text-white hover:bg-mainColor "
         name="Cancle"
         @on-click="onClickCancel()"
       />
       <ActionButton
-        class="ml-10 bg-white border-orange-200
-              border border-solid rounded-lg px-6
-              py-4 font-semilight text-mainColor"
+        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6
+              py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
         name="Create"
         @on-click="onClickCreate()"
       />
@@ -99,11 +111,28 @@ export default {
   },
   data() {
     return {
+      selectedSectionId: 1,
+      sectionlist: [
+        {
+          id: 1,
+          sectionName: 'Section 1',
+        },
+      ],
       qlist: [
         {
           id: 1,
           type: 'mc',
-          data: 'dwd',
+          sectionId: 1,
+          questionData: {
+            question: '',
+            answers: [
+              {
+                id: 1,
+                optionData: '',
+                correct: false,
+              },
+            ],
+          },
         },
       ],
       questionTypeOptionList: [
@@ -134,15 +163,29 @@ export default {
       ],
     };
   },
+ 
   methods: {
     addQuestion() {
       this.qlist.push(
         {
           id: this.qlist.length + 1,
+          sectionId: this.selectedSectionId,
           type: 'mc',
           data: '',
         },
       );
+    },
+    addSection() {
+      this.sectionlist.push(
+        {
+          id: this.sectionlist.length + 1,
+          sectionName: `Section ${this.sectionlist.length + 1}`,
+        },
+      );
+    },
+    onClickSelectSection(id) {
+      this.selectedSectionId = id
+      console.log(this.selectedSectionId);
     },
     copyQuestion(index) {
       console.log(this.qlist[index]);
@@ -158,6 +201,11 @@ export default {
       console.log(this.qlist);
     },
   },
+  computed: {
+    questionList() {
+      return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+    }
+  }
 };
 
 </script>
