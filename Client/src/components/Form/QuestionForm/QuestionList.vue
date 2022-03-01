@@ -54,7 +54,7 @@
               <ActionButton
                 class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
                 name="Delete"
-                @on-click="deleteQuestion(index)"
+                @on-click="deleteQuestion(item.id)"
               />
             </div>
           </div>
@@ -158,7 +158,7 @@ export default {
   methods: {
     addQuestion() {
       this.qlist.push({
-        id: this.qlist.length + 1,
+        id: this.qlist[this.qlist.length - 1].id + 1,
         sectionId: this.selectedSectionId,
         type: "mc",
         data: "",
@@ -187,8 +187,8 @@ export default {
     copyQuestion(index) {
       console.log(this.qlist[index]);
     },
-    deleteQuestion(index) {
-      this.qlist.splice(index, 1);
+    deleteQuestion(id) {
+      this.qlist = this.qlist.filter((e) => e.id !== id);
     },
     onClickCancel() {
       this.$router.push({ name: "YourExam" }).catch(() => true);
