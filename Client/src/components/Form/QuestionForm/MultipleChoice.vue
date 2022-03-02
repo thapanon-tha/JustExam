@@ -27,7 +27,7 @@
         />
       </div>
       <div class="ml-20">
-        <CheckboxForm v-model="item.correct" label="correct" />
+        <CheckboxForm v-model="item.correct" label="correct" @onChange="onChange()" :onChangeFunc="onChange"/>
       </div>
       <div class="ml-20">
         <ActionButton class="text-mainColor" name="x" @on-click="deleteChoice(index)" />
@@ -60,9 +60,6 @@ export default {
     };
   },
   methods: {
-    handleInput(e) {
-      this.$emit("input", this.question);
-    },
     addChoice() {
       this.questionData.answers.push({
         id: this.questionData.answers.length + 1,

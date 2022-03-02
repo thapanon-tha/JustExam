@@ -8,7 +8,7 @@
           width="8/9"
           height="40"
           v-model="questionData.question"
-          :onChangeFunc=onChange
+          :onChangeFunc="onChange"
         />
       </div>
     </div>
@@ -22,7 +22,8 @@
           height="2/4"
           :name="`keyans[${index}][ans]`"
           v-model="item.ans"
-          :onChangeFunc=onChange
+          @change="onChange()"
+          :onChangeFunc="onChange"
         />
       </div>
       <div class="ml-20">
@@ -53,7 +54,7 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  prop: ['value'],
+  props: ["value"],
   data() {
     return {
       questionData: this.value
@@ -64,8 +65,8 @@ export default {
       this.questionData.keyans.push(
         {
           id: this.questionData.keyans.length + 1,
-          ans: '',
-        },
+          ans: "",
+        }
       );
     },
     deleteChoice(index) {
@@ -74,6 +75,13 @@ export default {
     onChange() {
       this.$emit('input', this.questionData);
     },
+  },
+  model: {
+    prop: "value", // บอกว่า v-model ให้เข้า value
+    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+  },
+  created() {
+    console.log(this.value);
   },
 };
 

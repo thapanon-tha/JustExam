@@ -37,6 +37,7 @@
                 id="type"
                 name="type"
                 v-model="item.type"
+                @change="onChange(item.id, item.type)"
               >
                 <option
                   v-for="(item, indexO) in questionTypeOptionList"
@@ -196,6 +197,82 @@ export default {
     onClickCreate() {
       // Integrate with API with form validator
       console.log(this.qlist);
+    },
+    onChange(id , type) {
+      let indexObject = this.qlist.findIndex(value => value.id === id);
+      if (type === "mc") 
+        this.qlist[indexObject].questionData = {
+          question: "",
+          answers: [
+            {
+              id: 1,
+              optionData: "",
+              correct: false,
+            },
+          ],
+        }
+      
+      if (type === "sa") 
+        this.qlist[indexObject].questionData = {
+          question: "",
+          keyans: [
+            {
+              id: 1,
+              ans: "",
+            },
+          ],
+        }
+
+      if (type === "pa") 
+        this.qlist[indexObject].questionData = {
+          question: "",
+  
+        }
+
+      if (type === "tf") 
+        this.qlist[indexObject].questionData = {
+          question: "",
+          correct: [
+            {
+              id: 1,
+              label: "True",
+              correct: false,
+            },
+            {
+              id: 2,
+              label: "False",
+              correct: false,
+            },
+          ],
+        }
+
+      if (type === "ma") 
+        this.qlist[indexObject].questionData = {
+          question: "",
+          matchs: [
+            {
+              id: 1,
+              subquestion: "",
+              matchanswer: "",
+            },
+          ],
+        }
+
+      if (type === "code") 
+        this.qlist[indexObject].questionData = {
+          code: "",
+          question: "",
+          input: "",
+          output: "",
+          example: [
+            {
+              id: 1,
+              xampleinput: "",
+              xampleoutput: "",
+            },
+          ],
+        }
+
     },
   },
   computed: {

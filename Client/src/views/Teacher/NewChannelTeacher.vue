@@ -22,7 +22,7 @@
             </div>
             <div class="form-control">
               <DatePicker
-
+                v-model="datePicked"
               />
             </div>
             <div class="form-control">
@@ -126,6 +126,7 @@ export default {
       title: '',
       description: '',
       examsetting: [],
+      datePicked: new Date(),
       
 
     };

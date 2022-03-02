@@ -6,7 +6,8 @@
                     focus:border-opacity-100 focus:outline-none px-3"
         name="Channel Title"
         type="text"
-        v-model.trim="searchText"
+        placeholder="Search exam"
+      
       />
       <button class="mt-3 ml-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-2 font-semilight text-mainColor">
         Search

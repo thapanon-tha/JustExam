@@ -24,7 +24,7 @@
             readonly
             v-bind="attrs"
             v-on="on"
-                         
+                  
           >
             {{ computedDateFormatted }}
           </div>
@@ -44,7 +44,6 @@
   export default { ////"MM/DD/YYYY"
     data: vm => ({
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      // dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
       menu: false,
     }),
 
@@ -69,6 +68,6 @@
       },
       
     },
-    props: ['computedDateFormatted'],
+    props: ['value'],
   }
 </script>
