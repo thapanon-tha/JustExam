@@ -60,6 +60,7 @@
               height="2/4"
               :name="`example[${index}][xampleinput]`"
               v-model="item.xampleinput"
+              @change="onChange()"
               :onChangeFunc="onChange"
             />
           </div>
@@ -80,6 +81,7 @@
               height="2/4"
               :name="`example[${index}][xampleoutput]`"
               v-model="item.xampleoutput"
+              @change="onChange()"
               :onChangeFunc="onChange"
             />
           </div>
@@ -110,7 +112,6 @@ export default {
       questionData: this.value,
     };
   },
-  props: ["value"],
   methods: {
     addExample() {
       this.questionData.example.push({

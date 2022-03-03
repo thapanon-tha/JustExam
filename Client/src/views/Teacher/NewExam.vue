@@ -5,7 +5,7 @@
         @click="onClick('YourExam')"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
-        Back
+        Preview
       </button>
     </Header>
     <ExamInfoForm/>

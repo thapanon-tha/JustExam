@@ -12,7 +12,7 @@
         />
       </div>
     </div>
-    <div  class="flex flex-row ml-3" v-for="(item, index) in questionData.keyans" :key="item.id">
+    <div  class="flex flex-row ml-3" v-for="(item, index) in questionData.keylist" :key="item.id">
       <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
         <QuillTextEditor
           class="bg-mainColor"
@@ -20,8 +20,8 @@
           theme="bubble"
           width="60"
           height="2/4"
-          :name="`keyans[${index}][ans]`"
-          v-model="item.ans"
+          :name="`keylist[${index}][keyans]`"
+          v-model="item.keyans"
           @change="onChange()"
           :onChangeFunc="onChange"
         />
@@ -57,28 +57,26 @@ export default {
   props: ["value"],
   data() {
     return {
-      questionData: this.value
+      questionData: this.value,
     };
   },
   methods: {
     addKey() {
-      this.questionData.keyans.push(
-        {
-          id: this.questionData.keyans.length + 1,
-          ans: "",
-        }
-      );
+      this.questionData.keylist.push({
+          id: this.questionData.keylist.length + 1,
+          keyans: "",
+      });
     },
     deleteChoice(index) {
-      this.questionData.keyans.splice(index, 1);
+      this.questionData.keylist.splice(index, 1);
     },
     onChange() {
       this.$emit('input', this.questionData);
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: "value",
+    event: "input", 
   },
   created() {
     console.log(this.value);

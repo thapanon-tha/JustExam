@@ -142,7 +142,7 @@ export default {
           value: "pa",
         },
         {
-          name: "True/Falsee",
+          name: "True/False",
           value: "tf",
         },
         {
@@ -150,7 +150,7 @@ export default {
           value: "ma",
         },
         {
-          name: "Code",
+          name: "Coding",
           value: "ca",
         },
       ],
@@ -212,41 +212,31 @@ export default {
           ],
         }
       
-      if (type === "sa") 
+      else if (type === "sa") 
         this.qlist[indexObject].questionData = {
           question: "",
-          keyans: [
+          keylist: [
             {
               id: 1,
-              ans: "",
+              keyans: "",
             },
           ],
         }
 
-      if (type === "pa") 
+      else if (type === "pa") 
         this.qlist[indexObject].questionData = {
           question: "",
   
         }
 
-      if (type === "tf") 
+      else if (type === "tf") 
         this.qlist[indexObject].questionData = {
           question: "",
-          correct: [
-            {
-              id: 1,
-              label: "True",
-              correct: false,
-            },
-            {
-              id: 2,
-              label: "False",
-              correct: false,
-            },
-          ],
+          true: false,
+          false: false,
         }
 
-      if (type === "ma") 
+      else if (type === "ma") 
         this.qlist[indexObject].questionData = {
           question: "",
           matchs: [
@@ -258,7 +248,7 @@ export default {
           ],
         }
 
-      if (type === "code") 
+      else (type === "code") 
         this.qlist[indexObject].questionData = {
           code: "",
           question: "",

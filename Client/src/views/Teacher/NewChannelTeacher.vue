@@ -35,42 +35,42 @@
             <div class="flex flex-col justify-center gap-5">
               <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Random sections"
                   v-model="examsetting"
                 />
               </div>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Random questions in section"
                   v-model="examsetting"
                 />
               </div>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Shuffle choices"
                   v-model="examsetting"
                 />
               </div>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Show correct answers after submit the exam"
                   v-model="examsetting"
                 />
               </div>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Show total scores after submit the exam"
                   v-model="examsetting"
                 />
               </div>
               <div>
-                <Checkbox2
+                <Checkbox3
                   textRight="Cannot submit the exam if there are missed answers"
                   v-model="examsetting"
                 />
               </div>
-              <div> {{ examsetting }} </div>
+              <!-- <div> {{ examsetting }} </div> -->
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@
 import ActionButton from '@/components/Button/ActionButton.vue';
 import Header from '@/components/Header/Header.vue';
 import InputForm from '@/components/Form/InputForm.vue';
-import Checkbox2 from '@/components/Form/Checkbox2.vue';
+import Checkbox3 from '@/components/Form/Checkbox3.vue';
 import DatePicker from '@/components/Form/DatePicker.vue';
 import TimePicker from '@/components/Form/TimePicker.vue';
 
@@ -117,17 +117,18 @@ export default {
     ActionButton,
     Header,
     InputForm,
-    Checkbox2,
+    Checkbox3,
     DatePicker,
     TimePicker,
   },
   data() {
     return {
-      title: '',
-      description: '',
-      examsetting: [],
-      datePicked: new Date(),
-      
+      ChannelData: {
+        title: '',
+        description: '',
+        examsetting: [],
+        datePicked: new Date(),
+      },
 
     };
   },
