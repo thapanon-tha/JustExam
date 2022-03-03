@@ -24,6 +24,7 @@
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
+          {{ item.questionData }}
           <div class="flex flex-row justify-center mt-10 mb-10">
             <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
             <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
@@ -154,6 +155,59 @@ export default {
           value: "ca",
         },
       ],
+      //* this is prototype for new question
+      prototype: {
+        mc: {
+          question: "",
+          answers: [
+            {
+              id: 1,
+              optionData: "",
+              correct: false,
+            },
+          ],
+        },
+        sa: {
+          question: "",
+          keylist: [
+            {
+              id: 1,
+              keyans: "",
+            },
+          ],
+        },
+        pa: {
+          question: "",
+        },
+        tf: {
+          question: "",
+          true: false,
+          false: false,
+        },
+        ma: {
+          question: "",
+          matchs: [
+            {
+              id: 1,
+              subquestion: "",
+              matchanswer: "",
+            },
+          ],
+        },
+        ca: {
+          code: "",
+          question: "",
+          input: "",
+          output: "",
+          example: [
+            {
+              id: 1,
+              xampleinput: "",
+              xampleoutput: "",
+            },
+          ],
+        },
+      },
     };
   },
   methods: {
@@ -198,71 +252,57 @@ export default {
       // Integrate with API with form validator
       console.log(this.qlist);
     },
-    onChange(id , type) {
-      let indexObject = this.qlist.findIndex(value => value.id === id);
-      if (type === "mc") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          answers: [
-            {
-              id: 1,
-              optionData: "",
-              correct: false,
-            },
-          ],
-        }
-      
-      else if (type === "sa") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          keylist: [
-            {
-              id: 1,
-              keyans: "",
-            },
-          ],
-        }
-
-      else if (type === "pa") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-  
-        }
-
-      else if (type === "tf") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          true: false,
-          false: false,
-        }
-
-      else if (type === "ma") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          matchs: [
-            {
-              id: 1,
-              subquestion: "",
-              matchanswer: "",
-            },
-          ],
-        }
-
-      else (type === "code") 
-        this.qlist[indexObject].questionData = {
-          code: "",
-          question: "",
-          input: "",
-          output: "",
-          example: [
-            {
-              id: 1,
-              xampleinput: "",
-              xampleoutput: "",
-            },
-          ],
-        }
-
+    onChange(id, type) {
+      let indexObject = this.qlist.findIndex((value) => value.id === id);
+      this.qlist[indexObject].questionData = this.prototype[type];
+      // if (type === "mc") {
+      //   console.log("GG MC");
+      // } else if (type === "sa")
+      //   this.qlist[indexObject].questionData = {
+      //     question: "",
+      //     keylist: [
+      //       {
+      //         id: 1,
+      //         keyans: "",
+      //       },
+      //     ],
+      //   };
+      // else if (type === "pa")
+      //   this.qlist[indexObject].questionData = {
+      //     question: "",
+      //   };
+      // else if (type === "tf")
+      //   this.qlist[indexObject].questionData = {
+      //     question: "",
+      //     true: false,
+      //     false: false,
+      //   };
+      // else if (type === "ma")
+      //   this.qlist[indexObject].questionData = {
+      //     question: "",
+      //     matchs: [
+      //       {
+      //         id: 1,
+      //         subquestion: "",
+      //         matchanswer: "",
+      //       },
+      //     ],
+      //   };
+      // else if (type === "ca") {
+      //   this.qlist[indexObject].questionData = {
+      //     code: "",
+      //     question: "",
+      //     input: "",
+      //     output: "",
+      //     example: [
+      //       {
+      //         id: 1,
+      //         xampleinput: "",
+      //         xampleoutput: "",
+      //       },
+      //     ],
+      //   };
+      // }
     },
   },
   computed: {
