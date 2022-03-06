@@ -5,24 +5,24 @@
         @click="onClick('NewExam')"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
-        +  New exam
+        + New exam
       </button>
     </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
-      <div @click="onClick('InsideYourExam')" v-for="box in boxlist" :key="box">
-        <CardExam />
+      <div @click="onClick('InsideYourExam', box.eid)" v-for="box in examsData" :key="box.eid">
+        <CardExam v-bind:detail="box" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
-import Header from '@/components/Header/Header.vue';
-import CardExam from '@/components/Card/CardExam.vue';
+import Header from "@/components/Header/Header.vue";
+import CardExam from "@/components/Card/CardExam.vue";
+import api from "@/services/apis";
 
 export default {
-  name: 'YourExam',
+  name: "YourExam",
   components: {
     CardExam,
     Header,
@@ -30,17 +30,25 @@ export default {
   data() {
     return {
       qlist: [],
-      boxlist: 4,
+      examsData: Object,
     };
   },
   methods: {
-    onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => true);
+    onClick(pageName, eid) {
+      this.$router.push({ name: pageName, params: { eid } }).catch(() => true);
+    },
+
+    async getExam() {
+      const token = this.$cookies.get("username-localhost-8888");
+      console.log(token);
+      this.examsData = await api.exams().then((res) => res.data);
     },
   },
   mounted() {
     //
   },
+  created() {
+    this.getExam();
+  },
 };
-
 </script>

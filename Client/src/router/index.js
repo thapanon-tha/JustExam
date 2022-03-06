@@ -65,7 +65,7 @@ const routes = [
     component: () => import('@/views/Teacher/NewExam.vue'),
   },
   {
-    path: '/yourexam/test-exam-inside',
+    path: `/yourexam/:eid`,
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
   },

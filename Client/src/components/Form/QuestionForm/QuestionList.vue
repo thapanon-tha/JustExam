@@ -255,54 +255,6 @@ export default {
     onChange(id, type) {
       let indexObject = this.qlist.findIndex((value) => value.id === id);
       this.qlist[indexObject].questionData = this.prototype[type];
-      // if (type === "mc") {
-      //   console.log("GG MC");
-      // } else if (type === "sa")
-      //   this.qlist[indexObject].questionData = {
-      //     question: "",
-      //     keylist: [
-      //       {
-      //         id: 1,
-      //         keyans: "",
-      //       },
-      //     ],
-      //   };
-      // else if (type === "pa")
-      //   this.qlist[indexObject].questionData = {
-      //     question: "",
-      //   };
-      // else if (type === "tf")
-      //   this.qlist[indexObject].questionData = {
-      //     question: "",
-      //     true: false,
-      //     false: false,
-      //   };
-      // else if (type === "ma")
-      //   this.qlist[indexObject].questionData = {
-      //     question: "",
-      //     matchs: [
-      //       {
-      //         id: 1,
-      //         subquestion: "",
-      //         matchanswer: "",
-      //       },
-      //     ],
-      //   };
-      // else if (type === "ca") {
-      //   this.qlist[indexObject].questionData = {
-      //     code: "",
-      //     question: "",
-      //     input: "",
-      //     output: "",
-      //     example: [
-      //       {
-      //         id: 1,
-      //         xampleinput: "",
-      //         xampleoutput: "",
-      //       },
-      //     ],
-      //   };
-      // }
     },
   },
   computed: {
