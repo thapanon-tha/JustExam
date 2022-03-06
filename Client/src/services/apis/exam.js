@@ -10,7 +10,16 @@ const examList = (eid) => {
   return axios.get(`http://localhost/api/exams/${eid}/questions`);
 }
 
+const createExams = (examData) => {
+  return axios.post(`http://localhost/api/exams/${eid}/questions`);
+}
+
+const examMapper = (examData) => {
+
+}
+
 export default {
   exams,
-  examList
+  examList,
+  createExams
 }

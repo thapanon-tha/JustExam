@@ -8,27 +8,32 @@
         Preview
       </button>
     </Header>
-    <ExamInfoForm/>
+    <ExamInfoForm v-bind:title="title" v-bind:description="description" />
     <div class="flex flex-col items-center justify-center">
-      <QuestionList/>
+      <QuestionList />
     </div>
   </div>
 </template>
 
 <script>
-
-import Header from '@/components/Header/Header.vue';
-import QuestionList from '@/components/Form/QuestionForm/QuestionList.vue';
-import ExamInfoForm from '@/components/Form/YourExamForm/ExamInfoForm';
-import InputForm from '@/components/Form/InputForm';
+import Header from "@/components/Header/Header.vue";
+import QuestionList from "@/components/Form/QuestionForm/QuestionList.vue";
+import ExamInfoForm from "@/components/Form/YourExamForm/ExamInfoForm";
+import InputForm from "@/components/Form/InputForm";
 
 export default {
-  name: 'NewExam',
+  name: "NewExam",
   components: {
     QuestionList,
     ExamInfoForm,
     Header,
     InputForm,
+  },
+  data() {
+    return {
+      title: "title",
+      description: "description",
+    };
   },
   methods: {
     onClick(pageName) {
@@ -36,5 +41,4 @@ export default {
     },
   },
 };
-
 </script>

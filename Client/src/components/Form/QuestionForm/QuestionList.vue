@@ -91,6 +91,7 @@ import Paragraph from "@/components/Form/QuestionForm/Paragraph.vue";
 import Matching from "@/components/Form/QuestionForm/Matching.vue";
 import TrueFalse from "@/components/Form/QuestionForm/TrueFalse.vue";
 import CodingQuestion from "@/components/Form/QuestionForm/CodingQuestion.vue";
+import api from "@/services/apis";
 
 export default {
   name: "QuestionList",
