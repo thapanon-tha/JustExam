@@ -28,14 +28,12 @@
 
       <div class="text-center">
         <v-bottom-sheet v-model="sheet" persistent>
-          <v-sheet class="text-center" height="30vh">
-            <v-btn class="mt-6" text color="error" @click="sheet = !sheet"> close </v-btn>
+          <v-sheet class="text-center">
             <pulse-loader
               :loading="loaderOption.loading"
               :color="loaderOption.color"
               :size="loaderOption.size"
             ></pulse-loader>
-
             <div v-if="createSuccess.status === true">
               <v-alert dense text type="success">
                 <strong>{{ createSuccess.message }}</strong>
@@ -109,27 +107,33 @@ export default {
     },
     async sendreq() {
       this.loaderOption.loading = true;
-      const res = await api.createExams(this.examInfo);
-      console.log(await api.createExams(this.examInfo));
-      if (res.status === 201) {
-        this.loaderOption.loading = false;
-        this.createStatus.status = true;
-        this.createStatus.message = "created success";
-        setInterval(() => {
-          this.createFail.status = false;
-          this.createFail.message = res;
-        }, 1000);
-        setInterval(() => {
-          this.sheet = false;
-        }, 1000);
-        console.log("SUCCESS");
-      } else {
+
+      try {
+        const res = await api.createExams(this.examInfo);
+        if (res !== undefined && res.status === 201) {
+          this.loaderOption.loading = false;
+          this.createSuccess.status = true;
+          this.createSuccess.message = "created success";
+          setTimeout(() => {
+            this.createSuccess.status = false;
+            this.createSuccess.message = res;
+            this.sheet = false;
+          }, 2000);
+          setTimeout(() => {
+            this.this.$router.push({ name: "YourExam" }).catch(() => true);
+          }, 2500);
+        } else {
+          throw new Error("Create Fail");
+        }
+      } catch (e) {
+        console.log(e);
         this.createFail.status = true;
-        this.createFail.message = res;
-        setInterval(() => {
+        this.createFail.message = e;
+        setTimeout(() => {
           this.createFail.status = false;
-          this.createFail.message = res;
-        }, 1000);
+          this.createFail.message = e;
+          this.sheet = false;
+        }, 2000);
       }
     },
   },

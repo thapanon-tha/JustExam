@@ -16,6 +16,8 @@ const createExams = (examData) => {
       title: examData.title,
       description: examData.description,
     }
+  }).catch(error => {
+    return (error)
   });
 }
 
