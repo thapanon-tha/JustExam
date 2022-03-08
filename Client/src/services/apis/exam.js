@@ -11,7 +11,12 @@ const examList = (eid) => {
 }
 
 const createExams = (examData) => {
-  return axios.post(`http://localhost/api/exams/${eid}/questions`);
+  return axios.post(`http://localhost/api/exams`, {
+    data: {
+      title: examData.title,
+      description: examData.description,
+    }
+  });
 }
 
 const examMapper = (examData) => {

@@ -68,18 +68,6 @@
         />
       </div>
     </div>
-    <div class="flex flex-row-reverse gap-10 mt-10">
-      <ActionButton
-        class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-grayColor hover:text-white hover:bg-mainColor"
-        name="Cancle"
-        @on-click="onClickCancel()"
-      />
-      <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
-        name="Create"
-        @on-click="onClickCreate()"
-      />
-    </div>
   </div>
 </template>
 
@@ -91,7 +79,6 @@ import Paragraph from "@/components/Form/QuestionForm/Paragraph.vue";
 import Matching from "@/components/Form/QuestionForm/Matching.vue";
 import TrueFalse from "@/components/Form/QuestionForm/TrueFalse.vue";
 import CodingQuestion from "@/components/Form/QuestionForm/CodingQuestion.vue";
-import api from "@/services/apis";
 
 export default {
   name: "QuestionList",
@@ -211,6 +198,12 @@ export default {
       },
     };
   },
+  props: {
+    value: {
+      type: Boolean,
+      defaultf: false,
+    },
+  },
   methods: {
     addQuestion() {
       this.qlist.push({
@@ -246,13 +239,6 @@ export default {
     deleteQuestion(id) {
       this.qlist = this.qlist.filter((e) => e.id !== id);
     },
-    onClickCancel() {
-      this.$router.push({ name: "YourExam" }).catch(() => true);
-    },
-    onClickCreate() {
-      // Integrate with API with form validator
-      console.log(this.qlist);
-    },
     onChange(id, type) {
       let indexObject = this.qlist.findIndex((value) => value.id === id);
       this.qlist[indexObject].questionData = this.prototype[type];
@@ -261,6 +247,11 @@ export default {
   computed: {
     questionList() {
       return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+    },
+  },
+  watch: {
+    qlist: function (newVal, oldVal) {
+      this.$emit("update:qlist", this.qlist);
     },
   },
 };

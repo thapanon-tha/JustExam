@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center mt-10 mb-10">
     <div class="">
-      <InputForm inputLabel="Exam Title" type="text" v-model="formData.title" />
-      <InputForm inputLabel="Exam Description" type="text" v-model="formData.description" />
+      <InputForm inputLabel="Exam Title" type="text" v-model="title" />
+      <InputForm inputLabel="Exam Description" type="text" v-model="description" />
     </div>
     <div class="">
       <div class="felx flex-row mb-3">
@@ -46,13 +46,20 @@ export default {
   components: {
     InputForm,
   },
+  props: ["value"],
   data() {
     return {
-      formData: {
-        title: "",
-        description: "",
-      },
+      title: this.value.title,
+      description: this.value.description,
     };
+  },
+  watch: {
+    title: function (newVal, oldVal) {
+      this.$emit("input", { title: this.title, description: this.description });
+    },
+    description: function (newVal, oldVal) {
+      this.$emit("input", { title: this.title, description: this.description });
+    },
   },
 };
 </script>
