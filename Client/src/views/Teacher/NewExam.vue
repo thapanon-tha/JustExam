@@ -26,27 +26,36 @@
         />
       </div>
 
-      <div class="text-center">
-        <v-bottom-sheet v-model="sheet" persistent>
-          <v-sheet class="text-center">
-            <pulse-loader
-              :loading="loaderOption.loading"
-              :color="loaderOption.color"
-              :size="loaderOption.size"
-            ></pulse-loader>
-            <div v-if="createSuccess.status === true">
-              <v-alert dense text type="success">
-                <strong>{{ createSuccess.message }}</strong>
-              </v-alert>
+      <v-raw class="text-center">
+        <v-dialog v-model="sheet" persistent width="290">
+          <v-card max-width="290">
+            <v-card-title v-if="loaderOption.loading === true">Createing</v-card-title>
+            <v-card-title v-if="loaderOption.loading === false"></v-card-title>
+            <div class="d-flex align-center">
+              <v-card-text class="d-flex align-center justify-center">
+                <div v-if="loaderOption.loading === true">
+                  <pulse-loader
+                    :loading="loaderOption.loading"
+                    :color="loaderOption.color"
+                    :size="loaderOption.size"
+                  >
+                  </pulse-loader>
+                </div>
+                <div v-if="createSuccess.status === true">
+                  <v-alert dense text type="success">
+                    <strong>{{ createSuccess.message }}</strong>
+                  </v-alert>
+                </div>
+                <div v-if="createFail.status === true">
+                  <v-alert dense outlined type="error">
+                    <strong>{{ createFail.message }}</strong>
+                  </v-alert>
+                </div>
+              </v-card-text>
             </div>
-            <div v-if="createFail.status === true">
-              <v-alert dense outlined type="error">
-                <strong>{{ createFail.message }}</strong>
-              </v-alert>
-            </div>
-          </v-sheet>
-        </v-bottom-sheet>
-      </div>
+          </v-card>
+        </v-dialog>
+      </v-raw>
     </v-container>
   </div>
 </template>
@@ -107,10 +116,15 @@ export default {
     },
     async sendreq() {
       this.loaderOption.loading = true;
-
       try {
-        const res = await api.createExams(this.examInfo);
-        if (res !== undefined && res.status === 201) {
+        const res = await api.createExams(this.examInfo).then((res) => {
+          return {
+            ...res.data,
+            status: res.status,
+          };
+        });
+        console.log(res);
+        if (res.status === 201) {
           this.loaderOption.loading = false;
           this.createSuccess.status = true;
           this.createSuccess.message = "created success";
@@ -127,6 +141,7 @@ export default {
         }
       } catch (e) {
         console.log(e);
+        this.loaderOption.loading = false;
         this.createFail.status = true;
         this.createFail.message = e;
         setTimeout(() => {

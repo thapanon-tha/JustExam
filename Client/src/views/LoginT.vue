@@ -65,7 +65,11 @@ export default {
       this.$router.push({ name: "ExamChannelTeacher" }).catch(() => true);
     },
     onClickLoginWithGoogle() {
-      console.log("Login with google");
+      window.open(
+        "http://localhost/api/auth/google",
+        "popUpWindow",
+        "height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes"
+      );
     },
   },
 };

@@ -1,32 +1,29 @@
-const axios = require('axios')
+const axios = require("axios");
+const BACKEND_HOST = 'http://localhost'
 
 const exams = () => {
   // Call login api here
-
-  return axios.get(`http://localhost/api/exams`);
+  console.log(process.env)
+  return axios.get(`${BACKEND_HOST}/api/exams`);
 };
 
 const examList = (eid) => {
-  return axios.get(`http://localhost/api/exams/${eid}/questions`);
-}
+  return axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
+};
 
-const createExams = (examData) => {
-  return axios.post(`http://localhost/api/exams`, {
-    data: {
-      title: examData.title,
-      description: examData.description,
-    }
-  }).catch(error => {
-    return (error)
-  });
-}
+const createExams = async (examData) => {
+  return axios.post(`${BACKEND_HOST}/api/exams`, { data: { title: examData.title, description: examData.description } }, { validateStatus: false });
+};
 
-const examMapper = (examData) => {
+const loginGoogle = async () => {
+  return axios.get(`${BACKEND_HOST}/api/auth/google`);
+};
 
-}
+const examMapper = (examData) => { };
 
 export default {
   exams,
   examList,
-  createExams
-}
+  createExams,
+  loginGoogle
+};
