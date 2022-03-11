@@ -24,7 +24,6 @@
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
-          {{ item.questionData }}
           <div class="flex flex-row justify-center mt-10 mb-10">
             <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
             <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
@@ -206,8 +205,14 @@ export default {
   },
   methods: {
     addQuestion() {
+      let _id;
+      if (this.qlist.length === 0) {
+        _id = 1;
+      } else {
+        _id = this.qlist[this.qlist.length - 1].id + 1;
+      }
       this.qlist.push({
-        id: this.qlist[this.qlist.length - 1].id + 1,
+        id: _id,
         sectionId: this.selectedSectionId,
         type: "mc",
         data: "",

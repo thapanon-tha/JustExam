@@ -1,5 +1,6 @@
 const axios = require("axios");
-const BACKEND_HOST = 'http://localhost'
+const BACKEND_HOST = 'http://localhost:3000'
+const mapperTool = require('./examMapper.js');
 
 const exams = () => {
   // Call login api here
@@ -19,11 +20,23 @@ const loginGoogle = async () => {
   return axios.get(`${BACKEND_HOST}/api/auth/google`);
 };
 
-const examMapper = (examData) => { };
+const createQuestions = async (eid, data) => {
+  return axios.post(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data: data }, { validateStatus: false });
+};
+
+
+const examMapper = (examData) => {
+  const result = examData.map(element => {
+    return mapperTool.mapper(element)
+  });
+  return result
+};
 
 export default {
   exams,
   examList,
   createExams,
-  loginGoogle
+  loginGoogle,
+  examMapper,
+  createQuestions
 };

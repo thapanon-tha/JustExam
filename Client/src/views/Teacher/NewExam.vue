@@ -26,36 +26,32 @@
         />
       </div>
 
-      <v-raw class="text-center">
-        <v-dialog v-model="sheet" persistent width="290">
-          <v-card max-width="290">
-            <v-card-title v-if="loaderOption.loading === true">Createing</v-card-title>
-            <v-card-title v-if="loaderOption.loading === false"></v-card-title>
-            <div class="d-flex align-center">
-              <v-card-text class="d-flex align-center justify-center">
-                <div v-if="loaderOption.loading === true">
-                  <pulse-loader
-                    :loading="loaderOption.loading"
-                    :color="loaderOption.color"
-                    :size="loaderOption.size"
-                  >
-                  </pulse-loader>
-                </div>
-                <div v-if="createSuccess.status === true">
-                  <v-alert dense text type="success">
-                    <strong>{{ createSuccess.message }}</strong>
-                  </v-alert>
-                </div>
-                <div v-if="createFail.status === true">
-                  <v-alert dense outlined type="error">
-                    <strong>{{ createFail.message }}</strong>
-                  </v-alert>
-                </div>
-              </v-card-text>
-            </div>
-          </v-card>
-        </v-dialog>
-      </v-raw>
+      <v-dialog v-model="sheet" persistent width="290">
+        <v-card max-width="290">
+          <v-card-title v-if="loaderOption.loading === true">Createing</v-card-title>
+          <v-card-title v-if="loaderOption.loading === false">Result</v-card-title>
+          <div class="d-flex align-center">
+            <v-card-text class="d-flex align-center justify-center">
+              <div v-if="loaderOption.loading === true">
+                <pulse-loader
+                  :loading="loaderOption.loading"
+                  :color="loaderOption.color"
+                  :size="loaderOption.size"
+                >
+                </pulse-loader>
+              </div>
+              <div v-if="createSuccess.status === true" class="d-flex align-center">
+                <v-icon color="green" large> mdi-check-circle </v-icon>
+                <strong>{{ createSuccess.message }}</strong>
+              </div>
+              <div v-if="createFail.status === true" class="d-flex align-center">
+                <v-icon color="red" large> mdi-alert-circle </v-icon>
+                <strong>{{ createFail.message }}</strong>
+              </div>
+            </v-card-text>
+          </div>
+        </v-card>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -123,14 +119,15 @@ export default {
             status: res.status,
           };
         });
-        console.log(res);
         if (res.status === 201) {
+          const resultMap = api.examMapper(this.questions);
+          await api.createQuestions(res.eid, resultMap);
           this.loaderOption.loading = false;
           this.createSuccess.status = true;
           this.createSuccess.message = "created success";
           setTimeout(() => {
             this.createSuccess.status = false;
-            this.createSuccess.message = res;
+            this.createSuccess.message = "";
             this.sheet = false;
           }, 2000);
           setTimeout(() => {
