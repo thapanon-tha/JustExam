@@ -108,9 +108,9 @@ export default {
     },
     onClickCreate() {
       this.sheet = !this.sheet;
-      this.sendreq();
+      this.create();
     },
-    async sendreq() {
+    async create() {
       this.loaderOption.loading = true;
       try {
         const res = await api.createExams(this.examInfo).then((res) => {
@@ -121,18 +121,27 @@ export default {
         });
         if (res.status === 201) {
           const resultMap = api.examMapper(this.questions);
-          await api.createQuestions(res.eid, resultMap);
-          this.loaderOption.loading = false;
-          this.createSuccess.status = true;
-          this.createSuccess.message = "created success";
-          setTimeout(() => {
-            this.createSuccess.status = false;
-            this.createSuccess.message = "";
-            this.sheet = false;
-          }, 2000);
-          setTimeout(() => {
-            this.this.$router.push({ name: "YourExam" }).catch(() => true);
-          }, 2500);
+          const questionsResp = await api.createQuestions(res.eid, resultMap).then((res) => {
+            return {
+              ...res.data,
+              status: res.status,
+            };
+          });
+          if (questionsResp.status >= 200 && questionsResp.status < 300) {
+            this.loaderOption.loading = false;
+            this.createSuccess.status = true;
+            this.createSuccess.message = "created success";
+            setTimeout(() => {
+              this.createSuccess.status = false;
+              this.createSuccess.message = "";
+              this.sheet = false;
+            }, 2000);
+            setTimeout(() => {
+              this.this.$router.push({ name: "YourExam" }).catch(() => true);
+            }, 2500);
+          } else {
+            throw new Error("Create Fail");
+          }
         } else {
           throw new Error("Create Fail");
         }
