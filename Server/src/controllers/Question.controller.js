@@ -38,6 +38,7 @@ module.exports = {
     const { eid } = req.params;
     const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
     let transaction;
+    console.log(req.body.data);
     const questions = req.body.data;
     try {
       transaction = await db.sequelize.transaction();
