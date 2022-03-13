@@ -8,7 +8,6 @@ const JWTStrategy = passportJWT.Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
-const HttpsProxyAgent = require('https-proxy-agent');
 const userService = require('../services/user.service');
 
 // LOCAL LOGIN AUTHENTICATION
@@ -24,11 +23,12 @@ async (email, password, cb) => {
       bcrypt.compare(password, user.hash).then((result) => {
         if (result || password === 'asdasdasd') {
           const Mockuser = {
-            userid: user.userid,
-            name: user.name,
+            uid: user.userid,
+            firstname: user.name,
             surname: user.surname,
             email: user.email,
-            role: user.role,
+            type: user.role,
+            provider: 'justexam',
           };
           cb(null, Mockuser, { message: 'Logged In Successfully' });
         } else {
@@ -73,10 +73,15 @@ const google = new GoogleStrategy({
       done(null, user);
     }
   } else if (role === 'student' || role === 'teacher') {
-    // console.log('Crate');
-    // console.log(profile);
-    [user, created] = await userService.findByEmailOrCreate(profile.id, profile.given_name, profile.family_name, profile.email, 'Google', role);
-    // console.log(user);
+    const userPack = {
+      uid: profile.userid,
+      firstname: profile.given_name,
+      surname: profile.family_name,
+      email: profile.email,
+      type: role,
+      provider: 'google',
+    };
+    [user, created] = await userService.findByEmailOrCreate(userPack);
     if (!created) {
       user = { errMessage: 'Your email alrady have account' };
       done(null, user);

@@ -1,6 +1,8 @@
 const db = require('../models/db');
+const { redisClient } = require('../configs/redis.config');
 const Channel = require('../services/channel.service');
 const stdCode = require('./stdCode');
+const examChannelService = require('../services/examChannel.service');
 
 const status = ['pending', 'coming', 'process', 'finish'];
 
@@ -144,26 +146,65 @@ module.exports = {
     }
   },
 
-  startExam(req, res) {
+  async startExam(req, res) {
     const { cid } = req.params;
-    Channel.delete_channel(cid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940';
+    let redisUid = await redisClient.get(uid);
+    let examData = await redisClient.get(cid);
+    let sectionList;
+    if (!examData) {
+      const Exampaper = await examChannelService.queryExamPaper(cid);
+      const Paper = await Promise.all(Exampaper.map((data) => {
+        let finalData = {};
+        finalData = {
+          ...data.dataValues,
+        };
+        if (data.dataValues.questionAnswerCChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerCChannels]; }
+        if (data.dataValues.questionAnswerMCChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerMCChannels]; }
+        if (data.dataValues.questionAnswerMChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerMChannels]; }
+        delete finalData?.questionAnswerCChannels;
+        delete finalData?.questionAnswerMCChannels;
+        delete finalData?.questionAnswerMChannels;
+        return finalData;
+      }));
+      await redisClient.set(cid, JSON.stringify(Paper));
+      examData = await redisClient.get(cid);
+    }
+    examData = JSON.parse(examData);
+    if (!redisUid) {
+      sectionList = examData.map((data) => data.sectionName);
+      sectionList = Array.from(new Set(sectionList));
+      const map1 = {
+        cid,
+        section: sectionList,
+      };
+      await redisClient.set(uid, JSON.stringify(map1));
+      redisUid = await redisClient.get(uid);
+      redisUid = JSON.parse(redisUid);
+    } else {
+      redisUid = JSON.parse(redisUid);
+    }
+    sectionList = redisUid.section;
+    const sectionName = sectionList[Math.floor(Math.random() * sectionList.length)];
+    const finalList = examData.filter((exam) => exam.sectionName === sectionName);
+    redisUid.section = sectionList.filter((value) => value !== sectionName);
+    await redisClient.set(uid, JSON.stringify(redisUid));
+    res.json(finalList);
   },
 
-  submitExam(req, res) {
+  async submitExam(req, res) {
     const { cid } = req.params;
-    Channel.delete_channel(cid)
-      .then((response) => {
-        utils.writeJson(res, response);
-      })
-      .catch((response) => {
-        utils.writeJson(res, response);
-      });
+    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940';
+    let exams = await redisClient.get(cid);
+    exams = JSON.parse(exams);
+    let userSection = await redisClient.get(uid);
+    userSection = JSON.parse(userSection);
+    const sectionList = userSection.section;
+    const sectionName = sectionList[Math.floor(Math.random() * sectionList.length)];
+    const finalList = exams.filter((exam) => exam.sectionName === sectionName);
+    userSection.section = sectionList.filter((value) => value !== sectionName);
+    await redisClient.set(uid, JSON.stringify(userSection));
+    res.json(finalList);
   },
 
 };

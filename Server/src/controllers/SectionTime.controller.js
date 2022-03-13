@@ -11,7 +11,7 @@ module.exports = {
       if (data.length !== 0) {
         stdCode.querySuccess(data, res);
       } else {
-        stdCode.NotFound({ message: `sectionTime for cid : ${cid} Not Found` }, res);
+        stdCode.NotFound({ message: `sectionTime for ecid : ${ecid} Not Found` }, res);
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
