@@ -12,9 +12,7 @@
     </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
       <div  v-for="box in boxlist" :key="box">
-        <CardChannel
-        
-        />
+        <CardChannel/>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <div>
     <Header main="Your exam" current="> New exam">
       <button
-        @click="onClick('YourExam')"
+        @click="onClick('PreviewExam')"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
         Preview

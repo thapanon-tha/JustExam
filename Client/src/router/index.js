@@ -65,6 +65,11 @@ const routes = [
     component: () => import('@/views/Teacher/NewExam.vue'),
   },
   {
+    path: '/yourexam/new-exam/preview',
+    name: 'PreviewExam',
+    component: () => import('@/views/Teacher/PreviewExam.vue'),
+  },
+  {
     path: '/yourexam/test-exam-inside',
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
