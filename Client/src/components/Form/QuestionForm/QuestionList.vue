@@ -1,33 +1,33 @@
 <template>
   <div class="flex flex-col justify-center">
     
-    <div class="flex flex-row mt-5 justify-center">
+    <div class="flex flex-row mt-5 justify-start ml-5">
       <div
-        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor text-center ml-3"
+        class="bg-subColor border-orange-200 border border-solid rounded-xl shadow-sm font-semilight 
+        text-mainColor mr-2"
         v-for="(section, index) in sectionlist"
         :key="index"
         
       >
-        <div 
-          class="rounded-md flex flex-row"
-          @click="onClickSelectSection(section.id)"
-        >
-          <p class="pt-3 pl-3">Section {{ index + 1 }}</p>
-          <div 
-          class="rounded-md hover:text-white hover:bg-mainColor"
-          @click="clickToSee"
-          >
-            <span class="material-icons pt-3">more_vert</span>
+        <div class="flex flex-row" @click="onClickSelectSection(section.id)">
+          <div class="pt-3 pl-3 pr-3">
+            <p>Section {{ index + 1 }}</p>
           </div>
-          <div class="w-10 border-l-2 border-orange-200 hover:bg-mainColor hover:text-white rounded-md" v-if="seeModal" @click="deleteSection(section.id)">
-            <span class="material-icons pt-3">delete</span>
-          </div>
+          <div class="pt-3 pr-3"> 
+            <v-icon 
+              small 
+              color="orange darken-2"
+              class="rounded-full hover:white hover:bg-orange-200"
+              @click="deleteSection(section.id)"
+            >
+              mdi-close
+            </v-icon>
+          </div> 
         </div>
-        
       </div>
       
       <ActionButton
-        class="bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white px-4 py-2 ml-3"
+        class="w-12 h-12 bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white mt-1 ml-2"
         name="+"
         @on-click="addSection"
       />
@@ -41,7 +41,7 @@
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
-          <div class="flex flex-row justify-center mt-10 mb-10">
+          <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10">
             <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
             <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
             <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
@@ -90,18 +90,6 @@
           @on-click="addQuestion"
         />
       </div>
-    </div>
-    <div class="flex flex-row-reverse gap-10 mt-10">
-      <ActionButton
-        class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-grayColor hover:text-white hover:bg-mainColor"
-        name="Cancle"
-        @on-click="onClickCancel()"
-      />
-      <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
-        name="Create"
-        @on-click="onClickCreate()"
-      />
     </div>
   </div>
 </template>
@@ -179,12 +167,78 @@ export default {
           value: "ca",
         },
       ],
+      //* this is prototype for new question
+      prototype: {
+        mc: {
+          question: "",
+          answers: [
+            {
+              id: 1,
+              optionData: "",
+              correct: false,
+            },
+          ],
+        },
+        sa: {
+          question: "",
+          keylist: [
+            {
+              id: 1,
+              keyans: "",
+            },
+          ],
+        },
+        pa: {
+          question: "",
+        },
+        tf: {
+          question: "",
+          true: false,
+          false: false,
+        },
+        ma: {
+          question: "",
+          matchs: [
+            {
+              id: 1,
+              subquestion: "",
+              matchanswer: "",
+            },
+          ],
+        },
+        ca: {
+          lang: "",
+          code: "",
+          question: "",
+          input: "",
+          output: "",
+          example: [
+            {
+              id: 1,
+              xampleinput: "",
+              xampleoutput: "",
+            },
+          ],
+        },
+      },
     };
+  },
+  props: {
+    value: {
+      type: Boolean,
+      defaultf: false,
+    },
   },
   methods: {
     addQuestion() {
+      let _id;
+      if (this.qlist.length === 0) {
+        _id = 1;
+      } else {
+        _id = this.qlist[this.qlist.length - 1].id + 1;
+      }
       this.qlist.push({
-        id: this.qlist[this.qlist.length - 1].id + 1,
+        id: _id,
         sectionId: this.selectedSectionId,
         type: "mc",
         data: "",
@@ -225,84 +279,19 @@ export default {
     deleteQuestion(id) {
       this.qlist = this.qlist.filter((e) => e.id !== id);
     },
-    onClickCancel() {
-      this.$router.push({ name: "YourExam" }).catch(() => true);
-    },
-    onClickCreate() {
-      // Integrate with API with form validator
-      console.log(this.qlist);
-    },
-    onChange(id , type) {
-      let indexObject = this.qlist.findIndex(value => value.id === id);
-      if (type === "mc") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          answers: [
-            {
-              id: 1,
-              optionData: "",
-              correct: false,
-            },
-          ],
-        }
-      
-      else if (type === "sa") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          keylist: [
-            {
-              id: 1,
-              keyans: "",
-            },
-          ],
-        }
-
-      else if (type === "pa") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-  
-        }
-
-      else if (type === "tf") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          true: false,
-          false: false,
-        }
-
-      else if (type === "ma") 
-        this.qlist[indexObject].questionData = {
-          question: "",
-          matchs: [
-            {
-              id: 1,
-              subquestion: "",
-              matchanswer: "",
-            },
-          ],
-        }
-
-      else (type === "code") 
-        this.qlist[indexObject].questionData = {
-          lang: "",
-          code: "",
-          question: "",
-          input: "",
-          output: "",
-          example: [
-            {
-              id: 1,
-              xampleinput: "",
-              xampleoutput: "",
-            },
-          ],
-        }
-
+    onChange(id, type) {
+      let indexObject = this.qlist.findIndex((value) => value.id === id);
+      this.qlist[indexObject].questionData = this.prototype[type];
     },
   },
   computed: {
     questionList() {
       return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+    },
+  },
+  watch: {
+    qlist: function (newVal, oldVal) {
+      this.$emit("update:qlist", this.qlist);
     },
   },
 };

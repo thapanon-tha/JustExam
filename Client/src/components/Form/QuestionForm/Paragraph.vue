@@ -7,8 +7,8 @@
           theme="snow"
           width="8/9"
           height="40"
-          v-model="question"
-          :onChangeFunc=onChange
+          v-model="questionData.question"
+          :onChangeFunc="onChange"
         />
       </div>
     </div>
@@ -16,22 +16,22 @@
 </template>
 
 <script>
-import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+import QuillTextEditor from "@/components/TextEditor/QuillTextEditor.vue";
 
 export default {
-  name: 'Paragraph',
+  name: "Paragraph",
   components: {
     QuillTextEditor,
   },
-  prop: ['value'],
+  props: ["value"],
   data() {
     return {
-      questionData: this.value
+      questionData: this.value,
     };
   },
   methods: {
     onChange() {
-      this.$emit('input', this.questionData);
+      this.$emit("input", this.questionData);
     },
   },
 };

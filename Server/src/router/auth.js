@@ -27,16 +27,9 @@ router.get('/google/callback',
     if (user.errMassage !== false) {
       return res.status(401).send(user);
     } if (user) {
-      const userdata = {
-        userid: user.userid,
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-        role: user.role,
-      };
-      const token = jwt.sign(userdata, process.env.JWT_SECRET);
+      const token = jwt.sign(user, process.env.JWT_SECRET);
 
-      return res.json({ ...userdata, token });
+      return res.json({ ...user, token });
     }
     return res.status(422).json(user);
   });

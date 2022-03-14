@@ -25,20 +25,6 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-5 place-self-end">
-                <button 
-                    class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-2
-                    font-semilight text-mainColor"
-                >
-                    Cancel
-                </button>
-                <button 
-                    class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-2
-                    font-semilight text-mainColor ml-5"
-                >
-                    Save
-                </button>
-            </div>
         </div>
     </div>
 </template>

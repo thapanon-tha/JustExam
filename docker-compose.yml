@@ -1,6 +1,7 @@
 version: "3.4"
 
-x-logging: &default-logging
+x-logging:
+  &default-logging
   logging:
     driver: json-file
     options:
@@ -33,53 +34,34 @@ services:
     depends_on:
       - db
     env_file: ./.env
+    ports:
+      - $EXPOSE_PORT:$EXPOSE_PORT
     networks:
       - network
     restart: always
 
-  nginx:
-    image: nginx:1.21.0-alpine
-    volumes:
-      - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    command: ["nginx", "-g", "daemon off;"]
-    # depends_on:
-    #   - client
+  redis:
+    container_name: redis
+    image: "redis:alpine"
     networks:
       - network
     ports:
-      - "${EXPOSE_PORT}:80"
-
+      - "${redisPort}:${redisPort}"
+    restart: always
+  # nginx:
+  #   image: nginx:1.21.0-alpine
+  #   volumes:
+  #     - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   command: [ "nginx", "-g", "daemon off;" ]
+  #   # depends_on:
+  #   #   - client
+  #   networks:
+  #     - network
+  #   ports:
+  #     - "80:80"
   # server:
   #   build: ./Server
   #   image: "jebuild.azurecr.io/server"
-  #   volumes:
-  #     - upload:/app/data/upload
-  #     - log:/app/log
-  #     - ./server/src:/app/src
-  #   # depends_on:
-  #   #   - db
-  #   env_file: ./.env
-  #   networks:
-  #     - network
-  #   restart: always
-
-  # server2:
-  #   build: ./Server
-  #   image: "jebuild.azurecr.io/server2"
-  #   volumes:
-  #     - upload:/app/data/upload
-  #     - log:/app/log
-  #     - ./server/src:/app/src
-  #   # depends_on:
-  #   #   - db
-  #   env_file: ./.env
-  #   networks:
-  #     - network
-  #   restart: always
-
-  # server3:
-  #   build: ./Server
-  #   image: "jebuild.azurecr.io/server3"
   #   volumes:
   #     - upload:/app/data/upload
   #     - log:/app/log

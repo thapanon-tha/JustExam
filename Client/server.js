@@ -1,7 +1,6 @@
 const express = require('express');
 const serveStatic = require('serve-static');
 const path = require('path');
-
 const app = express();
 
 // here we are configuring dist to serve app files
