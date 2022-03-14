@@ -1,7 +1,12 @@
 <template>
     <div class="w-3/6 h-auto border-2 border-orange-200 rounded-xl bg-subColor">
         <div class="mt-5 ml-5 mr-5 mb-5">
-            <h1 class="font-semilight text-2xl mb-5">Choose your exam</h1>
+            <div class="flex flex-col">
+                <div class="flex justify-end" @click="clikClose">
+                    <v-icon small color="orange" class="rounded-full hover:bg-orange-200">mdi-close</v-icon>
+                </div>
+                <h1 class="font-semilight text-2xl mb-5">Choose your exam</h1>
+            </div>
             <div class="overflow-x-scroll">
                 <div class="flex justify-start gap-5 mt-5 mb-5">
                     <div 
@@ -40,6 +45,11 @@ export default {
             numQuestion: 5,
             cardlist: 20,
         };
+    },
+    methods: {
+        clikClose() {
+            this.$emit('clikClose');
+        },
     },
 };
 </script>

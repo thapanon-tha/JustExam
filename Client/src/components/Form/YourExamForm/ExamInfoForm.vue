@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center mt-10 mb-10">
-    <div class="">
+    <div>
       <InputForm inputLabel="Exam Title" type="text" v-model="title" />
       <InputForm inputLabel="Exam Description" type="text" v-model="description" />
     </div>

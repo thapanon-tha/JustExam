@@ -4,7 +4,7 @@
         main="Your exam" current="> Preview Exam"
         >
             <button
-                @click="onClick('NewExam')"
+                @click="onClickBack"
                 class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
             >
                 Back
@@ -82,9 +82,9 @@ export default {
         };
     },
     methods: {
-        onclick(pageName) {
-            this.$router.push({ name: pageName }).catch(() => {});
-        },
+        onClickBack() {
+            this.$router.push({ name: "NewExam" }).catch(() => true);
+    },
     },
 };
 

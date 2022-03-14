@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="flex flex-col">
-      <label class="text-xl font-semilight">
+      <!-- <label class="text-xl font-semilight">
           Title
-      </label>
-      <div class="mt-1 box-border h-40 w-60 p-4
+      </label> -->
+      <div class="box-border h-40 w-60 p-4
                   rounded-xl text-white bg-gradient-to-tl
                   from-gray-800 via-gray-800 to-orange-700"
       >

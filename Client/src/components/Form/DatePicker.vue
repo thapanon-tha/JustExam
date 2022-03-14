@@ -8,7 +8,7 @@
         (MM/DD/YYYY)  
       </label>
     </div>
-    <div class="flex w-5/6">
+    <div class="flex w-3/6">
       <v-menu
         v-model="menu"
         :close-on-content-click="false"
@@ -19,8 +19,8 @@
                 
       >
         <template v-slot:activator="{ on, attrs }">
-          <div class="px-10 w-full border border-solid border-mainColor border-opacity-40 text-base font-semilight
-                    text-grayColor bg-subColor rounded-md pt-3 pb-3"
+          <div class="px-10 pt-3 pb-3 w-full border border-solid border-mainColor border-opacity-40 text-base font-semilight
+                    text-grayColor bg-subColor rounded-md text-center"
             readonly
             v-bind="attrs"
             v-on="on"

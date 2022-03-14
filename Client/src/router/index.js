@@ -55,6 +55,16 @@ const routes = [
     component: () => import('@/views/Teacher/InsideChannelTeacher.vue'),
   },
   {
+    path: '/examchannel/test-channel-1/member',
+    name: 'MemberChannel',
+    component: () => import('@/views/Teacher/MemberChannel.vue'),
+  },
+  {
+    path: '/examchannel/test-channel-1/summary',
+    name: 'ExamSummary',
+    component: () => import('@/views/Teacher/ExamSummary.vue'),
+  },
+  {
     path: '/yourexam',
     name: 'YourExam',
     component: () => import('@/views/Teacher/YourExam.vue'),

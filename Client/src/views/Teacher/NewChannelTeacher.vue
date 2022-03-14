@@ -1,69 +1,16 @@
-
 <template>
-  <div class="mb-96">
-    <Header main="Exam channel" current=" > New channel" button="Back" to="ExamChannelTeacher" />
-    <div class="mt-20">
-      <form>
-        <div class="flex flex-row justify-center gap-40">
-          <div class="flex flex-col gap-5">
-            <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
-            <div class="form-control">
-              <InputForm inputLabel="Channel Title" type="text" v-model="title" />
-            </div>
-            <div class="form-control">
-              <InputForm inputLabel="Channel Description" type="text" v-model="description" />
-            </div>
-            <div class="form-control">
-              <DatePicker v-model="datePicked" />
-            </div>
-            <div class="form-control">
-              <TimePicker labelText="Time" />
-            </div>
-          </div>
-          <div class="form-control">
-            <div class="flex flex-col justify-center gap-5">
-              <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
-              <div>
-                <Checkbox3 textRight="Random sections" v-model="examsetting" />
-              </div>
-              <div>
-                <Checkbox3 textRight="Random questions in section" v-model="examsetting" />
-              </div>
-              <div>
-                <Checkbox3 textRight="Shuffle choices" v-model="examsetting" />
-              </div>
-              <div>
-                <Checkbox3
-                  textRight="Show correct answers after submit the exam"
-                  v-model="examsetting"
-                />
-              </div>
-              <div>
-                <Checkbox3
-                  textRight="Show total scores after submit the exam"
-                  v-model="examsetting"
-                />
-              </div>
-              <div>
-                <Checkbox3
-                  textRight="Cannot submit the exam if there are missed answers"
-                  v-model="examsetting"
-                />
-              </div>
-              <!-- <div> {{ examsetting }} </div> -->
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+  <div class="mb-60">
+    <Header main="Exam channel" current=" > New channel" class="mb-10"/>
+    <ChannelForm v-model="channelInfo"/>
     <div class="relative">
       <CardAddExam
+        @clikClose="closeModalAddExam"
         class="fixed z-0 top-52 left-96"
         v-if="showModal"
       />
     </div>
     <ActionButton
-      class="ml-56 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
       name="+ Add your exam"
       @on-click="onClickAddExam"
     />
@@ -86,10 +33,7 @@
 <script>
 import ActionButton from "@/components/Button/ActionButton.vue";
 import Header from "@/components/Header/Header.vue";
-import InputForm from "@/components/Form/InputForm.vue";
-import Checkbox3 from "@/components/Form/Checkbox3.vue";
-import DatePicker from "@/components/Form/DatePicker.vue";
-import TimePicker from "@/components/Form/TimePicker.vue";
+import ChannelForm from '@/components/Form/ChannelForm/ChannelForm';
 import CardAddExam from '@/components/Card/CardAddExam';
 
 export default {
@@ -97,20 +41,24 @@ export default {
   components: {
     ActionButton,
     Header,
-    InputForm,
-    Checkbox3,
-    DatePicker,
-    TimePicker,
+    ChannelForm,
     CardAddExam,
   },
   data() {
     return {
       showModal: false,
-      ChannelData: {
+      channelInfo: {
         title: "",
         description: "",
-        examsetting: [],
-        datePicked: new Date(),
+        datePicked: "",
+        settingData: {
+          randomSec: false,
+          randomQuestion: false,
+          shuffleChoices: false,
+          showCAnswer: false,
+          showTotalScore: false,
+          cantSubmitEmpty: false,
+        },
       },
     };
   },
@@ -124,6 +72,9 @@ export default {
     },
     onClickCancel() {
       this.$router.push({ name: "ExamChannelTeacher" }).catch(() => true);
+    },
+    closeModalAddExam() {
+      this.showModal = false;
     },
   },
 };

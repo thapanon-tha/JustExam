@@ -12,7 +12,10 @@
     </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
       <div  v-for="box in boxlist" :key="box">
-        <CardChannel/>
+        <div @click="onClick('InsideChannelTeacher')" class="w-60">
+          <CardChannel 
+          />
+        </div>
       </div>
     </div>
   </div>
