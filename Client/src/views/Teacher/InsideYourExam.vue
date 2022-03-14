@@ -1,14 +1,10 @@
 <template>
   <div>
-    <!-- <Header main="Your exam" current="> New exam" button="Back" to="YourExam" /> -->
-    <NewExam/>
+    <Header main="Your exam" current="> New exam" />
   </div>
 </template>
 
 <script>
-
-import QuestionList from '@/components/Form/QuestionForm/QuestionList.vue';
-import NewExam from '@/views/Teacher/NewExam';
 
 export default {
   name: 'InsideYourExam',

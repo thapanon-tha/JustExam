@@ -1,14 +1,31 @@
 <template>
   <div class="flex flex-col justify-center">
+    
     <div class="flex flex-row mt-5 justify-center">
       <div
-        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor px-5 py-2 ml-3 hover:text-white hover:bg-mainColor"
+        class="bg-subColor border-orange-200 border border-solid rounded-md shadow-sm font-semilight text-mainColor text-center ml-3"
         v-for="(section, index) in sectionlist"
         :key="index"
-        @click="onClickSelectSection(section.id)"
+        
       >
-        <h1>Section {{ index + 1 }}</h1>
+        <div 
+          class="rounded-md flex flex-row"
+          @click="onClickSelectSection(section.id)"
+        >
+          <p class="pt-3 pl-3">Section {{ index + 1 }}</p>
+          <div 
+          class="rounded-md hover:text-white hover:bg-mainColor"
+          @click="clickToSee"
+          >
+            <span class="material-icons pt-3">more_vert</span>
+          </div>
+          <div class="w-10 border-l-2 border-orange-200 hover:bg-mainColor hover:text-white rounded-md" v-if="seeModal" @click="deleteSection(section.id)">
+            <span class="material-icons pt-3">delete</span>
+          </div>
+        </div>
+        
       </div>
+      
       <ActionButton
         class="bg-mainColor border border-solid rounded-full shadow-sm font-semilight text-white px-4 py-2 ml-3"
         name="+"
@@ -33,7 +50,8 @@
             <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'" />
             <div class="flex flex-col ml-10">
               <select
-                class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white px-8 py-3 text-mainColor font-semilight"
+                class="border rounded-md border-solid border-mainColor border-opacity-40 
+                bg-white px-8 py-3 text-mainColor font-semibold text-center"
                 id="type"
                 name="type"
                 v-model="item.type"
@@ -47,16 +65,22 @@
                   {{ item.name }}
                 </option>
               </select>
-              <ActionButton
-                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-3 py-3 font-semilight text-mainColor"
-                name="Copy exam"
-                @on-click="copyQuestion(index)"
-              />
-              <ActionButton
-                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
-                name="Delete"
-                @on-click="deleteQuestion(item.id)"
-              />
+              <button
+                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg font-semilight text-mainColor p-1"
+                @click="copyQuestion(index)"
+              >
+                <span class="material-icons mt-2">
+                  content_copy
+                </span>
+              </button>
+              <button
+                class="mt-3 bg-white border-orange-200 border border-solid rounded-lg font-semilight text-mainColor"
+                @click="deleteQuestion(item.id)"
+              >
+                <span class="material-icons mt-2 text-3xl">
+                  delete_outline
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -104,6 +128,7 @@ export default {
   },
   data() {
     return {
+      seeModal: false,
       selectedSectionId: 1,
       sectionlist: [
         {
@@ -185,6 +210,15 @@ export default {
       this.selectedSectionId = id;
       console.log(this.selectedSectionId);
     },
+    clickToSee() {
+      this.seeModal = !this.seeModal;
+    },
+    deleteSection(id) {
+      this.selectedSectionId = id;
+      this.qlist = this.qlist.filter((e) => e.id !== id);
+      this.sectionlist = this.sectionlist.filter((e) => e.id !== id);
+      this.seeModal = false;
+    },
     copyQuestion(index) {
       console.log(this.qlist[index]);
     },
@@ -250,6 +284,7 @@ export default {
 
       else (type === "code") 
         this.qlist[indexObject].questionData = {
+          lang: "",
           code: "",
           question: "",
           input: "",

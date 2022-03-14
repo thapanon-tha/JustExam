@@ -8,9 +8,29 @@
         +  New exam
       </button>
     </Header>
-    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
-      <div @click="onClick('InsideYourExam')" v-for="box in boxlist" :key="box">
-        <CardExam />
+    <select
+      class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2
+            text-mainColor font-semilight text-sm"
+      id="sort"
+      name="sort"
+      v-model="sort"
+    >
+      <option disabled value="">Sort by</option>
+      <option
+        v-for="(item, index) in sortlist"
+        :key="index"
+        :value="item.value"
+      >{{ item.name }}</option>
+    </select>
+    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20 static ">
+      <div v-for="box in boxlist" :key="box">
+        <div v-if="showSetting" class="w-auto bg-white border-2 border-orange-200 rounded-lg text-xs ml-52 absolute">
+          <div class="p-1 border-b-2 border-orange-200 rounded-t-lg hover:bg-mainColor hover:text-white">Edit Exam</div>
+          <div class="p-1 rounded-b-lg hover:bg-mainColor hover:text-white">Delete Exam</div>
+        </div>
+        <CardExam 
+          @clickSet="clickSetting"
+        />
       </div>
     </div>
   </div>
@@ -31,11 +51,25 @@ export default {
     return {
       qlist: [],
       boxlist: 4,
+      showSetting: false,
+      sortlist: [
+        {
+          name: "Incoming exam",
+          value: "comin"
+        },
+        {
+          name: "Alphabetical",
+          value: "alpha"
+        },
+      ],
     };
   },
   methods: {
     onClick(pageName) {
       this.$router.push({ name: pageName }).catch(() => true);
+    },
+    clickSetting() {
+      this.showSetting = !this.showSetting;
     },
   },
   mounted() {

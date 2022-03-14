@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-96">
+  <div class="mb-60">
     <Header main="Exam channel" current=" > New channel" button="Back" to="ExamChannelTeacher" />
     <div class="mt-20">
       <form>
@@ -10,19 +10,19 @@
               <InputForm
                 inputLabel="Channel Title"
                 type="text"
-                v-model="title"
+                v-model="ChannelData.title"
               />
             </div>
             <div class="form-control">
               <InputForm
                 inputLabel="Channel Description"
                 type="text"
-                v-model="description"
+                v-model="ChannelData.description"
               />
             </div>
             <div class="form-control">
               <DatePicker
-                v-model="datePicked"
+                v-model="ChannelData.datePicked"
               />
             </div>
             <div class="form-control">
@@ -37,37 +37,37 @@
               <div>
                 <Checkbox3
                   textRight="Random sections"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <div>
                 <Checkbox3
                   textRight="Random questions in section"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <div>
                 <Checkbox3
                   textRight="Shuffle choices"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <div>
                 <Checkbox3
                   textRight="Show correct answers after submit the exam"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <div>
                 <Checkbox3
                   textRight="Show total scores after submit the exam"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <div>
                 <Checkbox3
                   textRight="Cannot submit the exam if there are missed answers"
-                  v-model="examsetting"
+                  v-model="ChannelData.examsetting"
                 />
               </div>
               <!-- <div> {{ examsetting }} </div> -->
@@ -76,14 +76,19 @@
         </div>
       </form>
     </div>
+    <div class="relative">
+      <CardAddExam
+        class="fixed z-0 top-52 left-96"
+        v-if="showModal"
+      />
+    </div>
     <ActionButton
         class="ml-56 mt-10 bg-white border-orange-200
                border border-solid rounded-lg px-6 py-4
                font-semilight text-mainColor"
         name="+ Add your exam"
-        
+        @on-click="onClickAddExam"
     />
-
     <div class="flex justify-end mr-56">
       <ActionButton
         class="bg-white border-orange-200 border
@@ -99,7 +104,7 @@
         name="Create"
         @on-click="submitForm"
       />
-    </div>
+    </div>    
   </div>
 </template>
 
@@ -110,6 +115,7 @@ import InputForm from '@/components/Form/InputForm.vue';
 import Checkbox3 from '@/components/Form/Checkbox3.vue';
 import DatePicker from '@/components/Form/DatePicker.vue';
 import TimePicker from '@/components/Form/TimePicker.vue';
+import CardAddExam from '@/components/Card/CardAddExam';
 
 export default {
   name: 'NewChannelTeacher',
@@ -120,9 +126,11 @@ export default {
     Checkbox3,
     DatePicker,
     TimePicker,
+    CardAddExam,
   },
   data() {
     return {
+      showModal: false,
       ChannelData: {
         title: '',
         description: '',
@@ -133,6 +141,9 @@ export default {
     };
   },
   methods: {
+    onClickAddExam() {
+      this.showModal = true;
+    },
     submitForm() {
       this.title = '';
       this.description = '';

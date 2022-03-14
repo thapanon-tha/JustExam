@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="ml-3">
-      <div class="flex justify-start">
-        <div class="shadow-sm border-mainColor border-l-4 mb-3">
+      <div class="flex flex-row mb-3">
+        <div class="shadow-sm border-mainColor border-l-4">
           <QuillTextEditor
             :placeholder="`Question`"
             theme="bubble"
@@ -24,6 +24,23 @@
             :onChangeFunc="onChange"
           />
         </div>
+        <select
+          class="border rounded-md border-solid border-mainColor border-opacity-40 
+                bg-mainColor px-2 text-white font-semilight text-center ml-10"
+          id="lang"
+          name="lang"
+          v-model="questionData.lang"
+          :onChangeFunc="onChange"
+        >
+          <option disabled value="">Select Language</option>
+          <option
+            v-for="(item, index) in Langlist"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.name }}
+          </option>
+        </select>
       </div>
       <div class="flex justify-start">
         <div class="shadow-sm border-mainColor border-l-4 mb-3">
@@ -110,6 +127,44 @@ export default {
   data() {
     return {
       questionData: this.value,
+      Langlist: [
+        {
+          name: "Python",
+          value: "python",
+        },
+        {
+          name: "C",
+          value: "c",
+        },
+        {
+          name: "Java",
+          value: "java",
+        },
+        {
+          name: "Javascript",
+          value: "javascript",
+        },
+        {
+          name: "C++",
+          value: "cpp",
+        },
+        {
+          name: "C#",
+          value: "csharp",
+        },
+        {
+          name: "Kotlin",
+          value: "kotlin",
+        },
+        {
+          name: "Ruby",
+          value: "ruby",
+        },
+        {
+          name: "Go",
+          value: "go",
+        },
+      ],
     };
   },
   methods: {
