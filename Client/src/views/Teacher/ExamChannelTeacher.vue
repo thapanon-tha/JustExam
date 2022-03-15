@@ -11,9 +11,14 @@
       </button>
     </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
+      <div v-if="showSetting" class="w-auto bg-white border-2 border-orange-200 rounded-lg text-xs ml-52 absolute">
+        <div class="p-1 border-b-2 border-orange-200 rounded-t-lg hover:bg-mainColor hover:text-white">Edit Channel</div>
+        <div class="p-1 rounded-b-lg hover:bg-mainColor hover:text-white">Delete Channel</div>
+      </div>
       <div  v-for="box in boxlist" :key="box">
         <div @click="onClick('InsideChannelTeacher')" class="w-60">
           <CardChannel 
+            @clickSet="clickSetting"
           />
         </div>
       </div>
@@ -33,12 +38,16 @@ export default {
   },
   data() {
     return {
+      showSetting: false,
       boxlist: 4,
     };
   },
   methods: {
     onClick(pageName) {
       this.$router.push({ name: pageName }).catch(() => {});
+    },
+    clickSetting() {
+      this.showSetting = !this.showSetting;
     },
   },
   mounted() {

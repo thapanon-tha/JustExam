@@ -10,7 +10,8 @@
             <div class="overflow-x-scroll">
                 <div class="flex justify-start gap-5 mt-5 mb-5">
                     <div 
-                        class="w-48 h-60 flex-none bg-navyColor  rounded-t-lg relative shadow-sm" 
+                        class="w-48 h-60 flex-none bg-navyColor rounded-t-lg relative border-4 border-white hover:border-red-400" 
+                        @click="clickSelect"
                         v-for="card in cardlist" :key="card.id"
                     >
                         <div class="ml-3 mt-3 mr-3">
@@ -49,6 +50,9 @@ export default {
     methods: {
         clikClose() {
             this.$emit('clikClose');
+        },
+        clickSelect() {
+            this.$emit('clickSelect');
         },
     },
 };

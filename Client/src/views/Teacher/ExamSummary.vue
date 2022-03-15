@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-60">
+    <div class="mb-40">
         <Header 
             main="Exam channel" current="> Inside channel > Exam Summary" class="mb-10"
         >
@@ -16,16 +16,20 @@
                 Export score
             </button>
         </Header>
+        <div>Min MAx Bla Bla</div>
+        <TableForm/>
     </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header';
+import TableForm from '@/components/Form/ChannelForm/TableForm';
 
 export default {
     name: 'ExamSummary',
     components: {
         Header,
+        TableForm,
     },
     methods: {
         onClickBack() {

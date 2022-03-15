@@ -10,16 +10,19 @@
                 Back
             </button>
         </Header>
+        <TableForm/>
     </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header';
+import TableForm from '@/components/Form/ChannelForm/TableForm';
 
 export default {
     name: 'MemberChannel',
     components: {
         Header,
+        TableForm,
     },
     methods: {
         onClickBack() {

@@ -17,31 +17,10 @@
       </button>
     </Header>
     <ChannelForm v-model="channelInfo" />
-    <div class="relative">
-      <CardAddExam
-        @clikClose="closeModalAddExam"
-        class="fixed z-0 top-52 left-96"
-        v-if="showModal"
-      />
+    <div>
+      <div>Your Invite Code</div>
+      <div>Selected box</div>
     </div>
-    <ActionButton
-      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-      name="+ Add your exam"
-      @on-click="onClickAddExam"
-    />
-
-    <!-- <div class="flex justify-end mr-56">
-      <ActionButton
-        class="bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
-        name="Cancel"
-        @on-click="onClickCancel"
-      />
-      <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-        name="Create"
-        @on-click="submitForm"
-      />
-    </div> -->
   </div>
 </template>
 

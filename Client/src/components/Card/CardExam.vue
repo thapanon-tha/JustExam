@@ -29,13 +29,6 @@
 <script>
 export default {
   name: "CardExam",
-  props: {
-    detail: Object,
-    to: {
-      type: String,
-      default: "YourExam",
-    },
-  },
   methods: {
     clickSet() {
       this.$emit('clickSet');

@@ -2,19 +2,27 @@
   <div class="mb-60">
     <Header main="Exam channel" current=" > New channel" class="mb-10"/>
     <ChannelForm v-model="channelInfo"/>
-    <div class="relative">
-      <CardAddExam
-        @clikClose="closeModalAddExam"
-        class="fixed z-0 top-52 left-96"
-        v-if="showModal"
-      />
-    </div>
     <ActionButton
       class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
       name="+ Add your exam"
       @on-click="onClickAddExam"
+      v-if="showButton"
     />
-
+    <CardSelectedExam
+      class="ml-48 mt-10"
+      @clickChange="clickChangeSelect"
+      @clickScore="clickScoreExam"
+      @clickDelete="clickDeleteSelect"
+      v-if="showSelected"
+    />
+    <div class="relative">
+      <CardAddExam
+        @clikClose="closeModalAddExam"
+        @clickSelect="clickSelectExam"
+        class="fixed top-52 left-96"
+        v-if="showModal"
+      />
+    </div>
     <div class="flex justify-end mr-56">
       <ActionButton
         class="bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
@@ -35,6 +43,7 @@ import ActionButton from "@/components/Button/ActionButton.vue";
 import Header from "@/components/Header/Header.vue";
 import ChannelForm from '@/components/Form/ChannelForm/ChannelForm';
 import CardAddExam from '@/components/Card/CardAddExam';
+import CardSelectedExam from '@/components/Card/CardSelectedExam';
 
 export default {
   name: "NewChannelTeacher",
@@ -43,10 +52,13 @@ export default {
     Header,
     ChannelForm,
     CardAddExam,
+    CardSelectedExam,
   },
   data() {
     return {
       showModal: false,
+      showSelected: false,
+      showButton: true,
       channelInfo: {
         title: "",
         description: "",
@@ -65,6 +77,21 @@ export default {
   methods: {
     onClickAddExam() {
       this.showModal = true;
+    },
+    clickSelectExam() {
+      this.showModal = false;
+      this.showSelected = true;
+      this.showButton = false;
+    },
+    clickChangeSelect() {
+      this.showModal = true;
+    },
+    clickScoreExam() {
+      this.$router.push({ name: "ScoreExamPage" }).catch(() => true);
+    },
+    clickDeleteSelect() {
+      this.showButton = true;
+      this.showSelected = false;
     },
     submitForm() {
       this.title = "";

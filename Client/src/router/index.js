@@ -65,6 +65,11 @@ const routes = [
     component: () => import('@/views/Teacher/ExamSummary.vue'),
   },
   {
+    path: '/examchannel/new-channel/score-exam',
+    name: 'ScoreExamPage',
+    component: () => import('@/views/Teacher/ScoreExamPage.vue'),
+  },
+  {
     path: '/yourexam',
     name: 'YourExam',
     component: () => import('@/views/Teacher/YourExam.vue'),
