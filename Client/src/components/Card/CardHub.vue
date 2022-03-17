@@ -1,6 +1,5 @@
 <template>
-  <div class="box-border h-40 w-72 rounded-xl text-white bg-gradient-to-tl
-          from-gray-800 via-gray-800 to-orange-700"
+  <div class="box-border h-40 w-72 rounded-xl text-white bg-navyColor"
   >
       <div class="flex flex-col">
         <v-icon 
@@ -12,8 +11,9 @@
         </v-icon>
         <div class="h-32 w-42 p-2">
           <h1 class="text-md font-semilight ml-2">Title</h1>
-          <h2 class="text-md font-semilight ml-2">Date</h2>
-          <h2 class="text-md font-semilight ml-2">Time</h2>
+          <h2 class="text-md font-semilight ml-2">Modified date</h2>
+          <h2 class="text-md font-semilight ml-2">Created date</h2>
+          <h2 class="text-md font-semilight ml-2">Creator</h2>
         </div>
       </div> 
   </div>
@@ -22,7 +22,7 @@
 <script>
 
 export default {
-  name: 'CardChannel',
+  name: 'CardHub',
   methods: {
     clickSet() {
       this.$emit('clickSet');

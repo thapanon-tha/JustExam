@@ -12,10 +12,10 @@
         </Header>
         <div>
             <div class="ml-60 mt-10">
-                <h1 class="font-semibold text-xl mb-2">Exam title</h1>
-                <p class="ml-3 font-bold text-xl text-mainColor w-4/5 break-all">{{ examTitle }}</p>
-                <h1 class="font-semibold text-xl mb-2">Exam description</h1>
-                <p class="ml-3 font-bold text-xl text-mainColor  w-4/5 break-all">{{ description }}</p>
+                <!-- <h1 class="font-semibold text-xl mb-2">Exam title</h1> -->
+                <p class="ml-3 font-semibold text-lg text-black w-4/5 break-all">{{ examTitle }}</p>
+                <!-- <h1 class="font-semibold text-xl mb-2">Exam description</h1> -->
+                <p class="ml-3 font-semibold text-lg text-black  w-4/5 break-all">{{ description }}</p>
             </div>
             <div class="flex flex-col w-screen gap-5 ml-64 mt-5">
                 <div 

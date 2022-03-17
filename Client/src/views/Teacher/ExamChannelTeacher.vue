@@ -10,7 +10,23 @@
         +  New channel
       </button>
     </Header>
-    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
+    <div class="flex justify-end mr-15 mt-5">
+      <select
+        class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2
+              text-mainColor font-semilight text-sm text-center"
+        id="sort"
+        name="sort"
+        v-model="sort"
+      >
+        <option disabled value="">Sort by</option>
+        <option
+          v-for="(item, index) in sortlist"
+          :key="index"
+          :value="item.value"
+        >{{ item.name }}</option>
+      </select>
+    </div>
+    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
       <div v-if="showSetting" class="w-auto bg-white border-2 border-orange-200 rounded-lg text-xs ml-52 absolute">
         <div class="p-1 border-b-2 border-orange-200 rounded-t-lg hover:bg-mainColor hover:text-white">Edit Channel</div>
         <div class="p-1 rounded-b-lg hover:bg-mainColor hover:text-white">Delete Channel</div>
@@ -40,6 +56,17 @@ export default {
     return {
       showSetting: false,
       boxlist: 4,
+      sort: '',
+      sortlist: [
+        {
+          name: "Incoming exam",
+          value: "comin"
+        },
+        {
+          name: "Alphabetical",
+          value: "alpha"
+        },
+      ],
     };
   },
   methods: {

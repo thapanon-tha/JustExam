@@ -1,7 +1,7 @@
 <template>
     <div>
         <form>
-            <div class="flex flex-row justify-center gap-40">
+            <div class="flex justify-center gap-40">
                 <div class="flex flex-col gap-5">
                     <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
                     <div class="form-control">

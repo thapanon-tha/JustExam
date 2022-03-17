@@ -16,10 +16,40 @@
         Exam Summary
       </button>
     </Header>
-    <ChannelForm v-model="channelInfo" />
-    <div>
-      <div>Your Invite Code</div>
-      <div>Selected box</div>
+    <div class="w-4/6 ml-48">
+      <ChannelForm v-model="channelInfo" />
+    </div>
+    <div class="ml-48 mt-10">
+      <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
+      <div class="flex flex-wrap mt-5">
+        <p class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2 ">
+          {{ channelInfo.inviteCode }}
+        </p>
+        <div class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10">
+          <v-icon large color="grey darken-1">link</v-icon>
+        </div>
+      </div>
+    </div>
+    <ActionButton
+      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+      name="+ Add your exam"
+      @on-click="onClickAddExam"
+      v-if="showButton"
+    />
+    <CardSelectedExam
+      class="ml-48 mt-10"
+      @clickChange="clickChangeSelect"
+      @clickScore="clickScoreExam"
+      @clickDelete="clickDeleteSelect"
+      v-if="showSelected"
+    />
+    <div class="relative">
+      <CardAddExam
+        @clikClose="closeModalAddExam"
+        @clickSelect="clickSelectExam"
+        class="fixed top-52 left-96"
+        v-if="showModal"
+      />
     </div>
   </div>
 </template>
@@ -29,6 +59,7 @@ import ActionButton from "@/components/Button/ActionButton.vue";
 import Header from "@/components/Header/Header.vue";
 import ChannelForm from '@/components/Form/ChannelForm/ChannelForm';
 import CardAddExam from '@/components/Card/CardAddExam';
+import CardSelectedExam from '@/components/Card/CardSelectedExam';
 
 export default {
   name: "InsideChannelTeacher",
@@ -37,10 +68,13 @@ export default {
     Header,
     ChannelForm,
     CardAddExam,
+    CardSelectedExam,
   },
   data() {
     return {
       showModal: false,
+      showSelected: false,
+      showButton: true,
       channelInfo: {
         title: "Channel 1",
         description: "Description 1",
@@ -53,12 +87,28 @@ export default {
           showTotalScore: false,
           cantSubmitEmpty: false,
         },
+        inviteCode: "123456",
       },
     };
   },
   methods: {
     onClickAddExam() {
       this.showModal = true;
+    },
+    clickSelectExam() {
+      this.showModal = false;
+      this.showSelected = true;
+      this.showButton = false;
+    },
+    clickChangeSelect() {
+      this.showModal = true;
+    },
+    clickScoreExam() {
+      this.$router.push({ name: "ScoreExamPage" }).catch(() => true);
+    },
+    clickDeleteSelect() {
+      this.showButton = true;
+      this.showSelected = false;
     },
     // submitForm() {
     //   this.title = "";

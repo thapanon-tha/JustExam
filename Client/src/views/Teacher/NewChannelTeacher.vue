@@ -1,7 +1,9 @@
 <template>
   <div class="mb-60">
     <Header main="Exam channel" current=" > New channel" class="mb-10"/>
-    <ChannelForm v-model="channelInfo"/>
+    <div class="w-4/6 ml-48">
+      <ChannelForm v-model="channelInfo"/>
+    </div>
     <ActionButton
       class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
       name="+ Add your exam"

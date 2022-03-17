@@ -1,7 +1,7 @@
 <template>
-    <div class="mb-60">
+    <div>
         <Header 
-            main="Exam channel" current="> Inside channel > Member" class="mb-10"
+            main="Exam channel" current="> Inside channel > Member"
         >
             <button
                 @click="onClickBack"
@@ -10,19 +10,19 @@
                 Back
             </button>
         </Header>
-        <TableForm/>
+        <MemberTable/>
     </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header';
-import TableForm from '@/components/Form/ChannelForm/TableForm';
+import MemberTable from '@/components/Form/ChannelForm/MemberTable';
 
 export default {
     name: 'MemberChannel',
     components: {
         Header,
-        TableForm,
+        MemberTable,
     },
     methods: {
         onClickBack() {
