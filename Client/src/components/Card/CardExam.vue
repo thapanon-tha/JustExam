@@ -29,5 +29,6 @@
 <script>
 export default {
   name: "CardExam",
+  props: ['detail']
 };
 </script>
