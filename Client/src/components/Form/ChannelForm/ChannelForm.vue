@@ -5,10 +5,10 @@
                 <div class="flex flex-col gap-5">
                     <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
                     <div class="form-control">
-                        <InputForm inputLabel="Channel Title" type="text" v-model="title" />
+                        <InputForm inputLabel="Channel Title" type="text" v-model="value.title" />
                     </div>
                     <div class="form-control">
-                        <InputForm inputLabel="Channel Description" type="text" v-model="description" />
+                        <InputForm inputLabel="Channel Description" type="text" v-model="value.description" />
                     </div>
                     <div class="form-control">
                         <DatePicker v-model="datePicked" />

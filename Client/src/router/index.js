@@ -50,7 +50,7 @@ const routes = [
     component: () => import('@/views/Teacher/NewChannelTeacher.vue'),
   },
   {
-    path: '/examchannel/test-channel-1',
+    path: '/examchannel/:cid',
     name: 'InsideChannelTeacher',
     component: () => import('@/views/Teacher/InsideChannelTeacher.vue'),
   },
@@ -85,7 +85,6 @@ const routes = [
     component: () => import('@/views/Teacher/PreviewExam.vue'),
   },
   {
-    path: '/yourexam/test-exam-inside',
     path: `/yourexam/:eid`,
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),

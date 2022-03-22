@@ -71,7 +71,7 @@
         </div>
       </div>
       <div v-for="box in channels" :key="box.cid">
-        <div @click="onClick('InsideChannelTeacher')" class="w-60">
+        <div @click="onClick('InsideChannelTeacher', box.cid)" class="w-60">
           <CardChannel v-bind:detail="box" @clickSet="clickSetting" />
         </div>
       </div>
@@ -109,8 +109,8 @@ export default {
     };
   },
   methods: {
-    onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
+    onClick(pageName, cid) {
+      this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
     },
     clickSetting() {
       this.showSetting = !this.showSetting;
