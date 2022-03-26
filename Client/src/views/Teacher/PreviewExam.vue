@@ -17,39 +17,8 @@
                 <!-- <h1 class="font-semibold text-xl mb-2">Exam description</h1> -->
                 <p class="ml-3 font-semibold text-lg text-black  w-4/5 break-all">{{ description }}</p>
             </div>
-            <div class="flex flex-col w-screen gap-5 ml-64 mt-5">
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreMultiple
-                    label="2"
-                    />
-                </div>
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreShortAns/>
-                </div>
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreParagraph/>
-                </div>
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreTrueFalse/>
-                </div>
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreMatching/>
-                </div>
-                <div 
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreCoding/>
-                </div>
+            <div>
+                <PreviewList/>
             </div>
         </div>
     </div>
@@ -63,6 +32,7 @@ import PreParagraph from '@/components/Form/PreviewForm/PreParagraph';
 import PreMatching from '@/components/Form/PreviewForm/PreMatching';
 import PreCoding from '@/components/Form/PreviewForm/PreCoding';
 import PreTrueFalse from '@/components/Form/PreviewForm/PreTrueFalse';
+import PreviewList from '@/components/Form/PreviewForm/PreviewList';
 
 export default {
     name: 'PreviewExam',
@@ -74,17 +44,20 @@ export default {
         PreMatching,
         PreCoding,
         PreTrueFalse,
+        PreviewList,
     },
     data() {
         return {
             examTitle: 'Exam Title Data',
-            description: 'Exam Description Data'
+            description: 'Exam Description Data',
         };
     },
     methods: {
         onClickBack() {
-            this.$router.push({ name: "NewExam" }).catch(() => true);
-    },
+            this.$router.push({ name: "NewExam" }).catch(() => true); 
+            //
+            //ทำให้กด Back แล้วหน้า New Exam ยัง Save Data
+        },
     },
 };
 
