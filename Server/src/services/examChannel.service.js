@@ -1,6 +1,14 @@
 const db = require('../models/db');
 
-const { examChannel, questionExamChannel } = db;
+const {
+  examChannel,
+  questionExamChannel,
+  questionAnswerCChannel,
+  questionAnswerMCChannel,
+  questionAnswerMChannel,
+  questionAnswerSAChannel,
+  questionAnswerTFChannel,
+} = db;
 
 const medthods = {
 
@@ -17,6 +25,40 @@ const medthods = {
   async getExamChannel(cid) {
     return examChannel.findOne({
       where: { cid },
+    });
+  },
+
+  async queryExamPaper(cid) {
+    const questionAnswerCChannelsAtt = ['qaccid', 'code', 'exInput', 'exOutput'];
+    const questionAnswerMCChannelsAtt = ['qamccid', 'textA'];
+    const questionAnswerMChannelsAtt = ['qamcid', 'textA', 'textQ'];
+    const questionAnswerSAChannelsAtt = [];
+    const questionAnswerTFChannelsAtt = [];
+    return questionExamChannel.findAll({
+      include: [
+        {
+          attributes: [],
+          model: examChannel,
+          where: { cid },
+          required: true,
+        },
+        {
+          attributes: questionAnswerCChannelsAtt,
+          model: questionAnswerCChannel,
+        }, {
+          attributes: questionAnswerMCChannelsAtt,
+          model: questionAnswerMCChannel,
+        }, {
+          attributes: questionAnswerMChannelsAtt,
+          model: questionAnswerMChannel,
+        }, {
+          attributes: questionAnswerSAChannelsAtt,
+          model: questionAnswerSAChannel,
+        }, {
+          attributes: questionAnswerTFChannelsAtt,
+          model: questionAnswerTFChannel,
+        },
+      ],
     });
   },
 
@@ -46,6 +88,10 @@ const medthods = {
       },
       where: { cid },
     });
+  },
+
+  async AutoPointChannel(cid, uid) {
+
   },
 
 };

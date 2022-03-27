@@ -1,36 +1,30 @@
 const db = require('../models/db');
 
 const User = db.user;
-
+const userAttribute = ['uid', 'firstname', 'surname', 'email', 'password', 'type', 'provider'];
 const medthods = {
   async findByEmail(email) {
     return User.findOne({
-      attributes: ['userid', 'name', 'surname',
-        'email', 'role'],
+      attributes: userAttribute,
       where: { email },
     });
   },
 
   async findByEmailLogin(email) {
     return User.findOne({
-      attributes: ['userid', 'name', 'surname',
-        'email', ['password', 'hash'], 'role'],
+      attributes: ['uid', 'firstname', 'surname',
+        'email', ['password', 'hash'], 'type'],
       where: { email },
     });
   },
 
-  async findByEmailOrCreate(userid, name, surname, email, loginBy, role) {
+  async findByEmailOrCreate(userPag) {
     return User.findOrCreate({
-      attributes: ['userid', 'name', 'surname',
-        'email', 'role'],
-      where: { email },
+      attributes: ['uid', 'firstname', 'surname',
+        'email', 'provider', 'type'],
+      where: { email: userPag.email },
       defaults: {
-        userid,
-        name,
-        surname,
-        email,
-        loginBy,
-        role,
+        ...userPag,
       },
     });
   },
