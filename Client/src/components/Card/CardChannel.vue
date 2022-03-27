@@ -1,25 +1,21 @@
 <template>
-  <div>
-    <div class="flex flex-col">
-      <label class="text-xl font-semilight">
-          Title
-      </label>
-      <div class="mt-1 box-border h-40 w-60 p-4
-                  rounded-xl text-white bg-gradient-to-tl
-                  from-gray-800 via-gray-800 to-orange-700"
-      >
-        <section class="border-r-4 rounded-md border-red-600">
-            <div class="mb-10 gap-20">
-                <h1 class="text-md font-semilight">Title</h1>
-                <div class="mt-15">
-                    <h2 class="text-md font-semilight">Date</h2>
-                    <h2 class="text-md font-semilight">Time</h2>
-                </div>
-
-            </div>
-        </section>
+  <div class="box-border h-40 w-72 rounded-xl text-white bg-gradient-to-tl
+          from-gray-800 via-gray-800 to-orange-700"
+  >
+      <div class="flex flex-col">
+        <v-icon
+          @click="clickSet" class="flex justify-end mr-3 mt-3"
+          small
+          color="white"
+        >
+          settings
+        </v-icon>
+        <div class="h-32 w-42 p-2">
+          <h1 class="text-md font-semilight ml-2">{{detail.title}}</h1>
+          <h2 class="text-md font-semilight ml-2">{{detail.schedule}}</h2>
+          <h2 class="text-md font-semilight ml-2">{{detail.startAt}}</h2>
+        </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -27,10 +23,10 @@
 
 export default {
   name: 'CardChannel',
-  props: {
-    to: {
-      type: String,
-      default: 'ExamChannelTeacher',
+  props: ['detail'],
+  methods: {
+    clickSet() {
+      this.$emit('clickSet');
     },
   },
 };

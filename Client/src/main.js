@@ -7,6 +7,7 @@ import vuetify from "./plugins/vuetify";
 import store from "./store"
 import VueQuillEditor from "vue-quill-editor";
 import VueTimepicker from 'vue2-timepicker';
+import VueCookies from 'vue-cookies'
 
 // require styles
 import 'vue2-timepicker/dist/VueTimepicker.css';
@@ -26,5 +27,8 @@ new Vue({
 Vue.use(VuePortal, {
   name: "portal", // optional, use to rename component
 });
+
+Vue.use(VueCookies)
+Vue.use(require('vue-moment'));
 
 Vue.use(VueQuillEditor, VueTimepicker /* { default global options } */);

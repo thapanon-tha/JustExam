@@ -41,7 +41,7 @@ module.exports = {
   Validation(err, res) {
     // console.error(err.message);
     if (!err.statusCode) err.statusCode = 422;
-    res.status(err.statusCode).send(err.message);
+    res.status(err.statusCode).json({ type: 'Validation Error', statusCode: err.statusCode, message: err.message });
   },
 
   Unauthorized(err, res) {

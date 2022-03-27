@@ -45,7 +45,7 @@ export default {
         };
     },
     methods: {
-        //input-class="rounded-md px-10 py-6 text-center text-semilight text-grayColor bg-subColor focus:outline-none"
+    
     },
 };
 </script>

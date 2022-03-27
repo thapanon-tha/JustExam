@@ -8,11 +8,11 @@
           width="8/9"
           height="40"
           v-model="questionData.question"
-          :onChangeFunc=onChange
+          :onChangeFunc="onChange"
         />
       </div>
     </div>
-    <div  class="flex flex-row ml-3" v-for="(item, index) in questionData.keyans" :key="item.id">
+    <div  class="flex flex-row ml-3" v-for="(item, index) in questionData.keylist" :key="item.id">
       <div class="shadow-sm border-mainColor border-l-4 mb-3 ">
         <QuillTextEditor
           class="bg-mainColor"
@@ -20,9 +20,10 @@
           theme="bubble"
           width="60"
           height="2/4"
-          :name="`keyans[${index}][ans]`"
-          v-model="item.ans"
-          :onChangeFunc=onChange
+          :name="`keylist[${index}][keyans]`"
+          v-model="item.keyans"
+          @change="onChange()"
+          :onChangeFunc="onChange"
         />
       </div>
       <div class="ml-20">
@@ -53,35 +54,32 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  emits: ['delete'],
+  props: ["value"],
   data() {
     return {
-      questionData: {
-        question: '',
-        keyans: [
-          {
-            id: 1,
-            ans: '',
-          },
-        ],
-      },
+      questionData: this.value,
     };
   },
   methods: {
     addKey() {
-      this.questionData.keyans.push(
-        {
-          id: this.questionData.keyans.length + 1,
-          ans: '',
-        },
-      );
+      this.questionData.keylist.push({
+          id: this.questionData.keylist.length + 1,
+          keyans: "",
+      });
     },
     deleteChoice(index) {
-      this.questionData.keyans.splice(index, 1);
+      this.questionData.keylist.splice(index, 1);
     },
     onChange() {
       this.$emit('input', this.questionData);
     },
+  },
+  model: {
+    prop: "value",
+    event: "input", 
+  },
+  created() {
+    console.log(this.value);
   },
 };
 

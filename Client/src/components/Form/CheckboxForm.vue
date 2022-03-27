@@ -2,13 +2,11 @@
   <div>
     <input
       type="checkbox"
-      class="h-4 w-4"
-      :value="value"
-      @change="onChange()"
+      class="h-3 w-3 mr-2"
+      v-model="valueCorrect"
+      @change="onChange($event)"
     />
-    <label
-      class="ml-2 font-semilight text-grey-700 text-md"
-    >
+    <label>
       {{ label }}
     </label>
   </div>
@@ -22,16 +20,26 @@ export default {
       type: String,
       default: '',
     },
+    onChangeFunc: {
+      type: Function,
+      default: () => true,
+    },
+    value: Boolean,
   },
   data() {
     return {
-      value: true,
+      valueCorrect: this.value,
     };
   },
   methods: {
     onChange() {
-      this.$emit('input', this.value);
+      this.$emit('input', this.valueCorrect);
+      this.onChangeFunc();
     },
+  },
+  model: {
+    prop: "value", // บอกว่า v-model ให้เข้า value
+    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
   },
 };
 </script>

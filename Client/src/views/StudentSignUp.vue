@@ -4,11 +4,11 @@
       <h1 class="text-4xl mb-10">Sign up for student</h1>
       <SignUpForm @on-submit="onSubmit"/>
     </section>
-    <section class="box-border mt-32 ml-10 mr-32 mb-40 flex flex-col">
+    <section class="box-border mt-28 ml-10 mr-32 mb-40 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img
           src="@/assets/kid.svg"
-          class="w-80 h-80 ml-20"
+          class="w-80 h-80"
           alt="book"
         >
         <ActionButton

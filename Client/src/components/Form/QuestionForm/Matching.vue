@@ -8,7 +8,7 @@
           width="8/9"
           height="40"
           v-model="questionData.question"
-          :onChangeFunc=onChange
+          :onChangeFunc="onChange"
         />
       </div>
     </div>
@@ -25,7 +25,8 @@
             height="2/4"
             :name="`match[${index}][subquestion]`"
             v-model="item.subquestion"
-            :onChangeFunc=onChange
+            @change="onChange()"
+            :onChangeFunc="onChange"
           />
         </div>
         <div class="ml-20">
@@ -45,7 +46,8 @@
             height="2/4"
             :name="`match[${index}][matchanswer]`"
             v-model="item.matchanswer"
-            :onChangeFunc=onChange
+            @change="onChange()"
+            :onChangeFunc="onChange"
           />
         </div>
       </div>
@@ -70,24 +72,10 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  props: {
-    no: {
-      type: String,
-      default: 'no',
-    },
-  },
+  props: ['value'],
   data() {
     return {
-      questionData: {
-        question: '',
-        matchs: [
-          {
-            id: 1,
-            subquestion: '',
-            matchanswer: '',
-          },
-        ],
-      },
+      questionData: this.value
     };
   },
   methods: {
@@ -106,6 +94,13 @@ export default {
     onChange() {
       this.$emit('input', this.questionData);
     },
+  },
+  model: {
+    prop: "value", // บอกว่า v-model ให้เข้า value
+    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+  },
+  created() {
+    console.log(this.value);
   },
 
 };

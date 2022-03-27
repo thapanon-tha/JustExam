@@ -8,7 +8,7 @@
           width="8/9"
           height="40"
           v-model="questionData.question"
-          :onChangeFunc=onChange
+          :onChangeFunc="onChange"
         />
       </div>
     </div>
@@ -16,11 +16,20 @@
       <div
         class="flex flex-row mb-3"
       >
-        <div class="border-mainColor border-l-4 mb-3 px-4 py-2 w-40 "> Is this correct ? </div>
-        <div class="ml-20 mt-2" >
-          <CheckboxForm
-            v-model="questionData.correct"
-            label="True or False"
+        <div class="ml-2" >
+          <Checkbox2 
+            v-model="questionData.true" 
+            label="True" 
+            text="True"
+            @onChange="onChange()" 
+            :onChangeFunc="onChange"
+          />
+          <Checkbox2 
+            v-model="questionData.false" 
+            label="False" 
+            text="False"
+            @onChange="onChange()" 
+            :onChangeFunc="onChange"
           />
         </div>
       </div>
@@ -30,26 +39,31 @@
 
 <script>
 import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
-import CheckboxForm from '@/components/Form/CheckboxForm.vue';
+import Checkbox2 from '@/components/Form/Checkbox2.vue';
 
 export default {
   name: 'TrueFalse',
   components: {
     QuillTextEditor,
-    CheckboxForm,
+    Checkbox2,
   },
+  props: ['value'],
   data() {
     return {
-      questionData: {
-        question: '',
-        correct: false,
-      },
+      questionData: this.value
     };
   },
   methods: {
     onChange() {
       this.$emit('input', this.questionData);
     },
+  },
+  model: {
+    prop: "value", // บอกว่า v-model ให้เข้า value
+    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+  },
+  created() {
+    console.log(this.value);
   },
 };
 

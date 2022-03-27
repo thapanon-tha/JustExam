@@ -30,8 +30,9 @@
             v-model="formData.confirmpassword"
         />
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row mt-3 mb-3 ml-2">
         <input
+          class="mt-1"
           type="checkbox"
           id="agree"
           :value="agree"
