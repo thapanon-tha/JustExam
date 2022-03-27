@@ -1,36 +1,19 @@
-const axios = require("axios");
-const BACKEND_HOST = 'http://localhost:3000'
-const mapperTool = require('./examMapper.js');
+import axios from 'axios';
+import mapperTool from './examMapper';
 
-const exams = () => {
-  // Call login api here
-  console.log(process.env)
-  return axios.get(`${BACKEND_HOST}/api/exams`);
-};
+const BACKEND_HOST = 'http://localhost:3000';
 
-const examList = (eid) => {
-  return axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
-};
+const exams = () => axios.get(`${BACKEND_HOST}/api/exams`);
 
-const createExams = async (examData) => {
-  return axios.post(`${BACKEND_HOST}/api/exams`, { data: { title: examData.title, description: examData.description } }, { validateStatus: false });
-};
+const examList = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
 
-const loginGoogle = async () => {
-  return axios.get(`${BACKEND_HOST}/api/auth/google`);
-};
+const createExams = async (examData) => axios.post(`${BACKEND_HOST}/api/exams`, { data: { title: examData.title, description: examData.description } }, { validateStatus: false });
 
-const createQuestions = async (eid, data) => {
-  return axios.post(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data: data }, { validateStatus: false });
-};
+const loginGoogle = async () => axios.get(`${BACKEND_HOST}/api/auth/google`);
 
+const createQuestions = async (eid, data) => axios.post(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data }, { validateStatus: false });
 
-const examMapper = (examData) => {
-  const result = examData.map(element => {
-    return mapperTool.mapper(element)
-  });
-  return result
-};
+const examMapper = (examData) => examData.map((element) => mapperTool.mapper(element));
 
 export default {
   exams,
@@ -38,5 +21,5 @@ export default {
   createExams,
   loginGoogle,
   examMapper,
-  createQuestions
+  createQuestions,
 };

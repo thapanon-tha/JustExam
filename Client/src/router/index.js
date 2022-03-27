@@ -85,7 +85,7 @@ const routes = [
     component: () => import('@/views/Teacher/PreviewExam.vue'),
   },
   {
-    path: `/yourexam/:eid`,
+    path: '/yourexam/:eid',
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
   },

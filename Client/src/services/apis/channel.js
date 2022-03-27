@@ -1,15 +1,12 @@
-const axios = require("axios");
-const BACKEND_HOST = 'http://localhost:3000'
+import axios from 'axios';
 
-const channels = () => {
-  return axios.get(`${BACKEND_HOST}/api/channels?type=teacher`);
-};
+const BACKEND_HOST = 'http://localhost:3000';
 
-const channelsDetail = (cid) => {
-  return axios.get(`${BACKEND_HOST}/api/channels/${cid}?type=teacher`);
-};
+const channels = () => axios.get(`${BACKEND_HOST}/api/channels?type=teacher`);
+
+const channelsDetail = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}?type=teacher`);
 
 export default {
   channels,
-  channelsDetail
+  channelsDetail,
 };
