@@ -93,7 +93,25 @@ export default {
                     sectionName: "Section 3",
                 },
             ],
-            qlist: [
+            qlist: [],
+            answermatchlist: [],
+        };
+    },
+    methods: {
+        onClickSelectSection(id) {
+            this.selectedSectionId = id;
+            console.log(this.selectedSectionId);
+        },
+    },
+    computed: {
+        questionList() {
+            return this.qlist.filter(
+                (question) => question.sectionId === this.selectedSectionId
+            );
+        },
+    },
+    mounted() {
+         this.qlist = [
                 {
                     id: 1,
                     type: "mc",
@@ -223,6 +241,11 @@ export default {
                                 subquestion: "Who is New girlfriend ?",
                                 matchanswer: "Game",
                             },
+                            {
+                                id: 2,
+                                subquestion: "A?",
+                                matchanswer: "B",
+                            },
                         ],
                     },
                 },
@@ -235,73 +258,23 @@ export default {
                         true: false,
                         false: false,
                         },
-                },
-            ],
-            // prototype: {
-            //     mc: {
-            //         question: "",
-            //         answers: [
-            //             {
-            //                 id: 1,
-            //                 optionData: "",
-            //                 correct: false,
-            //             },
-            //         ],
-            //     },
-            //     sa: {
-            //         question: "",
-            //         answer: "",
-            //     },
-            //     pa: {
-            //         question: "",
-            //         answer: "",
-            //     },
-            //     tf: {
-            //         question: "",
-            //         true: false,
-            //         false: false,
-            //     },
-            //     ma: {
-            //         question: "",
-            //         matchs: [
-            //             {
-            //                 id: 1,
-            //                 subquestion: "",
-            //                 matchanswer: "",
-            //             },
-            //         ],
-            //     },
-            //     ca: {
-            //         lang: "",
-            //         code: "",
-            //         question: "",
-            //         input: "",
-            //         output: "",
-            //         example: [
-            //             {
-            //             id: 1,
-            //             xampleinput: "",
-            //             xampleoutput: "",
-            //             },
-            //         ],
-            //     },
+                }
+            ]
+        this.answermatchlist = qlist.map((data)=> {
+            if (data.type == 'ma') {
+                return {
+                    id: data.id,
+                    type: data.type,
+                    sectionId: data.sectionId,
+                    matchanswerlist: data.questionData.map((questionData) => {
+                        return questionData.matchanswer
+                    })
+                }
+            }
+        })
+        console.log(this.answermatchlist);
+    }
 
-            // },
-        };
-    },
-    methods: {
-        onClickSelectSection(id) {
-            this.selectedSectionId = id;
-            console.log(this.selectedSectionId);
-        },
-    },
-    computed: {
-        questionList() {
-            return this.qlist.filter(
-                (question) => question.sectionId === this.selectedSectionId
-            );
-        },
-    },
 };
 
 </script>
