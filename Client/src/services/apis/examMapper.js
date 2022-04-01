@@ -95,9 +95,7 @@ const method = {
 
 module.exports = {
   ...method
-}
-
-
+};
 // {
 //   "data": [
 //     {

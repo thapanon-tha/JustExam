@@ -1,17 +1,16 @@
 <template>
     <div class="ml-10 mt-10 mr-10 mb-10">
         <div class="break-words p-3 mb-3">
-            Multiple Choice
+            {{ questionData.question }}
         </div>
-        <div class="ml-5 break-normal" v-for="choice in choicelist" :key="choice.id">
+        <div class="ml-5 break-normal" v-for="item in questionData.answers" :key="item.id">
             <input
-            type="checkbox"
             class="h-4 w-4 mr-2"
-            v-model="valueCorrect"
-            @change="onChange($event)"
+            type="checkbox"
+            v-model="item.correct"
             />
             <label class="break-all">
-            {{ label }}
+            {{ item.optionData}}
             </label>
         </div>
     </div>
@@ -21,17 +20,24 @@
 
 export default  {
     name: 'PreMultiple',
-    props: {
-        label: {
-            type: String,
-            default: 'label',
-        },
-    },
+    props: ["value"],
     data()  {
         return  {
-            choicelist: 4,
+            questionData: this.value,
         };
     },
+    // methods: {
+    //     onChange() {
+    //         this.$emit('input', this.questionData);
+    //     },
+    // },
+    // model: {
+    //     prop: "value", 
+    //     event: "input", 
+    // },
+    // created() {
+    //     console.log(this.value);
+    // },
 };
 
 </script>
