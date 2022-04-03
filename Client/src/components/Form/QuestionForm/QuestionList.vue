@@ -175,16 +175,17 @@
 </template>
 
 <script>
-import ActionButton from "@/components/Button/ActionButton.vue";
-import MultipleChoice from "@/components/Form/QuestionForm/MultipleChoice.vue";
-import ShortAnswer from "@/components/Form/QuestionForm/ShortAnswer.vue";
-import Paragraph from "@/components/Form/QuestionForm/Paragraph.vue";
-import Matching from "@/components/Form/QuestionForm/Matching.vue";
-import TrueFalse from "@/components/Form/QuestionForm/TrueFalse.vue";
-import CodingQuestion from "@/components/Form/QuestionForm/CodingQuestion.vue";
+import ActionButton from '@/components/Button/ActionButton.vue';
+import MultipleChoice from '@/components/Form/QuestionForm/MultipleChoice.vue';
+import ShortAnswer from '@/components/Form/QuestionForm/ShortAnswer.vue';
+import Paragraph from '@/components/Form/QuestionForm/Paragraph.vue';
+import Matching from '@/components/Form/QuestionForm/Matching.vue';
+import TrueFalse from '@/components/Form/QuestionForm/TrueFalse.vue';
+import CodingQuestion from '@/components/Form/QuestionForm/CodingQuestion.vue';
 
 export default {
-  name: "QuestionList",
+/* eslint-disable */
+  name: 'QuestionList',
   components: {
     MultipleChoice,
     ShortAnswer,
@@ -201,20 +202,20 @@ export default {
       sectionlist: [
         {
           id: 1,
-          sectionName: "Section 1",
+          sectionName: 'Section 1',
         },
       ],
       qlist: [
         {
           id: 1,
-          type: "mc",
+          type: 'mc',
           sectionId: 1,
           questionData: {
-            question: "",
+            question: '',
             answers: [
               {
                 id: 1,
-                optionData: "",
+                optionData: '',
                 correct: false,
               },
             ],
@@ -223,80 +224,80 @@ export default {
       ],
       questionTypeOptionList: [
         {
-          name: "Multiple Choice",
-          value: "mc",
+          name: 'Multiple Choice',
+          value: 'mc',
         },
         {
-          name: "Short Answer",
-          value: "sa",
+          name: 'Short Answer',
+          value: 'sa',
         },
         {
-          name: "Paragraph Answer",
-          value: "pa",
+          name: 'Paragraph Answer',
+          value: 'pa',
         },
         {
-          name: "True/False",
-          value: "tf",
+          name: 'True/False',
+          value: 'tf',
         },
         {
-          name: "Matching",
-          value: "ma",
+          name: 'Matching',
+          value: 'ma',
         },
         {
-          name: "Coding",
-          value: "ca",
+          name: 'Coding',
+          value: 'ca',
         },
       ],
       //* this is prototype for new question
       prototype: {
         mc: {
-          question: "",
+          question: '',
           answers: [
             {
               id: 1,
-              optionData: "",
+              optionData: '',
               correct: false,
             },
           ],
         },
         sa: {
-          question: "",
+          question: '',
           keylist: [
             {
               id: 1,
-              keyans: "",
+              keyans: '',
             },
           ],
         },
         pa: {
-          question: "",
+          question: '',
         },
         tf: {
-          question: "",
+          question: '',
           true: false,
           false: false,
         },
         ma: {
-          question: "",
+          question: '',
           matchs: [
             {
               id: 1,
-              subquestion: "",
-              matchanswer: "",
+              subquestion: '',
+              matchanswer: '',
             },
           ],
         },
         ca: {
-          lang: "",
-          code: "",
-          question: "",
-          input: "",
-          output: "",
+          lang: '',
+          code: '',
+          question: '',
+          input: '',
+          output: '',
           example: [
             {
               id: 1,
-              xampleinput: "",
-              xampleoutput: "",
+              xampleinput: '',
+              xampleoutput: '',
             },
           ],
         },
@@ -320,14 +321,14 @@ export default {
       this.qlist.push({
         id: _id,
         sectionId: this.selectedSectionId,
-        type: "mc",
-        data: "",
+        type: 'mc',
+        data: '',
         questionData: {
-          question: "",
+          question: '',
           answers: [
             {
               id: 1,
-              optionData: "",
+              optionData: '',
               correct: false,
             },
           ],
@@ -365,7 +366,7 @@ export default {
     },
   },
   created() {
-    this.$emit("update:qlist", this.qlist);
+    this.$emit('update:qlist', this.qlist);
   },
   computed: {
     questionList() {
@@ -376,7 +377,7 @@ export default {
   },
   watch: {
     qlist: function (newVal, oldVal) {
-      this.$emit("update:qlist", this.qlist);
+      this.$emit('update:qlist', this.qlist);
     },
   },
 };

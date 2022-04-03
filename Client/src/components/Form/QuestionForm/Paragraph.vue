@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import QuillTextEditor from "@/components/TextEditor/QuillTextEditor.vue";
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
 
 export default {
-  name: "Paragraph",
+  name: 'Paragraph',
   components: {
     QuillTextEditor,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       questionData: this.value,
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     onChange() {
-      this.$emit("input", this.questionData);
+      this.$emit('input', this.questionData);
     },
   },
 };

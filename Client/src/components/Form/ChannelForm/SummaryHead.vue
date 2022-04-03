@@ -43,21 +43,21 @@
 </template>
 <script>
 export default {
-    name: 'SummaryHead',
-    data() {
-        return {
-            summaryData: {
-                channelTitle: 'CPE494 Blockchain',
-                examDate: '2 January 2022',
-                examStart: '10.00 AM',
-                examEnd: '11.00 AM',
-                studentNum: 8,
-                scoreTotal: 50,
-                scoreMax: 49,
-                scoreMin: 39,
-                scoreSD: 2,
-            },
-        };
-    },
+  name: 'SummaryHead',
+  data() {
+    return {
+      summaryData: {
+        channelTitle: 'CPE494 Blockchain',
+        examDate: '2 January 2022',
+        examStart: '10.00 AM',
+        examEnd: '11.00 AM',
+        studentNum: 8,
+        scoreTotal: 50,
+        scoreMax: 49,
+        scoreMin: 39,
+        scoreSD: 2,
+      },
+    };
+  },
 };
 </script>

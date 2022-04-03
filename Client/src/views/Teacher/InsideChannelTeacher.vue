@@ -34,7 +34,7 @@
       </button>
     </Header>
     <div class="w-4/6 ml-48">
-      <ChannelForm v-model="channelInfo" />
+      <EditChannelForm v-model="channelInfo"/>
     </div>
     <div class="ml-48 mt-10">
       <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
@@ -100,19 +100,19 @@
 </template>
 
 <script>
-import ActionButton from "@/components/Button/ActionButton.vue";
-import Header from "@/components/Header/Header.vue";
-import ChannelForm from "@/components/Form/ChannelForm/ChannelForm";
-import CardAddExam from "@/components/Card/CardAddExam";
-import CardSelectedExam from "@/components/Card/CardSelectedExam";
-import api from "@/services/apis";
+import ActionButton from '@/components/Button/ActionButton.vue';
+import Header from '@/components/Header/Header.vue';
+import EditChannelForm from '@/components/Form/ChannelForm/EditChannelForm.vue';
+import CardAddExam from '@/components/Card/CardAddExam.vue';
+import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
+import api from '@/services/apis';
 
 export default {
-  name: "InsideChannelTeacher",
+  name: 'InsideChannelTeacher',
   components: {
     ActionButton,
     Header,
-    ChannelForm,
+    EditChannelForm,
     CardAddExam,
     CardSelectedExam,
   },
@@ -123,9 +123,9 @@ export default {
       showButton: true,
       channelsApiInfo: {},
       channelInfo: {
-        title: "",
-        description: "",
-        datePicked: "",
+        title: '',
+        description: '',
+        datePicked: '',
         settingData: {
           randomSec: false,
           randomQuestion: false,
@@ -134,7 +134,7 @@ export default {
           showTotalScore: false,
           cantSubmitEmpty: false,
         },
-        inviteCode: "",
+        inviteCode: '',
       },
     };
   },
@@ -151,7 +151,7 @@ export default {
       this.showModal = true;
     },
     clickScoreExam() {
-      this.$router.push({ name: "ScoreExamPage" }).catch(() => true);
+      this.$router.push({ name: 'ScoreExamPage' }).catch(() => true);
     },
     clickDeleteSelect() {
       this.showButton = true;
@@ -162,10 +162,10 @@ export default {
     //   this.description = "";
     // },
     onClickMember() {
-      this.$router.push({ name: "MemberChannel" }).catch(() => true);
+      this.$router.push({ name: 'MemberChannel' }).catch(() => true);
     },
     onClickSummary() {
-      this.$router.push({ name: "ExamSummary" }).catch(() => true);
+      this.$router.push({ name: 'ExamSummary' }).catch(() => true);
     },
     closeModalAddExam() {
       this.showModal = false;

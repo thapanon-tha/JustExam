@@ -1,61 +1,54 @@
 <template>
-    <div>
-            <div class="flex flex-row mt-5 justify-center">
-                <div
-                    class="
-                        bg-subColor
-                        border-orange-200 border border-solid
-                        rounded-xl
-                        shadow-sm
-                        font-semilight
-                        text-mainColor
-                        mr-2
-                        "
-                    v-for="(section, index) in sectionlist"
-                    :key="index"
-                >
-                    <div class="flex flex-row" @click="onClickSelectSection(section.id)">
-                        <div class="pt-3 pl-3 pr-3">
-                            <p>Section {{ index + 1 }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="flex flex-col w-screen gap-5 ml-64 mt-5"
-                v-for="item in questionList"
-                :key="item.id"
-            >
-                <div
-                    class="bg-subColor border border-orange-200 rounded-xl w-4/6"
-                >
-                    <PreMultiple
-                    v-if="item.type === 'mc'"
-                    :value="item.questionData"
-                    />
-                    <PreShortAns
-                    v-if="item.type === 'sa'"
-                    :value="item.questionData"
-                    />
-                    <PreParagraph
-                    v-if="item.type === 'pa'"
-                    :value="item.questionData"
-                    />
-                    <PreTrueFalse
-                    v-if="item.type === 'tf'"
-                    :value="item.questionData"
-                    />
-                    <PreMatching
-                    v-if="item.type === 'ma'"
-                    :value="item.questionData"
-                    />
-                    <PreCoding
-                    v-if="item.type === 'ca'"
-                    :value="item.questionData"
-                    />
-                </div>
-            </div>
+  <div class="ml-72">
+    <div class="flex flex-row mt-5">
+      <div
+        class="bg-subColor border-orange-200 border border-solid
+              rounded-xl shadow-sm font-semilight text-mainColor mr-2"
+        v-for="(section, index) in sectionlist"
+        :key="index"
+      >
+        <div class="flex flex-row" @click="onClickSelectSection(section.id)">
+          <div class="pt-3 pl-3 pr-3">
+            <p>Section {{ index + 1 }}</p>
+          </div>
+        </div>
+      </div>
     </div>
+    <div
+      class="flex flex-col w-screen gap-5 mt-5"
+      v-for="item in questionList"
+      :key="item.id"
+    >
+      <div
+        class="bg-subColor border border-orange-200 rounded-xl w-4/6"
+      >
+        <PreMultiple
+          v-if="item.type === 'mc'"
+          :value="item.questionData"
+        />
+        <PreShortAns
+          v-if="item.type === 'sa'"
+          :value="item.questionData"
+        />
+        <PreParagraph
+          v-if="item.type === 'pa'"
+          :value="item.questionData"
+        />
+        <PreTrueFalse
+          v-if="item.type === 'tf'"
+          :value="item.questionData"
+        />
+        <PreMatching
+          v-if="item.type === 'ma'"
+          :value="item.questionData"
+        />
+        <PreCoding
+          v-if="item.type === 'ca'"
+          :value="item.questionData"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

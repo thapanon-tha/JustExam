@@ -1,0 +1,407 @@
+<template>
+    <div>
+        <form>
+            <div class="flex justify-center gap-40">
+                <div class="flex flex-col gap-5">
+                    <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
+                    <label class="form-label inline-block text-gray-700
+                        font-semilight text-xl"
+                    >
+                        Channel Title
+                    </label>
+                    <div class="form-control flex flex-row">
+                        <input
+                            type="text"
+                            v-model="value.title"
+                            ref="channel_title"
+                            placeholder="Channel Title"
+                            :disabled="!isEditingTitle"
+                            class="w-5/6 px-3 py-3 text-lg font-semilight
+                            text-text-gray-700 bg-white bg-clip-padding
+                            border border-solid
+                            border-mainColor border-opacity-40 rounded-md transition
+                            ease-in-out m-0
+                          focus:bg-subColor focus:mainColor
+                            focus:border-opacity-100
+                            focus:outline-none"
+                            :class="{view: !isEditingTitle}"
+                        >
+                        <v-icon
+                            @click="isEditingTitle = !isEditingTitle" v-if="!isEditingTitle"
+                            class="ml-5 text-right"
+                            big
+                            color="orange darken-2"
+                        >
+                            settings
+                        </v-icon>
+                        <v-icon
+                            @click="saveTitle" v-else-if="isEditingTitle"
+                            class="ml-5 text-right"
+                            big
+                            color="green accent-3"
+                        >
+                            check_circle
+                        </v-icon>
+                        <v-icon
+                            v-if="isEditingTitle" @click="isEditingTitle = false"
+                            class="ml-5 text-right"
+                            big
+                            color="deep-orange lighten-1"
+                        >
+                            cancel
+                        </v-icon>
+                    </div>
+                    <label class="form-label inline-block mb-2 text-gray-700
+                        font-semilight text-xl"
+                        >
+                            Channel Description
+                        </label>
+                    <div class="form-control flex flex-row">
+                        <input
+                            type="text"
+                            v-model="value.description"
+                            ref="channel_description"
+                            placeholder="Channel Description"
+                            :disabled="!isEditingDesc"
+                            class="w-5/6 px-3 py-3 text-lg font-semilight
+                            text-gray-700 bg-white bg-clip-padding
+                            border border-solid
+                            border-mainColor border-opacity-40 rounded-md transition
+                            ease-in-out m-0
+                            focus:bg-subColor focus:mainColor
+                            focus:border-opacity-100
+                            focus:outline-none"
+                            :class="{view: !isEditingDesc}"
+                        >
+                        <v-icon
+                            @click="isEditingDesc = !isEditingDesc" v-if="!isEditingDesc"
+                            class="ml-5 text-right"
+                            big
+                            color="orange darken-2"
+                        >
+                            settings
+                        </v-icon>
+                        <v-icon
+                            @click="saveDescription" v-else-if="isEditingDesc"
+                            class="ml-5 text-right"
+                            big
+                            color="green accent-3"
+                        >
+                            check_circle
+                        </v-icon>
+                        <v-icon
+                            v-if="isEditingDesc" @click="isEditingDesc = false"
+                            class="ml-5 text-right"
+                            big
+                            color="deep-orange lighten-1"
+                        >
+                            cancel
+                        </v-icon>
+                    </div>
+                    <div class="form-control">
+                        <div>
+                            <label
+                                class="form-label inline-block mb-2 text-gray-700
+                                font-semilight text-xl"
+                            >
+                                Schedule
+                            </label>
+                            <label
+                                class="form-label inline-block mb-2 ml-2 text-gray-700
+                                text-opacity-50 font-semilight text-sm"
+                            >
+                                (YYYY/MM/DD)
+                            </label>
+                        </div>
+                        <div class="flex flex-row">
+                            <v-menu
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <input
+                                        class="w-5/6 px-3 pt-3 pb-3  border border-solid
+                                        border-mainColor border-opacity-40 text-base
+                                        font-semilight text-grayColor bg-subColor
+                                        rounded-md"
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        v-model="date"
+                                        ref="channel_schedule"
+                                        :disabled="!isEditingDate"
+                                        :class="{view: !isEditingDate}"
+                                    >
+                                </template>
+                                <v-date-picker
+                                    v-model="date"
+                                    @input="menu = false"
+                                    color="orange darken-4"
+                                ></v-date-picker>
+                            </v-menu>
+                            <v-icon
+                                @click="isEditingDate = !isEditingDate" v-if="!isEditingDate"
+                                class="ml-5 text-right"
+                                big
+                                color="orange darken-2"
+                            >
+                                settings
+                            </v-icon>
+                            <v-icon
+                                @click="saveSchedule" v-else-if="isEditingDate"
+                                class="ml-5 text-right"
+                                big
+                                color="green accent-3"
+                            >
+                                check_circle
+                            </v-icon>
+                            <v-icon
+                                v-if="isEditingDate" @click="isEditingDate = false"
+                                class="ml-5 text-right"
+                                big
+                                color="deep-orange lighten-1"
+                            >
+                                cancel
+                            </v-icon>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label
+                            class="inline-block text-gray-700 font-semilight text-xl mb-3"
+                        >
+                            Time Duration
+                        </label>
+                        <label
+                            class="form-label inline-block mb-2 ml-2 text-gray-700
+                            text-opacity-50 font-semilight text-sm"
+                        >
+                            (24 hours format)
+                        </label>
+                        <div class="flex flex-nowrap">
+                            <div class="mr-2">
+                                <v-menu
+                                    ref="menu1"
+                                    v-model="menu1"
+                                    :close-on-content-click="false"
+                                    :nudge-right="40"
+                                    :return-value.sync="timeStart"
+                                    transition="scale-transition"
+                                    offset-y
+                                    max-width="290px"
+                                    min-width="290px"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <label
+                                        class="inline-block text-gray-500 font-semilight
+                                        text-sm mb-1 mr-1"
+                                        >
+                                        Start:
+                                        </label>
+                                        <input
+                                            class="w-3/6 px-3 pt-3 pb-3  border border-solid
+                                            border-mainColor border-opacity-40 text-base
+                                            font-semilight text-grayColor bg-subColor
+                                            rounded-md"
+                                            v-model="timeStart"
+                                            readonly
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            placeholder="select"
+                                            ref="time_start"
+                                            :disabled="!isEditingTime"
+                                            :class="{view: !isEditingTime}"
+                                        >
+                                    </template>
+                                    <v-time-picker
+                                        v-if="menu1"
+                                        v-model="timeStart"
+                                        full-width
+                                        @click:minute="$refs.menu1.save(timeStart)"
+                                        format="24hr"
+                                        :max="timeEnd"
+                                    ></v-time-picker>
+                                </v-menu>
+                            </div>
+                            <div>
+                                <v-menu
+                                    ref="menu2"
+                                    v-model="menu2"
+                                    :close-on-content-click="false"
+                                    :nudge-right="40"
+                                    :return-value.sync="timeEnd"
+                                    transition="scale-transition"
+                                    offset-y
+                                    max-width="290px"
+                                    min-width="290px"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <label
+                                            class="inline-block text-gray-500 font-semilight
+                                            text-sm mb-1 mr-1"
+                                        >
+                                            End:
+                                        </label>
+                                        <input
+                                            class="w-3/6 px-3 pt-3 pb-3  border border-solid
+                                            border-mainColor border-opacity-40 text-base
+                                            font-semilight text-grayColor bg-subColor
+                                            rounded-md"
+                                            v-model="timeEnd"
+                                            readonly
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            placeholder="select"
+                                            ref="time_end"
+                                            :disabled="!isEditingTime"
+                                            :class="{view: !isEditingTime}"
+                                        >
+                                    </template>
+                                    <v-time-picker
+                                        v-if="menu2"
+                                        v-model="timeEnd"
+                                        full-width
+                                        @click:minute="$refs.menu2.save(timeEnd)"
+                                        format="24hr"
+                                        :min="timeStart"
+                                    ></v-time-picker>
+                                </v-menu>
+                            </div>
+                                <v-icon
+                                    @click="isEditingTime = !isEditingTime" v-if="!isEditingTime"
+                                    class="ml-5 text-right"
+                                    big
+                                    color="orange darken-2"
+                                >
+                                    settings
+                                </v-icon>
+                                <v-icon
+                                    @click="saveTime" v-else-if="isEditingTime"
+                                    class="ml-5 text-right"
+                                    big
+                                    color="green accent-3"
+                                >
+                                    check_circle
+                                </v-icon>
+                                <v-icon
+                                    v-if="isEditingTime" @click="isEditingTime = false"
+                                    class="ml-5 text-right"
+                                    big
+                                    color="deep-orange lighten-1"
+                                >
+                                    cancel
+                                </v-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <div class="flex flex-col justify-center gap-5">
+                        <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
+                        <div>
+                            <Checkbox3
+                                textRight="Random sections" v-model="settingData.randomSec"
+                            />
+                        </div>
+                        <div>
+                            <Checkbox3
+                                textRight="Random questions in section"
+                                v-model="settingData.randomQuestion"
+                            />
+                        </div>
+                        <div>
+                            <Checkbox3
+                                textRight="Shuffle choices" v-model="settingData.shuffleChoices"
+                            />
+                        </div>
+                        <div>
+                            <Checkbox3
+                                textRight="Show correct answers after submit the exam"
+                                v-model="settingData.showCAnswer"
+                            />
+                        </div>
+                        <div>
+                            <Checkbox3
+                                textRight="Show total scores after submit the exam"
+                                v-model="settingData.showTotalScore"
+                            />
+                        </div>
+                        <div>
+                            <Checkbox3
+                                textRight="Cannot submit the exam if there are missed answers"
+                                v-model="settingData.cantSubmitEmpty"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+import Checkbox3 from '@/components/Form/Checkbox3.vue';
+
+export default {
+  name: 'EditChannelForm',
+  components: {
+    Checkbox3,
+  },
+  props: ['value'],
+  data() {
+    return {
+      menu: false,
+      menu1: false,
+      menu2: false,
+      isEditingTitle: false,
+      isEditingDesc: false,
+      isEditingDate: false,
+      isEditingTime: false,
+      title: this.value.title,
+      description: this.value.description,
+      timeStart: this.value.timeStart,
+      timeEnd: this.value.timeStart,
+      // eslint-disable-next-line max-len
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      datePicked: this.value.date,
+      settingData: {
+        randomSec: this.value.randomSec,
+        randomQuestion: this.value.randomQuestion,
+        shuffleChoices: this.value.shuffleChoices,
+        showCAnswer: this.value.showCAnswer,
+        showTotalScore: this.value.showTotalScore,
+        cantSubmitEmpty: this.value.cantSubmitEmpty,
+      },
+    };
+  },
+  methods: {
+    saveTitle() {
+      this.title = this.$refs.channel_title.value;
+      this.isEditingTitle = !this.isEditingTitle;
+    },
+    saveDescription() {
+      this.description = this.$refs.channel_description.value;
+      this.isEditingDesc = !this.isEditingDesc;
+    },
+    saveSchedule() {
+      this.date = this.$refs.channel_schedule.value;
+      this.isEditingDate = !this.isEditingDate;
+    },
+    saveTime() {
+      this.timeStart = this.$refs.time_start.value;
+      this.timeEnd = this.$refs.time_end.value;
+      this.isEditingTime = !this.isEditingTime;
+    },
+  },
+};
+</script>
+
+<style>
+.view {
+  border-color: transparent;
+  background-color: initial;
+  color: #EF7F4C;
+}
+</style>

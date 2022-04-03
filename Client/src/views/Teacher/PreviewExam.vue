@@ -1,30 +1,31 @@
 <template>
+  <div>
+    <Header
+      main="Preview"
+    >
+      <button
+        @click="onClickBack"
+        class="mt-3 bg-white border-orange-200 border border-solid
+              rounded-lg px-8 py-3 font-semilight text-mainColor"
+      >
+        Back
+      </button>
+    </Header>
     <div>
-        <Header
-        main="Your exam" current="> Preview Exam"
-        >
-            <button
-                @click="onClickBack"
-                class="mt-3 bg-white border-orange-200 border border-solid
-                        rounded-lg px-8 py-3 font-semilight text-mainColor"
-            >
-                Back
-            </button>
-        </Header>
-        <div>
-            <div class="ml-60 mt-10">
-                <p class="ml-3 font-semibold text-lg text-black w-4/5 break-all">
-                    {{ examTitle }}
-                </p>
-                <p class="ml-3 font-semibold text-lg text-black  w-4/5 break-all">
-                    {{ description }}
-                </p>
-            </div>
-            <div>
-                <PreviewList/>
-            </div>
-        </div>
+      <div class="ml-72 mt-10">
+        <p class="ml-3 font-semibold text-lg text-black w-4/5 break-all">
+          {{ examTitle }}
+        </p>
+        <p class="ml-3 font-semibold text-lg text-black  w-4/5 break-all">
+          {{ description }}
+        </p>
+      </div>
+      <div>
+        <PreviewList
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

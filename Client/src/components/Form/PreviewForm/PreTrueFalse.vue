@@ -17,18 +17,18 @@
 </template>
 
 <script>
-import CheckboxForm from '@/components/Form/CheckboxForm';
+import CheckboxForm from '@/components/Form/CheckboxForm.vue';
 
 export default {
-    name: 'PreTrueFalse',
-    components: {
-        CheckboxForm,
-    },
-    props: ["value"],
-    data() {
-        return {
-            questionData: this.value,
-        };
-    },
+  name: 'PreTrueFalse',
+  components: {
+    CheckboxForm,
+  },
+  props: ['value'],
+  data() {
+    return {
+      questionData: this.value,
+    };
+  },
 };
 </script>
