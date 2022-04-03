@@ -102,7 +102,7 @@ export default {
       this.questions = data;
     },
     onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
+      this.$router.push({ name: pageName });
     },
     onClickCancel() {
       this.$router.push({ name: 'YourExam' }).catch(() => true);
@@ -114,20 +114,16 @@ export default {
     async create() {
       this.loaderOption.loading = true;
       try {
-        const res = await api.createExams(this.examInfo).then((res) => {
-          return {
-            ...res.data,
-            status: res.status,
-          };
-        });
+        const res = await api.createExams(this.examInfo).then((res2) => ({
+          ...res2.data,
+          status: res2.status,
+        }));
         if (res.status === 201) {
           const resultMap = api.examMapper(this.questions);
-          const questionsResp = await api.createQuestions(res.eid, resultMap).then((res) => {
-            return {
-              ...res.data,
-              status: res.status,
-            };
-          });
+          const questionsResp = await api.createQuestions(res.eid, resultMap).then((res2) => ({
+            ...res2.data,
+            status: res2.status,
+          }));
           if (questionsResp.status >= 200 && questionsResp.status < 300) {
             this.loaderOption.loading = false;
             this.createSuccess.status = true;

@@ -49,7 +49,8 @@
         v-if='$store.getters.getIsAuth
               &&
               $store.getters.getIsStudent'
-      /> {{ $store.getters.getIsStudent}}
+      />
+      {{ $store.getters.getIsStudent }}
     </div>
     <div class="flex flex-row-reverse">
       <NavButton
