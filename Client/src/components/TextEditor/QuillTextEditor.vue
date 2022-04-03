@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import { quillEditor } from "vue-quill-editor";
-import katex from "katex";
-import "katex/dist/katex.min.css";
+import { quillEditor } from 'vue-quill-editor';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 export default {
   components: { quillEditor },
@@ -24,11 +24,11 @@ export default {
     value: {},
     placeholder: {
       type: String,
-      default: "Text",
+      default: 'Text',
     },
     theme: {
       type: String,
-      default: "snow",
+      default: 'snow',
     },
     width: {
       type: String,
@@ -45,20 +45,20 @@ export default {
   },
   data() {
     return {
-      content: "",
+      content: '',
       editorOption: {
         readOnly: true,
         placeholder: this.placeholder,
         theme: this.theme,
         modules: {
           toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
             [{ color: [] }, { background: [] }],
-            [{ align: [] }, { list: "ordered" }, { list: "bullet" }],
-            ["formula", "image", "video", "link"],
-            ["clean"],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['formula', 'image', 'video', 'link'],
+            ['clean'],
           ],
         },
       },
@@ -69,13 +69,13 @@ export default {
   },
   methods: {
     onChange() {
-      this.$emit("input", this.content);
+      this.$emit('input', this.content);
       this.onChangeFunc();
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value',
+    event: 'input',
   },
   created() {
     this.content = this.value;

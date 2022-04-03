@@ -18,26 +18,13 @@
 
 <script>
 
-export default  {
-    name: 'PreMultiple',
-    props: ["value"],
-    data()  {
-        return  {
-            questionData: this.value,
-        };
-    },
-    // methods: {
-    //     onChange() {
-    //         this.$emit('input', this.questionData);
-    //     },
-    // },
-    // model: {
-    //     prop: "value", 
-    //     event: "input", 
-    // },
-    // created() {
-    //     console.log(this.value);
-    // },
+export default {
+  name: 'PreMultiple',
+  props: ['value'],
+  data() {
+    return {
+      questionData: this.value,
+    };
+  },
 };
-
 </script>

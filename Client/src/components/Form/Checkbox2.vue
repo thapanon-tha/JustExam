@@ -43,8 +43,8 @@ export default {
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value', // บอกว่า v-model ให้เข้า value
+    event: 'input', // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
   },
 };
 </script>

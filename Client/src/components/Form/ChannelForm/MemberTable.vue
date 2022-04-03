@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 <template>
   <v-data-table
     :headers="headers"
@@ -140,150 +141,152 @@
 </template>
 
 <script>
-  export default {
-    name: 'MemberTable',
-    data: () => ({
-      dialog: false,
-      dialogDelete: false,
-      headers: [
+export default {
+  name: 'MemberTable',
+  data: () => ({
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {
+        text: 'Student ID',
+        align: 'center',
+        sortable: false,
+        value: 'sid',
+      },
+      {
+        text: 'Name',
+        align: 'center',
+        value: 'name',
+      },
+      {
+        text: 'Role',
+        align: 'center',
+        sortable: false,
+        value: 'role',
+
+      },
+      {
+        text: '',
+        align: 'center',
+        sortable: false,
+        value: 'actions',
+
+      },
+    ],
+    memberlist: [],
+    editedIndex: -1,
+    editedItem: {
+      sid: '',
+      role: 'Student',
+    },
+    defaultItem: {
+      sid: '',
+      role: 'Student',
+    },
+  }),
+
+  watch: {
+    dialog(val) {
+      // eslint-disable-next-line no-unused-expressions
+      val || this.close();
+    },
+    dialogDelete(val) {
+      // eslint-disable-next-line no-unused-expressions
+      val || this.closeDelete();
+    },
+  },
+
+  created() {
+    this.initialize();
+  },
+
+  methods: {
+    initialize() {
+      this.memberlist = [
         {
-          text: 'Student ID',
-          align: 'center',
-          sortable: false,
-          value: 'sid',
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
         },
-        { 
-          text: 'Name', 
-          align: 'center',
-          value: 'name' 
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
         },
-        { 
-          text: 'Role', 
-          align: 'center',
-          sortable: false,
-          value: 'role'
-           
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
         },
-        { 
-          text: '', 
-          align: 'center',
-          sortable: false,
-          value: 'actions'
-           
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
         },
-      ],
-      memberlist: [],
-      editedIndex: -1,
-      editedItem: {
-        sid: '',
-        role: 'Student',
-      },
-      defaultItem: {
-        sid: '',
-        role: 'Student',
-      },
-    }),
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
+        },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
+        },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
+        },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          role: 'Student',
+        },
+      ];
     },
 
-    created () {
-      this.initialize()
+    editItem(item) {
+      this.editedIndex = this.memberlist.indexOf(item);
+      this.editedItem = { ...item };
+      this.dialog = true;
     },
 
-    methods: {
-      initialize () {
-        this.memberlist = [
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            role: 'Student'
-          },
-        ]
-      },
-
-      editItem (item) {
-        this.editedIndex = this.memberlist.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
-
-      deleteItem (item) {
-        this.editedIndex = this.memberlist.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      },
-
-      deleteItemConfirm () {
-        this.memberlist.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.memberlist[this.editedIndex], this.editedItem)
-        } else {
-          this.memberlist.push(this.editedItem)
-        }
-        this.close()
-      },
+    deleteItem(item) {
+      this.editedIndex = this.memberlist.indexOf(item);
+      this.editedItem = { ...item };
+      this.dialogDelete = true;
     },
-  }
+
+    deleteItemConfirm() {
+      this.memberlist.splice(this.editedIndex, 1);
+      this.closeDelete();
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = { ...this.defaultItem };
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = { ...this.defaultItem };
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.memberlist[this.editedIndex], this.editedItem);
+      } else {
+        this.memberlist.push(this.editedItem);
+      }
+      this.close();
+    },
+  },
+};
 </script>

@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 <template>
   <div class="flex justify-center mt-10 mb-10">
     <div>
@@ -11,7 +12,9 @@
         </div>
         <div>
           <select
-            class="w-80 px-3 py-3 text-base font-semilight text-gray-700 text-center bg-subColor border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out focus:text-black focus:bg-subColor focus:mainColor"
+            class="w-80 px-3 py-3 text-base font-semilight text-gray-700 text-center
+             bg-subColor border border-solid border-mainColor border-opacity-40 rounded-md
+             transition ease-in-out focus:text-black focus:bg-subColor focus:mainColor"
           >
             <option>Select category</option>
             <option>Math</option>
@@ -26,7 +29,9 @@
         </div>
         <div>
           <select
-            class="w-80 px-3 py-3 text-base font-semilight text-gray-700 text-center bg-subColor border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out focus:text-black focus:bg-subColor focus:mainColor"
+            class="w-80 px-3 py-3 text-base font-semilight text-gray-700 text-center
+            bg-subColor border border-solid border-mainColor border-opacity-40 rounded-md
+            transition ease-in-out focus:text-black focus:bg-subColor focus:mainColor"
           >
             <option>Select option</option>
             <option>Share only questions</option>
@@ -39,14 +44,14 @@
 </template>
 
 <script>
-import InputForm from "@/components/Form/InputForm.vue";
+import InputForm from '@/components/Form/InputForm.vue';
 
 export default {
-  name: "ExamInfoForm",
+  name: 'ExamInfoForm',
   components: {
     InputForm,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       title: this.value.title,
@@ -54,11 +59,12 @@ export default {
     };
   },
   watch: {
-    title: function (newVal, oldVal) {
-      this.$emit("input", { title: this.title, description: this.description });
+    /* eslint-disable */
+    title(newVal, oldVal) {
+      this.$emit('input', { title: this.title, description: this.description });
     },
-    description: function (newVal, oldVal) {
-      this.$emit("input", { title: this.title, description: this.description });
+    description(newVal, oldVal) {
+      this.$emit('input', { title: this.title, description: this.description });
     },
   },
 };

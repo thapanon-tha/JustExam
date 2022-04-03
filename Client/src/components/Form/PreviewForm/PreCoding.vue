@@ -2,7 +2,10 @@
     <div class="ml-15 mt-10 mr-15 mb-10">
         <div class="mb-5">
             <div>
-                <p class="font-semibold text-lg text-mainColor ml-2 text-right">{{ questionData.lang }}</p>
+                <p class="font-semibold text-lg text-mainColor ml-2 text-right"
+                >
+                    {{ questionData.lang }}
+                </p>
                 <p class="font-semibold text-lg">Question</p>
             </div>
             <div class="p-3 border-l-4 border-mainColor break-words">
@@ -52,19 +55,19 @@
 </template>
 
 <script>
-import QuillTextEditor from '@/components/TextEditor/QuillTextEditor';
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
 
 export default {
-    name: 'PreCoding',
-    components: {
-        QuillTextEditor,
-    },
-    props: ["value"],
-    data() {
-        return {
-            questionData: this.value,
-        };
-    },
+  name: 'PreCoding',
+  components: {
+    QuillTextEditor,
+  },
+  props: ['value'],
+  data() {
+    return {
+      questionData: this.value,
+    };
+  },
 
 };
 </script>

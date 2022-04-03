@@ -26,8 +26,7 @@
         name='Exam channel'
         to='ExamChannelTeacher'
         v-if='$store.getters.getIsAuth
-              && ($store.getters.getIsTeacher ||
-              $store.getters.getIsStudent)'
+              && $store.getters.getIsTeacher'
       />
       <NavButton
         name='Your exam'
@@ -44,6 +43,13 @@
               && ($store.getters.getIsTeacher ||
               $store.getters.getIsStudent)'
       />
+      <NavButton
+        name='Student channel'
+        to='ExamChannelStudent'
+        v-if='$store.getters.getIsAuth
+              &&
+              $store.getters.getIsStudent'
+      /> {{ $store.getters.getIsStudent}}
     </div>
     <div class="flex flex-row-reverse">
       <NavButton

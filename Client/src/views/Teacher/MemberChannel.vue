@@ -23,25 +23,26 @@
 </template>
 
 <script>
-import Header from "@/components/Header/Header";
-import MemberTable from "@/components/Form/ChannelForm/MemberTable";
-import api from "@/services/apis";
+import Header from '@/components/Header/Header.vue';
+import MemberTable from '@/components/Form/ChannelForm/MemberTable.vue';
+import api from '@/services/apis';
+
 export default {
-  name: "MemberChannel",
+  name: 'MemberChannel',
   components: {
     Header,
     MemberTable,
   },
   methods: {
     onClickBack() {
-      this.$router.push({ name: "InsideChannelTeacher" }).catch(() => true);
+      this.$router.push({ name: 'InsideChannelTeacher' }).catch(() => true);
     },
     async getMember(cid) {
       await api.members(cid);
     },
   },
-  created() {
-    this.getMember(cid)
+  created(cid) {
+    this.getMember(cid);
   },
 };
 </script>
