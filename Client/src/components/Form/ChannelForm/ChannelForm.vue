@@ -1,7 +1,7 @@
 <template>
     <div>
         <form>
-            <div class="flex justify-center gap-40">
+            <div class="flex justify-center gap-32">
                 <div class="flex flex-col gap-5">
                     <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
                     <div class="form-control">
@@ -16,10 +16,10 @@
                         <DatePicker v-model="datePicked" />
                     </div>
                     <div class="form-control">
-                        <TimePicker labelText="Time" />
+                        <TimePicker/>
                     </div>
                 </div>
-                <div class="form-control">
+                <div class="form-control w-11/12">
                     <div class="flex flex-col justify-center gap-5">
                         <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
                         <div>

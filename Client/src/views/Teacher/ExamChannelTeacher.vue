@@ -39,7 +39,7 @@
         </option>
       </select>
     </div>
-    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
+    <div class="grid grid-cols-4 gap-10 ml-40 mr-40 mt-10">
       <div v-for="box in channels" :key="box.cid">
         <div class="w-60">
           <CardChannel

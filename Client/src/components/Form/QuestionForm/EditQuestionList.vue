@@ -38,7 +38,7 @@
     >
       <div class="flex flex-col justify-center">
         <div
-          v-for="(item, index) in questionList"
+          v-for="item in questionList"
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor
           w-auto ml-20 mr-20 mt-10 shadow-md"
@@ -338,7 +338,7 @@ export default {
       this.qlist = this.qlist.filter((e) => e.id !== id);
     },
     onChange(id, type) {
-      let indexObject = this.qlist.findIndex((value) => value.id === id);
+      const indexObject = this.qlist.findIndex((value) => value.id === id);
       this.qlist[indexObject].questionData = this.prototype[type];
     },
   },
@@ -348,12 +348,12 @@ export default {
   computed: {
     questionList() {
       return this.qlist.filter(
-        (question) => question.sectionId === this.selectedSectionId
+        (question) => question.sectionId === this.selectedSectionId,
       );
     },
   },
   watch: {
-    qlist: function (newVal, oldVal) {
+    qlist(newVal, oldVal) {
       this.$emit('update:qlist', this.qlist);
     },
   },

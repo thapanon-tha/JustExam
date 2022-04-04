@@ -31,9 +31,11 @@
         border-solid border-mainColor border-opacity-40
         rounded-md transition ease-in-out m-0 focus:text-black
         focus:mainColor focus:border-opacity-100 focus:outline-none"
-        type="number" min="0" v-model="questionData.totalPoint"
-        placeholder="Total"
+        type="number" min="0" v-model="questionData.receivedPoint"
+        placeholder="Point"
       >
+      <h1 class="text-md">/</h1>
+      <div class="text-md">10</div>
     </div>
   </div>
 </template>

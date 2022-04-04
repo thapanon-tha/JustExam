@@ -21,7 +21,7 @@
         >{{ item.name }}</option>
       </select>
     </div>
-    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-20">
+    <div class="grid grid-cols-4 gap-10 ml-40 mr-40 mt-10">
       <div
         v-for="box in examsData" :key="box.eid"
       >

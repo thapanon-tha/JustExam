@@ -1,18 +1,17 @@
 <template>
-    <div class="flex justify-between">
-        <label
-          class="text-gray-700 font-semilight text-xl mr-20"
-        >
-          {{ textRight }}
-        </label>
-        <input
+  <div class="flex">
+    <input
           type="checkbox"
-          class="h-4 w-4"
+          class="h-4 w-4 mt-1"
           :value="value"
           @change="onChange()"
-        />
-
-    </div>
+    />
+    <p
+      class="text-gray-700 font-semilight text-xl w-auto ml-5"
+    >
+      {{ textRight }}
+    </p>
+  </div>
 </template>
 
 <script>

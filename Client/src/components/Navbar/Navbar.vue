@@ -37,20 +37,20 @@
               && $store.getters.getIsTeacher'
       />
       <NavButton
-        name='Exam hub'
-        to='ExamHubTeacher'
-        v-if='$store.getters.getIsAuth
-              && ($store.getters.getIsTeacher ||
-              $store.getters.getIsStudent)'
-      />
-      <NavButton
         name='Student channel'
         to='ExamChannelStudent'
         v-if='$store.getters.getIsAuth
               &&
               $store.getters.getIsStudent'
       />
-      {{ $store.getters.getIsStudent }}
+      <!-- {{ $store.getters.getIsStudent }} -->
+      <!-- <NavButton
+        name='Exam hub'
+        to='ExamHubTeacher'
+        v-if='$store.getters.getIsAuth
+              && ($store.getters.getIsTeacher ||
+              $store.getters.getIsStudent)'
+      /> -->
     </div>
     <div class="flex flex-row-reverse">
       <NavButton

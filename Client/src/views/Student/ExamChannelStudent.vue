@@ -12,6 +12,7 @@
           font-semilight
           text-mainColor
         "
+        @click="dialog = true"
       >
         Join channel
       </button>
@@ -39,16 +40,71 @@
       </select>
     </div>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
-      <div v-for="box in channels" :key="box.cid">
+      <div v-for="box in channels" :key="box.id">
         <div class="w-60">
           <CardStudentChannel
-            v-bind:detail="box"
             @onClick="onClick('InsideChannelStudent', box.cid)"
             @clickDelete="onClickDeleteChannel()"
           />
         </div>
       </div>
     </div>
+    <v-row justify="center">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="420"
+      >
+        <v-card>
+          <v-card-title class="text-h6">
+            Enter your student ID and invite code
+          </v-card-title>
+          <div class="flex flex-row ml-10 mt-5">
+            <label class="text-sm">Student ID</label>
+            <input
+              type="text"
+              v-model="studentID"
+              class="ml-5 px-3 py-2 text-sm font-semilight text-gray-700 bg-subColor
+                bg-clip-padding border border-solid border-mainColor
+                border-opacity-40 rounded-md transition ease-in-out m-0
+                focus:text-black focus:bg-subColor focus:mainColor
+                focus:border-opacity-100 focus:outline-none"
+              placeholder="Student ID"
+            >
+          </div>
+          <div class="flex flex-row ml-10 mt-5 mb-5">
+            <label class="text-sm">Invite code</label>
+            <input
+              type="text"
+              v-model="inviteCode"
+              class="ml-4 px-3 py-2 text-sm font-semilight text-gray-700 bg-subColor
+                bg-clip-padding border border-solid border-mainColor
+                border-opacity-40 rounded-md transition ease-in-out m-0
+                focus:text-black focus:bg-subColor focus:mainColor
+                focus:border-opacity-100 focus:outline-none"
+              placeholder="Invite code"
+            >
+          </div>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="orange darken-1"
+              text
+              @click="dialog = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              color="orange darken-1"
+              text
+              @click="dialog = false"
+            >
+              Join
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+  </v-row>
   </div>
 </template>
 
@@ -65,7 +121,10 @@ export default {
   },
   data() {
     return {
-      channels: [],
+      inviteCode: '',
+      studentID: '',
+      dialog: false,
+      channels: 6,
       sortlist: [
         {
           name: 'Sort by uncoming',
@@ -85,15 +144,10 @@ export default {
     onClickLeaveChannel() {
       //
     },
-    // async getChannels() {
-    //   this.channels = await api.channels().then((res) => res.data);
-    // },
+
   },
   mounted() {
     //
   },
-  // created() {
-  //   this.getChannels();
-  // },
 };
 </script>

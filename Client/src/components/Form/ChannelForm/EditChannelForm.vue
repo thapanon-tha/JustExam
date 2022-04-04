@@ -4,11 +4,37 @@
             <div class="flex justify-center gap-40">
                 <div class="flex flex-col gap-5">
                     <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
-                    <label class="form-label inline-block text-gray-700
-                        font-semilight text-xl"
-                    >
-                        Channel Title
-                    </label>
+                    <div>
+                        <label class="form-label inline-block text-gray-700
+                            font-semilight text-xl"
+                        >
+                            Channel Title
+                        </label>
+                        <v-icon
+                            @click="isEditingTitle = !isEditingTitle" v-if="!isEditingTitle"
+                            class="ml-1 text-right"
+                            small
+                            color="orange darken-2"
+                        >
+                            settings
+                        </v-icon>
+                        <v-icon
+                            @click="saveTitle" v-else-if="isEditingTitle"
+                            class="ml-1 text-right"
+                            small
+                            color="green accent-3"
+                        >
+                            check_circle
+                        </v-icon>
+                        <v-icon
+                            v-if="isEditingTitle" @click="isEditingTitle = false"
+                            class="ml-1 text-right"
+                            small
+                            color="deep-orange lighten-1"
+                        >
+                            cancel
+                        </v-icon>
+                    </div>
                     <div class="form-control flex flex-row">
                         <input
                             type="text"
@@ -16,7 +42,7 @@
                             ref="channel_title"
                             placeholder="Channel Title"
                             :disabled="!isEditingTitle"
-                            class="w-5/6 px-3 py-3 text-lg font-semilight
+                            class="w-11/12 px-3 py-3 text-lg font-semilight
                             text-text-gray-700 bg-white bg-clip-padding
                             border border-solid
                             border-mainColor border-opacity-40 rounded-md transition
@@ -26,36 +52,38 @@
                             focus:outline-none"
                             :class="{view: !isEditingTitle}"
                         >
+                    </div>
+                    <div>
+                        <label class="form-label inline-block text-gray-700
+                        font-semilight text-xl"
+                        >
+                            Channel Description
+                        </label>
                         <v-icon
-                            @click="isEditingTitle = !isEditingTitle" v-if="!isEditingTitle"
-                            class="ml-5 text-right"
-                            big
+                            @click="isEditingDesc = !isEditingDesc" v-if="!isEditingDesc"
+                            class="ml-1 text-right"
+                            small
                             color="orange darken-2"
                         >
                             settings
                         </v-icon>
                         <v-icon
-                            @click="saveTitle" v-else-if="isEditingTitle"
-                            class="ml-5 text-right"
-                            big
+                            @click="saveDescription" v-else-if="isEditingDesc"
+                            class="ml-1 text-right"
+                            small
                             color="green accent-3"
                         >
                             check_circle
                         </v-icon>
                         <v-icon
-                            v-if="isEditingTitle" @click="isEditingTitle = false"
-                            class="ml-5 text-right"
-                            big
+                            v-if="isEditingDesc" @click="isEditingDesc = false"
+                            class="ml-1 text-right"
+                            small
                             color="deep-orange lighten-1"
                         >
                             cancel
                         </v-icon>
                     </div>
-                    <label class="form-label inline-block mb-2 text-gray-700
-                        font-semilight text-xl"
-                        >
-                            Channel Description
-                        </label>
                     <div class="form-control flex flex-row">
                         <input
                             type="text"
@@ -63,7 +91,7 @@
                             ref="channel_description"
                             placeholder="Channel Description"
                             :disabled="!isEditingDesc"
-                            class="w-5/6 px-3 py-3 text-lg font-semilight
+                            class="w-11/12 px-3 py-3 text-lg font-semilight
                             text-gray-700 bg-white bg-clip-padding
                             border border-solid
                             border-mainColor border-opacity-40 rounded-md transition
@@ -73,30 +101,6 @@
                             focus:outline-none"
                             :class="{view: !isEditingDesc}"
                         >
-                        <v-icon
-                            @click="isEditingDesc = !isEditingDesc" v-if="!isEditingDesc"
-                            class="ml-5 text-right"
-                            big
-                            color="orange darken-2"
-                        >
-                            settings
-                        </v-icon>
-                        <v-icon
-                            @click="saveDescription" v-else-if="isEditingDesc"
-                            class="ml-5 text-right"
-                            big
-                            color="green accent-3"
-                        >
-                            check_circle
-                        </v-icon>
-                        <v-icon
-                            v-if="isEditingDesc" @click="isEditingDesc = false"
-                            class="ml-5 text-right"
-                            big
-                            color="deep-orange lighten-1"
-                        >
-                            cancel
-                        </v-icon>
                     </div>
                     <div class="form-control">
                         <div>
@@ -112,6 +116,30 @@
                             >
                                 (YYYY/MM/DD)
                             </label>
+                            <v-icon
+                                @click="isEditingDate = !isEditingDate" v-if="!isEditingDate"
+                                class="ml-1 text-right"
+                                small
+                                color="orange darken-2"
+                            >
+                                settings
+                            </v-icon>
+                            <v-icon
+                                @click="saveSchedule" v-else-if="isEditingDate"
+                                class="ml-1 text-right"
+                                small
+                                color="green accent-3"
+                            >
+                                check_circle
+                            </v-icon>
+                            <v-icon
+                                v-if="isEditingDate" @click="isEditingDate = false"
+                                class="ml-1 text-right"
+                                small
+                                color="deep-orange lighten-1"
+                            >
+                                cancel
+                            </v-icon>
                         </div>
                         <div class="flex flex-row">
                             <v-menu
@@ -143,44 +171,46 @@
                                     color="orange darken-4"
                                 ></v-date-picker>
                             </v-menu>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <div>
+                            <label
+                                class="inline-block text-gray-700 font-semilight text-xl mb-3"
+                            >
+                                Time Duration
+                            </label>
+                            <label
+                                class="form-label inline-block mb-2 ml-2 text-gray-700
+                                text-opacity-50 font-semilight text-sm"
+                            >
+                                (24 hours format)
+                            </label>
                             <v-icon
-                                @click="isEditingDate = !isEditingDate" v-if="!isEditingDate"
-                                class="ml-5 text-right"
-                                big
+                                @click="isEditingTime = !isEditingTime" v-if="!isEditingTime"
+                                class="ml-1 text-right"
+                                small
                                 color="orange darken-2"
                             >
                                 settings
                             </v-icon>
                             <v-icon
-                                @click="saveSchedule" v-else-if="isEditingDate"
-                                class="ml-5 text-right"
-                                big
+                                @click="saveTime" v-else-if="isEditingTime"
+                                class="ml-1 text-right"
+                                small
                                 color="green accent-3"
                             >
-                                check_circle
+                                        check_circle
                             </v-icon>
                             <v-icon
-                                v-if="isEditingDate" @click="isEditingDate = false"
-                                class="ml-5 text-right"
-                                big
+                                v-if="isEditingTime" @click="isEditingTime = false"
+                                class="ml-1 text-right"
+                                small
                                 color="deep-orange lighten-1"
                             >
                                 cancel
                             </v-icon>
                         </div>
-                    </div>
-                    <div class="form-control">
-                        <label
-                            class="inline-block text-gray-700 font-semilight text-xl mb-3"
-                        >
-                            Time Duration
-                        </label>
-                        <label
-                            class="form-label inline-block mb-2 ml-2 text-gray-700
-                            text-opacity-50 font-semilight text-sm"
-                        >
-                            (24 hours format)
-                        </label>
                         <div class="flex flex-nowrap">
                             <div class="mr-2">
                                 <v-menu
@@ -199,10 +229,10 @@
                                         class="inline-block text-gray-500 font-semilight
                                         text-sm mb-1 mr-1"
                                         >
-                                        Start:
+                                        Time Start:
                                         </label>
                                         <input
-                                            class="w-3/6 px-3 pt-3 pb-3  border border-solid
+                                            class="w-5/6 px-3 pt-3 pb-3  border border-solid
                                             border-mainColor border-opacity-40 text-base
                                             font-semilight text-grayColor bg-subColor
                                             rounded-md"
@@ -210,7 +240,7 @@
                                             readonly
                                             v-bind="attrs"
                                             v-on="on"
-                                            placeholder="select"
+                                            placeholder="Time start"
                                             ref="time_start"
                                             :disabled="!isEditingTime"
                                             :class="{view: !isEditingTime}"
@@ -243,10 +273,10 @@
                                             class="inline-block text-gray-500 font-semilight
                                             text-sm mb-1 mr-1"
                                         >
-                                            End:
+                                            Time End:
                                         </label>
                                         <input
-                                            class="w-3/6 px-3 pt-3 pb-3  border border-solid
+                                            class="w-5/6 px-3 pt-3 pb-3  border border-solid
                                             border-mainColor border-opacity-40 text-base
                                             font-semilight text-grayColor bg-subColor
                                             rounded-md"
@@ -254,7 +284,7 @@
                                             readonly
                                             v-bind="attrs"
                                             v-on="on"
-                                            placeholder="select"
+                                            placeholder="Time end"
                                             ref="time_end"
                                             :disabled="!isEditingTime"
                                             :class="{view: !isEditingTime}"
@@ -270,36 +300,12 @@
                                     ></v-time-picker>
                                 </v-menu>
                             </div>
-                                <v-icon
-                                    @click="isEditingTime = !isEditingTime" v-if="!isEditingTime"
-                                    class="ml-5 text-right"
-                                    big
-                                    color="orange darken-2"
-                                >
-                                    settings
-                                </v-icon>
-                                <v-icon
-                                    @click="saveTime" v-else-if="isEditingTime"
-                                    class="ml-5 text-right"
-                                    big
-                                    color="green accent-3"
-                                >
-                                    check_circle
-                                </v-icon>
-                                <v-icon
-                                    v-if="isEditingTime" @click="isEditingTime = false"
-                                    class="ml-5 text-right"
-                                    big
-                                    color="deep-orange lighten-1"
-                                >
-                                    cancel
-                                </v-icon>
                         </div>
                     </div>
                 </div>
-                <div class="form-control">
+                <div class="form-control w-11/12">
                     <div class="flex flex-col justify-center gap-5">
-                        <h1 class="text-gray-700 font-semibold text-2xl">Exam setting</h1>
+                        <h1 class="text-gray-700 font-semibold text-2xl mb-5">Exam setting</h1>
                         <div>
                             <Checkbox3
                                 textRight="Random sections" v-model="settingData.randomSec"
@@ -363,8 +369,8 @@ export default {
       description: this.value.description,
       timeStart: this.value.timeStart,
       timeEnd: this.value.timeStart,
-      // eslint-disable-next-line max-len
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000))
+        .toISOString().substr(0, 10),
       datePicked: this.value.date,
       settingData: {
         randomSec: this.value.randomSec,
