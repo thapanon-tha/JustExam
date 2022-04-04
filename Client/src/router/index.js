@@ -65,6 +65,11 @@ const routes = [
     component: () => import('@/views/Teacher/ExamSummary.vue'),
   },
   {
+    path: '/examchannel/test-channel-1/summary/feedback',
+    name: 'GradeStudentExam',
+    component: () => import('@/views/Teacher/GradeStudentExam.vue'),
+  },
+  {
     path: '/examchannel/new-channel/score-exam',
     name: 'ScoreExamPage',
     component: () => import('@/views/Teacher/ScoreExamPage.vue'),
@@ -85,14 +90,24 @@ const routes = [
     component: () => import('@/views/Teacher/PreviewExam.vue'),
   },
   {
-    path: `/yourexam/:eid`,
+    path: '/yourexam/:eid',
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
+  },
+  {
+    path: '/yourexam/edit-exam',
+    name: 'EditExam',
+    component: () => import('@/views/Teacher/EditExam.vue'),
   },
   {
     path: '/examhub',
     name: 'ExamHubTeacher',
     component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
+  },
+  {
+    path: '/examchannelstudent',
+    name: 'ExamChannelStudent',
+    component: () => import('@/views/Student/ExamChannelStudent.vue'),
   },
 ];
 

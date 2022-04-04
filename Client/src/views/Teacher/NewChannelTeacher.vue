@@ -5,7 +5,8 @@
       <ChannelForm v-model="channelInfo"/>
     </div>
     <ActionButton
-      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg
+      px-6 py-4 font-semilight text-mainColor"
       name="+ Add your exam"
       @on-click="onClickAddExam"
       v-if="showButton"
@@ -27,12 +28,14 @@
     </div>
     <div class="flex justify-end mr-56">
       <ActionButton
-        class="bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
+        class="bg-white border-orange-200 border border-solid rounded-lg
+        px-8 py-3 font-semilight text-grayColor"
         name="Cancel"
         @on-click="onClickCancel"
       />
       <ActionButton
-        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+        class="ml-10 bg-white border-orange-200 border border-solid rounded-lg
+        px-6 py-4 font-semilight text-mainColor"
         name="Create"
         @on-click="submitForm"
       />
@@ -41,14 +44,14 @@
 </template>
 
 <script>
-import ActionButton from "@/components/Button/ActionButton.vue";
-import Header from "@/components/Header/Header.vue";
-import ChannelForm from '@/components/Form/ChannelForm/ChannelForm';
-import CardAddExam from '@/components/Card/CardAddExam';
-import CardSelectedExam from '@/components/Card/CardSelectedExam';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import Header from '@/components/Header/Header.vue';
+import ChannelForm from '@/components/Form/ChannelForm/ChannelForm.vue';
+import CardAddExam from '@/components/Card/CardAddExam.vue';
+import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
 
 export default {
-  name: "NewChannelTeacher",
+  name: 'NewChannelTeacher',
   components: {
     ActionButton,
     Header,
@@ -62,9 +65,9 @@ export default {
       showSelected: false,
       showButton: true,
       channelInfo: {
-        title: "",
-        description: "",
-        datePicked: "",
+        title: '',
+        description: '',
+        datePicked: '',
         settingData: {
           randomSec: false,
           randomQuestion: false,
@@ -89,18 +92,18 @@ export default {
       this.showModal = true;
     },
     clickScoreExam() {
-      this.$router.push({ name: "ScoreExamPage" }).catch(() => true);
+      this.$router.push({ name: 'ScoreExamPage' }).catch(() => true);
     },
     clickDeleteSelect() {
       this.showButton = true;
       this.showSelected = false;
     },
     submitForm() {
-      this.title = "";
-      this.description = "";
+      this.title = '';
+      this.description = '';
     },
     onClickCancel() {
-      this.$router.push({ name: "ExamChannelTeacher" }).catch(() => true);
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
     closeModalAddExam() {
       this.showModal = false;

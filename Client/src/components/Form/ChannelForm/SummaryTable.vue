@@ -4,7 +4,7 @@
     :items="memberlist"
     sort-by="name"
     class="elevation-0"
-    
+
   >
     <template v-slot:top>
       <v-toolbar
@@ -40,110 +40,110 @@
 </template>
 
 <script>
-  export default {
-    name: 'SummaryTable',
-    data: () => ({
-      dialog: false,
-      headers: [
-        { 
-          text: 'Score Feedback', 
-          align: 'center',
-          sortable: false,
-          value: 'actions'
-           
+export default {
+  name: 'SummaryTable',
+  data: () => ({
+    dialog: false,
+    headers: [
+      {
+        text: 'Score Feedback',
+        align: 'center',
+        sortable: false,
+        value: 'actions',
+
+      },
+      {
+        text: 'Student ID',
+        align: 'center',
+        sortable: false,
+        value: 'sid',
+      },
+      {
+        text: 'Name',
+        align: 'center',
+        value: 'name',
+      },
+      {
+        text: 'Score',
+        align: 'center',
+        value: 'score',
+
+      },
+      {
+        text: 'Finish Time',
+        align: 'center',
+        value: 'finish',
+
+      },
+    ],
+    memberlist: [],
+    defaultItem: {
+      sid: '',
+      score: '',
+
+    },
+  }),
+
+  created() {
+    this.initialize();
+  },
+
+  methods: {
+    initialize() {
+      this.memberlist = [
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Not Attended',
+          finish: '15.00',
         },
         {
-          text: 'Student ID',
-          align: 'center',
-          sortable: false,
-          value: 'sid',
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Not Attended',
+          finish: '15.00',
         },
-        { 
-          text: 'Name', 
-          align: 'center',
-          value: 'name' 
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Not Attended',
+          finish: '15.00',
         },
-        { 
-          text: 'Score', 
-          align: 'center',
-          value: 'score'
-           
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Pending',
+          finish: '15.00',
         },
-        { 
-          text: 'Finish Time', 
-          align: 'center',
-          value: 'finish'
-           
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Pending',
+          finish: '15.00',
         },
-      ],
-      memberlist: [],
-      defaultItem: {
-        sid: '',
-        score: '',
-        
-      },
-    }),
-
-    created () {
-      this.initialize()
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 'Wait for feedback',
+          finish: '15.00',
+        },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 0,
+          finish: '15.00',
+        },
+        {
+          sid: '61070507219',
+          name: 'Rungwilai  Payak',
+          score: 0,
+          finish: '15.00',
+        },
+      ];
     },
-
-    methods: {
-      initialize () {
-        this.memberlist = [
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Not Attended',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Not Attended',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Not Attended',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Pending',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Pending',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 'Wait for feedback',
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 0,
-            finish: '15.00'
-          },
-          {
-            sid: '61070507219',
-            name: 'Rungwilai  Payak',
-            score: 0,
-            finish: '15.00'
-          },
-        ]
-      },
-      clickRespone() {
-        this.$emit('clickRespone');
-      },
+    clickRespone() {
+      this.$emit('clickRespone');
     },
-  }
+  },
+};
 </script>

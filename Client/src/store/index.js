@@ -33,7 +33,7 @@ export default new Vuex.Store({
       state.isTeacher = value;
     },
     SET_IS_STUDENT(state, value) {
-      state.isAuth = value;
+      state.isStudent = value;
     },
     SET_NAME(state, valeu) {
       state.name = valeu;

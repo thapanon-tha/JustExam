@@ -27,14 +27,18 @@
         />
       </div>
       <div class="ml-20">
-        <CheckboxForm v-model="item.correct" label="correct" @onChange="onChange()" :onChangeFunc="onChange"/>
+        <CheckboxForm
+          v-model="item.correct" label="correct" @onChange="onChange()"
+          :onChangeFunc="onChange"
+        />
       </div>
       <div class="ml-20">
         <ActionButton class="text-mainColor" name="x" @on-click="deleteChoice(index)" />
       </div>
     </div>
     <ActionButton
-      class="mt-3 ml-3 bg-subColor border-orange-200 border border-solid rounded-lg px-3 py-2 font-semilight text-mainColor"
+      class="mt-3 ml-3 bg-subColor border-orange-200 border
+      border-solid rounded-lg px-3 py-2 font-semilight text-mainColor"
       name="+ Add an option"
       @on-click="addChoice"
     />
@@ -42,18 +46,18 @@
 </template>
 
 <script>
-import QuillTextEditor from "@/components/TextEditor/QuillTextEditor.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
-import CheckboxForm from "@/components/Form/CheckboxForm.vue";
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import CheckboxForm from '@/components/Form/CheckboxForm.vue';
 
 export default {
-  name: "MultipleChoice",
+  name: 'MultipleChoice',
   components: {
     QuillTextEditor,
     ActionButton,
     CheckboxForm,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       questionData: this.value,
@@ -63,7 +67,7 @@ export default {
     addChoice() {
       this.questionData.answers.push({
         id: this.questionData.answers.length + 1,
-        optionData: "",
+        optionData: '',
         correct: false,
       });
     },
@@ -71,12 +75,12 @@ export default {
       this.questionData.answers.splice(index, 1);
     },
     onChange() {
-      this.$emit("input", this.questionData);
+      this.$emit('input', this.questionData);
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value', // บอกว่า v-model ให้เข้า value
+    event: 'input', // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
   },
   created() {
     console.log(this.value);

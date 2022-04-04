@@ -17,11 +17,11 @@ module.exports = {
         editorColor: '#F9CCB7',
         grayColor: '#3F454C',
         redColor: '#FF0000',
-        navyColor: '#253850'
+        navyColor: '#253850',
       },
       width: {
-        '156': '72rem',
-      }
+        156: '72rem',
+      },
     },
   },
   plugins: [],

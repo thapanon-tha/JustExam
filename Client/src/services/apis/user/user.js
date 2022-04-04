@@ -4,7 +4,7 @@ const login = (rawData) => {
   console.log(data);
   return {
     token: 'token',
-    role: 'TEACHER',
+    role: 'STUDENT',
     name: 'TEST_NAME',
   };
 };

@@ -4,23 +4,24 @@
             {{ questionData.question }}
         </div>
         <div class="ml-5" v-for="(item, index) in questionData.matchs" :key="item.index">
-            <p 
+            <p
                 class="px-5 py-3 mt-2 mr-10 w-7/8 break-words"
-                
+
             >
                 {{ `${index + 1})` }} {{ item.subquestion }}
             </p>
-            <select 
-                class="ml-10 border-2 border-solid border-mainColor border-opacity-70 rounded-md bg-white px-5 py-2 focus:outline-none"
-                v-for="item in questionData.matchs"
-                :key="item.id"
+            <select
+                class=" ml-10 border-2 border-solid border-mainColor border-opacity-70
+                        rounded-md bg-white px-5 py-2 focus:outline-none"
                 v-model="item.matchanswer"
             >
                 <option disabled value="">Select matching answer</option>
-                <option 
-                    :value="item.matchanswer"
+                <option
+                    v-for="item in questionData.listOfMatchsAnswer"
+                    :key="item"
+                    :value="item"
                 >
-                    {{ item.matchanswer }}
+                    {{ item }}
                 </option>
             </select>
         </div>
@@ -29,17 +30,14 @@
 
 <script>
 
-export default  {
-    name: 'PreMatching',
-    props: ["value"],
-    data()  {
-        return {
-            
-            questionData: this.value,
-        };
-        //class="w-100 text-ellipsis overflow-hidden whitespace-pre appearance-none border rounded-md border-solid border-mainColor border-opacity-40 bg-white px-5 py-2 text-black font-semilight"
-
-    },
+export default {
+  name: 'PreMatching',
+  props: ['value'],
+  data() {
+    return {
+      questionData: this.value,
+    };
+  },
 };
 
 </script>
@@ -48,7 +46,7 @@ export default  {
 select {
   width: 600px;
   max-width: 100%;
- 
+
 }
 
 option {

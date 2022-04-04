@@ -13,7 +13,8 @@
       </div>
       <div class="mt-6 ml-2">
         <ActionButton
-          class="bg-subColor border-orange-200 border border-solid rounded-lg px-10 py-3 w-4/5 font-semilight text-mainColor"
+          class="bg-subColor border-orange-200 border border-solid
+          rounded-lg px-10 py-3 w-4/5 font-semilight text-mainColor"
           name="Log in"
           @on-click="onSubmit"
         />
@@ -23,7 +24,8 @@
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/book.svg" class="w-80 h-80 ml-8" alt="book" />
         <ActionButton
-          class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-white"
+          class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg
+          px-8 py-3 font-medium text-white"
           name="Login with Google account"
           @on-click="onClickLoginWithGoogle"
         />
@@ -33,14 +35,14 @@
 </template>
 
 <script>
-import InputForm from "@/components/Form/InputForm.vue";
-import CheckboxForm from "@/components/Form/CheckboxForm.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
-import api from "@/services/apis";
-import auth from "@/services/authentications";
+import InputForm from '@/components/Form/InputForm.vue';
+import CheckboxForm from '@/components/Form/CheckboxForm.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import api from '@/services/apis';
+import auth from '@/services/authentications';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
     InputForm,
     CheckboxForm,
@@ -49,8 +51,8 @@ export default {
   data() {
     return {
       loginFormData: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
     };
   },
@@ -62,13 +64,13 @@ export default {
       auth.setToken(data.token);
       auth.setRole(data.role);
       auth.setName(data.name);
-      this.$router.push({ name: "ExamChannelTeacher" }).catch(() => true);
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
     onClickLoginWithGoogle() {
       window.open(
-        "http://localhost/api/auth/google",
-        "popUpWindow",
-        "height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes"
+        'http://localhost/api/auth/google',
+        'popUpWindow',
+        'height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes',
       );
     },
   },
