@@ -14,7 +14,6 @@ import 'vue2-timepicker/dist/VueTimepicker.css';
 import "quill/dist/quill.bubble.css";
 import "quill/dist/quill.snow.css";
 import './index.css'
-
 Vue.config.productionTip = false;
 
 new Vue({

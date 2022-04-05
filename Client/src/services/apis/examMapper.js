@@ -1,20 +1,33 @@
 const questionsType = {
   mc: '74fbc3a5-0217-4892-9aba-70b612fc1a0e',
   sa: '5b3f9f23-bc46-4247-9e3d-3ebb5d5cd1c1',
-  pa: '74fbc3a5-0217-4892-9aba-70b612fc1a0e',
+  pa: '5edad656-83b9-4de0-ab94-f7d40cea3354',
   ma: 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7',
   ca: '7190c532-3ccc-4ed7-ae77-6ffd967bf87c',
   tf: 'b3037171-640a-4077-bf17-10b23a52c386',
 };
+const code = {
+  python: 71,
+  c: 50,
+  java: 62,
+  javascript: 63,
+  cpp: 54,
+  csharp: 51,
+  kotlin: 78,
+  ruby: 72,
+  go: 60,
+};
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
 
 const method = {
   mapper(question) {
     let answer;
     if (question.type === 'mc') {
-      console.log(question.questionData.answers);
       answer = question.questionData.answers.map((data) => {
         const result = method.mc(data);
-        console.log(result);
         return result;
       });
     }
@@ -32,6 +45,7 @@ const method = {
         code: question.questionData.code,
         input: question.questionData.input,
         output: question.questionData.output,
+        lang: question.questionData.lang,
         ...data,
       }));
     }
@@ -44,12 +58,6 @@ const method = {
       }
     }
 
-    console.log({
-      questionTopic: question.questionData.question,
-      sectionName: question.sectionId,
-      qtid: questionsType[question.type],
-      questionAnswer: answer,
-    });
     return ({
       questionTopic: question.questionData.question,
       sectionName: question.sectionId,
@@ -79,161 +87,141 @@ const method = {
       exInput: data.xampleinput,
       output: data.output,
       exOutput: data.xampleoutput,
-      clid: 51,
+      clid: code[data.lang],
     });
   },
   tf(data) {
     return ({ value: data });
+  },
+
+  convertToCLI(List) {
+    const qlist = [];
+    List.forEach((element) => {
+      if (element.qtid === questionsType.ma) {
+        qlist.push(method.toma(element));
+      }
+      if (element.qtid === questionsType.pa) {
+        qlist.push(method.topa(element));
+      }
+      if (element.qtid === questionsType.tf) {
+        qlist.push(method.totf(element));
+      }
+      if (element.qtid === questionsType.sa) {
+        qlist.push(method.tosa(element));
+      }
+      if (element.qtid === questionsType.mc) {
+        qlist.push(method.tomc(element));
+      }
+      if (element.qtid === questionsType.ca) {
+        qlist.push(method.toca(element));
+      }
+    });
+    return qlist;
+  },
+
+  tomc(data) {
+    const ans = data.answer.map((e) => ({
+      id: e.qamcid,
+      optionData: e.textA,
+      correct: e.correct,
+    }));
+
+    const ret = {
+      id: data.qid,
+      type: 'mc',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        question: data.questionTopic,
+        answers: ans,
+      },
+    };
+    return (ret);
+  },
+  tosa(data) {
+    const ans = data.answer.map((e) => ({
+      id: e.qasaid,
+      keyans: e.textA,
+    }));
+    const ret = {
+      id: data.qid,
+      type: 'sa',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        question: data.questionTopic,
+        keylist: ans,
+      },
+    };
+    return (ret);
+  },
+  topa(data) {
+    const ret = {
+      id: data.qid,
+      type: 'pa',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        question: data.questionTopic,
+        answers: [],
+      },
+    };
+    return (ret);
+  },
+  toma(data) {
+    const ret = {
+      id: data.qid,
+      type: 'ma',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        question: data.questionTopic,
+        matchs: data.answer.map((answers) => ({
+          id: answers.qamid,
+          matchanswer: answers.textA,
+          subquestion: answers.textQ,
+        })),
+      },
+    };
+    return (ret);
+  },
+  toca(data) {
+    const ans = data.answer.map((e) => ({
+      id: e.qacid,
+      xampleinput: e.exInput,
+      xampleoutput: e.exOutput,
+    }));
+    const lang = getKeyByValue(code, data.answer[0].clid);
+    const ret = {
+      id: data.qid,
+      type: 'ca',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        lang,
+        code: data.answer[0].code,
+        question: data.questionTopic,
+        input: data.answer[0].input,
+        output: data.answer[0].output,
+        example: ans,
+      },
+    };
+    return (ret);
+  },
+  totf(data) {
+    let correct = false;
+    if (data.value === true) {
+      correct = true;
+    }
+    const ret = {
+      id: data.qid,
+      type: 'tf',
+      sectionId: parseInt(data.sectionName, 10),
+      questionData: {
+        question: data.questionTopic,
+        true: correct,
+        false: !correct,
+      },
+    };
+    return (ret);
   },
 };
 
 module.exports = {
   ...method,
 };
-// {
-//   "data": [
-//     {
-//       "questionTopic": "Matching",
-//       "sectionName": "77",
-//       "qtid": "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7",
-//       "questionAnswer": [
-//         {
-//           "textQ": "A",
-//           "textA": "1"
-//         },
-//         {
-//           "textQ": "B",
-//           "textA": "2"
-//         }
-//       ]
-//     },
-//     {
-//       "questionTopic": "T/F",
-//       "sectionName": "77",
-//       "qtid": "b3037171-640a-4077-bf17-10b23a52c386",
-//       "questionAnswer": [
-//         {
-//           "value": 1
-//         }
-//       ]
-//     },
-//     {
-//       "questionTopic": "Coding",
-//       "sectionName": "77",
-//       "qtid": "7190c532-3ccc-4ed7-ae77-6ffd967bf87c",
-//       "questionAnswer": [
-//         {
-//           "code": "example Code",
-//           "input": "testcase",
-//           "exInput": "Example input",
-//           "output": "testcase Output",
-//           "exOutput": "Example Output",
-//           "clid": 63
-//         }
-//       ]
-//     },
-//     {
-//       "questionTopic": "Short Answer",
-//       "sectionName": "77",
-//       "qtid": "5b3f9f23-bc46-4247-9e3d-3ebb5d5cd1c1",
-//       "questionAnswer": [
-//         {
-//           "textA": "example Answer"
-//         },
-//         {
-//           "textA": "example Answer2"
-//         },
-//         {
-//           "textA": "example Answer4"
-//         }
-//       ]
-//     },
-//     {
-//       "questionTopic": "Paragraph",
-//       "sectionName": "77",
-//       "qtid": "5edad656-83b9-4de0-ab94-f7d40cea3354",
-//       "questionAnswer": []
-//     },
-//     {
-//       "questionTopic": "Multiple Choice",
-//       "sectionName": "77",
-//       "qtid": "74fbc3a5-0217-4892-9aba-70b612fc1a0e",
-//       "questionAnswer": [
-//         {
-//           "textA": "example Answer",
-//           "correct": 1,
-//           "pointQ": -1
-//         },
-//         {
-//           "textA": "example Answer1",
-//           "correct": 0
-//         },
-//         {
-//           "textA": "example Answer2",
-//           "correct": 1
-//         },
-//         {
-//           "textA": "example Answer3",
-//           "correct": 0
-//         },
-//         {
-//           "textA": "example Answer4",
-//           "correct": 0
-//         }
-//       ]
-//     }
-//   ]
-// }
-
-// prototype: {
-//   mc: {
-//     question: "",
-//       answers: [
-//         {
-//           id: 1,
-//           optionData: "",
-//           correct: false,
-//         },
-//       ],
-//   },
-//   sa: {
-//     question: "",
-//       keylist: [
-//         {
-//           id: 1,
-//           keyans: "",
-//         },
-//       ],
-//   },
-//   pa: {
-//     question: "",
-//   },
-//   tf: {
-//     question: "",
-//       true: false,
-//         false: false,
-//   },
-//   ma: {
-//     question: "",
-//       matchs: [
-//         {
-//           id: 1,
-//           subquestion: "",
-//           matchanswer: "",
-//         },
-//       ],
-//   },
-//   ca: {
-//     code: "",
-//       question: "",
-//         input: "",
-//           output: "",
-//             example: [
-//               {
-//                 id: 1,
-//                 xampleinput: "",
-//                 xampleoutput: "",
-//               },
-//             ],
-//   },
-// },

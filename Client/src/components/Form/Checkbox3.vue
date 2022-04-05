@@ -35,3 +35,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.view {
+  border-color: transparent;
+  background-color: initial;
+  color: #EF7F4C;
+}
+</style>

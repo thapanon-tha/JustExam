@@ -7,13 +7,19 @@ const exams = () => axios.get(`${BACKEND_HOST}/api/exams`);
 
 const examList = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
 
-const createExams = async (examData) => axios.post(`${BACKEND_HOST}/api/exams`, { data: { title: examData.title, description: examData.description } }, { validateStatus: false });
+const createExams = async (examData) => axios.post(
+  `${BACKEND_HOST}/api/exams`,
+  { data: { title: examData.title, description: examData.description } },
+  { validateStatus: false },
+);
 
 const loginGoogle = async () => axios.get(`${BACKEND_HOST}/api/auth/google`);
 
 const createQuestions = async (eid, data) => axios.post(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data }, { validateStatus: false });
 
 const examMapper = (examData) => examData.map((element) => mapperTool.mapper(element));
+
+const reverse = (examData) => mapperTool.convertToCLI(examData);
 
 export default {
   exams,
@@ -22,4 +28,5 @@ export default {
   loginGoogle,
   examMapper,
   createQuestions,
+  reverse,
 };
