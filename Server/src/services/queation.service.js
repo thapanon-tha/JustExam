@@ -97,6 +97,16 @@ const medthods = {
       },
     }, { transaction });
   },
+
+  async deleteQuestions(eid, uid, transaction) {
+    return Question.destroy({
+      where: { eid },
+      include: {
+        model: exam,
+        where: { uid },
+      },
+    }, { transaction });
+  },
 };
 
 module.exports = {

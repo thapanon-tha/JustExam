@@ -38,7 +38,6 @@ module.exports = {
     const { eid } = req.params;
     const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
     let transaction;
-    console.log(req.body.data);
     const questions = req.body.data;
     try {
       transaction = await db.sequelize.transaction();
@@ -90,6 +89,32 @@ module.exports = {
           return finalData;
         }));
         stdCode.querySuccess(data[0], res);
+      } else {
+        throw Error('Can\'t Update Something Wrong');
+      }
+    } catch (e) {
+      if (transaction) { await transaction.rollback(); }
+      stdCode.Unexpected(e, res);
+    }
+  },
+
+  async updateQueations(req, res) {
+    const { eid } = req.params;
+    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    const questions = req.body.data;
+    let transaction;
+    try {
+      transaction = await db.sequelize.transaction();
+      const response = await Question.deleteQuestions(eid, uid, transaction);
+      if (response) {
+        const result = await Promise.all(questions.map((question) => Question.addQuestion(eid, question.questionTopic, question.sectionName, question.qtid, transaction)
+          .then(async (resultCreated) => {
+            const answers = await Answer.createMany(question.questionAnswer, resultCreated.qid, resultCreated.qtid, transaction);
+            const final = { ...resultCreated.dataValues, questionAnswer: answers };
+            return final;
+          })));
+        await transaction.commit();
+        stdCode.Created(result, res);
       } else {
         throw Error('Can\'t Update Something Wrong');
       }

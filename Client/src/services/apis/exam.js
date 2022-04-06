@@ -16,6 +16,8 @@ const createExams = async (examData) => axios.post(
 const loginGoogle = async () => axios.get(`${BACKEND_HOST}/api/auth/google`);
 
 const createQuestions = async (eid, data) => axios.post(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data }, { validateStatus: false });
+const updateQuestions = async (eid, data) => axios.put(`${BACKEND_HOST}/api/exams/${eid}/questions`, { data }, { validateStatus: false });
+
 
 const examMapper = (examData) => examData.map((element) => mapperTool.mapper(element));
 
@@ -29,4 +31,5 @@ export default {
   examMapper,
   createQuestions,
   reverse,
+  updateQuestions,
 };
