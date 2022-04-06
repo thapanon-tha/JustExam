@@ -59,10 +59,7 @@
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
-          <div
-            class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10"
-            v-if="showEditQuestion"
-          >
+          <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10" v-if="showEditQuestion">
             <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
             <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
             <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
@@ -99,10 +96,7 @@
               </button>
             </div>
           </div>
-          <div
-            class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10"
-            v-if="showSaveQuestion"
-          >
+          <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10" v-if="showSaveQuestion">
             <PreMultiple v-if="qlist.type === 'mc'" :value="prototype.mc" />
             <PreShortAns v-if="qlist.type === 'sa'" :value="prototype.sa" />
             <PreParagraph v-if="qlist.type === 'pa'" :value="prototype.pa" />
@@ -122,23 +116,23 @@
 </template>
 
 <script>
-import ActionButton from "@/components/Button/ActionButton.vue";
-import MultipleChoice from "@/components/Form/QuestionForm/MultipleChoice.vue";
-import ShortAnswer from "@/components/Form/QuestionForm/ShortAnswer.vue";
-import Paragraph from "@/components/Form/QuestionForm/Paragraph.vue";
-import Matching from "@/components/Form/QuestionForm/Matching.vue";
-import TrueFalse from "@/components/Form/QuestionForm/TrueFalse.vue";
-import CodingQuestion from "@/components/Form/QuestionForm/CodingQuestion.vue";
-import PreMultiple from "@/components/Form/PreviewForm/PreMultiple.vue";
-import PreShortAns from "@/components/Form/PreviewForm/PreShortAns.vue";
-import PreParagraph from "@/components/Form/PreviewForm/PreParagraph.vue";
-import PreMatching from "@/components/Form/PreviewForm/PreMatching.vue";
-import PreCoding from "@/components/Form/PreviewForm/PreCoding.vue";
-import PreTrueFalse from "@/components/Form/PreviewForm/PreTrueFalse.vue";
-import api from "@/services/apis";
+import ActionButton from '@/components/Button/ActionButton.vue';
+import MultipleChoice from '@/components/Form/QuestionForm/MultipleChoice.vue';
+import ShortAnswer from '@/components/Form/QuestionForm/ShortAnswer.vue';
+import Paragraph from '@/components/Form/QuestionForm/Paragraph.vue';
+import Matching from '@/components/Form/QuestionForm/Matching.vue';
+import TrueFalse from '@/components/Form/QuestionForm/TrueFalse.vue';
+import CodingQuestion from '@/components/Form/QuestionForm/CodingQuestion.vue';
+import PreMultiple from '@/components/Form/PreviewForm/PreMultiple.vue';
+import PreShortAns from '@/components/Form/PreviewForm/PreShortAns.vue';
+import PreParagraph from '@/components/Form/PreviewForm/PreParagraph.vue';
+import PreMatching from '@/components/Form/PreviewForm/PreMatching.vue';
+import PreCoding from '@/components/Form/PreviewForm/PreCoding.vue';
+import PreTrueFalse from '@/components/Form/PreviewForm/PreTrueFalse.vue';
+import api from '@/services/apis';
 
 export default {
-  name: "EditQuestionList",
+  name: 'EditQuestionList',
   components: {
     MultipleChoice,
     ShortAnswer,
@@ -162,93 +156,93 @@ export default {
       sectionlist: [
         {
           id: 1,
-          sectionName: "Section 1",
+          sectionName: 'Section 1',
         },
       ],
       qlist: [],
       questionTypeOptionList: [
         {
-          name: "Multiple Choice",
-          value: "mc",
+          name: 'Multiple Choice',
+          value: 'mc',
         },
         {
-          name: "Short Answer",
-          value: "sa",
+          name: 'Short Answer',
+          value: 'sa',
         },
         {
-          name: "Paragraph Answer",
-          value: "pa",
+          name: 'Paragraph Answer',
+          value: 'pa',
         },
         {
-          name: "True/False",
-          value: "tf",
+          name: 'True/False',
+          value: 'tf',
         },
         {
-          name: "Matching",
-          value: "ma",
+          name: 'Matching',
+          value: 'ma',
         },
         {
-          name: "Coding",
-          value: "ca",
+          name: 'Coding',
+          value: 'ca',
         },
       ],
       //* this is prototype for new question
       prototype: {
         mc: {
-          question: "",
+          question: '',
           answers: [
             {
               id: 1,
-              optionData: "",
+              optionData: '',
               correct: false,
             },
           ],
         },
         sa: {
-          question: "",
+          question: '',
           keylist: [
             {
               id: 1,
-              keyans: "",
+              keyans: '',
             },
           ],
         },
         pa: {
-          question: "",
+          question: '',
         },
         tf: {
-          question: "",
+          question: '',
           true: false,
           false: false,
         },
         ma: {
-          question: "",
+          question: '',
           matchs: [
             {
               id: 1,
-              subquestion: "",
-              matchanswer: "",
+              subquestion: '',
+              matchanswer: '',
             },
           ],
         },
         ca: {
-          lang: "",
-          code: "",
-          question: "",
-          input: "",
-          output: "",
+          lang: '',
+          code: '',
+          question: '',
+          input: '',
+          output: '',
           example: [
             {
               id: 1,
-              xampleinput: "",
-              xampleoutput: "",
+              xampleinput: '',
+              xampleoutput: '',
             },
           ],
         },
       },
     };
   },
-  props: ["value"],
+  props: ['value'],
   methods: {
     addQuestion() {
       let _id;
@@ -260,14 +254,14 @@ export default {
       this.qlist.push({
         id: _id,
         sectionId: this.selectedSectionId,
-        type: "mc",
-        data: "",
+        type: 'mc',
+        data: '',
         questionData: {
-          question: "",
+          question: '',
           answers: [
             {
               id: 1,
-              optionData: "",
+              optionData: '',
               correct: false,
             },
           ],
@@ -290,17 +284,16 @@ export default {
       this.qlist = this.qlist.map((e) => {
         if (e.sectionId > id) {
           const newData = { ...e };
-          newData.sectionId = newData.sectionId - 1;
+          newData.sectionId -= 1;
           return newData;
-        } else {
-          return e;
         }
+        return e;
       });
       this.sectionlist = this.sectionlist.filter((e) => e.id !== id);
       this.sectionlist = this.sectionlist.map((e) => {
         if (e.id > id) {
           const newData = { ...e };
-          newData.id = newData.id - 1;
+          newData.id -= 1;
           return newData;
         }
         return e;
@@ -319,9 +312,7 @@ export default {
       this.qlist[indexObject].questionData = this.prototype[type];
     },
     async callApi() {
-      const questionsApi = await api
-        .examList(this.$route.params.eid)
-        .then((res) => res.data);
+      const questionsApi = await api.examList(this.$route.params.eid).then((res) => res.data);
       this.qlist = api.reverse(questionsApi);
       this.sectionCalo();
     },
@@ -329,30 +320,26 @@ export default {
       const list = this.qlist.map((data) => data.sectionId);
       const result = list.filter((v, i) => list.indexOf(v) === i);
       if (result.length !== 0) {
-        this.sectionlist = result.map((v) => {
-          return {
-            id: v,
-            sectionName: `Section ${v}`,
-          };
-        });
+        this.sectionlist = result.map((v) => ({
+          id: v,
+          sectionName: `Section ${v}`,
+        }));
       }
       this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
   },
   created() {
     this.callApi();
-    this.$emit("update:qlist", this.qlist);
+    this.$emit('update:qlist', this.qlist);
   },
   computed: {
     questionList() {
-      return this.qlist.filter(
-        (question) => question.sectionId === this.selectedSectionId
-      );
+      return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
     },
   },
   watch: {
     qlist(newVal, oldVal) {
-      this.$emit("update:qlist", this.qlist);
+      this.$emit('update:qlist', this.qlist);
     },
   },
 };
