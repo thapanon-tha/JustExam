@@ -285,15 +285,16 @@ export default {
     },
     deleteSection(id) {
       const newQl = this.qlist.filter((e) => e.sectionId !== id);
-      console.log(newQl)
-      this.qlist = newQl
+      console.log(newQl);
+      this.qlist = newQl;
       this.qlist = this.qlist.map((e) => {
         if (e.sectionId > id) {
           const newData = { ...e };
           newData.sectionId = newData.sectionId - 1;
           return newData;
+        } else {
+          return e;
         }
-        return e;
       });
       this.sectionlist = this.sectionlist.filter((e) => e.id !== id);
       this.sectionlist = this.sectionlist.map((e) => {
@@ -304,7 +305,7 @@ export default {
         }
         return e;
       });
-      this.onClickSelectSection(1)
+      this.onClickSelectSection(1);
     },
     saveQuestion(id, type) {
       this.showEditQuestion = false;
