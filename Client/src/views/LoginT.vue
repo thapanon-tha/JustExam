@@ -13,8 +13,7 @@
       </div>
       <div class="mt-6 ml-2">
         <ActionButton
-          class="bg-subColor border-orange-200 border border-solid
-          rounded-lg px-10 py-3 w-4/5 font-semilight text-mainColor"
+          class="bg-subColor border-orange-200 border border-solid rounded-lg px-10 py-3 w-4/5 font-semilight text-mainColor"
           name="Log in"
           @on-click="onSubmit"
         />
@@ -24,8 +23,7 @@
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/book.svg" class="w-80 h-80 ml-8" alt="book" />
         <ActionButton
-          class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg
-          px-8 py-3 font-medium text-white"
+          class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-white"
           name="Login with Google account"
           @on-click="onClickLoginWithGoogle"
         />
@@ -59,7 +57,6 @@ export default {
   methods: {
     onSubmit() {
       const data = api.login(this.loginFormData);
-
       // Can refactor it to query from API
       auth.setToken(data.token);
       auth.setRole(data.role);
@@ -67,11 +64,7 @@ export default {
       this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
     onClickLoginWithGoogle() {
-      window.open(
-        'http://localhost/api/auth/google',
-        'popUpWindow',
-        'height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes',
-      );
+      location.href ='http://localhost:3000/api/auth/google';
     },
   },
 };

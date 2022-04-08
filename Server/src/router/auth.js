@@ -7,7 +7,47 @@ router.post('/login', (req, res) => {
     if (err) return res.status(500).send(err);
     if (user) {
       const token = jwt.sign(user, process.env.JWT_SECRET);
-      return res.json({ ...user, token });
+      res.cookie('token', token, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('uid', user.uid, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('firstname', user.firstname, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('surname', user.surname, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('email', user.email, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('type', user.type, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('type', user.type, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('isLogin', true, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).redirect('http://localhost:8080/examchannel');
     }
     return res.status(401).send(info);
   })(req, res);
@@ -29,7 +69,47 @@ router.get('/google/callback',
     } if (user) {
       const token = jwt.sign(user, process.env.JWT_SECRET);
 
-      return res.json({ ...user, token });
+      res.cookie('token', token, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('uid', user.uid, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('firstname', user.firstname, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('surname', user.surname, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('email', user.email, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('type', user.type, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('type', user.type, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).cookie('isLogin', true, {
+        maxAge: new Date() * 0.001 + 300,
+        domain: 'localhost',
+        secure: true,
+        sameSite: 'none',
+      }).redirect('http://localhost:8080/examchannel');
     }
     return res.status(422).json(user);
   });
@@ -38,7 +118,7 @@ router.get('/azure', passport.authenticate('azure_ad_oauth2'));
 
 router.get('/azure/callback', passport.authenticate('azure_ad_oauth2', { session: false }),
   (req, res) => {
-  // Successful authentication, redirect home.
+    // Successful authentication, redirect home.
     res.status(200).send('OKKKKKKK');
   });
 
