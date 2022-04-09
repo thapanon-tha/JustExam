@@ -14,3 +14,6 @@ app.get(/.*/, (req, res) => {
 const port = process.env.PORT || 8080;
 app.listen(port);
 console.log(`app is listening on port: ${port}`);
+const bhost = process.env.BACKEND_HOST
+console.log(`app is listening on port: ${bhost}`);
+

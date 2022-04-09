@@ -8,31 +8,29 @@ x-logging:
       max-size: 100m
 
 services:
-  db:
-    image: mariadb:10.5.10-focal
-    volumes:
-      - database:/var/lib/mysql
-    ports:
-      - 3306:3306
-    env_file: ./.env
-    networks:
-      - network
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    restart: always
+  # db:
+  #   image: mariadb:10.5.10-focal
+  #   volumes:
+  #     - database:/var/lib/mysql
+  #   ports:
+  #     - 3306:3306
+  #   env_file: ./.env
+  #   networks:
+  #     - network
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   restart: always
 
   server:
     build: ./Server
-    image: "je-test/server"
+    image: "justexam.azurecr.io/server"
     volumes:
       - upload:/app/data/upload
       - log:/app/log
       - ./server/src:/app/src
-    depends_on:
-      - db
     env_file: ./.env
     ports:
       - $EXPOSE_PORT:$EXPOSE_PORT
@@ -40,14 +38,14 @@ services:
       - network
     restart: always
 
-  redis:
-    container_name: redis
-    image: "redis:alpine"
-    networks:
-      - network
-    ports:
-      - "${redisPort}:${redisPort}"
-    restart: always
+  # redis:
+  #   container_name: redis
+  #   image: "redis:alpine"
+  #   networks:
+  #     - network
+  #   ports:
+  #     - "${redisPort}:${redisPort}"
+  #   restart: always
   # nginx:
   #   image: nginx:1.21.0-alpine
   #   volumes:
@@ -74,11 +72,11 @@ services:
   #   restart: always
 
 volumes:
-  database:
+  # database:
   upload:
   log:
-  postgres-data:
-  redis-data:
+  # postgres-data:
+  # redis-data:
 
 networks:
   network:

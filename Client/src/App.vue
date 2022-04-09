@@ -21,6 +21,9 @@ export default {
   mounted() {
     this.$store.dispatch({ type: 'restoreLogin' });
   },
+  created() {
+    console.log(process.env.BACKEND_HOST)
+  },
 };
 </script>
 

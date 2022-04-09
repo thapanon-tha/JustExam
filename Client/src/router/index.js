@@ -109,6 +109,11 @@ const routes = [
     name: 'ExamChannelStudent',
     component: () => import('@/views/Student/ExamChannelStudent.vue'),
   },
+  {
+    path: '/examchannel/:cid/OnExam',
+    name: 'ExamChannelOnExam',
+    component: () => import('@/views/Student/ExamChannelOnExam.vue'),
+  },
 ];
 
 const router = new VueRouter({

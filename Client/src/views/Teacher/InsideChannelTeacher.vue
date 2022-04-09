@@ -3,32 +3,13 @@
     <Header main="Exam channel" current="> Inside channel" class="mb-10">
       <button
         @click="onClickMember"
-        class="
-          mt-3
-          mr-3
-          bg-white
-          border-orange-200 border border-solid
-          rounded-lg
-          px-4
-          py-3
-          font-semilight
-          text-mainColor
-        "
+        class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
         Member
       </button>
       <button
         @click="onClickSummary"
-        class="
-          mt-3
-          bg-white
-          border-orange-200 border border-solid
-          rounded-lg
-          px-4
-          py-3
-          font-semilight
-          text-mainColor
-        "
+        class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
         Exam Summary
       </button>
@@ -42,43 +23,24 @@
       <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
       <div class="flex flex-wrap mt-5">
         <p
-          class="
-            w-60
-            h-10
-            bg-subColor
-            border border-outlineColor border-opacity-50
-            rounded-lg
-            text-center
-            pt-2
-          "
+          class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2"
         >
           {{ channelInfo.inviteCode }}
         </p>
-        <div
-          class="
-            bg-subColor
-            border border-outlineColor border-opacity-50
-            rounded-lg
-            w-10
-            h-10
-          "
-        >
-          <v-icon large color="grey darken-1">link</v-icon>
+        <div class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10">
+          <button
+            type="button"
+            v-clipboard:copy="channelInfo.inviteCode"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError"
+          >
+            <v-icon large color="grey darken-1">link</v-icon>
+          </button>
         </div>
       </div>
     </div>
     <ActionButton
-      class="
-        ml-48
-        mt-10
-        bg-white
-        border-orange-200 border border-solid
-        rounded-lg
-        px-6
-        py-4
-        font-semilight
-        text-mainColor
-      "
+      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
       name="+ Add your exam"
       @on-click="onClickAddExam"
       v-if="showButton"
@@ -102,15 +64,15 @@
 </template>
 
 <script>
-import ActionButton from "@/components/Button/ActionButton.vue";
-import Header from "@/components/Header/Header.vue";
-import EditChannelForm from "@/components/Form/ChannelForm/EditChannelForm.vue";
-import CardAddExam from "@/components/Card/CardAddExam.vue";
-import CardSelectedExam from "@/components/Card/CardSelectedExam.vue";
-import api from "@/services/apis";
+import ActionButton from '@/components/Button/ActionButton.vue';
+import Header from '@/components/Header/Header.vue';
+import EditChannelForm from '@/components/Form/ChannelForm/EditChannelForm.vue';
+import CardAddExam from '@/components/Card/CardAddExam.vue';
+import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
+import api from '@/services/apis';
 
 export default {
-  name: "InsideChannelTeacher",
+  name: 'InsideChannelTeacher',
   components: {
     ActionButton,
     Header,
@@ -125,9 +87,9 @@ export default {
       showButton: true,
       channelsApiInfo: {},
       channelInfo: {
-        title: "",
-        description: "",
-        datePicked: "",
+        title: '',
+        description: '',
+        datePicked: '',
         settingData: {
           randomSec: false,
           randomQuestion: false,
@@ -136,11 +98,17 @@ export default {
           showTotalScore: false,
           cantSubmitEmpty: false,
         },
-        inviteCode: "",
+        inviteCode: '',
       },
     };
   },
   methods: {
+    onCopy(e) {
+      alert(`You just copied: ${e.text}`);
+    },
+    onError(e) {
+      alert('Failed to copy texts');
+    },
     onClickAddExam() {
       this.showModal = true;
     },
@@ -153,7 +121,7 @@ export default {
       this.showModal = true;
     },
     clickScoreExam() {
-      this.$router.push({ name: "ScoreExamPage" }).catch(() => true);
+      this.$router.push({ name: 'ScoreExamPage' }).catch(() => true);
     },
     clickDeleteSelect() {
       this.showButton = true;
@@ -164,18 +132,16 @@ export default {
     //   this.description = "";
     // },
     onClickMember() {
-      this.$router.push({ name: "MemberChannel" }).catch(() => true);
+      this.$router.push({ name: 'MemberChannel' }).catch(() => true);
     },
     onClickSummary() {
-      this.$router.push({ name: "ExamSummary" }).catch(() => true);
+      this.$router.push({ name: 'ExamSummary' }).catch(() => true);
     },
     closeModalAddExam() {
       this.showModal = false;
     },
     async apiCall() {
-      this.channelsApiInfo = await api
-        .channelsDetail(this.$route.params.cid)
-        .then((res) => res);
+      this.channelsApiInfo = await api.channelsDetail(this.$route.params.cid).then((res) => res);
       this.channelInfo = this.channelsApiInfo[0].data;
     },
   },

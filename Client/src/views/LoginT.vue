@@ -64,7 +64,7 @@ export default {
       this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
     onClickLoginWithGoogle() {
-      location.href ='http://localhost:3000/api/auth/google';
+      window.location.href = 'http://localhost:3000/api/auth/google';
     },
   },
 };
