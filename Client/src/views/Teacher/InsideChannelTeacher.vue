@@ -14,52 +14,57 @@
         Exam Summary
       </button>
     </Header>
-    <div>
+    <v-container class="lighten-5 flex justify-center gap-40">
       <div class="w-4/6 ml-48">
         <EditChannelForm v-model="channelInfo" />
       </div>
-    </div>
-    <div class="ml-48 mt-10">
-      <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
-      <div class="flex flex-wrap mt-5">
-        <p
-          class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2"
-        >
-          {{ channelInfo.inviteCode }}
-        </p>
-        <div class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10">
-          <button
-            type="button"
-            v-clipboard:copy="channelInfo.inviteCode"
-            v-clipboard:success="onCopy"
-            v-clipboard:error="onError"
+    </v-container>
+    <v-container>
+      <div class="ml-48 mt-10">
+        <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
+        <div class="flex flex-wrap mt-5">
+          <p
+            class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2"
           >
-            <v-icon large color="grey darken-1">link</v-icon>
-          </button>
+            {{ channelInfo.inviteCode }}
+          </p>
+          <div
+            class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10"
+          >
+            <button
+              type="button"
+              v-clipboard:copy="channelInfo.inviteCode"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            >
+              <v-icon large color="grey darken-1">link</v-icon>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <ActionButton
-      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-      name="+ Add your exam"
-      @on-click="onClickAddExam"
-      v-if="showButton"
-    />
-    <CardSelectedExam
-      class="ml-48 mt-10"
-      @clickChange="clickChangeSelect"
-      @clickScore="clickScoreExam"
-      @clickDelete="clickDeleteSelect"
-      v-if="showSelected"
-    />
-    <div class="relative">
-      <CardAddExam
-        @clikClose="closeModalAddExam"
-        @clickSelect="clickSelectExam"
-        class="fixed top-52 left-96"
-        v-if="showModal"
+
+      <ActionButton
+        class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+        name="+ Add your exam"
+        @on-click="onClickAddExam"
+        v-if="showButton"
       />
-    </div>
+      <CardSelectedExam
+        class="ml-48 mt-10"
+        @clickChange="clickChangeSelect"
+        @clickScore="clickScoreExam"
+        @clickDelete="clickDeleteSelect"
+        v-if="showSelected"
+      />
+      <div class="relative">
+        <CardAddExam
+          @clikClose="closeModalAddExam"
+          @clickSelect="clickSelectExam"
+          class="fixed top-52 left-96"
+          v-if="showModal"
+        />
+      </div>
+    </v-container>
   </div>
 </template>
 

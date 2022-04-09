@@ -25,10 +25,8 @@
 </template>
 
 <script>
-import katex from 'katex';
 import Header from '@/components/Header/Header.vue';
-import api from '@/services/apis';
-import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+// import api from '@/services/apis';
 
 export default {
   name: 'ExamChannelOnExam',
