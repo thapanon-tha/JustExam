@@ -1,25 +1,9 @@
 const redis = require('redis');
 
-let redisClient = null;
-
-// (async () => {
-//   // Initialize Redis client after vault secrets are loaded
-//   redisClient = redis.createClient({
-//     url: `redis://${process.env.REDISCACHEHOSTNAME}:6380`,
-//     password: process.env.REDISCACHEKEY,
-//   });
-
-//   redisClient.on('error', (err) => {
-//     console.log(err);
-//   });
-//   await redisClient.connect();
-//   const message = await redisClient.get('kk');
-//   console.log(message);
-// })();
-
+// let redisClient = null;
 async function connect() {
   // Add your cache name and access key.
-  redisClient = redis.createClient({
+  const redisClient = redis.createClient({
     url: 'redis://je-casch.redis.cache.windows.net:6380',
     password: 'RWdHLf85B6jK1eRaUTOMyEzKQfBbLdiFoAzCaKECX84=',
     tls: { servername: 'je-casch.redis.cache.windows.net' },
@@ -50,5 +34,3 @@ async function connect() {
 }
 
 connect();
-
-module.exports = { redisClient };

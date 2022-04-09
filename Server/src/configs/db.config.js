@@ -5,7 +5,7 @@ module.exports = {
   DB_USERNAME: process.env.MYSQL_USER,
   DB_PASSWORD: process.env.MYSQL_PASSWORD,
   DB_NAME: process.env.MYSQL_DATABASE,
-  DB_DIALECT: 'mariadb',
+  DB_DIALECT: 'mysql',
   DB_DEFINE: {
     charset: 'utf8',
     dialectOptions: {

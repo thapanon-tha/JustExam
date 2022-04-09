@@ -69,7 +69,7 @@ router.get('/google/callback',
     } if (user) {
       const token = jwt.sign(user, process.env.JWT_SECRET);
 
-      res.cookie('token', token, {
+      return res.cookie('token', token, {
         maxAge: new Date() * 0.001 + 300,
         domain: 'localhost',
         secure: true,

@@ -29,7 +29,7 @@ const medthods = {
   },
 
   async queryExamPaper(cid) {
-    const questionAnswerCChannelsAtt = ['qaccid', 'code', 'exInput', 'exOutput'];
+    const questionAnswerCChannelsAtt = ['qaccid', 'code', 'exInput', 'exOutput', 'clid'];
     const questionAnswerMCChannelsAtt = ['qamccid', 'textA'];
     const questionAnswerMChannelsAtt = ['qamcid', 'textA', 'textQ'];
     const questionAnswerSAChannelsAtt = [];
