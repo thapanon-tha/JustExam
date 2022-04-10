@@ -51,9 +51,10 @@
       />
       <CardSelectedExam
         class="ml-48 mt-10"
-        @clickChange="clickChangeSelect"
+        @clickChange="onClickAddExam"
         @clickScore="clickScoreExam"
         @clickDelete="clickDeleteSelect"
+        :detail="channelInfo.examChannel"
         v-if="showSelected"
       />
       <div class="relative">
@@ -62,6 +63,7 @@
           @clickSelect="clickSelectExam"
           class="fixed top-52 left-96"
           v-if="showModal"
+          :examlist="examlist"
         />
       </div>
     </v-container>
@@ -90,6 +92,7 @@ export default {
       showModal: false,
       showSelected: false,
       showButton: true,
+      examlist: [],
       channelsApiInfo: {},
       channelInfo: {
         title: '',
@@ -114,10 +117,15 @@ export default {
     onError(e) {
       alert('Failed to copy texts');
     },
-    onClickAddExam() {
-      this.showModal = true;
+    async onClickAddExam() {
+      const Responses = await api.exams().then((res) => res);
+      if (Responses.status >= 200 && Responses.status <= 299) {
+        this.examlist = Responses.data;
+        this.showModal = 1;
+      }
     },
-    clickSelectExam() {
+    clickSelectExam(examData) {
+      this.connectChannel(examData);
       this.showModal = false;
       this.showSelected = true;
       this.showButton = false;
@@ -126,11 +134,22 @@ export default {
       this.showModal = true;
     },
     clickScoreExam() {
-      this.$router.push({ name: 'ScoreExamPage' }).catch(() => true);
+      this.$router
+        .push({
+          name: 'ScoreExamPage',
+          params: { cid: this.channelInfo.cid, ecid: this.channelInfo.examChannel.ecid },
+        })
+
+        .catch(() => true);
     },
-    clickDeleteSelect() {
-      this.showButton = true;
-      this.showSelected = false;
+    async clickDeleteSelect() {
+      const res = await api
+        .disconnectExamtoChennal(this.channelInfo.cid, this.channelInfo.examChannel.ecid)
+        .then((res) => res);
+      console.log(res.status === 200);
+      if (res.status === 200) {
+        window.location.reload();
+      }
     },
     // submitForm() {
     //   this.title = "";
@@ -147,7 +166,39 @@ export default {
     },
     async apiCall() {
       this.channelsApiInfo = await api.channelsDetail(this.$route.params.cid).then((res) => res);
-      this.channelInfo = this.channelsApiInfo[0].data;
+      this.channelInfo = await this.channelsApiInfo[0].data;
+      console.log(this.channelInfo.examchennal);
+      if (this.channelInfo.examChannel !== undefined && this.channelInfo.examChannel !== null) {
+        this.showButton = false;
+        this.showSelected = true;
+      } else {
+        this.showButton = true;
+      }
+    },
+    async connectChannel(detail) {
+      const data = {
+        cid: this.$route.params.cid,
+        title: detail.title,
+        description: detail.description,
+        eid: detail.eid,
+        createDate: detail.createDate,
+        updateDate: detail.updateDate,
+      };
+      const result = await api.connectExamtoChennal(data).then((res) => res);
+      if (result.status > 199 && result.status < 300) {
+        const examQuestioneList = await api
+          .examList(this.channelInfo.examChannel.eid)
+          .then(async (res) => await api.reverse(res.data))
+          .then(async (data) => await api.examMapper(data))
+          .then(
+            async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
+          );
+        if(examQuestioneList.status===201){
+          window.location.reload();
+        }else{
+          this.clickDeleteSelect();
+        }
+      }
     },
   },
   created() {

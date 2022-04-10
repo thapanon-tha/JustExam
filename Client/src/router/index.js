@@ -70,7 +70,7 @@ const routes = [
     component: () => import('@/views/Teacher/GradeStudentExam.vue'),
   },
   {
-    path: '/examchannel/new-channel/score-exam',
+    path: '/examchannel/:cid/questions/:ecid/score-exam',
     name: 'ScoreExamPage',
     component: () => import('@/views/Teacher/ScoreExamPage.vue'),
   },

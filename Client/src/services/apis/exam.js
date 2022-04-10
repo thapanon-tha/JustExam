@@ -3,7 +3,7 @@ import mapperTool from './examMapper';
 
 const BACKEND_HOST = 'http://localhost:3000';
 
-const exams = () => axios.get(`${BACKEND_HOST}/api/exams`);
+const exams = () => axios.get(`${BACKEND_HOST}/api/exams`, { validateStatus: false });
 
 const examList = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
 
