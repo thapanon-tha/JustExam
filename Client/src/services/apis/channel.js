@@ -1,4 +1,5 @@
 import axios from 'axios';
+import mapperTool from './channelMapper';
 
 const BACKEND_HOST = 'http://localhost:3000';
 
@@ -25,6 +26,16 @@ const getChannelQuestions = (cid, ecid) => axios.get(`${BACKEND_HOST}/api/channe
   validateStatus: false,
 });
 
+const channelScoreMapper = (data) => mapperTool.convertToScoreAdd(data);
+const channelReverse = (data) => mapperTool.mapperPUT(data);
+const updateScore = (data, cid, ecid) => axios.put(
+  `${BACKEND_HOST}/api/channels/${cid}/exams/${ecid}/questions`,
+  { data },
+  {
+    validateStatus: false,
+  },
+);
+
 export default {
   channels,
   channelsDetail,
@@ -33,4 +44,7 @@ export default {
   disconnectExamtoChennal,
   createChennalQuestion,
   getChannelQuestions,
+  channelScoreMapper,
+  channelReverse,
+  updateScore,
 };

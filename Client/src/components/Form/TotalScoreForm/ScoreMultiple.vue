@@ -9,7 +9,7 @@
         text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor
         border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black
         focus:mainColor focus:border-opacity-100 focus:outline-none"
-        type="number" v-model="item.point" placeholder="Point"
+        type="number" v-model="item.pointQ" placeholder="Point"
       >
       <input
         class="h-4 w-4 mr-2"
@@ -27,7 +27,7 @@
         text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor
         border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black
         focus:mainColor focus:border-opacity-100 focus:outline-none"
-        type="number" min="0" v-model="questionData.totalPoint" placeholder="Total"
+        type="number" min="0" v-model="questionData.point" placeholder="Total"
       >
     </div>
   </div>

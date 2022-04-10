@@ -3,18 +3,16 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
-  ],
+  extends: ['plugin:vue/essential', '@vue/airbnb'],
   parserOptions: {
     parser: 'babel-eslint',
   },
   rules: {
+    'vue/max-attributes-per-line': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-unused-vars': 1,
-    'quotes': [2, 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }]
+    quotes: [2, 'single', { avoidEscape: true, allowTemplateLiterals: true }],
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header main="Exam channel" current="> Add exam > Score exam">
+    <Header main="Exam channel" current="> Score exam">
       <button
         @click="onClickBack"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
@@ -9,15 +9,7 @@
       </button>
     </Header>
     <div>
-      <div class="ml-72 mt-10">
-        <p class="ml-3 font-semibold text-lg text-black w-4/5 break-all">
-          {{ examTitle }}
-        </p>
-        <p class="ml-3 font-semibold text-lg text-black w-4/5 break-all">
-          {{ description }}
-        </p>
-      </div>
-      <ScoreQuestionList />
+      <ScoreQuestionList v-model="questionsList" @update:qlist="updateQuestion" />
     </div>
     <div class="flex gap-10 mt-10 justify-center">
       <ActionButton
@@ -31,6 +23,20 @@
         @on-click="onClickCancel()"
       />
     </div>
+
+    <v-snackbar v-model="snackbar" :multi-line="true" :top="true">
+      {{ snackbarMessage }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          v-bind:color="isSuccess === 1 ? 'success' : 'error'"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -51,24 +57,39 @@ export default {
       examTitle: 'Exam Title Data',
       description: 'Exam Description Data',
       questionsList: [],
+      snackbarMessage: '',
+      snackbar: false,
+      isSuccess: true,
     };
   },
   methods: {
     onClickBack() {
-      this.$router.push({ name: 'InsideChannelTeacher' }).catch(() => true);
+      this.$router
+        .push({ name: 'InsideChannelTeacher', params: { cid: this.$route.params.cid } })
+        .catch(() => true);
     },
-    onClickSave() {
-      //
+    async onClickSave() {
+      const data = this.questionsList.map((data) => api.channelReverse(data));
+      const response = await api
+        .updateScore(data, this.$route.params.cid, this.$route.params.ecid)
+        .then((res) => ({ data: res.data, status: res.status }));
+      if (response.status >= 200 && response.status <= 299) {
+        this.snackbarMessage = 'success';
+        this.snackbar = true;
+        this.isSuccess = true;
+        window.location.reload();
+      } else {
+        this.snackbarMessage = 'update score fail';
+        this.isSuccess = true;
+        this.snackbar = false;
+      }
     },
     onClickCancel() {
-      //
+      window.location.reload();
     },
-    async callApi() {
-      this.questionsList = await api.getChannelQuestions(this.$route.params.cid, this.$route.params.ecid).then((res) => res.data);
+    async updateQuestion(data) {
+      this.questionsList = data;
     },
-  },
-  created() {
-    this.callApi();
   },
 };
 </script>

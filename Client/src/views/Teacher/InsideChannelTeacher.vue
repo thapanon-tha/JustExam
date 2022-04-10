@@ -126,6 +126,7 @@ export default {
     },
     clickSelectExam(examData) {
       this.connectChannel(examData);
+      window.location.reload();
       this.showModal = false;
       this.showSelected = true;
       this.showButton = false;
@@ -193,9 +194,9 @@ export default {
           .then(
             async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
           );
-        if(examQuestioneList.status===201){
+        if (examQuestioneList.status === 201) {
           window.location.reload();
-        }else{
+        } else {
           this.clickDeleteSelect();
         }
       }

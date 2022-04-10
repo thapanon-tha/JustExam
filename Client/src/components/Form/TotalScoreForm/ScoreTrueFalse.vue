@@ -34,7 +34,7 @@
         border-solid border-mainColor border-opacity-40
         rounded-md transition ease-in-out m-0 focus:text-black
         focus:mainColor focus:border-opacity-100 focus:outline-none"
-        type="number" min="0" v-model="questionData.totalPoint"
+        type="number" min="0" v-model="questionData.point"
         placeholder="Total"
         >
     </div>

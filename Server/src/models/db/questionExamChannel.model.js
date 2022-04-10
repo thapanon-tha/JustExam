@@ -3,11 +3,27 @@ module.exports = (sequelize, Sequelize) => {
     'questionExamChannel',
     {
       qecid: {
-        type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'qecid',
+        type: Sequelize.UUID,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4,
+        field: 'qecid',
       },
-      questionTopic: { type: Sequelize.STRING(255), allowNull: false, field: 'questionTopic' },
-      sectionName: { type: Sequelize.STRING(255), allowNull: false, field: 'sectionName' },
-      point: { type: Sequelize.INTEGER, allowNull: false, field: 'point' },
+      questionTopic: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        field: 'questionTopic',
+      },
+      sectionName: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        field: 'sectionName',
+      },
+      point: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        field: 'point',
+        defaultValue: 0,
+      },
     },
     { tableName: 'questionExamChannel' },
   );
