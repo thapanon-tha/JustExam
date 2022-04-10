@@ -126,9 +126,7 @@ export default {
     },
     clickSelectExam(examData) {
       this.connectChannel(examData);
-      window.location.reload();
       this.showModal = false;
-      this.showSelected = true;
       this.showButton = false;
     },
     clickChangeSelect() {
@@ -152,10 +150,6 @@ export default {
         window.location.reload();
       }
     },
-    // submitForm() {
-    //   this.title = "";
-    //   this.description = "";
-    // },
     onClickMember() {
       this.$router.push({ name: 'MemberChannel' }).catch(() => true);
     },
@@ -195,7 +189,8 @@ export default {
             async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
           );
         if (examQuestioneList.status === 201) {
-          window.location.reload();
+          this.channelInfo.examChannel = result.data;
+          this.showSelected = true;
         } else {
           this.clickDeleteSelect();
         }

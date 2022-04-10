@@ -69,7 +69,7 @@ export default {
           status: res2.status,
         }));
       if (questionsResp.status >= 200 && questionsResp.status <= 299) {
-        // this.$router.go(this.$router.currentRoute)
+        this.$router.go(this.$router.currentRoute)
         console.log(questionsResp)
       }
     },

@@ -3,17 +3,7 @@
     <Header main="Exam channel" current="> Inside channel > Member">
       <button
         @click="onClickBack"
-        class="
-          mt-3
-          mr-3
-          bg-white
-          border-orange-200 border border-solid
-          rounded-lg
-          px-4
-          py-3
-          font-semilight
-          text-mainColor
-        "
+        class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
         Back
       </button>
@@ -33,16 +23,24 @@ export default {
     Header,
     MemberTable,
   },
+  data() {
+    return {
+      members: [],
+    };
+  },
   methods: {
     onClickBack() {
-      this.$router.push({ name: 'InsideChannelTeacher' }).catch(() => true);
+      this.$router
+        .push({ name: 'InsideChannelTeacher', params: { cid: this.$route.params.cid } })
+        .catch(() => true);
     },
     async getMember(cid) {
-      await api.members(cid);
+      const data = await api.getMember(cid).then((res) => res);
+      if (data.status === 200) this.members = data.data;
     },
   },
-  created(cid) {
-    this.getMember(cid);
+  created() {
+    this.getMember(this.$route.params.cid);
   },
 };
 </script>

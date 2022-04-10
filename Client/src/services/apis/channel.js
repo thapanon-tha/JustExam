@@ -36,6 +36,10 @@ const updateScore = (data, cid, ecid) => axios.put(
   },
 );
 
+const getMember = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members`, {
+  validateStatus: false,
+});
+
 export default {
   channels,
   channelsDetail,
@@ -47,4 +51,5 @@ export default {
   channelScoreMapper,
   channelReverse,
   updateScore,
+  getMember,
 };
