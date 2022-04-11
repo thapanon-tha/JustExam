@@ -157,7 +157,6 @@ export default {
       const res = await api
         .disconnectExamtoChennal(this.channelInfo.cid, this.channelInfo.examChannel.ecid)
         .then((res) => res);
-      console.log(res.status === 200);
       if (res.status === 200) {
         window.location.reload();
       }
@@ -191,14 +190,16 @@ export default {
         updateDate: detail.updateDate,
       };
       const result = await api.connectExamtoChennal(data).then((res) => res);
-      if (result.status > 199 && result.status < 300) {
+      console.log(result.status);
+      if (result.status === 200) {
         const examQuestioneList = await api
-          .examList(this.channelInfo.examChannel.eid)
-          .then(async (res) => await api.reverse(res.data))
-          .then(async (data) => await api.examMapper(data))
+          .examList(data.eid)
+          .then((res) => api.reverse(res.data))
+          .then((data) => api.examMapper(data))
           .then(
             async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
           );
+        console.log(examQuestioneList);
         if (examQuestioneList.status === 201) {
           this.channelInfo.examChannel = result.data;
           this.showSelected = true;

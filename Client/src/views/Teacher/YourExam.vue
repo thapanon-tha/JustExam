@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      examsData: Object,
+      examsData: [],
       sortlist: [
         {
           name: 'Sort by uncoming',
@@ -67,8 +67,10 @@ export default {
       //
     },
     async getExam() {
-      const token = this.$cookies.get('username-localhost-8888');
-      this.examsData = await api.exams().then((res) => res.data);
+      const data = await api.exams().then((res) => res);
+      if(data.status===200){
+        this.examsData = data.data
+      }
     },
   },
   mounted() {

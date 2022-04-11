@@ -59,6 +59,9 @@ export default {
     onClickBack() {
       this.$router.push({ name: 'YourExam' }).catch(() => true);
     },
+    onClickCancel() {
+      this.$router.push({ name: 'YourExam' }).catch(() => true);
+    },
     updateQuestion(data) {
       this.questions = data;
     },
@@ -72,6 +75,8 @@ export default {
           status: res2.status,
         }));
       if (questionsResp.status >= 200 && questionsResp.status <= 299) {
+        this.$router.push({ name: 'YourExam' }).catch(() => true);
+      } else {
         this.$router.go(this.$router.currentRoute);
       }
     },
