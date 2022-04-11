@@ -13,9 +13,6 @@ let redisClient = null;
     console.log(err);
   });
   await redisClient.connect();
-  await redisClient.set('kk', 'hee');
-  const message = await redisClient.get('kk');
-  console.log(message);
 })();
 
 module.exports = { redisClient };

@@ -10,8 +10,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 
-const jwtChecker = require('./middlewares/jwt');
-
 const app = express();
 const port = process.env.EXPOSE_PORT;
 require('./configs/passport.config');
@@ -61,7 +59,6 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(process.env.REDISCACHEHOSTNAME);
   console.log(`server run on port ${port}`);
 });
 

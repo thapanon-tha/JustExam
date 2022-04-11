@@ -126,7 +126,8 @@ export default {
       this.text = `copied: ${e.text}`;
     },
     onError(e) {
-      alert('Failed to copy texts');
+      this.snackbar = true;
+      this.text = 'Failed to copy Invite ID';
     },
     async onClickAddExam() {
       const Responses = await api.exams().then((res) => res);
@@ -173,7 +174,6 @@ export default {
     async apiCall() {
       this.channelsApiInfo = await api.channelsDetail(this.$route.params.cid).then((res) => res);
       this.channelInfo = await this.channelsApiInfo[0].data;
-      console.log(this.channelInfo.examchennal);
       if (this.channelInfo.examChannel !== undefined && this.channelInfo.examChannel !== null) {
         this.showButton = false;
         this.showSelected = true;

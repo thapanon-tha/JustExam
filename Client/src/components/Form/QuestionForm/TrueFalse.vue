@@ -63,7 +63,6 @@ export default {
     event: 'input',
   },
   created() {
-    console.log(this.value);
   },
 };
 

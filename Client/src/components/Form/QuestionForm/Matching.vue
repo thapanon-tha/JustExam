@@ -100,7 +100,6 @@ export default {
     event: 'input', // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
   },
   created() {
-    console.log(this.value);
   },
 
 };

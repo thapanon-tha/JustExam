@@ -44,19 +44,7 @@ router.post('/login', (req, res) => {
           secure: true,
           sameSite: 'none',
         })
-        .cookie('type', user.type, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('isLogin', true, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .redirect(`http://${process.env.FRONTHOST}/examchannel`);
+        .redirect(`http://${process.env.FRONTHOST}:${process.env.FRONTPORT}/`);
     }
     return res.status(401).send(info);
   })(req, res);
@@ -81,10 +69,13 @@ router.get(
   passport.authenticate('google', { session: false }),
   (req, res) => {
     const { user } = req;
-    if (user.errMassage !== false) {
-      return res.status(401).send(user);
+    if (user.errMassage !== false && user?.uid === undefined) {
+      return res
+        .clearCookie('connect.sid')
+        .status(401)
+        .redirect(`http://${process.env.FRONTHOST}:${process.env.FRONTPORT}/`);
     }
-    if (user) {
+    if (user.errMassage === false) {
       const token = jwt.sign(user, process.env.JWT_SECRET);
 
       return res
@@ -124,19 +115,7 @@ router.get(
           secure: true,
           sameSite: 'none',
         })
-        .cookie('type', user.type, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('isLogin', true, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .redirect(`http://${process.env.FRONTHOST}/examchannel`);
+        .redirect(`http://${process.env.FRONTHOST}:${process.env.FRONTPORT}/`);
     }
     return res.status(422).json(user);
   },

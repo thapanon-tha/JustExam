@@ -54,10 +54,9 @@ export default new Vuex.Store({
       }
 
       const name = auth.getName();
-      console.log(name);
 
       // User is student
-      if (auth.getToken() && auth.getRole() === 'STUDENT') {
+      if (auth.getToken() && auth.getRole() === 'student') {
         commit('SET_IS_AUTH', true);
         commit('SET_IS_STUDENT', true);
         commit('SET_NAME', name);
@@ -65,7 +64,7 @@ export default new Vuex.Store({
       }
 
       // User is teacher
-      if (auth.getToken() && auth.getRole() === 'TEACHER') {
+      if (auth.getToken() && auth.getRole() === 'teacher') {
         commit('SET_IS_AUTH', true);
         commit('SET_IS_TEACHER', true);
         commit('SET_NAME', name);
@@ -75,6 +74,8 @@ export default new Vuex.Store({
       auth.removeToken();
       auth.removeRole();
       auth.removeName();
+      auth.removeUid();
+      auth.removeConnectId();
       commit('SET_IS_AUTH', false);
       commit('SET_IS_TEACHER', false);
       commit('SET_IS_STUDENT', false);

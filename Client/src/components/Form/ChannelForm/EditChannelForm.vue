@@ -14,9 +14,9 @@
             v-model="value.title"
             ref="channel_title"
             placeholder="Channel Title"
-            :disabled="!isEditingTitle"
+            :disabled="!isEditing"
             class="w-11/12 px-3 py-3 text-lg font-semilight text-text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
-            :class="{ view: !isEditingTitle }"
+            :class="{ view: !isEditing }"
           />
         </div>
         <div>
@@ -30,9 +30,9 @@
             v-model="value.description"
             ref="channel_description"
             placeholder="Channel Description"
-            :disabled="!isEditingDesc"
+            :disabled="!isEditing"
             class="w-11/12 px-3 py-3 text-lg font-semilight text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
-            :class="{ view: !isEditingDesc }"
+            :class="{ view: !isEditing }"
           />
         </div>
         <div class="form-control">
@@ -57,17 +57,17 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <input
-                  v-if="isEditing2"
+                  v-if="isEditing"
                   class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                   readonly
                   v-bind="attrs"
                   v-on="on"
                   v-model="value.schedule"
                   ref="channel_schedule"
-                  :disabled="!isEditingDate"
-                  :class="{ view: !isEditingDate }"
+                  :disabled="!isEditing"
+                  :class="{ view: !isEditing }"
                 />
-                <div v-if="!isEditing2" class="flex flex-row">
+                <div v-if="!isEditing" class="flex flex-row">
                   <div
                     class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                     readonly
@@ -115,7 +115,7 @@
                     Time Start:
                   </label>
                   <input
-                    v-if="isEditing2"
+                    v-if="isEditing"
                     class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                     v-model="value.startAt"
                     readonly
@@ -123,10 +123,10 @@
                     v-on="on"
                     placeholder="Time start"
                     ref="time_start"
-                    :disabled="!isEditingTime"
-                    :class="{ view: !isEditingTime }"
+                    :disabled="!isEditing"
+                    :class="{ view: !isEditing }"
                   />
-                  <div v-if="!isEditing2" class="flex flex-row">
+                  <div v-if="!isEditing" class="flex flex-row">
                     <div
                       class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                       readonly
@@ -163,7 +163,7 @@
                     Time End:
                   </label>
                   <input
-                    v-if="isEditing2"
+                    v-if="isEditing === true"
                     class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                     v-model="value.endAt"
                     readonly
@@ -171,10 +171,10 @@
                     v-on="on"
                     placeholder="Time end"
                     ref="time_end"
-                    :disabled="!isEditingTime"
-                    :class="{ view: !isEditingTime }"
+                    :disabled="!isEditing"
+                    :class="{ view: !isEditing }"
                   />
-                  <div v-if="!isEditing2" class="flex flex-row">
+                  <div v-if="isEditing === false" class="flex flex-row">
                     <div
                       class="w-5/6 px-3 pt-3 pb-3 border border-solid border-mainColor border-opacity-40 text-base font-semilight text-grayColor bg-subColor rounded-md"
                       readonly
@@ -197,7 +197,7 @@
           </div>
         </div>
       </div>
-      <div class="form-control ">
+      <div class="form-control">
         <div class="flex flex-col justify-center gap-5">
           <h1 class="text-gray-700 font-semibold text-2xl mb-5">Exam setting</h1>
           <div>
@@ -251,11 +251,6 @@ export default {
       menu1: false,
       menu2: false,
       isEditing: false,
-      isEditing2: false,
-      isEditingTitle: false,
-      isEditingDesc: false,
-      isEditingDate: false,
-      isEditingTime: false,
       title: this.value.title,
       description: this.value.description,
       timeStart: this.value.timeStart,
@@ -277,20 +272,20 @@ export default {
   methods: {
     saveTitle() {
       this.title = this.$refs.channel_title.value;
-      this.isEditingTitle = !this.isEditingTitle;
+      this.isEditing = !this.isEditing;
     },
     saveDescription() {
       this.description = this.$refs.channel_description.value;
-      this.isEditingDesc = !this.isEditingDesc;
+      this.isEditing = !this.isEditing;
     },
     saveSchedule() {
       this.date = this.$refs.channel_schedule.value;
-      this.isEditingDate = !this.isEditingDate;
+      this.isEditing = !this.isEditing;
     },
     saveTime() {
       this.timeStart = this.$refs.time_start.value;
       this.timeEnd = this.$refs.time_end.value;
-      this.isEditingTime = !this.isEditingTime;
+      this.isEditing = !this.isEditing;
     },
   },
 };

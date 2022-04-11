@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const { user, role } = require('../models/db');
 const db = require('../models/db');
 
 const { member } = db;
@@ -7,6 +8,13 @@ const medthods = {
   async findByCid(cid) {
     return member.findAll({
       where: { cid },
+      include: [{
+        model: user,
+        attributes: ['firstname','surname']
+      },{
+        model: role,
+        attributes: ['name']
+      }]
     });
   },
 
@@ -19,7 +27,6 @@ const medthods = {
   async create(uid, state, rid, cid, sid, transaction) {
     return member.findOrCreate({
       where: {
-
         cid,
         [Op.or]: [
           { uid },

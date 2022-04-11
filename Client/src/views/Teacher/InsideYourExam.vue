@@ -65,7 +65,6 @@ export default {
     async onClickUpdate() {
       this.loading = true;
       const resultMap = api.examMapper(this.questions);
-      console.log(resultMap);
       const questionsResp = await api
         .updateQuestions(this.$route.params.eid, resultMap)
         .then((res2) => ({
@@ -74,7 +73,6 @@ export default {
         }));
       if (questionsResp.status >= 200 && questionsResp.status <= 299) {
         this.$router.go(this.$router.currentRoute);
-        console.log(questionsResp);
       }
     },
   },

@@ -113,5 +113,13 @@ export default {
       menu2: false,
     };
   },
+  watch: {
+    timeStart(newVal, oldVal) {
+      this.$emit('update:timeStart', this.timeStart);
+    },
+    timeEnd(newVal, oldVal) {
+      this.$emit('update:timeEnd', this.timeEnd);
+    },
+  },
 };
 </script>

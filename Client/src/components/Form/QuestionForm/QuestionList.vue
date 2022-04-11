@@ -275,7 +275,6 @@ export default {
       this.seeModal = false;
     },
     copyQuestion(index) {
-      console.log(this.qlist[index]);
     },
     deleteQuestion(id) {
       this.qlist = this.qlist.filter((e) => e.id !== id);

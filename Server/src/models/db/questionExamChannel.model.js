@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'qecid',
       },
       questionTopic: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.TEXT,
         allowNull: false,
         field: 'questionTopic',
       },

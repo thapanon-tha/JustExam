@@ -44,7 +44,7 @@
             <h1
               class="text-sm font-semilight ml-2 truncate"
             >
-              {{ detail.title }}
+              {{ detail.description }}
             </h1>
             <h2 class="text-xs font-semilight ml-2">
               Created date: {{ detail.updatedAt | moment("Do / MMMM / YYYY") }}

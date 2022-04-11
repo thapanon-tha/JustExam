@@ -68,7 +68,6 @@ export default {
     },
     async getExam() {
       const token = this.$cookies.get('username-localhost-8888');
-      console.log(token);
       this.examsData = await api.exams().then((res) => res.data);
     },
   },
