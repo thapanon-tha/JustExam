@@ -5,6 +5,9 @@ const BACKEND_HOST = 'http://localhost:3000';
 
 const exams = () => axios.get(`${BACKEND_HOST}/api/exams`, { validateStatus: false });
 
+const examDetail = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}`, { validateStatus: false });
+const updateExamDetail = (eid, data) => axios.put(`${BACKEND_HOST}/api/exams/${eid}`, { data }, { validateStatus: false });
+
 const examList = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`);
 
 const createExams = async (examData) => axios.post(
@@ -30,4 +33,6 @@ export default {
   createQuestions,
   reverse,
   updateQuestions,
+  examDetail,
+  updateExamDetail,
 };

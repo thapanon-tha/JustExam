@@ -8,9 +8,11 @@
         Back
       </button>
     </Header>
-    <div>
-      <ScoreQuestionList v-model="questionsList" @update:qlist="updateQuestion" />
-    </div>
+    <v-container>
+      <div>
+        <ScoreQuestionList v-model="questionsList" @update:qlist="updateQuestion" />
+      </div>
+    </v-container>
     <div class="flex gap-10 mt-10 justify-center">
       <ActionButton
         class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor hover:text-white hover:bg-mainColor"

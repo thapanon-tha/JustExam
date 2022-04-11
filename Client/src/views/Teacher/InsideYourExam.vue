@@ -8,12 +8,16 @@
         Back
       </button>
     </Header>
-    <div>
-      <EditExamInfo />
-    </div>
-    <div class="flex justify-center">
-      <EditQuestionList @update:qlist="updateQuestion" />
-    </div>
+    <v-container>
+      <div>
+        <EditExamInfo />
+      </div>
+    </v-container>
+    <v-container class="flex justify-center">
+      <div>
+        <EditQuestionList @update:qlist="updateQuestion" />
+      </div>
+    </v-container>
     <div class="flex gap-10 mt-10 justify-center">
       <ActionButton
         class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-3 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
@@ -31,14 +35,14 @@
   </div>
 </template>
 <script>
-import Header from "@/components/Header/Header.vue";
-import EditExamInfo from "@/components/Form/YourExamForm/EditExamInfo.vue";
-import EditQuestionList from "@/components/Form/QuestionForm/EditQuestionList.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
-import api from "@/services/apis";
+import Header from '@/components/Header/Header.vue';
+import EditExamInfo from '@/components/Form/YourExamForm/EditExamInfo.vue';
+import EditQuestionList from '@/components/Form/QuestionForm/EditQuestionList.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import api from '@/services/apis';
 
 export default {
-  name: "EditExam",
+  name: 'EditExam',
   components: {
     Header,
     EditExamInfo,
@@ -53,7 +57,7 @@ export default {
   },
   methods: {
     onClickBack() {
-      this.$router.push({ name: "YourExam" }).catch(() => true);
+      this.$router.push({ name: 'YourExam' }).catch(() => true);
     },
     updateQuestion(data) {
       this.questions = data;
@@ -69,8 +73,8 @@ export default {
           status: res2.status,
         }));
       if (questionsResp.status >= 200 && questionsResp.status <= 299) {
-        this.$router.go(this.$router.currentRoute)
-        console.log(questionsResp)
+        this.$router.go(this.$router.currentRoute);
+        console.log(questionsResp);
       }
     },
   },

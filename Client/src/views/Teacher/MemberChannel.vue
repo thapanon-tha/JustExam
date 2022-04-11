@@ -8,7 +8,7 @@
         Back
       </button>
     </Header>
-    <MemberTable />
+    <MemberTable :members="members" />
   </div>
 </template>
 
@@ -36,7 +36,21 @@ export default {
     },
     async getMember(cid) {
       const data = await api.getMember(cid).then((res) => res);
-      if (data.status === 200) this.members = data.data;
+      if (data.status === 200) {
+        this.members = data.data;
+        this.members = this.members.map((e) => ({
+          cid: e.cid,
+          mid: e.mid,
+          rid: e.rid,
+          sid: e.sid,
+          state: e.state,
+          uid: e.uid,
+          createdAt: e.createdAt,
+          updatedAt: e.updatedAt,
+          role: e.role.name,
+          name: `${e.user.firstname} ${e.user.surname}`,
+        }));
+      }
     },
   },
   created() {

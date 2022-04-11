@@ -40,6 +40,18 @@ const getMember = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/member
   validateStatus: false,
 });
 
+const updateRole = (data, cid, mid) => axios.put(
+  `${BACKEND_HOST}/api/channels/${cid}/members/${mid}`,
+  { data },
+  {
+    validateStatus: false,
+  },
+);
+
+const kickMember = (cid, mid) => axios.delete(`${BACKEND_HOST}/api/channels/${cid}/members/${mid}`, {
+  validateStatus: false,
+});
+
 export default {
   channels,
   channelsDetail,
@@ -52,4 +64,6 @@ export default {
   channelReverse,
   updateScore,
   getMember,
+  updateRole,
+  kickMember,
 };

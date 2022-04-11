@@ -30,12 +30,8 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <!-- <v-text-field
-                      v-model="editedItem.role"
-                      label="Role"
-                    ></v-text-field> -->
                     <v-select
-                      :items="['Student', 'TA']"
+                      :items="['Student', 'Teacher Assistant']"
                       label="Select role"
                       v-model="editedItem.role"
                     >
@@ -84,8 +80,11 @@
 </template>
 
 <script>
+import api from '@/services/apis';
+
 export default {
   name: 'MemberTable',
+  props: ['members'],
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -116,10 +115,7 @@ export default {
     ],
     memberlist: [],
     editedIndex: -1,
-    editedItem: {
-      sid: '',
-      role: 'Student',
-    },
+    editedItem: {},
     defaultItem: {
       sid: '',
       role: 'Student',
@@ -143,48 +139,7 @@ export default {
 
   methods: {
     initialize() {
-      this.memberlist = [
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-        {
-          sid: '61070507219',
-          name: 'Rungwilai  Payak',
-          role: 'Student',
-        },
-      ];
+      this.memberlist = this.members;
     },
 
     editItem(item) {
@@ -199,9 +154,12 @@ export default {
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.memberlist.splice(this.editedIndex, 1);
-      this.closeDelete();
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = { ...this.defaultItem };
+        this.editedIndex = -1;
+      });
     },
 
     close() {
@@ -212,19 +170,32 @@ export default {
       });
     },
 
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = { ...this.defaultItem };
-        this.editedIndex = -1;
-      });
+    async deleteItemConfirm() {
+      const { mid } = this.editedItem;
+      const result = await api.kickMember(this.$route.params.cid, mid);
+      if (result.status >= 200 && result.status <= 299) {
+        this.memberlist.splice(this.editedIndex, 1);
+        this.closeDelete();
+      }
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.memberlist[this.editedIndex], this.editedItem);
-      } else {
-        this.memberlist.push(this.editedItem);
+    async save() {
+      const { role } = this.editedItem;
+      const { mid } = this.editedItem;
+
+      let rid;
+      if (role === 'Student') {
+        rid = '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5';
+      } else if (role === 'Teacher Assistant') {
+        rid = '3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+      }
+      const result = await api.updateRole({ rid }, this.$route.params.cid, mid);
+      if (result.status >= 200 && result.status <= 299) {
+        if (this.editedIndex > -1) {
+          Object.assign(this.memberlist[this.editedIndex], this.editedItem);
+        } else {
+          this.memberlist.push(this.editedItem);
+        }
       }
       this.close();
     },

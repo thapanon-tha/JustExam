@@ -19,8 +19,8 @@
         <EditChannelForm v-model="channelInfo" />
       </div>
     </v-container>
-    <v-container>
-      <div class="ml-48 mt-10">
+    <v-container class="flex justify-center">
+      <div class="mt-10">
         <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
         <div class="flex flex-wrap mt-5">
           <p
@@ -67,6 +67,14 @@
         />
       </div>
     </v-container>
+
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -89,10 +97,12 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
       showModal: false,
       showSelected: false,
       showButton: true,
       examlist: [],
+      text: '',
       channelsApiInfo: {},
       channelInfo: {
         title: '',
@@ -112,7 +122,8 @@ export default {
   },
   methods: {
     onCopy(e) {
-      alert(`You just copied: ${e.text}`);
+      this.snackbar = true;
+      this.text = `copied: ${e.text}`;
     },
     onError(e) {
       alert('Failed to copy texts');
