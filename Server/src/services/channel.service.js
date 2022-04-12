@@ -50,6 +50,14 @@ const medthods = {
     });
   },
 
+  async getById(cid) {
+    return Channel.findOne({
+      where: {
+        cid,
+      },
+    });
+  },
+
   async getOwner(uid) {
     return Channel.findAll({
       where: { uid },

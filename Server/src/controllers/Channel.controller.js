@@ -3,11 +3,14 @@ const { redisClient } = require('../configs/redis.config');
 const Channel = require('../services/channel.service');
 const stdCode = require('./stdCode');
 const examChannelService = require('../services/examChannel.service');
+const channelService = require('../services/channel.service');
 
 const status = ['pending', 'coming', 'process', 'finish'];
 // array array
 const randomsection = (allSection, completeSection) => {
-  const sectionList = allSection.filter((val) => completeSection.indexOf(val) === -1);
+  const sectionList = allSection.filter(
+    (val) => completeSection.indexOf(val) === -1,
+  );
   const random = sectionList[Math.floor(Math.random() * sectionList.length)];
   return random;
 };
@@ -239,7 +242,7 @@ module.exports = {
     const cidKey = `exam+${cid}`;
     // exam for cid  key  `exam + ${cid}`                 structure key: { section: [], questions: [], }
     // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
-
+    const channelDetail = await channelService.getById(cid);
     try {
       let redisUid = await redisClient.get(uidKey);
 
@@ -311,6 +314,7 @@ module.exports = {
       const responesPack = {
         questions: Pquestions,
         Section: PSection,
+        channel: channelDetail,
       };
       res.json(responesPack);
     } catch (error) {
