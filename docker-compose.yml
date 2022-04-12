@@ -8,21 +8,21 @@ x-logging:
       max-size: 100m
 
 services:
-  db:
-    image: mariadb:10.5.10-focal
-    volumes:
-      - database:/var/lib/mysql
-    ports:
-      - 3306:3306
-    env_file: ./.env
-    networks:
-      - network
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    restart: always
+  # db:
+  #   image: mariadb:10.5.10-focal
+  #   volumes:
+  #     - database:/var/lib/mysql
+  #   ports:
+  #     - 3306:3306
+  #   env_file: ./.env
+  #   networks:
+  #     - network
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   restart: always
 
   server:
     build: ./Server

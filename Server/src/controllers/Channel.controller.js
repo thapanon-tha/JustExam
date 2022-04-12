@@ -7,10 +7,9 @@ const examChannelService = require('../services/examChannel.service');
 const status = ['pending', 'coming', 'process', 'finish'];
 // array array
 const randomsection = (allSection, completeSection) => {
-  const sectionList = allSection.filter(
-    (e) => completeSection.findIndex(e) >= 0,
-  );
-  sectionList[Math.floor(Math.random() * sectionList.length)];
+  const sectionList = allSection.filter((val) => completeSection.indexOf(val) === -1);
+  const random = sectionList[Math.floor(Math.random() * sectionList.length)];
+  return random;
 };
 
 module.exports = {
@@ -18,7 +17,6 @@ module.exports = {
     const { inviteCode } = req.query;
     const { uid } = req.user;
     const userType = req.user.type;
-    console.log('aaaaaaaaaa');
     try {
       if (inviteCode !== undefined) {
         const data = await Channel.getByCode(inviteCode);
@@ -33,12 +31,8 @@ module.exports = {
       } else {
         // Owner
         // eslint-disable-next-line no-lonely-if
-        console.log(uid);
-        console.log(userType);
-        console.log(!userType.localeCompare('teacher'));
         if (!userType.localeCompare('teacher')) {
           const data = await Channel.getOwner(uid);
-          console.log(data);
           if (data) {
             stdCode.querySuccess(data, res);
           } else {
@@ -106,7 +100,6 @@ module.exports = {
       // eslint-disable-next-line no-lonely-if
       if (!userType.localeCompare('teacher')) {
         const data = await Channel.getOwnerByCid(cid, uid);
-        console.log(data);
         if (data) {
           stdCode.querySuccess(data, res);
         } else {
@@ -248,7 +241,7 @@ module.exports = {
     // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
 
     try {
-      const redisUid = await redisClient.get(uidKey);
+      let redisUid = await redisClient.get(uidKey);
 
       //! Get DATA From Redis and Store data to Redis
       let examData = await redisClient.get(cidKey);
@@ -276,10 +269,9 @@ module.exports = {
           }),
         );
         const section = Paper.map((e) => parseInt(e.sectionName, 10));
-        const uniqueNames = [];
-        $.each(section, (i, el) => {
-          if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
-        });
+        const uniqueNames = section.filter(
+          (value, index) => section.indexOf(value) == index,
+        );
         const packged = {
           questions: Paper,
           sections: uniqueNames,
@@ -289,15 +281,40 @@ module.exports = {
       }
       examData = JSON.parse(examData);
 
-      // check section
       if (!redisUid) {
         const user = { current: null, completeSection: [] };
         await redisClient.set(uidKey, JSON.stringify(user));
         redisUid = await redisClient.get(uidKey);
       }
+      redisUid = JSON.parse(redisUid);
 
-      res.json(finalList);
+      let Pquestions = [];
+      const PSection = {
+        current: null,
+        number: null,
+      };
+      if (redisUid.current === null) {
+        const randomResult = randomsection(
+          examData.sections,
+          redisUid.completeSection,
+        );
+        redisUid.current = randomResult;
+      }
+
+      PSection.current = redisUid.completeSection.length + 1;
+      PSection.number = examData.sections.length;
+      Pquestions = examData.questions.filter(
+        (e) => parseInt(e.sectionName, 10) === redisUid.current,
+      );
+
+      await redisClient.set(uidKey, JSON.stringify(redisUid));
+      const responesPack = {
+        questions: Pquestions,
+        Section: PSection,
+      };
+      res.json(responesPack);
     } catch (error) {
+      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },

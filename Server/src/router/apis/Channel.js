@@ -20,7 +20,7 @@ router.put('/:cid', controller.updateChannel);
 router.delete('/:cid', controller.deleteChannel);
 
 // student member only
-router.get('/:cid/startExam', controller.startExam);
+router.get('/:cid/startExam', controller.continue);
 
 // student member only
 router.post('/:cid/submitExam', controller.submitExam);
