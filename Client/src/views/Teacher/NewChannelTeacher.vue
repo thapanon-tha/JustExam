@@ -148,8 +148,7 @@
     </v-container>
 
     <v-snackbar v-model="snackbar">
-      invalid input
-
+      {{ text }}
       <template v-slot:action="{ attrs }">
         <v-btn color="red" text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
       </template>
@@ -192,6 +191,7 @@ export default {
       timeEnd: null,
       menu1: false,
       menu2: false,
+      text: '',
       channelInfo: {
         title: '',
         description: '',
@@ -244,6 +244,7 @@ export default {
         || this.timeEnd === null
       ) {
         this.snackbar = true;
+        this.text = `invalid input`;
       } else {
         const startT = this.convortTime(this.timeStart);
         const endT = this.convortTime(this.timeEnd);
@@ -256,13 +257,19 @@ export default {
         end.setHours(parseInt(endT[0], 10));
         end.setMinutes(parseInt(endT[1], 10));
         end.setMilliseconds(0);
-        await api.createChannel({
+        const result = await api.createChannel({
           title: this.channelInfo.title,
           description: this.channelInfo.description,
           schedule: date,
           startAt: start,
           endAt: end,
         });
+        if (result.status >= 200 && result.status < 300) {
+          this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
+        } else {
+          this.snackbar = true;
+          this.text = `Create Channel Fail`;
+        }
       }
     },
     onClickCancel() {

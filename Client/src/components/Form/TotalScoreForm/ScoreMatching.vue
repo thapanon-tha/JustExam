@@ -1,20 +1,28 @@
 <template>
   <div class="ml-10 mt-10 mr-10 mb-20">
-    <div class="break-words p-3 mb-3">
-      {{ questionData.question }}
-    </div>
-    <div class="ml-5" v-for="(item, index) in questionData.matchs" :key="item.index">
-      <p class="px-5 py-3 w-7/8 break-words">{{ `${index + 1})` }} {{ item.subquestion }}</p>
-      <select
-        class="ml-10 border-2 border-solid border-gray-300 rounded-md bg-gray-200 px-5 py-2 whitespace-pre-wrap break-words overflow-hidden"
-        v-model="select"
-        id="select"
-        name="select"
-      >
-        <option disabled value="">
-          {{ item.matchanswer }}
-        </option>
-      </select>
+    <div class="break-words p-3 mb-3" v-html="questionData.question"></div>
+    <div class="" v-for="(item, index) in questionData.matchs" :key="item.index">
+      <v-row>
+        <v-col :cols="2">
+          <p class="break-words">{{ `${index + 1})` }}</p>
+        </v-col>
+        <v-col>
+          <p class="break-words" v-html="item.subquestion"></p>
+        </v-col>
+      </v-row>
+
+      <v-col>
+        <select
+          class="ml-10 border-2 border-solid border-gray-300 rounded-md bg-gray-200 px-5 py-2 whitespace-pre-wrap break-words overflow-hidden"
+          v-model="select"
+          id="select"
+          name="select"
+        >
+          <option disabled value="">
+            <p v-html="item.matchanswer"></p>
+          </option>
+        </select>
+      </v-col>
     </div>
     <div class="flex justify-end">
       <input

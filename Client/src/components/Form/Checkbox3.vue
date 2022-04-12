@@ -1,14 +1,7 @@
 <template>
   <div class="flex">
-    <input
-          type="checkbox"
-          class="h-4 w-4 mt-1"
-          :value="value"
-          @change="onChange()"
-    />
-    <p
-      class="text-gray-700 font-semilight text-xl w-auto ml-5"
-    >
+    <input type="checkbox" class="h-4 w-4 mt-1" v-model="value" @change="onChange()" />
+    <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
       {{ textRight }}
     </p>
   </div>
@@ -18,15 +11,17 @@
 export default {
   name: 'Checkbox3',
   props: {
+    value: {
+      type: Boolean,
+      default: false,
+    },
     textRight: {
       type: String,
       default: '',
     },
   },
   data() {
-    return {
-      value: true,
-    };
+    return {};
   },
   methods: {
     onChange() {
@@ -40,6 +35,6 @@ export default {
 .view {
   border-color: transparent;
   background-color: initial;
-  color: #EF7F4C;
+  color: #ef7f4c;
 }
 </style>

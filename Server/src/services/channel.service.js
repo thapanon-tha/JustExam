@@ -52,9 +52,7 @@ const medthods = {
 
   async getOwner(uid) {
     return Channel.findAll({
-      where: {
-        uid,
-      },
+      where: { uid },
     });
   },
 

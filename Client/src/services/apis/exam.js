@@ -10,6 +10,8 @@ const updateExamDetail = (eid, data) => axios.put(`${BACKEND_HOST}/api/exams/${e
 
 const examList = (eid) => axios.get(`${BACKEND_HOST}/api/exams/${eid}/questions`, { validateStatus: false });
 
+const deleteExams = (eid) => axios.delete(`${BACKEND_HOST}/api/exams/${eid}`, { validateStatus: false });
+
 const createExams = async (examData) => axios.post(
   `${BACKEND_HOST}/api/exams`,
   {
@@ -37,4 +39,5 @@ export default {
   updateQuestions,
   examDetail,
   updateExamDetail,
+  deleteExams
 };

@@ -13,12 +13,12 @@ const sequelize = new Sequelize(
     logging: false,
     ssl: true,
     dialectOptions: {
-      // ssl: {
-      //   minVersion: 'TLSv1',
-      //   ca: process.env.cKey,
-      //   require: true,
-      //   rejectUnauthorized: false,
-      // },
+      ssl: {
+        minVersion: 'TLSv1',
+        ca: process.env.cKey,
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
   },
 );

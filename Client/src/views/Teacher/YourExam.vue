@@ -22,8 +22,8 @@
         <CardExam
           @onClick="onClick('InsideYourExam', box.eid)"
           v-bind:detail="box"
-          @clickEdit="onClickEdit('EditExam', box.eid)"
-          @clickDelete="onClickDeleteExam()"
+          @clickEdit="onClickEdit('InsideYourExam', box.eid)"
+          @clickDelete="onClickDeleteExam(box.eid)"
         />
       </div>
     </div>
@@ -63,13 +63,16 @@ export default {
     onClickEdit(pageName, eid) {
       this.$router.push({ name: pageName, params: { eid } }).catch(() => true);
     },
-    onClickDeleteExam() {
-      //
+    async onClickDeleteExam(eid) {
+      const result = await api.deleteExams(eid).then((res) => res);
+      if (result.status >= 200 && result.status < 300) {
+        window.location.reload();
+      }
     },
     async getExam() {
       const data = await api.exams().then((res) => res);
-      if(data.status===200){
-        this.examsData = data.data
+      if (data.status === 200) {
+        this.examsData = data.data;
       }
     },
   },

@@ -260,12 +260,12 @@ export default {
         .substr(0, 10),
       datePicked: this.value.date,
       settingData: {
-        randomSec: this.value.randomSec,
-        randomQuestion: this.value.randomQuestion,
-        shuffleChoices: this.value.shuffleChoices,
-        showCAnswer: this.value.showCAnswer,
-        showTotalScore: this.value.showTotalScore,
-        cantSubmitEmpty: this.value.cantSubmitEmpty,
+        randomSec: true,
+        randomQuestion: true,
+        shuffleChoices: true,
+        showCAnswer: false,
+        showTotalScore: false,
+        cantSubmitEmpty: false,
       },
     };
   },

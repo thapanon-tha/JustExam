@@ -5,12 +5,20 @@ const stdCode = require('./stdCode');
 const examChannelService = require('../services/examChannel.service');
 
 const status = ['pending', 'coming', 'process', 'finish'];
+// array array
+const randomsection = (allSection, completeSection) => {
+  const sectionList = allSection.filter(
+    (e) => completeSection.findIndex(e) >= 0,
+  );
+  sectionList[Math.floor(Math.random() * sectionList.length)];
+};
 
 module.exports = {
   async getChannel(req, res) {
     const { inviteCode } = req.query;
     const { uid } = req.user;
     const userType = req.user.type;
+    console.log('aaaaaaaaaa');
     try {
       if (inviteCode !== undefined) {
         const data = await Channel.getByCode(inviteCode);
@@ -25,8 +33,12 @@ module.exports = {
       } else {
         // Owner
         // eslint-disable-next-line no-lonely-if
+        console.log(uid);
+        console.log(userType);
+        console.log(!userType.localeCompare('teacher'));
         if (!userType.localeCompare('teacher')) {
           const data = await Channel.getOwner(uid);
+          console.log(data);
           if (data) {
             stdCode.querySuccess(data, res);
           } else {
@@ -94,6 +106,7 @@ module.exports = {
       // eslint-disable-next-line no-lonely-if
       if (!userType.localeCompare('teacher')) {
         const data = await Channel.getOwnerByCid(cid, uid);
+        console.log(data);
         if (data) {
           stdCode.querySuccess(data, res);
         } else {
@@ -224,6 +237,69 @@ module.exports = {
     redisUid.section = sectionList.filter((value) => value !== sectionName);
     await redisClient.set(uid, JSON.stringify(redisUid));
     res.json(finalList);
+  },
+
+  async continue(req, res) {
+    const { cid } = req.params;
+    const { uid } = req.user;
+    const uidKey = `exam+${cid}+${uid}`;
+    const cidKey = `exam+${cid}`;
+    // exam for cid  key  `exam + ${cid}`                 structure key: { section: [], questions: [], }
+    // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
+
+    try {
+      const redisUid = await redisClient.get(uidKey);
+
+      //! Get DATA From Redis and Store data to Redis
+      let examData = await redisClient.get(cidKey);
+      if (!examData) {
+        const Exampaper = await examChannelService.queryExamPaper(cid);
+        const Paper = await Promise.all(
+          Exampaper.map((data) => {
+            let finalData = {};
+            finalData = {
+              ...data.dataValues,
+            };
+            if (data.dataValues.questionAnswerCChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerCChannels];
+            }
+            if (data.dataValues.questionAnswerMCChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerMCChannels];
+            }
+            if (data.dataValues.questionAnswerMChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerMChannels];
+            }
+            delete finalData?.questionAnswerCChannels;
+            delete finalData?.questionAnswerMCChannels;
+            delete finalData?.questionAnswerMChannels;
+            return finalData;
+          }),
+        );
+        const section = Paper.map((e) => parseInt(e.sectionName, 10));
+        const uniqueNames = [];
+        $.each(section, (i, el) => {
+          if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+        });
+        const packged = {
+          questions: Paper,
+          sections: uniqueNames,
+        };
+        await redisClient.set(cidKey, JSON.stringify(packged));
+        examData = await redisClient.get(cidKey);
+      }
+      examData = JSON.parse(examData);
+
+      // check section
+      if (!redisUid) {
+        const user = { current: null, completeSection: [] };
+        await redisClient.set(uidKey, JSON.stringify(user));
+        redisUid = await redisClient.get(uidKey);
+      }
+
+      res.json(finalList);
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 
   async submitExam(req, res) {
