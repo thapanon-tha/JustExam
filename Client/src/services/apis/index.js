@@ -2,6 +2,7 @@ import axios from 'axios';
 import userAPI from './user/user';
 import examAPI from './exam';
 import channelAPI from './channel';
+import examChannelAPI from './examchannel';
 
 axios.interceptors.response.use(
   (response) => {
@@ -24,4 +25,5 @@ export default {
   ...userAPI,
   ...examAPI,
   ...channelAPI,
+  ...examChannelAPI
 };

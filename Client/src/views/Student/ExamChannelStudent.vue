@@ -21,6 +21,7 @@
       <div v-for="box in channels" :key="box.id">
         <div class="w-60">
           <CardStudentChannel
+            v-bind:detail="box"
             @onClick="onClick('InsideChannelStudent', box.cid)"
             @clickDelete="onClickDeleteChannel()"
           />
@@ -67,7 +68,7 @@
         <v-card>
           <v-card-title class="text-h6"> Enter your student ID </v-card-title>
           <div class="flex flex-row ml-10 mt-5">
-            <CardSelectedExam />
+            <CardChannel v-bind:detail="channelsresult" />
           </div>
           <div class="flex flex-row ml-10 mt-5">
             <label>Student ID</label>
@@ -107,8 +108,8 @@
 import Header from '@/components/Header/Header.vue';
 import CardStudentChannel from '@/components/Card/CardStudentChannel.vue';
 import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
+import CardChannel from '@/components/Card/CardChannel.vue';
 import api from '@/services/apis';
-import ExamChannelOnExamVue from './ExamChannelOnExam.vue';
 
 export default {
   name: 'ExamChannelTeacher',
@@ -116,6 +117,7 @@ export default {
     Header,
     CardStudentChannel,
     CardSelectedExam,
+    CardChannel,
   },
   data() {
     return {
@@ -126,7 +128,7 @@ export default {
       dialog2: false,
       loading: false,
       snackbar: false,
-      channels: 6,
+      channels: [],
       isSuccess: 0,
       snackbarMessage: '',
       sortlist: [
@@ -174,11 +176,20 @@ export default {
           sid: this.studentID,
         })
         .then((e) => ({ ...e.data, status: e.status }));
-      if (response.status < 300) this.$router.push({ name: 'ExamChannelOnExam', params: { cid } }).catch(() => {});
+      if (response.status < 300) this.$router.push({ name: 'ExamChannelOnExam', params: { cid: this.channelsresult.cid } }).catch(() => {});
+    },
+    async callapi() {
+      const response = await api.channels().then((e) => e);
+      if (response.status < 300) {
+        this.channels = response.data;
+      }
     },
   },
   mounted() {
     //
+  },
+  created() {
+    this.callapi();
   },
 };
 </script>
