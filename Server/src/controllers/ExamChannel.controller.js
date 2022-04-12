@@ -3,7 +3,6 @@ const examChannel = require('../services/examChannel.service');
 const stdCode = require('./stdCode');
 
 module.exports = {
-
   async getExamChannel(req, res) {
     const { cid } = req.params;
     try {
@@ -20,13 +19,19 @@ module.exports = {
 
   async addExamChannel(req, res) {
     const { cid } = req.params;
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
-    let transaction;
+    const { uid } = req.user;
     const { title, description, eid } = req.body.data;
+    let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      const data = await examChannel.deleteByCid(cid, transaction)
-        .then(() => examChannel.addExam(uid, cid, title, description, eid, transaction));
+      const data = await examChannel.addExam(
+        uid,
+        cid,
+        title,
+        description,
+        eid,
+        transaction,
+      );
       if (data) {
         await transaction.commit();
         stdCode.querySuccess(data, res);
@@ -34,25 +39,25 @@ module.exports = {
         throw Error('Something Worng');
       }
     } catch (error) {
+      await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
   },
 
   async updateExamChannel(req, res) {
     const { ecid, cid } = req.params;
-    const {
-      title,
-      description,
-    } = req.body.data;
+    const { title, description } = req.body.data;
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      const data = await examChannel.updateExamChannel(ecid, cid, title, description, transaction)
-        .then(((response) => {
+      const data = await examChannel
+        .updateExamChannel(ecid, cid, title, description, transaction)
+        .then((response) => {
           if (response[0]) {
             return examChannel.getExamChannel(cid);
-          } return 0;
-        }));
+          }
+          return 0;
+        });
       if (data) {
         await transaction.commit();
         stdCode.querySuccess(data, res);
@@ -70,7 +75,6 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-
       const data = await examChannel.delete(cid, ecid, transaction);
       if (data) {
         await transaction.commit();
@@ -97,5 +101,4 @@ module.exports = {
       stdCode.Unexpected(error, res);
     }
   },
-
 };

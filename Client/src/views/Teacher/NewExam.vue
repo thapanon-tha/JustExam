@@ -133,7 +133,7 @@ export default {
               this.sheet = false;
             }, 2000);
             setTimeout(() => {
-              this.this.$router.push({ name: "YourExam" }).catch(() => true);
+              this.$router.push({ name: "YourExam" }).catch(() => true);
             }, 2500);
           } else {
             throw new Error("Create Fail");

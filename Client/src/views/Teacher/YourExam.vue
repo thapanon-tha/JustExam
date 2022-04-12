@@ -44,8 +44,8 @@
         <CardExam
           @onClick="onClick('InsideYourExam', box.eid)"
           v-bind:detail="box"
-          @clickEdit="onClickEdit('EditExam', box.eid)"
-          @clickDelete="onClickDeleteExam()"
+          @clickEdit="onClickEdit('InsideYourExam', box.eid)"
+          @clickDelete="onClickDeleteExam(box.eid)"
         />
       </div>
     </div>
@@ -53,27 +53,27 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header.vue';
-import CardExam from '@/components/Card/CardExam.vue';
-import api from '@/services/apis';
+import Header from "@/components/Header/Header.vue";
+import CardExam from "@/components/Card/CardExam.vue";
+import api from "@/services/apis";
 
 export default {
-  name: 'YourExam',
+  name: "YourExam",
   components: {
     CardExam,
     Header,
   },
   data() {
     return {
-      examsData: Object,
+      examsData: [],
       sortlist: [
         {
-          name: 'Sort by uncoming',
-          value: 'comin',
+          name: "Sort by uncoming",
+          value: "comin",
         },
         {
-          name: 'Sort by alphabet',
-          value: 'alphabet',
+          name: "Sort by alphabet",
+          value: "alphabet",
         },
       ],
     };
@@ -85,13 +85,17 @@ export default {
     onClickEdit(pageName, eid) {
       this.$router.push({ name: pageName, params: { eid } }).catch(() => true);
     },
-    onClickDeleteExam() {
-      //
+    async onClickDeleteExam(eid) {
+      const result = await api.deleteExams(eid).then((res) => res);
+      if (result.status >= 200 && result.status < 300) {
+        window.location.reload();
+      }
     },
     async getExam() {
-      const token = this.$cookies.get('username-localhost-8888');
-      console.log(token);
-      this.examsData = await api.exams().then((res) => res.data);
+      const data = await api.exams().then((res) => res);
+      if (data.status === 200) {
+        this.examsData = data.data;
+      }
     },
   },
   mounted() {

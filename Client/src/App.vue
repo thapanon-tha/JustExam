@@ -3,7 +3,6 @@
     <v-main>
       <Navbar />
       <router-view/>
-      <Footer />
     </v-main>
   </v-app>
 </template>
@@ -22,7 +21,6 @@ export default {
     this.$store.dispatch({ type: 'restoreLogin' });
   },
   created() {
-    console.log(process.env.BACKEND_HOST)
   },
 };
 </script>

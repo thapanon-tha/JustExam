@@ -151,7 +151,6 @@ export default {
       const result = await api
         .channels({ inviteCode: this.inviteCode })
         .then((e) => ({ ...e.data, status: e.status }));
-      console.log(result);
       if (result.status >= 200 && result.status < 300) {
         this.dialog = false;
         this.dialog2 = true;

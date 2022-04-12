@@ -14,52 +14,67 @@
         Exam Summary
       </button>
     </Header>
-    <div>
+    <v-container class="lighten-5 flex justify-center gap-40">
       <div class="w-4/6 ml-48">
         <EditChannelForm v-model="channelInfo" />
       </div>
-    </div>
-    <div class="ml-48 mt-10">
-      <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
-      <div class="flex flex-wrap mt-5">
-        <p
-          class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2"
-        >
-          {{ channelInfo.inviteCode }}
-        </p>
-        <div class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10">
-          <button
-            type="button"
-            v-clipboard:copy="channelInfo.inviteCode"
-            v-clipboard:success="onCopy"
-            v-clipboard:error="onError"
+    </v-container>
+    <v-container class="flex justify-center">
+      <div class="mt-10">
+        <div class="text-gray-700 font-semilight text-xl">Your Invite Code</div>
+        <div class="flex flex-wrap mt-5">
+          <p
+            class="w-60 h-10 bg-subColor border border-outlineColor border-opacity-50 rounded-lg text-center pt-2"
           >
-            <v-icon large color="grey darken-1">link</v-icon>
-          </button>
+            {{ channelInfo.inviteCode }}
+          </p>
+          <div
+            class="bg-subColor border border-outlineColor border-opacity-50 rounded-lg w-10 h-10"
+          >
+            <button
+              type="button"
+              v-clipboard:copy="channelInfo.inviteCode"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+            >
+              <v-icon large color="grey darken-1">link</v-icon>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <ActionButton
-      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
-      name="+ Add your exam"
-      @on-click="onClickAddExam"
-      v-if="showButton"
-    />
-    <CardSelectedExam
-      class="ml-48 mt-10"
-      @clickChange="clickChangeSelect"
-      @clickScore="clickScoreExam"
-      @clickDelete="clickDeleteSelect"
-      v-if="showSelected"
-    />
-    <div class="relative">
-      <CardAddExam
-        @clikClose="closeModalAddExam"
-        @clickSelect="clickSelectExam"
-        class="fixed top-52 left-96"
-        v-if="showModal"
+
+      <ActionButton
+        class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-4 font-semilight text-mainColor"
+        name="+ Add your exam"
+        @on-click="onClickAddExam"
+        v-if="showButton"
       />
-    </div>
+      <CardSelectedExam
+        class="ml-48 mt-10"
+        @clickChange="onClickAddExam"
+        @clickScore="clickScoreExam"
+        @clickDelete="clickDeleteSelect"
+        :detail="channelInfo.examChannel"
+        v-if="showSelected"
+      />
+      <div class="relative">
+        <CardAddExam
+          @clikClose="closeModalAddExam"
+          @clickSelect="clickSelectExam"
+          class="fixed top-52 left-96"
+          v-if="showModal"
+          :examlist="examlist"
+        />
+      </div>
+    </v-container>
+
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -82,9 +97,12 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
       showModal: false,
       showSelected: false,
       showButton: true,
+      examlist: [],
+      text: '',
       channelsApiInfo: {},
       channelInfo: {
         title: '',
@@ -104,33 +122,45 @@ export default {
   },
   methods: {
     onCopy(e) {
-      alert(`You just copied: ${e.text}`);
+      this.snackbar = true;
+      this.text = `copied: ${e.text}`;
     },
     onError(e) {
-      alert('Failed to copy texts');
+      this.snackbar = true;
+      this.text = 'Failed to copy Invite ID';
     },
-    onClickAddExam() {
-      this.showModal = true;
+    async onClickAddExam() {
+      const Responses = await api.exams().then((res) => res);
+      if (Responses.status >= 200 && Responses.status <= 299) {
+        this.examlist = Responses.data;
+        this.showModal = 1;
+      }
     },
-    clickSelectExam() {
+    clickSelectExam(examData) {
+      this.connectChannel(examData);
       this.showModal = false;
-      this.showSelected = true;
       this.showButton = false;
     },
     clickChangeSelect() {
       this.showModal = true;
     },
     clickScoreExam() {
-      this.$router.push({ name: 'ScoreExamPage' }).catch(() => true);
+      this.$router
+        .push({
+          name: 'ScoreExamPage',
+          params: { cid: this.channelInfo.cid, ecid: this.channelInfo.examChannel.ecid },
+        })
+
+        .catch(() => true);
     },
-    clickDeleteSelect() {
-      this.showButton = true;
-      this.showSelected = false;
+    async clickDeleteSelect() {
+      const res = await api
+        .disconnectExamtoChennal(this.channelInfo.cid, this.channelInfo.examChannel.ecid)
+        .then((res) => res);
+      if (res.status === 200) {
+        window.location.reload();
+      }
     },
-    // submitForm() {
-    //   this.title = "";
-    //   this.description = "";
-    // },
     onClickMember() {
       this.$router.push({ name: 'MemberChannel' }).catch(() => true);
     },
@@ -142,7 +172,41 @@ export default {
     },
     async apiCall() {
       this.channelsApiInfo = await api.channelsDetail(this.$route.params.cid).then((res) => res);
-      this.channelInfo = this.channelsApiInfo[0].data;
+      this.channelInfo = await this.channelsApiInfo[0].data;
+      if (this.channelInfo.examChannel !== undefined && this.channelInfo.examChannel !== null) {
+        this.showButton = false;
+        this.showSelected = true;
+      } else {
+        this.showButton = true;
+      }
+    },
+    async connectChannel(detail) {
+      const data = {
+        cid: this.$route.params.cid,
+        title: detail.title,
+        description: detail.description,
+        eid: detail.eid,
+        createDate: detail.createDate,
+        updateDate: detail.updateDate,
+      };
+      const result = await api.connectExamtoChennal(data).then((res) => res);
+      console.log(result.status);
+      if (result.status === 200) {
+        const examQuestioneList = await api
+          .examList(data.eid)
+          .then((res) => api.reverse(res.data))
+          .then((data) => api.examMapper(data))
+          .then(
+            async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
+          );
+        console.log(examQuestioneList);
+        if (examQuestioneList.status === 201) {
+          this.channelInfo.examChannel = result.data;
+          this.showSelected = true;
+        } else {
+          this.clickDeleteSelect();
+        }
+      }
     },
   },
   created() {

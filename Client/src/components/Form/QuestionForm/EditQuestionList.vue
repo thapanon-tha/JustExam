@@ -279,7 +279,6 @@ export default {
     },
     deleteSection(id) {
       const newQl = this.qlist.filter((e) => e.sectionId !== id);
-      console.log(newQl);
       this.qlist = newQl;
       this.qlist = this.qlist.map((e) => {
         if (e.sectionId > id) {

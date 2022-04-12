@@ -5,26 +5,40 @@ const stdCode = require('./stdCode');
 const examChannelService = require('../services/examChannel.service');
 
 const status = ['pending', 'coming', 'process', 'finish'];
+// array array
+const randomsection = (allSection, completeSection) => {
+  const sectionList = allSection.filter(
+    (e) => completeSection.findIndex(e) >= 0,
+  );
+  sectionList[Math.floor(Math.random() * sectionList.length)];
+};
 
 module.exports = {
-
   async getChannel(req, res) {
     const { inviteCode } = req.query;
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
-    const userType = req.query.type || req.user.type;
+    const { uid } = req.user;
+    const userType = req.user.type;
+    console.log('aaaaaaaaaa');
     try {
       if (inviteCode !== undefined) {
         const data = await Channel.getByCode(inviteCode);
         if (data) {
           stdCode.querySuccess(data, res);
         } else {
-          stdCode.NotFound({ message: `inviteCode : ${inviteCode} Not Found` }, res);
+          stdCode.NotFound(
+            { message: `inviteCode : ${inviteCode} Not Found` },
+            res,
+          );
         }
       } else {
         // Owner
         // eslint-disable-next-line no-lonely-if
+        console.log(uid);
+        console.log(userType);
+        console.log(!userType.localeCompare('teacher'));
         if (!userType.localeCompare('teacher')) {
           const data = await Channel.getOwner(uid);
+          console.log(data);
           if (data) {
             stdCode.querySuccess(data, res);
           } else {
@@ -46,22 +60,31 @@ module.exports = {
 
   async addChannel(req, res) {
     const {
-      title,
-      description,
-      schedule,
-      startAt,
-      endAt,
+      title, description, schedule, startAt, endAt,
     } = req.body.data;
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    const { uid } = req.user;
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
       if (title.length === 0) {
         throw Error('title can\'t be " "');
       }
-      const invidecode = ((Date.now()).toString(16) + uid.split('-')[2]);
-      const code = invidecode.substring(invidecode.length - 9, invidecode.length - 2);
-      const data = await Channel.create(code, title, description, status[0], schedule, startAt, endAt, uid, transaction);
+      const invidecode = Date.now().toString(16) + uid.split('-')[2];
+      const code = invidecode.substring(
+        invidecode.length - 9,
+        invidecode.length - 2,
+      );
+      const data = await Channel.create(
+        code,
+        title,
+        description,
+        status[0],
+        schedule,
+        startAt,
+        endAt,
+        uid,
+        transaction,
+      );
       if (data) {
         await transaction.commit();
         stdCode.Created(data, res);
@@ -75,7 +98,7 @@ module.exports = {
   },
 
   async getChannelById(req, res) {
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    const { uid } = req.user;
     const userType = req.query.type || req.user.type;
     const { cid } = req.params;
     try {
@@ -83,6 +106,7 @@ module.exports = {
       // eslint-disable-next-line no-lonely-if
       if (!userType.localeCompare('teacher')) {
         const data = await Channel.getOwnerByCid(cid, uid);
+        console.log(data);
         if (data) {
           stdCode.querySuccess(data, res);
         } else {
@@ -102,7 +126,7 @@ module.exports = {
   },
 
   async updateChannel(req, res) {
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    const { uid } = req.user;
     const { cid } = req.params;
     const {
       title, description, schedule, startAt, endAt, releaseScoreFlag,
@@ -113,13 +137,23 @@ module.exports = {
       if (title.length === 0) {
         throw Error('title can\'t be " "');
       }
-      const response = await Channel.update(cid, uid, title, description, schedule, startAt, endAt, releaseScoreFlag, transaction);
+      const response = await Channel.update(
+        cid,
+        uid,
+        title,
+        description,
+        schedule,
+        startAt,
+        endAt,
+        releaseScoreFlag,
+        transaction,
+      );
       if (response[0]) {
         await transaction.commit();
         const data = await Channel.getOwnerByCid(cid, uid);
         stdCode.querySuccess(data, res);
       } else {
-        throw Error('something wrong can\'t update');
+        throw Error("something wrong can't update");
       }
     } catch (error) {
       if (transaction) await transaction.rollback();
@@ -138,7 +172,10 @@ module.exports = {
         await transaction.commit();
         stdCode.Success(res);
       } else {
-        stdCode.NotFound({ message: `cid: ${cid} Not Found or uid Incorrect` }, res);
+        stdCode.NotFound(
+          { message: `cid: ${cid} Not Found or uid Incorrect` },
+          res,
+        );
       }
     } catch (e) {
       if (transaction) await transaction.rollback();
@@ -154,19 +191,27 @@ module.exports = {
     let sectionList;
     if (!examData) {
       const Exampaper = await examChannelService.queryExamPaper(cid);
-      const Paper = await Promise.all(Exampaper.map((data) => {
-        let finalData = {};
-        finalData = {
-          ...data.dataValues,
-        };
-        if (data.dataValues.questionAnswerCChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerCChannels]; }
-        if (data.dataValues.questionAnswerMCChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerMCChannels]; }
-        if (data.dataValues.questionAnswerMChannels.length !== 0) { finalData.answer = [...data.dataValues.questionAnswerMChannels]; }
-        delete finalData?.questionAnswerCChannels;
-        delete finalData?.questionAnswerMCChannels;
-        delete finalData?.questionAnswerMChannels;
-        return finalData;
-      }));
+      const Paper = await Promise.all(
+        Exampaper.map((data) => {
+          let finalData = {};
+          finalData = {
+            ...data.dataValues,
+          };
+          if (data.dataValues.questionAnswerCChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerCChannels];
+          }
+          if (data.dataValues.questionAnswerMCChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerMCChannels];
+          }
+          if (data.dataValues.questionAnswerMChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerMChannels];
+          }
+          delete finalData?.questionAnswerCChannels;
+          delete finalData?.questionAnswerMCChannels;
+          delete finalData?.questionAnswerMChannels;
+          return finalData;
+        }),
+      );
       await redisClient.set(cid, JSON.stringify(Paper));
       examData = await redisClient.get(cid);
     }
@@ -186,10 +231,75 @@ module.exports = {
     }
     sectionList = redisUid.section;
     const sectionName = sectionList[Math.floor(Math.random() * sectionList.length)];
-    const finalList = examData.filter((exam) => exam.sectionName === sectionName);
+    const finalList = examData.filter(
+      (exam) => exam.sectionName === sectionName,
+    );
     redisUid.section = sectionList.filter((value) => value !== sectionName);
     await redisClient.set(uid, JSON.stringify(redisUid));
     res.json(finalList);
+  },
+
+  async continue(req, res) {
+    const { cid } = req.params;
+    const { uid } = req.user;
+    const uidKey = `exam+${cid}+${uid}`;
+    const cidKey = `exam+${cid}`;
+    // exam for cid  key  `exam + ${cid}`                 structure key: { section: [], questions: [], }
+    // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
+
+    try {
+      const redisUid = await redisClient.get(uidKey);
+
+      //! Get DATA From Redis and Store data to Redis
+      let examData = await redisClient.get(cidKey);
+      if (!examData) {
+        const Exampaper = await examChannelService.queryExamPaper(cid);
+        const Paper = await Promise.all(
+          Exampaper.map((data) => {
+            let finalData = {};
+            finalData = {
+              ...data.dataValues,
+            };
+            if (data.dataValues.questionAnswerCChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerCChannels];
+            }
+            if (data.dataValues.questionAnswerMCChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerMCChannels];
+            }
+            if (data.dataValues.questionAnswerMChannels.length !== 0) {
+              finalData.answer = [...data.dataValues.questionAnswerMChannels];
+            }
+            delete finalData?.questionAnswerCChannels;
+            delete finalData?.questionAnswerMCChannels;
+            delete finalData?.questionAnswerMChannels;
+            return finalData;
+          }),
+        );
+        const section = Paper.map((e) => parseInt(e.sectionName, 10));
+        const uniqueNames = [];
+        $.each(section, (i, el) => {
+          if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+        });
+        const packged = {
+          questions: Paper,
+          sections: uniqueNames,
+        };
+        await redisClient.set(cidKey, JSON.stringify(packged));
+        examData = await redisClient.get(cidKey);
+      }
+      examData = JSON.parse(examData);
+
+      // check section
+      if (!redisUid) {
+        const user = { current: null, completeSection: [] };
+        await redisClient.set(uidKey, JSON.stringify(user));
+        redisUid = await redisClient.get(uidKey);
+      }
+
+      res.json(finalList);
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 
   async submitExam(req, res) {
@@ -206,5 +316,4 @@ module.exports = {
     await redisClient.set(uid, JSON.stringify(userSection));
     res.json(finalList);
   },
-
 };

@@ -3,16 +3,18 @@ const Option = require('../services/option.service');
 const stdCode = require('./stdCode');
 
 module.exports = {
-
   async getOption(req, res) {
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940' || req.user.uid;
+    const { uid } = req.user;
     const { cid } = req.params;
     try {
       const data = await Option.getOption(cid, uid);
       if (data.length !== 0) {
         stdCode.querySuccess(data, res);
       } else {
-        stdCode.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
+        stdCode.NotFound(
+          { message: `option for cid: ${cid} or uid in correct` },
+          res,
+        );
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
@@ -25,7 +27,10 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      const response = await Option.createMany(data.map((arr) => ({ cid, otid: arr.otid })), transaction);
+      const response = await Option.createMany(
+        data.map((arr) => ({ cid, otid: arr.otid })),
+        transaction,
+      );
       await transaction.commit();
       stdCode.querySuccess(response, res);
     } catch (error) {
@@ -40,13 +45,22 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      const response = await Promise.all([Option.deleteAllByCid(cid, transaction), Option.createMany(data, transaction)]);
+      const response = await Promise.all([
+        Option.deleteAllByCid(cid, transaction),
+        Option.createMany(data, transaction),
+      ]);
       if (response.length !== 0) {
         await transaction.commit();
-        stdCode.querySuccess(response[1].map((resp) => resp[0]), res);
+        stdCode.querySuccess(
+          response[1].map((resp) => resp[0]),
+          res,
+        );
       } else {
         if (transaction) await transaction.rollback();
-        stdCode.NotFound({ message: `option for cid: ${cid} or uid in correct` }, res);
+        stdCode.NotFound(
+          { message: `option for cid: ${cid} or uid in correct` },
+          res,
+        );
       }
     } catch (error) {
       if (transaction) await transaction.rollback();

@@ -1,7 +1,6 @@
 <template>
   <div class="ml-10 mt-10 mr-10 mb-10">
-    <div class="break-words p-3 mb-3">
-      {{ questionData.question }}
+    <div class="break-words p-3 mb-3" v-html="questionData.question">
     </div>
     <input
       class="ml-5 w-2/6 px-3 py-3 font-semilight text-gray-700
@@ -18,7 +17,7 @@
         border-solid border-mainColor border-opacity-40
         rounded-md transition ease-in-out m-0 focus:text-black
         focus:mainColor focus:border-opacity-100 focus:outline-none"
-        type="number" min="0" v-model="questionData.totalPoint"
+        type="number" min="0" v-model="questionData.point"
         placeholder="Total"
       >
     </div>
