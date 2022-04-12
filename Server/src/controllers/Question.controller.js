@@ -155,7 +155,7 @@ module.exports = {
       transaction = await db.sequelize.transaction();
       const count = await Question.countQuestions(eid);
       const response = await Question.deleteQuestions(eid, uid, transaction);
-      
+
       if (response || count === 0) {
         const result = await Promise.all(
           questions.map((question) => Question.addQuestion(
@@ -165,7 +165,6 @@ module.exports = {
             question.qtid,
             transaction,
           ).then(async (resultCreated) => {
-            console.log(resultCreated);
             const answers = await Answer.createMany(
               question.questionAnswer,
               resultCreated.qid,
@@ -185,8 +184,9 @@ module.exports = {
         throw Error("Can't Update Something Wrong");
       }
     } catch (e) {
-      console.log(e);
-      await transaction.rollback();
+      if (transaction) {
+        await transaction.rollback();
+      }
       stdCode.Unexpected(e, res);
     }
   },

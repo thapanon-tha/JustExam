@@ -33,15 +33,13 @@ const medthods = {
   },
 
   async delete(cid, uid, transaction) {
-    return Channel.destroy(
-      {
-        where: {
-          cid,
-          uid,
-        },
+    return Channel.destroy({
+      where: {
+        cid,
+        uid,
       },
-      { transaction },
-    );
+      transaction,
+    });
   },
 
   async getByCode(inviteCode) {

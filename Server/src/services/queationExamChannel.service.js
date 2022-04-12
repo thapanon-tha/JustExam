@@ -15,21 +15,25 @@ const medthods = {
       include: [
         //* answer Quser
         {
-          model: questionAnswerCChannel, required: false,
+          model: questionAnswerCChannel,
+          required: false,
         },
         {
-          model: questionAnswerMCChannel, required: false,
+          model: questionAnswerMCChannel,
+          required: false,
         },
         {
-          model: questionAnswerSAChannel, required: false,
+          model: questionAnswerSAChannel,
+          required: false,
         },
         {
-          model: questionAnswerTFChannel, required: false,
+          model: questionAnswerTFChannel,
+          required: false,
         },
         {
-          model: questionAnswerMChannel, required: false,
+          model: questionAnswerMChannel,
+          required: false,
         },
-
       ],
       where: { ecid },
     });
@@ -40,45 +44,70 @@ const medthods = {
       include: [
         //* answer Quser
         {
-          model: questionAnswerCChannel, required: false,
+          model: questionAnswerCChannel,
+          required: false,
         },
         {
-          model: questionAnswerMCChannel, required: false,
+          model: questionAnswerMCChannel,
+          required: false,
         },
         {
-          model: questionAnswerSAChannel, required: false,
+          model: questionAnswerSAChannel,
+          required: false,
         },
         {
-          model: questionAnswerTFChannel, required: false,
+          model: questionAnswerTFChannel,
+          required: false,
         },
         {
-          model: questionAnswerMChannel, required: false,
+          model: questionAnswerMChannel,
+          required: false,
         },
-
       ],
       where: { qecid, ecid },
     });
   },
 
-  async addQuestion(ecid, questionTopic, sectionName, point, qtid, transaction) {
-    return questionExamChannel.create({
-      questionTopic,
-      sectionName,
-      qtid,
-      point,
-      ecid,
-    }, { transaction });
+  async addQuestion(
+    ecid,
+    questionTopic,
+    sectionName,
+    point,
+    qtid,
+    transaction,
+  ) {
+    return questionExamChannel.create(
+      {
+        questionTopic,
+        sectionName,
+        qtid,
+        point,
+        ecid,
+      },
+      { transaction },
+    );
   },
 
-  async updateQuestion(qecid, questionTopic, sectionName, point, qtid, transaction) {
-    return questionExamChannel.update({
-      questionTopic,
-      sectionName,
-      point,
-      qtid,
-    }, {
-      where: { qecid },
-    }, { transaction });
+  async updateQuestion(
+    qecid,
+    questionTopic,
+    sectionName,
+    point,
+    qtid,
+    transaction,
+  ) {
+    return questionExamChannel.update(
+      {
+        questionTopic,
+        sectionName,
+        point,
+        qtid,
+      },
+      {
+        where: { qecid },
+      },
+      { transaction },
+    );
   },
 
   async deleteQuestion(ecid, qecid, uid, transaction) {
@@ -88,7 +117,8 @@ const medthods = {
         model: exam,
         where: { uid },
       },
-    }, { transaction });
+      transaction,
+    });
   },
 };
 

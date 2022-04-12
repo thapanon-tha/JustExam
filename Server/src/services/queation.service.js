@@ -124,23 +124,21 @@ const medthods = {
           model: exam,
           where: { uid },
         },
+        transaction
       },
-      { transaction },
     );
   },
 
   async deleteQuestions(eid, uid, transaction) {
-    return Question.destroy(
-      {
-        where: { eid },
-        include: {
-          model: exam,
-          where: { uid },
-          required: true,
-        },
+    return Question.destroy({
+      where: { eid },
+      include: {
+        model: exam,
+        where: { uid },
+        required: true,
       },
-      { transaction },
-    );
+      transaction,
+    });
   },
 
   async countQuestions(eid) {

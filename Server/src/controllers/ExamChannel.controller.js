@@ -20,13 +20,18 @@ module.exports = {
   async addExamChannel(req, res) {
     const { cid } = req.params;
     const { uid } = req.user;
-    let transaction;
     const { title, description, eid } = req.body.data;
+    let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      const data = await examChannel
-        .deleteByCid(cid, transaction)
-        .then(() => examChannel.addExam(uid, cid, title, description, eid, transaction));
+      const data = await examChannel.addExam(
+        uid,
+        cid,
+        title,
+        description,
+        eid,
+        transaction,
+      );
       if (data) {
         await transaction.commit();
         stdCode.querySuccess(data, res);
@@ -34,6 +39,7 @@ module.exports = {
         throw Error('Something Worng');
       }
     } catch (error) {
+      await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
   },

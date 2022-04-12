@@ -17,6 +17,11 @@ services:
     env_file: ./.env
     networks:
       - network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: always
 
   server:
@@ -32,7 +37,7 @@ services:
     networks:
       - network
     restart: always
-
+  
   # redis:
   #   container_name: redis
   #   image: "redis:alpine"
@@ -70,8 +75,8 @@ volumes:
   database:
   upload:
   log:
-  # postgres-data:
-  # redis-data:
+    # postgres-data:
+    # redis-data:
 
 networks:
   network:

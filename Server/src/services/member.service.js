@@ -8,33 +8,41 @@ const medthods = {
   async findByCid(cid) {
     return member.findAll({
       where: { cid },
-      include: [{
-        model: user,
-        attributes: ['firstname','surname']
-      },{
-        model: role,
-        attributes: ['name']
-      }]
+      include: [
+        {
+          model: user,
+          attributes: ['firstname', 'surname'],
+        },
+        {
+          model: role,
+          attributes: ['name'],
+        },
+      ],
     });
   },
 
   async update(mid, rid, transaction) {
-    return member.update({
-      rid,
-    }, { where: { mid } }, { transaction });
+    return member.update(
+      {
+        rid,
+      },
+      { where: { mid } },
+      { transaction },
+    );
   },
 
   async create(uid, state, rid, cid, sid, transaction) {
     return member.findOrCreate({
       where: {
         cid,
-        [Op.or]: [
-          { uid },
-          { sid },
-        ],
+        [Op.or]: [{ uid }, { sid }],
       },
       defaults: {
-        uid, state, rid, cid, sid,
+        uid,
+        state,
+        rid,
+        cid,
+        sid,
       },
       transaction,
     });
@@ -49,7 +57,8 @@ const medthods = {
   async deleteById(mid, cid, transaction) {
     return member.destroy({
       where: { mid, cid },
-    }, { transaction });
+      transaction,
+    });
   },
 };
 
