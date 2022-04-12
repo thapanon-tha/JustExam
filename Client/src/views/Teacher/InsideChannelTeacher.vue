@@ -190,7 +190,6 @@ export default {
         updateDate: detail.updateDate,
       };
       const result = await api.connectExamtoChennal(data).then((res) => res);
-      console.log(result.status);
       if (result.status === 200) {
         const examQuestioneList = await api
           .examList(data.eid)
@@ -199,7 +198,6 @@ export default {
           .then(
             async (data) => await api.createChennalQuestion(data, this.$route.params.cid, result.data.ecid),
           );
-        console.log(examQuestioneList);
         if (examQuestioneList.status === 201) {
           this.channelInfo.examChannel = result.data;
           this.showSelected = true;
