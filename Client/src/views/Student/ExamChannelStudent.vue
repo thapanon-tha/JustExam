@@ -81,7 +81,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="orange darken-1" text @click="dialog2 = false"> Cancel </v-btn>
-            <v-btn color="orange darken-1" text @click="dialog2 = joinChannel"> Join </v-btn>
+            <v-btn color="orange darken-1" text @click="joinChannel"> Join </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -108,6 +108,7 @@ import Header from '@/components/Header/Header.vue';
 import CardStudentChannel from '@/components/Card/CardStudentChannel.vue';
 import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
 import api from '@/services/apis';
+import ExamChannelOnExamVue from './ExamChannelOnExam.vue';
 
 export default {
   name: 'ExamChannelTeacher',
@@ -119,6 +120,7 @@ export default {
   data() {
     return {
       inviteCode: '',
+      channelsresult: {},
       studentID: '',
       dialog: false,
       dialog2: false,
@@ -157,6 +159,7 @@ export default {
         this.loading = false;
         this.isSuccess = 1;
         this.snackbarMessage = 'Success';
+        this.channelsresult = result;
       } else {
         this.snackbar = true;
         this.isSuccess = 0;
@@ -166,11 +169,12 @@ export default {
       }
     },
     async joinChannel() {
-      await api
-        .memberJoin({
-          sid: studentID,
+      const response = await api
+        .memberJoin(this.channelsresult.cid, {
+          sid: this.studentID,
         })
         .then((e) => ({ ...e.data, status: e.status }));
+      if (response.status < 300) this.$router.push({ name: 'ExamChannelOnExam', params: { cid } }).catch(() => {});
     },
   },
   mounted() {

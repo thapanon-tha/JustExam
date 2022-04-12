@@ -38,7 +38,7 @@ const updateScore = (data, cid, ecid) => axios.put(
 
 const getMember = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members`, { validateStatus: false });
 
-const memberJoin = (cid, data) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members`, { data }, { validateStatus: false });
+const memberJoin = (cid, data) => axios.post(`${BACKEND_HOST}/api/channels/${cid}/members`, { data }, { validateStatus: false });
 
 const updateRole = (data, cid, mid) => axios.put(
   `${BACKEND_HOST}/api/channels/${cid}/members/${mid}`,
