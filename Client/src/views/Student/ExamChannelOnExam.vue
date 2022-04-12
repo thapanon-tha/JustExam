@@ -27,21 +27,25 @@
       v-bind:submit="onSubmit"
     />
 
-    <v-container class="max-width mb-4">
-      <Pagination
-        v-bind:page="questionData.length"
-        v-bind:choice="choice"
-        v-bind:answer="answer"
-        v-bind:nextPageFunc="nextPage"
-        v-bind:prevPageFunc="prevPage"
-        v-bind:changeExam="selectExam"
-      />
+    <v-container class="mb-4">
+      <v-row justify="center">
+        <v-col cols="8">
+          <Pagination
+            v-bind:page="questionData.length"
+            v-bind:choice="choice"
+            v-bind:answer="answer"
+            v-bind:nextPageFunc="nextPage"
+            v-bind:prevPageFunc="prevPage"
+            v-bind:changeExam="selectExam"
+          />
+        </v-col>
+      </v-row>
     </v-container>
 
     <div class="text-center">
       <v-container>
         <v-row justify="center">
-          <v-col cols="12">
+          <v-col cols="8">
             <div class="py-10 px-40 border border-yellow-500 rounded-xl">
               <div class="mb-5 text-lg text-left">
                 <span class="mr-2">{{ choice + 1 }})</span>
@@ -245,21 +249,25 @@
         </v-row>
 
         <!-------------------- Submit Button -------------------->
-        <div class="mt-10 flex justify-end">
-          <button
-            class="
-              py-3
-              px-10
-              text-white
-              rounded-lg
-              bg-green-500
-              hover:bg-green-600
-            "
-            @click="checkAnswerExam"
-          >
-            Submit
-          </button>
-        </div>
+        <v-row justify="center">
+          <v-col cols="8">
+            <div class="flex justify-end">
+              <button
+                class="
+                  py-3
+                  px-10
+                  text-white
+                  rounded-lg
+                  bg-green-500
+                  hover:bg-green-600
+                "
+                @click="checkAnswerExam"
+              >
+                Submit
+              </button>
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
   </div>
