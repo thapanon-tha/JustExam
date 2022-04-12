@@ -2,12 +2,12 @@
   <div class="flex flex-col justify-end">
     <v-container>
       <v-row justify="end">
-        <v-col cols="9">
-          <div class="text-xl flex justify-end items-center">
-            <span>Countdown</span>
+        <v-col cols="">
+          <div class="mt-1 text-xl relative">
+            <span class="text-bold absolute -right-3 text-red-500">Time Out in</span>
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="">
           <div
             v-if="loaded"
             class="w-56 flex text-2xl justify-center items-center"
@@ -53,7 +53,7 @@ export default {
     showRemaining() {
       const timer = setInterval(() => {
         const now = new Date();
-        const end = new Date(this.test);
+        const end = new Date(this.endTime);
         const distance = end.getTime() - now.getTime();
 
         if (distance <= 0) {

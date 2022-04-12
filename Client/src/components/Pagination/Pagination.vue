@@ -88,7 +88,7 @@ export default {
       let result = false
 
       if (Array.isArray(this.answer[item].answer)) {
-        if (this.answer[item].answer.length !== 0 && this.answer[item].answer.every((value) => value !== null)) result = true
+        if (this.answer[item].answer.length !== 0 && this.answer[item].answer.some((value) => value !== null)) result = true
       } else if (this.answer[item].answer !== "" && this.answer[item].answer !== undefined) result = true
 
       return result
