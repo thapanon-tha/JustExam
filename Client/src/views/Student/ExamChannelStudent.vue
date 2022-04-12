@@ -81,7 +81,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="orange darken-1" text @click="dialog2 = false"> Cancel </v-btn>
-            <v-btn color="orange darken-1" text @click="dialog2 = false"> Join </v-btn>
+            <v-btn color="orange darken-1" text @click="dialog2 = joinChannel"> Join </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -165,7 +165,13 @@ export default {
         this.dialog = true;
       }
     },
-    async joinChannel() {},
+    async joinChannel() {
+      await api
+        .memberJoin({
+          sid: studentID,
+        })
+        .then((e) => ({ ...e.data, status: e.status }));
+    },
   },
   mounted() {
     //
