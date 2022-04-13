@@ -50,7 +50,7 @@
                     :key="item.qamcid"
                   >
                     <v-container>
-                      <v-row justify="">
+                      <v-row>
                         <v-col cols="3">
                           <div v-html="item.textQ" class="mt-3"></div>
                         </v-col>
@@ -345,7 +345,7 @@ export default {
       submitAnswer.forEach((item, index) => {
         if (item.answer === undefined) {
           if (this.questionData[index].qtid === "74fbc3a5-0217-4892-9aba-70b612fc1a0e") submitAnswer[index].answer = [null]
-          else if (this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({ qamcid: this.questionData[index].answer[indexs].qamcid, value: value }))
+          else if (this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") submitAnswer[index].answer = this.questionData[index].answer.map((value) => ({ qamcid: value.qamcid, value: null }))
           else submitAnswer[index].answer = ''
         } else if (item.answer !== undefined && this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") {
           submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({ qamcid: this.questionData[index].answer[indexs].qamcid, value: value }))
