@@ -21,6 +21,22 @@ const medthods = {
     });
   },
 
+  async findByCidAndUid(cid, uid) {
+    return member.findOne({
+      where: { cid, uid },
+      include: [
+        {
+          model: user,
+          attributes: ['mid', 'firstname', 'surname'],
+        },
+        {
+          model: role,
+          attributes: ['name'],
+        },
+      ],
+    });
+  },
+
   async update(mid, rid, transaction) {
     return member.update(
       {

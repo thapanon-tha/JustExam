@@ -4,6 +4,7 @@ const Channel = require('../services/channel.service');
 const stdCode = require('./stdCode');
 const examChannelService = require('../services/examChannel.service');
 const channelService = require('../services/channel.service');
+const memberService = require('../services/member.service');
 
 const status = ['pending', 'coming', 'process', 'finish'];
 // array array
@@ -13,6 +14,19 @@ const randomsection = (allSection, completeSection) => {
   );
   const random = sectionList[Math.floor(Math.random() * sectionList.length)];
   return random;
+};
+
+const randomQuestions = (e) => {
+  const questions = e;
+  const final = [];
+  const { length } = e;
+  for (i = 0; i < length; i++) {
+    const random = Math.floor(Math.random() * questions.length);
+    final.push(questions[random]);
+    questions.splice(random, 1);
+  }
+
+  return final;
 };
 
 module.exports = {
@@ -159,7 +173,7 @@ module.exports = {
 
   async deleteChannel(req, res) {
     const { cid } = req.params;
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31941' || req.user.uid;
+    const { uid } = req.user;
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
@@ -243,6 +257,13 @@ module.exports = {
     // exam for cid  key  `exam + ${cid}`                 structure key: { section: [], questions: [], }
     // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
     const channelDetail = await channelService.getById(cid);
+
+    /*
+    !condition to check
+    check datetime
+
+    */
+
     try {
       let redisUid = await redisClient.get(uidKey);
 
@@ -285,7 +306,7 @@ module.exports = {
       examData = JSON.parse(examData);
 
       if (!redisUid) {
-        const user = { current: null, completeSection: [] };
+        const user = { current: null, completeSection: [], questions: null };
         await redisClient.set(uidKey, JSON.stringify(user));
         redisUid = await redisClient.get(uidKey);
       }
@@ -296,19 +317,22 @@ module.exports = {
         current: null,
         number: null,
       };
+
       if (redisUid.current === null) {
         const randomResult = randomsection(
           examData.sections,
           redisUid.completeSection,
         );
         redisUid.current = randomResult;
+        const sectionsQuestions = examData.questions.filter(
+          (e) => parseInt(e.sectionName, 10) === redisUid.current,
+        );
+        redisUid.questions = randomQuestions(sectionsQuestions);
       }
 
       PSection.current = redisUid.completeSection.length + 1;
       PSection.number = examData.sections.length;
-      Pquestions = examData.questions.filter(
-        (e) => parseInt(e.sectionName, 10) === redisUid.current,
-      );
+      Pquestions = redisUid.questions;
 
       await redisClient.set(uidKey, JSON.stringify(redisUid));
       const responesPack = {
@@ -317,6 +341,39 @@ module.exports = {
         channel: channelDetail,
       };
       res.json(responesPack);
+    } catch (error) {
+      console.log(error);
+      stdCode.Unexpected(error, res);
+    }
+  },
+
+  async submitExam2(req, res) {
+    const { cid } = req.params;
+    const { uid } = req.user;
+    const { data } = req.body;
+    data2 = [
+      {
+        aqsid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        mid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        ecid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        qecid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        pointReceive: 0,
+        answer: 'string',
+      },
+    ];
+    /*
+    !condition to check
+    check datetime
+
+    */
+    try {
+      const member = memberService.findByCidAndUid(cid, uid);
+      if (member) {
+      } else {
+        throw new Error('you are not member');
+      }
+
+      stdCode.Created(error, res);
     } catch (error) {
       console.log(error);
       stdCode.Unexpected(error, res);
