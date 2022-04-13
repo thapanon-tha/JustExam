@@ -5,6 +5,7 @@ const stdCode = require('./stdCode');
 const examChannelService = require('../services/examChannel.service');
 const channelService = require('../services/channel.service');
 const memberService = require('../services/member.service');
+const answerQuestionScoreService = require('../services/answerQuestionScore');
 
 const status = ['pending', 'coming', 'process', 'finish'];
 // array array
@@ -351,6 +352,9 @@ module.exports = {
     const { cid } = req.params;
     const { uid } = req.user;
     const { data } = req.body;
+    const uidKey = `exam+${cid}+${uid}`;
+    const cidKey = `exam+${cid}`;
+    let transaction;
     data2 = [
       {
         aqsid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -367,13 +371,66 @@ module.exports = {
 
     */
     try {
+      transaction = await db.sequelize.transaction();
       const member = memberService.findByCidAndUid(cid, uid);
+      let answers;
       if (member) {
+        answers = data.map((e) => ({
+          mid: member.mid || member.dataValues.mid,
+          ecid: e.ecid,
+          qecid: e.qecid,
+          pointReceive: 0,
+          answer: JSON.stringify(answer),
+        }));
       } else {
         throw new Error('you are not member');
       }
+      await answerQuestionScoreService.createMany(answers, transaction);
+      await transaction.commit();
 
-      stdCode.Created(error, res);
+      const examData = await redisClient.get(cidKey);
+      const redisUid = await redisClient.get(uidKey);
+      redisUid = JSON.parse(redisUid);
+      examData = JSON.parse(examData);
+      redisUid.completeSection.push(redisUid.current);
+      redisUid.current = null;
+      redisUid.questions = null;
+      await redisClient.set(uidKey, JSON.stringify(redisUid));
+
+      redisUid = await redisClient.get(uidKey);
+      redisUid = JSON.parse(redisUid);
+      if(redisUid.completeSection.length===examData.sections.length){
+        return res.status(202);
+      }
+      let Pquestions = [];
+      const PSection = {
+        current: null,
+        number: null,
+      };
+
+      if (redisUid.current === null) {
+        const randomResult = randomsection(
+          examData.sections,
+          redisUid.completeSection,
+        );
+        redisUid.current = randomResult;
+        const sectionsQuestions = examData.questions.filter(
+          (e) => parseInt(e.sectionName, 10) === redisUid.current,
+        );
+        redisUid.questions = randomQuestions(sectionsQuestions);
+      }
+
+      PSection.current = redisUid.completeSection.length + 1;
+      PSection.number = examData.sections.length;
+      Pquestions = redisUid.questions;
+
+      await redisClient.set(uidKey, JSON.stringify(redisUid));
+      const responesPack = {
+        questions: Pquestions,
+        Section: PSection,
+        channel: channelDetail,
+      };
+      res.json(responesPack);
     } catch (error) {
       console.log(error);
       stdCode.Unexpected(error, res);

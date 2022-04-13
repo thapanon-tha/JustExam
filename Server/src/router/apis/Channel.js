@@ -23,6 +23,6 @@ router.delete('/:cid', controller.deleteChannel);
 router.get('/:cid/startExam', controller.continue);
 
 // student member only
-router.post('/:cid/submitExam', controller.submitExam);
+router.post('/:cid/submitExam', controller.submitExam2);
 
 module.exports = router;
