@@ -27,7 +27,7 @@ const medthods = {
       include: [
         {
           model: user,
-          attributes: ['mid', 'firstname', 'surname'],
+          attributes: ['firstname', 'surname'],
         },
         {
           model: role,

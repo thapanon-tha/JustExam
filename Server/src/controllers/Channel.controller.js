@@ -355,6 +355,9 @@ module.exports = {
     const uidKey = `exam+${cid}+${uid}`;
     const cidKey = `exam+${cid}`;
     let transaction;
+
+    console.log(data)
+
     data2 = [
       {
         aqsid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -372,15 +375,17 @@ module.exports = {
     */
     try {
       transaction = await db.sequelize.transaction();
-      const member = memberService.findByCidAndUid(cid, uid);
+      const member = await memberService.findByCidAndUid(cid, uid);
+
+      console.log(member)
       let answers;
       if (member) {
         answers = data.map((e) => ({
-          mid: member.mid || member.dataValues.mid,
+          mid: member.dataValues.mid,
           ecid: e.ecid,
           qecid: e.qecid,
           pointReceive: 0,
-          answer: JSON.stringify(answer),
+          answer: JSON.stringify(e.answer),
         }));
       } else {
         throw new Error('you are not member');
@@ -388,8 +393,8 @@ module.exports = {
       await answerQuestionScoreService.createMany(answers, transaction);
       await transaction.commit();
 
-      const examData = await redisClient.get(cidKey);
-      const redisUid = await redisClient.get(uidKey);
+      let examData = await redisClient.get(cidKey);
+      let redisUid = await redisClient.get(uidKey);
       redisUid = JSON.parse(redisUid);
       examData = JSON.parse(examData);
       redisUid.completeSection.push(redisUid.current);
@@ -400,7 +405,7 @@ module.exports = {
       redisUid = await redisClient.get(uidKey);
       redisUid = JSON.parse(redisUid);
       if(redisUid.completeSection.length===examData.sections.length){
-        return res.status(202);
+        return res.sendStatus(202);
       }
       let Pquestions = [];
       const PSection = {

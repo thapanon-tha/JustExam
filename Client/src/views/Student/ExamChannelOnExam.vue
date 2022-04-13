@@ -12,20 +12,12 @@
     <Header main="Exam channel" current="> On Exam" class="mb-5"> </Header>
 
     <div class="m-auto w-5/6">
-      <v-container class="border">
-        <v-row justify="center">
-          <v-col class="border">
-            <div class="flex items-center justify-center">
-              <p class="text-2xl font-bold">Section {{ section.current }} / {{ section.all }}</p>
-            </div>
-          </v-col>
-          <v-col>
-            <Countdown class="mb-10" v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
-          </v-col>
-        </v-row>  
-      </v-container>
+      <div class="mb-8 flex justify-between items-center">
+        <div class="text-2xl font-bold">Section <span v-if="section.current !== undefined">{{ section.current }} / {{ section.all }}</span></div>
+        <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
+      </div>
 
-      <v-container class="mb-4 border border-green-400">
+      <v-container class="mb-4">
         <v-row justify="center">
           <v-col cols="">
             <Pagination
@@ -40,7 +32,7 @@
         </v-row>
       </v-container>
 
-      <div v-if="loading" class="text-center border border-red-800">
+      <div v-if="loading" class="text-center">
         <v-container>
           <v-row justify="center">
             <v-col cols="12">
@@ -153,14 +145,15 @@
                 <!-------------------- Multiple-Choice Type -------------------->
                 <div v-else-if="questionData[choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'">
                   <div
-                    class="ml-3"
+                    class="ml-5"
                     v-for="(item, itemIdex) in questionData[choice].answer"
                     :key="item.qamccid"
                   >
                     <v-checkbox
-                      class="border"
+                      class=""
                       color="#FB8C00"
                       v-model="answer[choice].answer[itemIdex]"
+                      hide-details
                       :label="`${(item.textA).replace(/(<([^>]+)>)/ig, '')}`"
                       :value="item.qamccid"
                       @change="storeData"
@@ -190,7 +183,7 @@
 
           <!-------------------- Submit Button -------------------->
           <v-row justify="center">
-            <v-col cols="8">
+            <v-col cols="">
               <div class="flex justify-end">
                 <button
                   class="py-3 px-10 text-white rounded-lg bg-green-500 hover:bg-green-600"
@@ -302,7 +295,7 @@ export default {
           this.questionData[this.choice].qtid ===
             "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7"
         )
-          this.selectAnswer([], this.questionData[this.choice].qecid);
+          this.selectAnswer([null], this.questionData[this.choice].qecid);
         else this.selectAnswer("", this.questionData[this.choice].qecid);
       }
     },
@@ -319,8 +312,6 @@ export default {
     checkAnswerExam() {
       this.status = "Checking";
       const notFinish = [];
-
-      console.log(this.answer);
 
       this.answer.forEach((item, index) => {
         if (item.answer === undefined) notFinish.push(index);
@@ -345,10 +336,25 @@ export default {
       this.textFinish = "กำลังส่งคำตอบ";
       this.status = "sending";
 
-      setTimeout(() => {
-        localStorage.removeItem("justExam");
-        this.finish = false;
-      }, 3000);
+      api.postExamAnswer(this.answer, this.$route.params.cid).then((res) => {
+        console.log(res)
+
+        if (res.status >= 202 && res.status <= 300) {
+          this.finish = false;
+          localStorage.removeItem('justExam');
+          this.$router.push({ name: 'ExamChannelStudent' }).catch(() => {})
+        } else if (res.status === 200) {
+          localStorage.removeItem('justExam')
+
+          setTimeout(() => {
+            this.textFinish = "ส่งคำตอบสำเร็จ"
+            this.callApi();
+          }, 2000)
+        } else {
+          this.textFinish = "ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้ง"
+          this.checkAnswerExam()
+        }
+      });
     },
     async callApi() {
       const result = await api.getExamChannel(this.$route.params.cid);
@@ -367,19 +373,18 @@ export default {
         }
       });
 
-      this.loading = true;
-
       if (this.answer.length === 0) {
         this.questionData.forEach((item) => {
           this.answer.push({
-            ecids: item.ecid,
-            qecids: item.qecid,
+            ecid: item.ecid,
+            qecid: item.qecid,
           });
         });
       }
 
       this.autoFillAnswer();
 
+      this.loading = true;
       console.log(result);
 
       this.time = { endTime: data.channel.endAt };

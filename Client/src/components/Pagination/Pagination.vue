@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center border border-gray-50 rounded-md">
     <button
       class="mx-1 p-1 w-10 h-10 border rounded-lg shadow-md bg-gray-100 hover:bg-yellow-500"
       @click="prevPageFunc"
@@ -7,7 +7,7 @@
       &lt;
     </button>
 
-    <div class="flex flex-wrap justify-center border">
+    <div class="flex flex-wrap justify-center">
       <div v-for="item in page" :key="item">
         <button
           v-if="choice + 1 === item"

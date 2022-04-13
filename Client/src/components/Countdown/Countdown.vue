@@ -1,35 +1,26 @@
 <template>
-  <div class="flex flex-col justify-end">
-    <v-container>
-      <v-row justify="end">
-        <v-col cols="">
-          <div class="mt-1 text-xl relative">
-            <span class="text-bold absolute -right-3 text-red-500">Time Out in</span>
-          </div>
-        </v-col>
-        <v-col cols="">
-          <div
-            v-if="loaded"
-            class="w-56 flex text-2xl justify-center items-center"
-          >
-            <div class="mr-2 relative">
-              {{ hours }}
-              <span class="text-sm text-gray-500 hidden xl:inline-block">Hr</span>
-            </div>
-            <span>:</span>
-            <div class="mx-2 relative">
-              {{ minutes }}
-              <span class="text-sm text-gray-500 hidden xl:inline-block">Min</span>
-            </div>
-            <span>:</span>
-            <div class="ml-2 relative">
-              {{ seconds }}
-              <span class="text-sm text-gray-500 hidden xl:inline-block">Sec</span>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
+  <div class="flex justify-end items-center">
+    <div class="text-xl mr-5">
+      <span class="text-bold text-red-500">Time Out in</span>
+    </div>
+    <div v-if="loaded" class="text-2xl">
+      <div class="flex items-center">
+        <div class="mr-2">
+          {{ hours }}
+          <span class="text-sm text-gray-500 hidden xl:inline-block">Hr</span>
+        </div>
+        <span>:</span>
+        <div class="mx-2">
+          {{ minutes }}
+          <span class="text-sm text-gray-500 hidden xl:inline-block">Min</span>
+        </div>
+        <span>:</span>
+        <div class="ml-2">
+          {{ seconds }}
+          <span class="text-sm text-gray-500 hidden xl:inline-block">Sec</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,7 +37,7 @@ export default {
     seconds: 0,
     loaded: false,
     finish: false,
-    test: new Date().getTime() + 60000
+    test: new Date().getTime() + 60000,
   }),
   methods: {
     formatNumber: (num) => (num < 10 ? "0" + num : num),
