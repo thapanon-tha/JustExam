@@ -355,9 +355,6 @@ module.exports = {
     const uidKey = `exam+${cid}+${uid}`;
     const cidKey = `exam+${cid}`;
     let transaction;
-
-    console.log(data)
-
     data2 = [
       {
         aqsid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -376,8 +373,8 @@ module.exports = {
     try {
       transaction = await db.sequelize.transaction();
       const member = await memberService.findByCidAndUid(cid, uid);
+      const channelDetail = await channelService.getById(cid);
 
-      console.log(member)
       let answers;
       if (member) {
         answers = data.map((e) => ({

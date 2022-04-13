@@ -11,7 +11,7 @@
 
     <Header main="Exam channel" current="> On Exam" class="mb-5"> </Header>
 
-    <div class="m-auto w-5/6">
+    <div v-if="loading" class="m-auto w-5/6">
       <div class="mb-8 flex justify-between items-center">
         <div class="text-2xl font-bold">Section <span v-if="section.current !== undefined">{{ section.current }} / {{ section.all }}</span></div>
         <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
@@ -61,7 +61,7 @@
                           <div class="w-64">
                             <v-select
                               :items="item.textA"
-                              label="Select Your Answer"
+                              :label="answer[choice].answer[index] || 'Select your Answer'"
                               solo
                               v-model="answer[choice].answer[index]"
                               @change="storeData"
@@ -197,11 +197,14 @@
         </v-container>
       </div>
     </div>
+
+    <div v-else>
+      <p class="text-center">กำลังโหลดคำถาม กรุณารอสักครู่</p>
+    </div>
   </div>
 </template>
 
 <script>
-import katex from "katex";
 import { codemirror } from "vue-codemirror";
 import api from "@/services/apis";
 
@@ -336,29 +339,50 @@ export default {
       this.textFinish = "กำลังส่งคำตอบ";
       this.status = "sending";
 
-      api.postExamAnswer(this.answer, this.$route.params.cid).then((res) => {
-        console.log(res)
+      let submitAnswer = this.answer
 
+      // Fill answer for submit when this question no answer
+      submitAnswer.forEach((item, index) => {
+        if (item.answer === undefined) {
+          if (this.questionData[index].qtid === "74fbc3a5-0217-4892-9aba-70b612fc1a0e") submitAnswer[index].answer = [null]
+          else if (this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({ qamcid: this.questionData[index].answer[indexs].qamcid, value: value }))
+          else submitAnswer[index].answer = ''
+        } else if (item.answer !== undefined && this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") {
+          submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({ qamcid: this.questionData[index].answer[indexs].qamcid, value: value }))
+        }
+      })
+
+      api.postExamAnswer(submitAnswer, this.$route.params.cid).then((res) => {
         if (res.status >= 202 && res.status <= 300) {
           this.finish = false;
           localStorage.removeItem('justExam');
           this.$router.push({ name: 'ExamChannelStudent' }).catch(() => {})
         } else if (res.status === 200) {
           localStorage.removeItem('justExam')
+          this.textFinish = "ส่งคำตอบสำเร็จ กำลังโหลดข้อสอบชุดต่อไป"
+          this.loading = false;
 
           setTimeout(() => {
-            this.textFinish = "ส่งคำตอบสำเร็จ"
-            this.callApi();
-          }, 2000)
+            this.callApi().then((res) => {
+              this.finish = false;
+              if (res === 'next') {
+                this.loading = true;
+              }
+            })
+          }, 1000)
         } else {
           this.textFinish = "ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้ง"
-          this.checkAnswerExam()
+          this.status = '';
         }
       });
     },
     async callApi() {
       const result = await api.getExamChannel(this.$route.params.cid);
       const data = await result.data;
+
+      this.answer = []
+      this.questionData = []
+      this.choice = 0
 
       this.questionData = data.questions;
 
@@ -373,7 +397,9 @@ export default {
         }
       });
 
-      if (this.answer.length === 0) {
+      if (JSON.parse(localStorage.getItem("justExam"))) {
+        this.answer = JSON.parse(localStorage.getItem("justExam"));
+      } else if (this.answer.length === 0) {
         this.questionData.forEach((item) => {
           this.answer.push({
             ecid: item.ecid,
@@ -383,22 +409,21 @@ export default {
       }
 
       this.autoFillAnswer();
-
       this.loading = true;
-      console.log(result);
 
       this.time = { endTime: data.channel.endAt };
       this.section = {
         current: data.Section.current,
         all: data.Section.number,
       };
+
+      return 'next';
     },
   },
   created() {
     this.callApi();
   },
   mounted() {
-    this.answer = JSON.parse(localStorage.getItem("justExam")) || this.answer;
   },
   watch: {},
 };
