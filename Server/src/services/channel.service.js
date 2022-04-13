@@ -93,7 +93,7 @@ const medthods = {
       include: [
         {
           model: Member,
-          attributes: [],
+          attributes: ['mid','sid','state'],
           where: { uid },
         },
         {

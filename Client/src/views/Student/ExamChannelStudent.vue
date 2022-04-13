@@ -22,7 +22,7 @@
         <div class="w-60">
           <CardStudentChannel
             v-bind:detail="box"
-            @onClick="onClick('InsideChannelStudent', box.cid)"
+            @onClick="onClick('ExamChannelLobby', box.cid)"
             @clickDelete="onClickDeleteChannel()"
           />
         </div>
@@ -176,7 +176,7 @@ export default {
           sid: this.studentID,
         })
         .then((e) => ({ ...e.data, status: e.status }));
-      if (response.status < 300) this.$router.push({ name: 'ExamChannelOnExam', params: { cid: this.channelsresult.cid } }).catch(() => {});
+      if (response.status < 300) this.$router.push({ name: 'ExamChannelLobby', params: { cid: this.channelsresult.cid } }).catch(() => {});
     },
     async callapi() {
       const response = await api.channels().then((e) => e);

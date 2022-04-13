@@ -47,6 +47,16 @@ const medthods = {
     );
   },
 
+  async updateStatusByUidAndCid(uid, cid, state, transaction) {
+    return member.update(
+      {
+        state,
+      },
+      { where: { uid, cid } },
+      { transaction },
+    );
+  },
+
   async create(uid, state, rid, cid, sid, transaction) {
     return member.findOrCreate({
       where: {

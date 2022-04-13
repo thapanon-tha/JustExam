@@ -3,13 +3,6 @@ const db = require('../models/db');
 
 const {
   answerQuestionScore,
-  questionExamChannel,
-  questionAnswerCChannel,
-  questionAnswerMCChannel,
-  questionAnswerMChannel,
-  questionAnswerSAChannel,
-  questionAnswerTFChannel,
-  sectionExamTimeChannel,
 } = db;
 
 const medthods = {

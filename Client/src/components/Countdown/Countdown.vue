@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-end items-center">
     <div class="text-xl mr-5">
-      <span class="text-bold text-red-500">Time Out in</span>
+      <span class="text-bold text-red-500">{{ text }}</span>
     </div>
     <div v-if="loaded" class="text-2xl">
       <div class="flex items-center">
@@ -26,10 +26,11 @@
 
 <script>
 export default {
-  name: "Countdown",
+  name: 'Countdown',
   props: {
     endTime: String,
     submit: Function,
+    text: String
   },
   data: () => ({
     hours: 0,
@@ -40,7 +41,7 @@ export default {
     test: new Date().getTime() + 60000,
   }),
   methods: {
-    formatNumber: (num) => (num < 10 ? "0" + num : num),
+    formatNumber: (num) => (num < 10 ? `0${num}` : num),
     showRemaining() {
       const timer = setInterval(() => {
         const now = new Date();

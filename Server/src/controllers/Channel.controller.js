@@ -258,7 +258,7 @@ module.exports = {
     // exam for cid  key  `exam + ${cid}`                 structure key: { section: [], questions: [], }
     // exam for uid  key  `exam + ${cid} + ${uid}`        structure key: { current: ${sectionNo}, completeSection: [] }
     const channelDetail = await channelService.getById(cid);
-
+    let transaction;
     /*
     !condition to check
     check datetime
@@ -266,6 +266,7 @@ module.exports = {
     */
 
     try {
+      transaction = await db.sequelize.transaction();
       let redisUid = await redisClient.get(uidKey);
 
       //! Get DATA From Redis and Store data to Redis
@@ -310,6 +311,12 @@ module.exports = {
         const user = { current: null, completeSection: [], questions: null };
         await redisClient.set(uidKey, JSON.stringify(user));
         redisUid = await redisClient.get(uidKey);
+        await memberService.updateStatusByUidAndCid(
+          uid,
+          cid,
+          'IN PROCESS',
+          transaction,
+        );
       }
       redisUid = JSON.parse(redisUid);
 
@@ -341,9 +348,11 @@ module.exports = {
         Section: PSection,
         channel: channelDetail,
       };
+      await transaction.commit();
       res.json(responesPack);
     } catch (error) {
       console.log(error);
+      await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
   },
@@ -355,16 +364,7 @@ module.exports = {
     const uidKey = `exam+${cid}+${uid}`;
     const cidKey = `exam+${cid}`;
     let transaction;
-    data2 = [
-      {
-        aqsid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        mid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        ecid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        qecid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        pointReceive: 0,
-        answer: 'string',
-      },
-    ];
+    const channelDetail = await channelService.getById(cid);
     /*
     !condition to check
     check datetime
@@ -373,8 +373,6 @@ module.exports = {
     try {
       transaction = await db.sequelize.transaction();
       const member = await memberService.findByCidAndUid(cid, uid);
-      const channelDetail = await channelService.getById(cid);
-
       let answers;
       if (member) {
         answers = data.map((e) => ({
@@ -389,7 +387,6 @@ module.exports = {
       }
       await answerQuestionScoreService.createMany(answers, transaction);
       await transaction.commit();
-
       let examData = await redisClient.get(cidKey);
       let redisUid = await redisClient.get(uidKey);
       redisUid = JSON.parse(redisUid);
@@ -401,7 +398,15 @@ module.exports = {
 
       redisUid = await redisClient.get(uidKey);
       redisUid = JSON.parse(redisUid);
-      if(redisUid.completeSection.length===examData.sections.length){
+      if (redisUid.completeSection.length === examData.sections.length) {
+        transaction2 = await db.sequelize.transaction();
+        await memberService.updateStatusByUidAndCid(
+          uid,
+          cid,
+          'FINISH',
+          transaction,
+        );
+        await transaction2.commit();
         return res.sendStatus(202);
       }
       let Pquestions = [];

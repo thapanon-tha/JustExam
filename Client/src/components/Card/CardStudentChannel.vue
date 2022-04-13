@@ -24,12 +24,18 @@
             </v-menu>
           </div>
           <div class="h-32 w-42 p-2 hover:text-orange-500" @click="onClick">
-            <h1 class="text-sm font-semilight ml-2">{{ detail.title }}</h1>
+            <h1 class="font-semilight ml-2">{{ detail.title }}</h1>
             <h1 class="text-xs font-semilight ml-2">teacher</h1>
-            <h2 class="text-xs font-semilight ml-2">{{ detail.schedule }}</h2>
-            <div class="flex flex-row">
-              <h2 class="text-xs font-semilight ml-2">{{ detail.startAt }}</h2>
-              <h2 class="text-xs font-semilight ml-2">{{ detail.endAt }}</h2>
+            <div class="align-end">
+              <h2 class="text-xs font-semilight ml-2">
+                {{ detail.schedule | moment('D / MM / YYYY') }}
+              </h2>
+              <div class="flex flex-row">
+                <h2 class="text-xs font-semilight ml-2">
+                  {{ detail.startAt | moment('H:mm:ss') }}
+                </h2>
+                <h2 class="text-xs font-semilight ml-2">{{ detail.endAt | moment('H:mm:ss') }}</h2>
+              </div>
             </div>
           </div>
         </div>
