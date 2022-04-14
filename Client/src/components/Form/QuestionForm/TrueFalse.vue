@@ -17,18 +17,18 @@
         class="flex flex-row mb-3"
       >
         <div class="ml-2" >
-          <Checkbox2 
-            v-model="questionData.true" 
-            label="True" 
+          <Checkbox2
+            v-model="questionData.true"
+            label="True"
             text="True"
-            @onChange="onChange()" 
+            @onChange="onChange()"
             :onChangeFunc="onChange"
           />
-          <Checkbox2 
-            v-model="questionData.false" 
-            label="False" 
+          <Checkbox2
+            v-model="questionData.false"
+            label="False"
             text="False"
-            @onChange="onChange()" 
+            @onChange="onChange()"
             :onChangeFunc="onChange"
           />
         </div>
@@ -50,7 +50,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      questionData: this.value
+      questionData: this.value,
     };
   },
   methods: {
@@ -59,11 +59,10 @@ export default {
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value',
+    event: 'input',
   },
   created() {
-    console.log(this.value);
   },
 };
 

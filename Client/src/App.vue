@@ -3,7 +3,6 @@
     <v-main>
       <Navbar />
       <router-view/>
-      <Footer />
     </v-main>
   </v-app>
 </template>
@@ -20,6 +19,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch({ type: 'restoreLogin' });
+  },
+  created() {
   },
 };
 </script>

@@ -11,6 +11,15 @@ const sequelize = new Sequelize(
     define: dbConfig.DB_DEFINE,
     timezone: '+07:00',
     logging: false,
+    ssl: true,
+    dialectOptions: {
+      ssl: {
+        minVersion: 'TLSv1',
+        ca: process.env.cKey,
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 );
 
@@ -35,8 +44,14 @@ db.exam = require('./db/exam.model')(sequelize, Sequelize);
 db.question = require('./db/question.model')(sequelize, Sequelize);
 db.questionType = require('./db/questionType.model')(sequelize, Sequelize);
 db.complieLang = require('./db/complieLang.model')(sequelize, Sequelize);
-db.questionAnswerC = require('./db/questionAnswerC.model')(sequelize, Sequelize);
-db.questionAnswerM = require('./db/questionAnswerM.model')(sequelize, Sequelize);
+db.questionAnswerC = require('./db/questionAnswerC.model')(
+  sequelize,
+  Sequelize,
+);
+db.questionAnswerM = require('./db/questionAnswerM.model')(
+  sequelize,
+  Sequelize,
+);
 db.questionAnswerMC = require('./db/questionAnswerMC.model')(
   sequelize,
   Sequelize,
@@ -149,7 +164,7 @@ db.examChannel.hasMany(db.answerQuestionScore, {
 });
 db.answerQuestionScore.belongsTo(db.examChannel, { foreignKey: 'ecid' });
 
-db.member.hasOne(db.answerQuestionScore, {
+db.member.hasMany(db.answerQuestionScore, {
   foreignKey: { name: 'mid', field: 'mid' },
   onUpdate: 'CASCADE',
   onDelete: 'SET NULL',
@@ -191,13 +206,11 @@ db.user.hasMany(db.examChannel, {
 });
 db.examChannel.belongsTo(db.channel, { foreignKey: 'uid' });
 
-db.exam.hasOne(
-  db.examChannel, {
-    foreignKey: { name: 'eid', field: 'eid' },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
-  },
-);
+db.exam.hasOne(db.examChannel, {
+  foreignKey: { name: 'eid', field: 'eid' },
+  onUpdate: 'CASCADE',
+  onDelete: 'SET NULL',
+});
 db.examChannel.belongsTo(db.exam, { foreignKey: 'eid' });
 
 db.role.hasMany(db.member, {
@@ -276,6 +289,13 @@ db.complieLang.hasMany(db.questionAnswerC, {
   onDelete: 'CASCADE',
 });
 db.questionAnswerC.belongsTo(db.complieLang, { foreignKey: 'clid' });
+
+db.complieLang.hasMany(db.questionAnswerCChannel, {
+  foreignKey: { name: 'clid', field: 'clid' },
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
+});
+db.questionAnswerCChannel.belongsTo(db.complieLang, { foreignKey: 'clid' });
 
 db.question.hasMany(db.questionAnswerC, {
   foreignKey: { name: 'qid', field: 'qid' },

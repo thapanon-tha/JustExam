@@ -3,12 +3,33 @@ const db = require('../models/db');
 
 const Member = db.member;
 const Channel = db.channel;
+const { examChannel } = db;
 
 const medthods = {
-  async create(inviteCode, title, description, status, schedule, startAt, endAt, uid, transaction) {
-    return Channel.create({
-      inviteCode, title, description, status, schedule, startAt, endAt, uid,
-    }, { transaction });
+  async create(
+    inviteCode,
+    title,
+    description,
+    status,
+    schedule,
+    startAt,
+    endAt,
+    uid,
+    transaction,
+  ) {
+    return Channel.create(
+      {
+        inviteCode,
+        title,
+        description,
+        status,
+        schedule,
+        startAt,
+        endAt,
+        uid,
+      },
+      { transaction },
+    );
   },
 
   async delete(cid, uid, transaction) {
@@ -17,7 +38,8 @@ const medthods = {
         cid,
         uid,
       },
-    }, { transaction });
+      transaction,
+    });
   },
 
   async getByCode(inviteCode) {
@@ -28,11 +50,17 @@ const medthods = {
     });
   },
 
+  async getById(cid) {
+    return Channel.findOne({
+      where: {
+        cid,
+      },
+    });
+  },
+
   async getOwner(uid) {
     return Channel.findAll({
-      where: {
-        uid,
-      },
+      where: { uid },
     });
   },
 
@@ -49,7 +77,12 @@ const medthods = {
   async getOwnerByCid(cid, uid) {
     return Channel.findOne({
       where: {
-        uid, cid,
+        uid,
+        cid,
+      },
+      include: {
+        model: examChannel,
+        required: false,
       },
     });
   },
@@ -57,20 +90,44 @@ const medthods = {
   async getMemberByCid(cid, uid) {
     return Channel.findOne({
       where: { cid },
-      include: {
-        model: Member,
-        attributes: [],
-        where: { uid },
-      },
+      include: [
+        {
+          model: Member,
+          attributes: ['mid','sid','state'],
+          where: { uid },
+        },
+        {
+          model: examChannel,
+          required: false,
+        },
+      ],
     });
   },
 
-  async update(cid, uid, title, description, schedule, startAt, endAt, releaseScoreFlag, transaction) {
-    return Channel.update({
-      title, description, schedule, startAt, endAt, releaseScoreFlag,
-    }, { where: { cid, uid } }, { transaction });
+  async update(
+    cid,
+    uid,
+    title,
+    description,
+    schedule,
+    startAt,
+    endAt,
+    releaseScoreFlag,
+    transaction,
+  ) {
+    return Channel.update(
+      {
+        title,
+        description,
+        schedule,
+        startAt,
+        endAt,
+        releaseScoreFlag,
+      },
+      { where: { cid, uid } },
+      { transaction },
+    );
   },
-
 };
 
 module.exports = {

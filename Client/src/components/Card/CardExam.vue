@@ -1,26 +1,59 @@
 <template>
   <div>
     <div class="flex flex-col">
-      <label class="text-xl font-semilight"> {{ detail.title }} </label>
+      <label class="text-xl font-semilight truncate"> {{ detail.title }} </label>
       <div
-        class="mt-1 box-border h-40 w-60 p-4 rounded-xl text-white bg-navyColor"
+        class="mt-1 box-border h-40 w-72 rounded-xl text-white bg-navyColor"
       >
-        <section class="border-r-4 rounded-md border-red-600">
-          <div class="mb-10 gap-20">
-            <h1 class="text-md font-semilight">{{ detail.title }}</h1>
-            <!-- <div @click="clickSet">
-              <span class="material-icons ml-3" >settings</span>
-            </div> -->
-            <div class="mt-15">
-              <h2 class="text-md font-semilight">
-                {{ detail.updatedAt | moment("Do / MMMM / YYYY") }}
-              </h2>
-              <h2 class="text-md font-semilight">
-                {{ detail.updatedAt | moment("h:mm:ss a") }}
-              </h2>
-            </div>
+        <div class="flex flex-col m-2">
+          <div class="text-right">
+            <v-menu
+              top
+              offset-y
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  class="flex justify-end mr-3 mt-3"
+                  small
+                  color="white"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  settings
+                </v-icon>
+              </template>
+              <v-list>
+                <div
+                  @click="clickEdit"
+                  class="text-xs p-2
+                  text-gray-700 hover:text-mainColor"
+                >
+                  Edit
+                </div>
+                <div
+                  @click="clickDelete"
+                  class="text-xs p-2
+                  text-gray-700 hover:text-mainColor"
+                >
+                  Leave
+                </div>
+              </v-list>
+            </v-menu>
           </div>
-        </section>
+          <div class="h-32 w-42 p-2 hover:text-orange-500" @click="onClick">
+            <h1
+              class="text-sm font-semilight ml-2 truncate"
+            >
+              {{ detail.description }}
+            </h1>
+            <h2 class="text-xs font-semilight ml-2">
+              Created date: {{ detail.updatedAt | moment("Do / MMMM / YYYY") }}
+            </h2>
+            <h2 class="text-xs font-semilight ml-2">
+              {{ detail.updatedAt | moment("h:mm:ss a") }}
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -28,7 +61,23 @@
 
 <script>
 export default {
-  name: "CardExam",
-  props: ['detail']
+  name: 'CardExam',
+  props: ['detail'],
+  data() {
+    return {
+      //
+    };
+  },
+  methods: {
+    onClick() {
+      this.$emit('onClick');
+    },
+    clickEdit() {
+      this.$emit('clickEdit');
+    },
+    clickDelete() {
+      this.$emit('clickDelete');
+    },
+  },
 };
 </script>

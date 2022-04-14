@@ -14,25 +14,32 @@ const medthods = {
     return Question.findAll({
       include: [
         {
-          model: exam, attributes: [], where: { eid, [Op.or]: [{ uid }, { shareQ: 1 }] }, required: true,
+          model: exam,
+          attributes: [],
+          where: { eid, [Op.or]: [{ uid }, { shareQ: 1 }] },
+          required: true,
         },
         //* answer Quser
         {
-          model: questionAnswerC, required: false,
+          model: questionAnswerC,
+          required: false,
         },
         {
-          model: questionAnswerMC, required: false,
+          model: questionAnswerMC,
+          required: false,
         },
         {
-          model: questionAnswerSA, required: false,
+          model: questionAnswerSA,
+          required: false,
         },
         {
-          model: questionAnswerTF, required: false,
+          model: questionAnswerTF,
+          required: false,
         },
         {
-          model: questionAnswerM, required: false,
+          model: questionAnswerM,
+          required: false,
         },
-
       ],
     });
   },
@@ -41,61 +48,103 @@ const medthods = {
     return Question.findAll({
       include: [
         {
-          model: exam, attributes: [], where: { eid, [Op.or]: [{ uid }, { shareQ: 1 }] }, required: true,
+          model: exam,
+          attributes: [],
+          where: { eid, [Op.or]: [{ uid }, { shareQ: 1 }] },
+          required: true,
         },
         //* answer Quser
         {
-          model: questionAnswerC, required: false,
+          model: questionAnswerC,
+          required: false,
         },
         {
-          model: questionAnswerMC, required: false,
+          model: questionAnswerMC,
+          required: false,
         },
         {
-          model: questionAnswerSA, required: false,
+          model: questionAnswerSA,
+          required: false,
         },
         {
-          model: questionAnswerTF, required: false,
+          model: questionAnswerTF,
+          required: false,
         },
         {
-          model: questionAnswerM, required: false,
+          model: questionAnswerM,
+          required: false,
         },
-
       ],
       where: { qid },
     });
   },
 
   async addQuestion(eid, questionTopic, sectionName, qtid, transaction) {
-    return Question.create({
-      questionTopic,
-      sectionName,
-      qtid,
-      eid,
-    }, { transaction });
+    return Question.create(
+      {
+        questionTopic,
+        sectionName,
+        qtid,
+        eid,
+      },
+      { transaction },
+    );
   },
 
-  async updateQuestion(eid, qid, questionTopic, sectionName, qtid, transaction) {
-    return Question.update({
-      questionTopic,
-      sectionName,
-      qtid,
-    }, {
-      where: { qid },
-      include: {
-        model: exam,
-        where: { eid },
+  async updateQuestion(
+    eid,
+    qid,
+    questionTopic,
+    sectionName,
+    qtid,
+    transaction,
+  ) {
+    return Question.update(
+      {
+        questionTopic,
+        sectionName,
+        qtid,
       },
-    }, { transaction });
+      {
+        where: { qid },
+        include: {
+          model: exam,
+          where: { eid },
+        },
+      },
+      { transaction },
+    );
   },
 
   async deleteQuestion(eid, qid, uid, transaction) {
+    return Question.destroy(
+      {
+        where: { eid, qid },
+        include: {
+          model: exam,
+          where: { uid },
+        },
+        transaction
+      },
+    );
+  },
+
+  async deleteQuestions(eid, uid, transaction) {
     return Question.destroy({
-      where: { eid, qid },
+      where: { eid },
       include: {
         model: exam,
         where: { uid },
+        required: true,
       },
-    }, { transaction });
+      transaction,
+    });
+  },
+
+  async countQuestions(eid) {
+    return Question.count({
+      where: { eid },
+    });
   },
 };
 

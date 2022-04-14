@@ -1,17 +1,13 @@
 <template>
-    <footer>
-        <div class="flex flex-row justify-start bg-footerColor
-                     text-white h-44 font-normal text-base mt-20">
-            <div class="pl-28 pt-10">Privacy & Legal</div>
-            <div class="pl-28 pt-10">Cookie & Setting</div>
-            <div class="pl-28 pt-10">Sitemap</div>
-        </div>
-    </footer>
+  <v-footer padless absolute color="">
+    <v-col class="text-center" cols="12">
+      {{ new Date().getFullYear() }} — <strong>JustExam</strong>
+    </v-col>
+  </v-footer>
 </template>
 
 <script>
 export default {
   name: 'Footer',
 };
-
 </script>

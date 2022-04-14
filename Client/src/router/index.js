@@ -55,17 +55,22 @@ const routes = [
     component: () => import('@/views/Teacher/InsideChannelTeacher.vue'),
   },
   {
-    path: '/examchannel/test-channel-1/member',
+    path: '/examchannel/:cid/member',
     name: 'MemberChannel',
     component: () => import('@/views/Teacher/MemberChannel.vue'),
   },
   {
-    path: '/examchannel/test-channel-1/summary',
+    path: '/examchannel/:cid/summary',
     name: 'ExamSummary',
     component: () => import('@/views/Teacher/ExamSummary.vue'),
   },
   {
-    path: '/examchannel/new-channel/score-exam',
+    path: '/examchannel/:cid/member/:mid/feedback',
+    name: 'GradeStudentExam',
+    component: () => import('@/views/Teacher/GradeStudentExam.vue'),
+  },
+  {
+    path: '/examchannel/:cid/questions/:ecid/score-exam',
     name: 'ScoreExamPage',
     component: () => import('@/views/Teacher/ScoreExamPage.vue'),
   },
@@ -90,9 +95,29 @@ const routes = [
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
   },
   {
+    path: '/yourexam/edit-exam',
+    name: 'EditExam',
+    component: () => import('@/views/Teacher/EditExam.vue'),
+  },
+  {
     path: '/examhub',
     name: 'ExamHubTeacher',
     component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
+  },
+  {
+    path: '/examchannelstudent',
+    name: 'ExamChannelStudent',
+    component: () => import('@/views/Student/ExamChannelStudent.vue'),
+  },
+  {
+    path: '/examchannel/:cid/OnExam',
+    name: 'ExamChannelOnExam',
+    component: () => import('@/views/Student/ExamChannelOnExam.vue'),
+  },
+  {
+    path: '/examchannel/:cid/lobby',
+    name: 'ExamChannelLobby',
+    component: () => import('@/views/Student/ExamChannelLobby.vue'),
   },
 ];
 

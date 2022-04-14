@@ -59,8 +59,7 @@
 <script>
 import Header from "@/components/Header/Header.vue";
 import QuestionList from "@/components/Form/QuestionForm/QuestionList.vue";
-import ExamInfoForm from "@/components/Form/YourExamForm/ExamInfoForm";
-import InputForm from "@/components/Form/InputForm";
+import ExamInfoForm from "@/components/Form/YourExamForm/ExamInfoForm.vue";
 import ActionButton from "@/components/Button/ActionButton.vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import api from "@/services/apis";
@@ -71,7 +70,6 @@ export default {
     QuestionList,
     ExamInfoForm,
     Header,
-    InputForm,
     ActionButton,
     PulseLoader,
   },
@@ -101,7 +99,7 @@ export default {
       this.questions = data;
     },
     onClick(pageName) {
-      this.$router.push({ name: pageName }).catch(() => {});
+      this.$router.push({ name: pageName });
     },
     onClickCancel() {
       this.$router.push({ name: "YourExam" }).catch(() => true);
@@ -113,20 +111,18 @@ export default {
     async create() {
       this.loaderOption.loading = true;
       try {
-        const res = await api.createExams(this.examInfo).then((res) => {
-          return {
-            ...res.data,
-            status: res.status,
-          };
-        });
+        const res = await api.createExams(this.examInfo).then((res2) => ({
+          ...res2.data,
+          status: res2.status,
+        }));
         if (res.status === 201) {
           const resultMap = api.examMapper(this.questions);
-          const questionsResp = await api.createQuestions(res.eid, resultMap).then((res) => {
-            return {
-              ...res.data,
-              status: res.status,
-            };
-          });
+          const questionsResp = await api
+            .createQuestions(res.eid, resultMap)
+            .then((res2) => ({
+              ...res2.data,
+              status: res2.status,
+            }));
           if (questionsResp.status >= 200 && questionsResp.status < 300) {
             this.loaderOption.loading = false;
             this.createSuccess.status = true;
@@ -137,7 +133,7 @@ export default {
               this.sheet = false;
             }, 2000);
             setTimeout(() => {
-              this.this.$router.push({ name: "YourExam" }).catch(() => true);
+              this.$router.push({ name: "YourExam" }).catch(() => true);
             }, 2500);
           } else {
             throw new Error("Create Fail");
@@ -146,7 +142,6 @@ export default {
           throw new Error("Create Fail");
         }
       } catch (e) {
-        console.log(e);
         this.loaderOption.loading = false;
         this.createFail.status = true;
         this.createFail.message = e;

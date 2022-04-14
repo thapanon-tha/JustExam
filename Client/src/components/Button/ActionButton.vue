@@ -1,28 +1,31 @@
 <template>
-    <button :type=type @click="onClick">
-      <div>
-        {{ name }}
-      </div>
-    </button>
+  <button :type="type" @click="onClick" :loading="isLoading">
+    <div>
+      {{ name }}
+    </div>
+  </button>
 </template>
 
 <script>
-
 export default {
-  name: 'ActionButton',
+  name: "ActionButton",
   props: {
     name: {
       type: String,
-      default: 'Button',
+      default: "Button",
     },
     type: {
       type: String,
-      default: 'Button',
+      default: "Button",
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
     onClick() {
-      this.$emit('on-click');
+      this.$emit("on-click");
     },
   },
 };

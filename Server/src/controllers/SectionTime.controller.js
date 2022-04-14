@@ -3,7 +3,6 @@ const SectionTime = require('../services/sectionTime.service');
 const db = require('../models/db');
 
 module.exports = {
-
   async getSectionTime(req, res) {
     const { ecid } = req.params;
     try {
@@ -11,7 +10,10 @@ module.exports = {
       if (data.length !== 0) {
         stdCode.querySuccess(data, res);
       } else {
-        stdCode.NotFound({ message: `sectionTime for ecid : ${ecid} Not Found` }, res);
+        stdCode.NotFound(
+          { message: `sectionTime for ecid : ${ecid} Not Found` },
+          res,
+        );
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
@@ -24,18 +26,21 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-
-      const respones = await SectionTime.createMany(data.map((sectionTime) => ({ ...sectionTime, cid, ecid })), transaction)
-        .then((respon) => {
-          const checker = ((respon.find((raw) => raw === 0)));
-          if (checker !== undefined) { return 0; }
-          return respon;
-        });
+      const respones = await SectionTime.createMany(
+        data.map((sectionTime) => ({ ...sectionTime, cid, ecid })),
+        transaction,
+      ).then((respon) => {
+        const checker = respon.find((raw) => raw === 0);
+        if (checker !== undefined) {
+          return 0;
+        }
+        return respon;
+      });
       if (respones) {
         await transaction.commit();
         stdCode.Created(respones, res);
       } else {
-        throw Error('sectionName can\'t be Null');
+        throw Error("sectionName can't be Null");
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
@@ -48,18 +53,23 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-
-      const respones = await SectionTime.updateMany(data.map((sectionTime) => ({ ...sectionTime, cid, ecid })), transaction)
-        .then((respon) => {
-          const checker = ((respon.find((raw) => raw === 0)));
-          if (checker !== undefined) { return 0; }
-          return Promise.all(data.map((element) => SectionTime.getById(element.setcid)));
-        });
+      const respones = await SectionTime.updateMany(
+        data.map((sectionTime) => ({ ...sectionTime, cid, ecid })),
+        transaction,
+      ).then((respon) => {
+        const checker = respon.find((raw) => raw === 0);
+        if (checker !== undefined) {
+          return 0;
+        }
+        return Promise.all(
+          data.map((element) => SectionTime.getById(element.setcid)),
+        );
+      });
       if (respones) {
         await transaction.commit();
         stdCode.Created(respones, res);
       } else {
-        throw Error('sectionName can\'t be Null');
+        throw Error("sectionName can't be Null");
       }
     } catch (error) {
       stdCode.Unexpected(error, res);
@@ -83,5 +93,4 @@ module.exports = {
       stdCode.Unexpected(error, res);
     }
   },
-
 };

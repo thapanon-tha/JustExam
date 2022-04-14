@@ -1,19 +1,24 @@
 // Warning !!! This should be implement with cookie method not localstroage
-const getToken = () => localStorage.getItem('token') || '';
+const getToken = () => $cookies.get('token') || '';
 
 // Warning !!! This should be implement with cookie method not localstroage
-const setToken = (token) => localStorage.setItem('token', token);
+const setToken = (token) => $cookies.set('token', token);
 
 // Warning !!! This should be implement with cookie method not localstroage
-const removeToken = () => localStorage.removeItem('token');
+const removeToken = () => $cookies.remove('token');
 
-const getRole = () => localStorage.getItem('role') || '';
-const setRole = (roleName) => localStorage.setItem('role', roleName);
-const removeRole = () => localStorage.removeItem('role');
+const getRole = () => $cookies.get('type') || '';
+const setRole = (roleName) => $cookies.set('type', roleName);
+const removeRole = () => $cookies.remove('type');
+const removeUid = () => $cookies.remove('uid');
+const getName = () => `${$cookies.get('firstname')} ${$cookies.get('surname')}` || '';
+const setName = (Name) => $cookies.set('name', Name);
 
-const getName = () => localStorage.getItem('name') || '';
-const setName = (roleName) => localStorage.setItem('name', roleName);
-const removeName = () => localStorage.removeItem('name');
+const removeConnectId = () => $cookies.remove('connect.sid');
+const removeName = () => {
+  $cookies.remove('firstname');
+  $cookies.remove('surname');
+};
 
 export default {
   getToken,
@@ -25,4 +30,6 @@ export default {
   getName,
   setName,
   removeName,
+  removeUid,
+  removeConnectId,
 };

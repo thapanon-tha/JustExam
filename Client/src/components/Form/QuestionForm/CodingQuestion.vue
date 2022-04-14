@@ -25,7 +25,7 @@
           />
         </div>
         <select
-          class="border rounded-md border-solid border-mainColor border-opacity-40 
+          class="border rounded-md border-solid border-mainColor border-opacity-40
                 bg-mainColor px-2 text-white font-semilight text-center ml-10"
           id="lang"
           name="lang"
@@ -105,7 +105,8 @@
         </div>
       </div>
       <ActionButton
-        class="mt-3 bg-subColor border-orange-200 border border-solid rounded-lg px-3 py-2 font-semilight text-mainColor"
+        class="mt-3 bg-subColor border-orange-200 border border-solid rounded-lg px-3 py-2
+        font-semilight text-mainColor"
         name="+ Add an example"
         @on-click="addExample"
       />
@@ -114,55 +115,55 @@
 </template>
 
 <script>
-import QuillTextEditor from "@/components/TextEditor/QuillTextEditor.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
 
 export default {
-  name: "CodingQuestion",
+  name: 'CodingQuestion',
   components: {
     QuillTextEditor,
     ActionButton,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       questionData: this.value,
       Langlist: [
         {
-          name: "Python",
-          value: "python",
+          name: 'Python',
+          value: 'python',
         },
         {
-          name: "C",
-          value: "c",
+          name: 'C',
+          value: 'c',
         },
         {
-          name: "Java",
-          value: "java",
+          name: 'Java',
+          value: 'java',
         },
         {
-          name: "Javascript",
-          value: "javascript",
+          name: 'Javascript',
+          value: 'javascript',
         },
         {
-          name: "C++",
-          value: "cpp",
+          name: 'C++',
+          value: 'cpp',
         },
         {
-          name: "C#",
-          value: "csharp",
+          name: 'C#',
+          value: 'csharp',
         },
         {
-          name: "Kotlin",
-          value: "kotlin",
+          name: 'Kotlin',
+          value: 'kotlin',
         },
         {
-          name: "Ruby",
-          value: "ruby",
+          name: 'Ruby',
+          value: 'ruby',
         },
         {
-          name: "Go",
-          value: "go",
+          name: 'Go',
+          value: 'go',
         },
       ],
     };
@@ -171,23 +172,22 @@ export default {
     addExample() {
       this.questionData.example.push({
         id: this.questionData.example.length + 1,
-        xampleinput: "",
-        xampleoutput: "",
+        xampleinput: '',
+        xampleoutput: '',
       });
     },
     deleteExample(index) {
       this.questionData.example.splice(index, 1);
     },
     onChange() {
-      this.$emit("input", this.questionData);
+      this.$emit('input', this.questionData);
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value',
+    event: 'input',
   },
   created() {
-    console.log(this.value);
   },
 };
 </script>

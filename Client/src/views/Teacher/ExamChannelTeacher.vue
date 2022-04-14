@@ -29,11 +29,7 @@
           font-semilight
           text-sm text-center
         "
-        id="sort"
-        name="sort"
-        v-model="sort"
       >
-        <option disabled value="">Sort by</option>
         <option
           v-for="(item, index) in sortlist"
           :key="index"
@@ -43,36 +39,14 @@
         </option>
       </select>
     </div>
-    <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
-      <div
-        v-if="showSetting"
-        class="
-          w-auto
-          bg-white
-          border-2 border-orange-200
-          rounded-lg
-          text-xs
-          ml-52
-          absolute
-        "
-      >
-        <div
-          class="
-            p-1
-            border-b-2 border-orange-200
-            rounded-t-lg
-            hover:bg-mainColor hover:text-white
-          "
-        >
-          Edit Channel
-        </div>
-        <div class="p-1 rounded-b-lg hover:bg-mainColor hover:text-white">
-          Delete Channel
-        </div>
-      </div>
+    <div class="grid grid-cols-4 gap-10 ml-40 mr-40 mt-10">
       <div v-for="box in channels" :key="box.cid">
-        <div @click="onClick('InsideChannelTeacher', box.cid)" class="w-60">
-          <CardChannel v-bind:detail="box" @clickSet="clickSetting" />
+        <div class="w-60">
+          <CardChannel
+            v-bind:detail="box"
+            @onClick="onClick('InsideChannelTeacher', box.cid)"
+            @clickDelete="onClickDeleteChannel()"
+          />
         </div>
       </div>
     </div>
@@ -80,30 +54,27 @@
 </template>
 
 <script>
-import Header from "@/components/Header/Header.vue";
-import CardChannel from "@/components/Card/CardChannel.vue";
-import api from "@/services/apis";
+import Header from '@/components/Header/Header.vue';
+import CardChannel from '@/components/Card/CardChannel.vue';
+import api from '@/services/apis';
 
 export default {
-  name: "ExamChannelTeacher",
+  name: 'ExamChannelTeacher',
   components: {
     Header,
     CardChannel,
   },
   data() {
     return {
-      showSetting: false,
-      boxlist: 4,
       channels: [],
-      sort: "",
       sortlist: [
         {
-          name: "Incoming exam",
-          value: "comin",
+          name: 'Sort by uncoming',
+          value: 'comin',
         },
         {
-          name: "Alphabetical",
-          value: "alpha",
+          name: 'Sort by alphabet',
+          value: 'alpha',
         },
       ],
     };
@@ -112,8 +83,8 @@ export default {
     onClick(pageName, cid) {
       this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
     },
-    clickSetting() {
-      this.showSetting = !this.showSetting;
+    onClickDeleteChannel() {
+      //
     },
     async getChannels() {
       this.channels = await api.channels().then((res) => res.data);

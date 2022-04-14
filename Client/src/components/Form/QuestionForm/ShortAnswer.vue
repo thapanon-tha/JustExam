@@ -54,7 +54,7 @@ export default {
     QuillTextEditor,
     ActionButton,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       questionData: this.value,
@@ -62,10 +62,12 @@ export default {
   },
   methods: {
     addKey() {
-      this.questionData.keylist.push({
+      this.questionData.keylist.push(
+        {
           id: this.questionData.keylist.length + 1,
-          keyans: "",
-      });
+          keyans: '',
+        },
+      );
     },
     deleteChoice(index) {
       this.questionData.keylist.splice(index, 1);
@@ -75,11 +77,10 @@ export default {
     },
   },
   model: {
-    prop: "value",
-    event: "input", 
+    prop: 'value',
+    event: 'input',
   },
   created() {
-    console.log(this.value);
   },
 };
 

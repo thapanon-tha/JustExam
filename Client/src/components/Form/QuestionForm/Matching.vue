@@ -75,7 +75,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      questionData: this.value
+      questionData: this.value,
     };
   },
   methods: {
@@ -96,11 +96,10 @@ export default {
     },
   },
   model: {
-    prop: "value", // บอกว่า v-model ให้เข้า value
-    event: "input", // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
+    prop: 'value', // บอกว่า v-model ให้เข้า value
+    event: 'input', // บอกว่า event ที่จะยิงออกไปหาคือตอน blur
   },
   created() {
-    console.log(this.value);
   },
 
 };

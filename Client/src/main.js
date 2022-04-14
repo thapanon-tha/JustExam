@@ -8,13 +8,13 @@ import store from "./store"
 import VueQuillEditor from "vue-quill-editor";
 import VueTimepicker from 'vue2-timepicker';
 import VueCookies from 'vue-cookies'
+import VueClipboard from 'vue-clipboard2'
 
 // require styles
 import 'vue2-timepicker/dist/VueTimepicker.css';
 import "quill/dist/quill.bubble.css";
 import "quill/dist/quill.snow.css";
 import './index.css'
-
 Vue.config.productionTip = false;
 
 new Vue({
@@ -28,6 +28,7 @@ Vue.use(VuePortal, {
   name: "portal", // optional, use to rename component
 });
 
+Vue.use(VueClipboard)
 Vue.use(VueCookies)
 Vue.use(require('vue-moment'));
 

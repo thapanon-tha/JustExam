@@ -4,7 +4,11 @@ let redisClient = null;
 
 (async () => {
   // Initialize Redis client after vault secrets are loaded
-  redisClient = redis.createClient({ url: `redis://${process.env.redisHost}:${process.env.redisPort}` });
+  redisClient = redis.createClient({
+    url: `rediss://${process.env.REDISCACHEHOSTNAME}:6380`,
+    password: process.env.REDISCACHEKEY,
+  });
+
   redisClient.on('error', (err) => {
     console.log(err);
   });

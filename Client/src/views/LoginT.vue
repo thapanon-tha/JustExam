@@ -33,14 +33,14 @@
 </template>
 
 <script>
-import InputForm from "@/components/Form/InputForm.vue";
-import CheckboxForm from "@/components/Form/CheckboxForm.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
-import api from "@/services/apis";
-import auth from "@/services/authentications";
+import InputForm from '@/components/Form/InputForm.vue';
+import CheckboxForm from '@/components/Form/CheckboxForm.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import api from '@/services/apis';
+import auth from '@/services/authentications';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
     InputForm,
     CheckboxForm,
@@ -49,27 +49,22 @@ export default {
   data() {
     return {
       loginFormData: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
     };
   },
   methods: {
     onSubmit() {
       const data = api.login(this.loginFormData);
-
       // Can refactor it to query from API
       auth.setToken(data.token);
       auth.setRole(data.role);
       auth.setName(data.name);
-      this.$router.push({ name: "ExamChannelTeacher" }).catch(() => true);
+      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
     },
     onClickLoginWithGoogle() {
-      window.open(
-        "http://localhost/api/auth/google",
-        "popUpWindow",
-        "height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes"
-      );
+      window.location.href = 'http://localhost:3000/api/auth/google';
     },
   },
 };
