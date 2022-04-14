@@ -164,7 +164,7 @@ db.examChannel.hasMany(db.answerQuestionScore, {
 });
 db.answerQuestionScore.belongsTo(db.examChannel, { foreignKey: 'ecid' });
 
-db.member.hasOne(db.answerQuestionScore, {
+db.member.hasMany(db.answerQuestionScore, {
   foreignKey: { name: 'mid', field: 'mid' },
   onUpdate: 'CASCADE',
   onDelete: 'SET NULL',

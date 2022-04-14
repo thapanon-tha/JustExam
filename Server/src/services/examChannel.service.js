@@ -1,3 +1,4 @@
+const { member, answerQuestionScore } = require('../models/db');
 const db = require('../models/db');
 
 const {
@@ -49,6 +50,49 @@ const medthods = {
           model: examChannel,
           where: { cid },
           required: true,
+        },
+        {
+          attributes: questionAnswerCChannelsAtt,
+          model: questionAnswerCChannel,
+        },
+        {
+          attributes: questionAnswerMCChannelsAtt,
+          model: questionAnswerMCChannel,
+        },
+        {
+          attributes: questionAnswerMChannelsAtt,
+          model: questionAnswerMChannel,
+        },
+        {
+          attributes: questionAnswerSAChannelsAtt,
+          model: questionAnswerSAChannel,
+        },
+        {
+          attributes: questionAnswerTFChannelsAtt,
+          model: questionAnswerTFChannel,
+        },
+      ],
+    });
+  },
+
+  async queryExamPaperAndMemberAnswer(cid, mid) {
+    const questionAnswerCChannelsAtt = {};
+    const questionAnswerMCChannelsAtt = {};
+    const questionAnswerMChannelsAtt = {};
+    const questionAnswerSAChannelsAtt = {};
+    const questionAnswerTFChannelsAtt = {};
+    return questionExamChannel.findAll({
+      include: [
+        {
+          attributes: [],
+          model: examChannel,
+          where: { cid },
+          required: true,
+        },
+        {
+          model: answerQuestionScore,
+          where: { mid },
+          required: false,
         },
         {
           attributes: questionAnswerCChannelsAtt,

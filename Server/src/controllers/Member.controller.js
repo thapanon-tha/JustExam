@@ -1,5 +1,6 @@
 const db = require('../models/db');
 const Member = require('../services/member.service');
+const examChannelService = require('../services/examChannel.service');
 const stdCode = require('./stdCode');
 
 module.exports = {
@@ -13,7 +14,51 @@ module.exports = {
         stdCode.NotFound({ message: `Member in cid : ${cid} Not Found` }, res);
       }
     } catch (error) {
-      stdCode(error, res);
+      console.log(error);
+      stdCode.Unexpected(error, res);
+    }
+  },
+
+  async getMemberAnswer(req, res) {
+    const { cid, mid } = req.params;
+    try {
+      const Exampaper = await examChannelService.queryExamPaperAndMemberAnswer(
+        cid,
+        mid,
+      );
+      const Paper = await Promise.all(
+        Exampaper.map((data) => {
+          let finalData = {};
+          finalData = {
+            ...data.dataValues,
+          };
+          if (data.dataValues.questionAnswerCChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerCChannels];
+          }
+          if (data.dataValues.questionAnswerMCChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerMCChannels];
+          }
+          if (data.dataValues.questionAnswerMChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerMChannels];
+          }
+          if (data.dataValues.questionAnswerSAChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerSAChannels];
+          }
+          if (data.dataValues.questionAnswerTFChannels.length !== 0) {
+            finalData.answer = [...data.dataValues.questionAnswerTFChannels];
+          }
+          delete finalData?.questionAnswerCChannels;
+          delete finalData?.questionAnswerMCChannels;
+          delete finalData?.questionAnswerMChannels;
+          delete finalData?.questionAnswerSAChannels;
+          delete finalData?.questionAnswerTFChannels;
+
+          return finalData;
+        }),
+      );
+      stdCode.querySuccess(Paper, res);
+    } catch (error) {
+      stdCode.Unexpected(error, res);
     }
   },
 

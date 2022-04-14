@@ -9,6 +9,9 @@ router.get('/', controller.getMember);
 // student join
 router.post('/', controller.addMember);
 
+// getmember answer
+router.get('/:mid', controller.getMemberAnswer);
+
 // owner (teacher)
 router.put('/:mid', controller.updateMember);
 

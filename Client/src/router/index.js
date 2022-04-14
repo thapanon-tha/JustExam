@@ -65,7 +65,7 @@ const routes = [
     component: () => import('@/views/Teacher/ExamSummary.vue'),
   },
   {
-    path: '/examchannel/test-channel-1/summary/feedback',
+    path: '/examchannel/:cid/member/:mid/feedback',
     name: 'GradeStudentExam',
     component: () => import('@/views/Teacher/GradeStudentExam.vue'),
   },

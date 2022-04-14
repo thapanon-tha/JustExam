@@ -13,7 +13,12 @@
 
     <div v-if="loading" class="m-auto w-5/6">
       <div class="mb-8 flex justify-between items-center">
-        <div class="text-2xl font-bold">Section <span v-if="section.current !== undefined">{{ section.current }} / {{ section.all }}</span></div>
+        <div class="text-2xl font-bold">
+          Section
+          <span v-if="section.current !== undefined"
+            >{{ section.current }} / {{ section.all }}</span
+          >
+        </div>
         <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
       </div>
 
@@ -89,7 +94,9 @@
                 </div>
 
                 <!-------------------- Paragraph Type -------------------->
-                <div v-else-if="questionData[choice].qtid === '5edad656-83b9-4de0-ab94-f7d40cea3354'">
+                <div
+                  v-else-if="questionData[choice].qtid === '5edad656-83b9-4de0-ab94-f7d40cea3354'"
+                >
                   <textarea
                     class="ml-3 w-full h-52 p-1 rounded-md resize-none focus:ring focus:ring-yellow-300 focus:outline-none"
                     type="text"
@@ -112,7 +119,10 @@
                           <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
                             Example Input :
                           </div>
-                          <div v-html="questionData[choice].answer[0].exInput" class="px-3 py-4"></div>
+                          <div
+                            v-html="questionData[choice].answer[0].exInput"
+                            class="px-3 py-4"
+                          ></div>
                         </div>
                       </v-col>
                       <v-col>
@@ -120,7 +130,10 @@
                           <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
                             Example Output :
                           </div>
-                          <div v-html="questionData[choice].answer[0].exOutput" class="px-3 py-4"></div>
+                          <div
+                            v-html="questionData[choice].answer[0].exOutput"
+                            class="px-3 py-4"
+                          ></div>
                         </div>
                       </v-col>
                     </v-row>
@@ -143,7 +156,9 @@
                 </div>
 
                 <!-------------------- Multiple-Choice Type -------------------->
-                <div v-else-if="questionData[choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'">
+                <div
+                  v-else-if="questionData[choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'"
+                >
                   <div
                     class="ml-5"
                     v-for="(item, itemIdex) in questionData[choice].answer"
@@ -154,7 +169,7 @@
                       color="#FB8C00"
                       v-model="answer[choice].answer[itemIdex]"
                       hide-details
-                      :label="`${(item.textA).replace(/(<([^>]+)>)/ig, '')}`"
+                      :label="`${item.textA.replace(/(<([^>]+)>)/gi, '')}`"
                       :value="item.qamccid"
                       @change="storeData"
                     ></v-checkbox>
@@ -162,7 +177,9 @@
                 </div>
 
                 <!-------------------- True/False Type -------------------->
-                <div v-else-if="questionData[choice].qtid === 'b3037171-640a-4077-bf17-10b23a52c386'">
+                <div
+                  v-else-if="questionData[choice].qtid === 'b3037171-640a-4077-bf17-10b23a52c386'"
+                >
                   <v-radio-group class="ml-3" v-model="answer[choice].answer">
                     <v-radio
                       color="#FB8C00"
@@ -205,24 +222,24 @@
 </template>
 
 <script>
-import { codemirror } from "vue-codemirror";
-import api from "@/services/apis";
+import { codemirror } from 'vue-codemirror';
+import api from '@/services/apis';
 
-import QuillTextEditor from "@/components/TextEditor/QuillTextEditor.vue";
-import Header from "@/components/Header/Header.vue";
-import Pagination from "@/components/Pagination/Pagination.vue";
-import Countdown from "@/components/Countdown/Countdown.vue";
+import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+import Header from '@/components/Header/Header.vue';
+import Pagination from '@/components/Pagination/Pagination.vue';
+import Countdown from '@/components/Countdown/Countdown.vue';
 
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/ayu-mirage.css";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/mode/python/python";
-import "codemirror/mode/go/go";
-import "codemirror/mode/ruby/ruby";
-import "codemirror/mode/clike/clike";
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/ayu-mirage.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/clike/clike';
 
 export default {
-  name: "ExamChannelOnExam",
+  name: 'ExamChannelOnExam',
   components: {
     Header,
     Pagination,
@@ -236,26 +253,26 @@ export default {
     time: {},
     section: {},
     finish: false,
-    status: "",
-    textFinish: "",
+    status: '',
+    textFinish: '',
     choice: 0,
     chanel: [],
     answer: [],
     language: [
-      { name: "Javascript", mode: "text/javascript", id: 63 },
-      { name: "Python", mode: "python", id: 71 },
-      { name: "C", mode: "text/x-csrc", id: 50 },
-      { name: "C#", mode: "text/x-csharp", id: 51 },
-      { name: "C++", mode: "text/x-c++src", id: 54 },
-      { name: "Java", mode: "text/x-java", id: 62 },
-      { name: "Kotlin", mode: "text/x-kotlin", id: 78 },
-      { name: "Ruby", mode: "ruby", id: 72 },
-      { name: "Golang", mode: "go", id: 60 },
+      { name: 'Javascript', mode: 'text/javascript', id: 63 },
+      { name: 'Python', mode: 'python', id: 71 },
+      { name: 'C', mode: 'text/x-csrc', id: 50 },
+      { name: 'C#', mode: 'text/x-csharp', id: 51 },
+      { name: 'C++', mode: 'text/x-c++src', id: 54 },
+      { name: 'Java', mode: 'text/x-java', id: 62 },
+      { name: 'Kotlin', mode: 'text/x-kotlin', id: 78 },
+      { name: 'Ruby', mode: 'ruby', id: 72 },
+      { name: 'Golang', mode: 'go', id: 60 },
     ],
     cmOptions: {
       tabSize: 2,
-      mode: "text/javascript",
-      theme: "ayu-mirage",
+      mode: 'text/javascript',
+      theme: 'ayu-mirage',
       lineNumbers: true,
       line: true,
     },
@@ -283,83 +300,86 @@ export default {
     },
     selectAnswerGroup(item, id, max, position) {
       const arrayIndex = this.answer.findIndex((obj) => obj.qecid === id);
-      const arrayResult = new Array(max).fill("");
+      const arrayResult = new Array(max).fill('');
       arrayResult[position] = item;
 
-      if (Array.isArray(this.answer[arrayIndex].answer))
-        this.answer[arrayIndex].answer[position] = item;
+      if (Array.isArray(this.answer[arrayIndex].answer)) this.answer[arrayIndex].answer[position] = item;
       else this.answer[arrayIndex].answer = arrayResult;
     },
     autoFillAnswer() {
       if (this.answer[this.choice].answer === undefined) {
         if (
-          this.questionData[this.choice].qtid ===
-            "74fbc3a5-0217-4892-9aba-70b612fc1a0e" ||
-          this.questionData[this.choice].qtid ===
-            "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7"
-        )
-          this.selectAnswer([null], this.questionData[this.choice].qecid);
-        else this.selectAnswer("", this.questionData[this.choice].qecid);
+          this.questionData[this.choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'
+          || this.questionData[this.choice].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+        ) this.selectAnswer([null], this.questionData[this.choice].qecid);
+        else this.selectAnswer('', this.questionData[this.choice].qecid);
       }
     },
     mappingCodeLanguage(numberCode) {
-      const codeIndex = this.language.findIndex(
-        (item) => item.id === numberCode
-      );
+      const codeIndex = this.language.findIndex((item) => item.id === numberCode);
       this.cmOptions.mode = this.language[codeIndex].mode;
       return this.language[codeIndex].name;
     },
     storeData() {
-      localStorage.setItem("justExam", JSON.stringify(this.answer));
+      localStorage.setItem('justExam', JSON.stringify(this.answer));
     },
     checkAnswerExam() {
-      this.status = "Checking";
+      this.status = 'Checking';
       const notFinish = [];
 
       this.answer.forEach((item, index) => {
         if (item.answer === undefined) notFinish.push(index);
-        else if (item.answer === "") notFinish.push(index);
+        else if (item.answer === '') notFinish.push(index);
         else if (Array.isArray(item.answer)) {
           if (item.answer.length === 0) notFinish.push(index);
-          else if (item.answer.length === 1 && item.answer[0] === null)
-            notFinish.push(index);
+          else if (item.answer.length === 1 && item.answer[0] === null) notFinish.push(index);
         }
       });
 
       this.finish = true;
 
-      if (notFinish.length > 0)
+      if (notFinish.length > 0) {
         this.textFinish = `คุณยังไม่ได้ทำข้อสอบข้อที่ ${notFinish
           .map((value) => value + 1)
-          .join(", ")}`;
-      else this.onSubmit();
+          .join(', ')}`;
+      } else this.onSubmit();
     },
     onSubmit() {
       this.finish = true;
-      this.textFinish = "กำลังส่งคำตอบ";
-      this.status = "sending";
+      this.textFinish = 'กำลังส่งคำตอบ';
+      this.status = 'sending';
 
-      let submitAnswer = this.answer
+      const submitAnswer = this.answer;
 
       // Fill answer for submit when this question no answer
       submitAnswer.forEach((item, index) => {
         if (item.answer === undefined) {
-          if (this.questionData[index].qtid === "74fbc3a5-0217-4892-9aba-70b612fc1a0e") submitAnswer[index].answer = [null]
-          else if (this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") submitAnswer[index].answer = this.questionData[index].answer.map((value) => ({ qamcid: value.qamcid, value: null }))
-          else submitAnswer[index].answer = ''
-        } else if (item.answer !== undefined && this.questionData[index].qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") {
-          submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({ qamcid: this.questionData[index].answer[indexs].qamcid, value: value }))
+          if (this.questionData[index].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e') submitAnswer[index].answer = [null];
+          else if (this.questionData[index].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7') {
+            submitAnswer[index].answer = this.questionData[index].answer.map((value) => ({
+              qamcid: value.qamcid,
+              value: null,
+            }));
+          } else submitAnswer[index].answer = '';
+        } else if (
+          item.answer !== undefined
+          && this.questionData[index].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+        ) {
+          submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({
+            qamcid: this.questionData[index].answer[indexs].qamcid,
+            value,
+          }));
         }
-      })
+      });
 
       api.postExamAnswer(submitAnswer, this.$route.params.cid).then((res) => {
         if (res.status >= 202 && res.status <= 300) {
           this.finish = false;
           localStorage.removeItem('justExam');
-          this.$router.push({ name: 'ExamChannelStudent' }).catch(() => {})
+          this.$router.push({ name: 'ExamChannelStudent' }).catch(() => {});
         } else if (res.status === 200) {
-          localStorage.removeItem('justExam')
-          this.textFinish = "ส่งคำตอบสำเร็จ กำลังโหลดข้อสอบชุดต่อไป"
+          localStorage.removeItem('justExam');
+          this.textFinish = 'ส่งคำตอบสำเร็จ กำลังโหลดข้อสอบชุดต่อไป';
           this.loading = false;
 
           setTimeout(() => {
@@ -368,10 +388,10 @@ export default {
               if (res === 'next') {
                 this.loading = true;
               }
-            })
-          }, 1000)
+            });
+          }, 1000);
         } else {
-          this.textFinish = "ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้ง"
+          this.textFinish = 'ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้ง';
           this.status = '';
         }
       });
@@ -380,25 +400,27 @@ export default {
       const result = await api.getExamChannel(this.$route.params.cid);
       const data = await result.data;
 
-      this.answer = []
-      this.questionData = []
-      this.choice = 0
+      this.answer = [];
+      this.questionData = [];
+      this.choice = 0;
 
       this.questionData = data.questions;
 
+      if (this.questionData.length === 0) {
+        this.$router.push({ name: 'ExamChannelLobby', params: { cid: this.$route.params.cid } });
+      }
+
       this.questionData.forEach((item, index) => {
-        if (item.qtid === "d284c3d2-e1d2-4b8b-94c6-58248fdf27e7") {
-          const answer = item.answer.map((value) =>
-            value.textA.replace(/(<([^>]+)>)/gi, "")
-          );
+        if (item.qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7') {
+          const answer = item.answer.map((value) => value.textA.replace(/(<([^>]+)>)/gi, ''));
           this.questionData[index].answer.forEach((element, aIndex) => {
             this.questionData[index].answer[aIndex].textA = answer;
           });
         }
       });
 
-      if (JSON.parse(localStorage.getItem("justExam"))) {
-        this.answer = JSON.parse(localStorage.getItem("justExam"));
+      if (JSON.parse(localStorage.getItem('justExam'))) {
+        this.answer = JSON.parse(localStorage.getItem('justExam'));
       } else if (this.answer.length === 0) {
         this.questionData.forEach((item) => {
           this.answer.push({
@@ -423,8 +445,7 @@ export default {
   created() {
     this.callApi();
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {},
 };
 </script>

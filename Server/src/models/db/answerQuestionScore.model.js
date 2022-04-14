@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const answerQuestionScore = sequelize.define(
-    'answerQuestionScoreanswerQuestionScore',
+    'answerQuestionScore',
     {
       aqsid: {
         type: Sequelize.UUID, primaryKey: true, defaultValue: Sequelize.UUIDV4, field: 'aqsid',

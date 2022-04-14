@@ -1,8 +1,9 @@
 const { Op } = require('sequelize');
-const { user, role } = require('../models/db');
 const db = require('../models/db');
 
-const { member } = db;
+const {
+  member, answerQuestionScore, user, role,
+} = db;
 
 const medthods = {
   async findByCid(cid) {
@@ -16,6 +17,10 @@ const medthods = {
         {
           model: role,
           attributes: ['name'],
+        },
+        {
+          model: answerQuestionScore,
+          attributes: ['pointReviceve'],
         },
       ],
     });
