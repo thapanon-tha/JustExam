@@ -8,9 +8,6 @@
       <div class="mt-6">
         <InputForm inputLabel="Password" type="password" v-model="loginFormData.password" />
       </div>
-      <div class="mt-6">
-        <CheckboxForm label="Remember me" class="ml-2 font-light text-grey-700 text-sm" />
-      </div>
       <div class="mt-6 ml-2">
         <ActionButton
           class="bg-subColor border-orange-200 border border-solid rounded-lg px-10 py-3 w-4/5 font-semilight text-mainColor"
@@ -21,7 +18,9 @@
     </form>
     <section class="box-border mt-28 ml-48 mr-48 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
-        <img src="@/assets/book.svg" class="w-80 h-80 ml-8" alt="book" />
+        <div class="flex justify-center">
+          <img src="@/assets/book.svg" class="w-80 h-80 ml-8" alt="book" />
+        </div>
         <ActionButton
           class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-white"
           name="Login with Google account"
@@ -29,6 +28,9 @@
         />
       </v-container>
     </section>
+    <v-snackbar v-model="snackbar" color="red accent-2" absolute centered top text outlined>
+      {{ text }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -48,6 +50,9 @@ export default {
   },
   data() {
     return {
+      text: '',
+      timeout: 2000,
+      snackbar: false,
       loginFormData: {
         email: '',
         password: '',
@@ -55,13 +60,27 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      const data = api.login(this.loginFormData);
-      // Can refactor it to query from API
-      auth.setToken(data.token);
-      auth.setRole(data.role);
-      auth.setName(data.name);
-      this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
+    async onSubmit() {
+      if (this.loginFormData.email !== '' && this.loginFormData.password !== '') {
+        const data = await api.login(this.loginFormData.email, this.loginFormData.password);
+        // Can refactor it to query from API
+        if (data.status === 200) {
+            auth.setToken(data.data.token);
+            auth.setRole(data.data.type);
+            auth.setfirstname(data.data.firstname);
+            auth.setsurname(data.data.surname);
+            auth.setuid(data.data.uid);
+            auth.setemail(data.data.email);
+            window.location.href = 'http://localhost:8080';
+
+        } else {
+          this.snackbar = true;
+          this.text = data.data.message;
+        }
+      } else {
+        this.snackbar = true;
+        this.text = 'require email and password';
+      }
     },
     onClickLoginWithGoogle() {
       window.location.href = 'http://localhost:3000/api/auth/google';
