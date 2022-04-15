@@ -14,6 +14,18 @@ const removeUid = () => $cookies.remove('uid');
 const getName = () => `${$cookies.get('firstname')} ${$cookies.get('surname')}` || '';
 const setName = (Name) => $cookies.set('name', Name);
 
+const getemail = () => `${$cookies.get('email')}` || '';
+const setemail = (Name) => $cookies.set('email', Name);
+
+const getfirstname = () => `${$cookies.get('firstname')}` || '';
+const setfirstname = (Name) => $cookies.set('firstname', Name);
+
+const getsurname = () => `${$cookies.get('surname')}` || '';
+const setsurname = (Name) => $cookies.set('surname', Name);
+
+const getuid = () => `${$cookies.get('uid')}` || '';
+const setuid = (Name) => $cookies.set('uid', Name);
+
 const removeConnectId = () => $cookies.remove('connect.sid');
 const removeName = () => {
   $cookies.remove('firstname');
@@ -32,4 +44,12 @@ export default {
   removeName,
   removeUid,
   removeConnectId,
+  getfirstname,
+  setfirstname,
+  getsurname,
+  setsurname,
+  getuid,
+  setuid,
+  getemail,
+  setemail,
 };

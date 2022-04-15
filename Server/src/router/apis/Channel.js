@@ -3,6 +3,7 @@ const controller = require('../../controllers/Channel.controller');
 router.use('/:cid/members', require('./Member'));
 router.use('/:cid/options', require('./Option'));
 router.use('/:cid/exams', require('./ExamChannel'));
+router.use('/:cid/answer', require('./Answer'));
 
 // all user
 router.get('/', controller.getChannel);

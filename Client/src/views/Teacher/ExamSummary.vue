@@ -13,8 +13,8 @@
         Export score
       </button>
     </Header>
-    <SummaryHead v-if="!isLoading" v-model="channelsDetail"/>
-    <div class="ml-36 mt-10 w-5/6 p-2 border border-orange-300 rounded-xl text-center">
+    <SummaryHead v-if="!isLoading" v-model="channelsDetail" />
+    <div v-if="!isLoading" class="ml-36 mt-10 w-5/6 p-2 border border-orange-300 rounded-xl text-center">
       <SummaryTable @clickRespone="clickGradeExam" v-model="channelsDetail.members" />
     </div>
     <Loading v-model="isLoading"></Loading>
@@ -59,7 +59,6 @@ export default {
         .channelsDetail(this.$route.params.cid)
         .then((res) => res[0].data);
       if (respones.status < 300) {
-        this.isLoading = false;
         this.channelsDetail.members = respones.data.map((e) => ({
           mid: e.mid,
           sid: e.sid,
@@ -70,10 +69,12 @@ export default {
             0,
           ),
         }));
+        this.isLoading = false;
       }
     },
   },
   created() {
+    this.isLoading = true;
     this.callApi();
   },
 };

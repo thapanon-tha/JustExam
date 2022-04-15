@@ -14,12 +14,17 @@
         />
       </v-container>
     </section>
+    <v-snackbar v-model="snackbar" color="red accent-2" absolute centered top text outlined>
+      {{ text }}
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import SignUpForm from '@/components/Form/SignUpForm.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
+import api from '@/services/apis';
+import auth from '@/services/authentications';
 
 export default {
   name: 'TeacherSignUp',
@@ -27,11 +32,54 @@ export default {
     SignUpForm,
     ActionButton,
   },
+
+  data() {
+    return {
+      text: '',
+      timeout: 2000,
+      snackbar: false,
+    };
+  },
+
   methods: {
-    onSubmit(data) {
+    async onSubmit(data) {
       // Integrate with API with form validator
       // console.log('submit');
-      // console.log(data);
+      if (
+        data.password !== ''
+        && data.email !== ''
+        && data.firstname !== ''
+        && data.surname !== ''
+      ) {
+        if (data.password !== data.confirmpassword) {
+          this.text = 'password not match';
+          this.snackbar = true;
+        } else {
+          await api
+            .register({
+              password: data.password,
+              email: data.email,
+              firstname: data.firstname,
+              surname: data.surname,
+              type: 'teacher',
+            })
+            .then((resp) => {
+              if (resp.status === 200) {
+                auth.setToken(resp.data.token);
+                auth.setRole(resp.data.type);
+                auth.setfirstname(resp.data.firstname);
+                auth.setsurname(resp.data.surname);
+                auth.setuid(resp.data.uid);
+                auth.setemail(resp.data.email);
+                window.location.href = 'http://localhost:8080';
+              }
+              return resp.data;
+            });
+        }
+      } else {
+        this.text = 'please complete form';
+        this.snackbar = true;
+      }
     },
     onClickSignUpWithGoogle() {
       // Integrate with API with form validator

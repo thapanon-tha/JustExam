@@ -351,7 +351,7 @@ module.exports = {
       await transaction.commit();
       res.json(responesPack);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
@@ -379,7 +379,7 @@ module.exports = {
           mid: member.dataValues.mid,
           ecid: e.ecid,
           qecid: e.qecid,
-          pointReceive: 0,
+          pointReviceve: 0,
           answer: JSON.stringify(e.answer),
         }));
       } else {
@@ -439,7 +439,7 @@ module.exports = {
       };
       res.json(responesPack);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       stdCode.Unexpected(error, res);
     }
   },

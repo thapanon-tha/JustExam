@@ -14,7 +14,7 @@ module.exports = {
         stdCode.NotFound({ message: `Member in cid : ${cid} Not Found` }, res);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
