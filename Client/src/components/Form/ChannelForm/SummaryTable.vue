@@ -8,7 +8,8 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon big class="mr-2" @click="clickRespone(item)"> edit_note </v-icon>
+      <v-icon v-if="item.state === 'NOT ATTENDANT'" big class="mr-2" color="red"> mdi-alert </v-icon>
+      <v-icon v-else big class="mr-2" @click="clickRespone(item)" color="#FFA000"> edit_note </v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn color="orange darken-3" @click="initialize"> Reload </v-btn>
@@ -27,6 +28,11 @@ export default {
         align: 'center',
         sortable: false,
         value: 'actions',
+      },
+      {
+        text: 'status',
+        align: 'center',
+        value: 'state',
       },
       {
         text: 'Student ID',
