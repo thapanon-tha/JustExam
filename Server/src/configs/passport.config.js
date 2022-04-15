@@ -17,32 +17,33 @@ const local = new LocalStrategy(
     passwordField: 'password',
   },
   async (email, password, cb) => {
+    // console.log(email, password);
     let user = await userService.findByEmailLogin(email);
     user = user?.dataValues;
     if (user !== undefined) {
-      if (user.loginBy !== 'Google') {
-        bcrypt.compare(password, user.hash).then((result) => {
-          if (result || password === 'asdasdasd') {
-            const Mockuser = {
-              uid: user.userid,
-              firstname: user.name,
-              surname: user.surname,
-              email: user.email,
-              type: user.role,
-              provider: 'justexam',
-            };
-            cb(null, Mockuser, { message: 'Logged In Successfully' });
-          } else {
-            cb(null, false, { message: 'Incorrect password.' });
-          }
-        });
+      // console.log(user.provider);
+      if (user.provider !== 'Google') {
+        const result = bcrypt.compare(password, user?.password);
+        if (result) {
+          const Mockuser = {
+            uid: user.uid,
+            firstname: user.firstname,
+            surname: user.surname,
+            email: user.email,
+            type: user.type,
+            provider: 'justexam',
+          };
+          cb(null, Mockuser, { message: 'Logged In Successfull' });
+        } else {
+          cb(null, false, { message: 'Incorrect password.' });
+        }
       } else {
         cb(null, false, {
           message: 'This email has alrady register by google account',
         });
       }
     } else {
-      cb(null, false, { message: 'Incorrect email or password.' });
+      cb(null, false, { message: 'Incorrect email' });
     }
   },
 );

@@ -56,7 +56,7 @@ module.exports = {
 
       const resp = await answerQuestionScore.updateMany(data, transaction);
 
-      console.log(resp);
+      // console.log(resp);
       await transaction.commit();
       stdCode.Success(res);
     } catch (error) {

@@ -351,7 +351,7 @@ module.exports = {
       await transaction.commit();
       res.json(responesPack);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
@@ -439,7 +439,7 @@ module.exports = {
       };
       res.json(responesPack);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
