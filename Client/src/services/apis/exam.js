@@ -1,7 +1,7 @@
 import axios from 'axios';
 import mapperTool from './examMapper';
 
-const BACKEND_HOST = 'http://localhost:3000';
+const BACKEND_HOST = process.env.VUE_APP_API;
 
 const exams = () => axios.get(`${BACKEND_HOST}/api/exams`, { validateStatus: false });
 
@@ -39,5 +39,5 @@ export default {
   updateQuestions,
   examDetail,
   updateExamDetail,
-  deleteExams
+  deleteExams,
 };
