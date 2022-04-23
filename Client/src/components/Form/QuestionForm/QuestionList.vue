@@ -1,6 +1,18 @@
 <template>
   <div class="flex flex-col justify-center">
     <div class="flex flex-row mt-5 justify-start ml-5">
+      <div class="flex">
+        <div class="d-flex justify-start m-1" v-for="(section, index) in sectionlist" :key="index">
+          <div v-if="selectedSectionId === index + 1" @click="onClickSelectSection(section.id)">
+            <v-btn class="white--text" color="#EF7F4C" large :outlined="false">
+              Section {{ index + 1 }}
+            </v-btn>
+          </div>
+          <div v-else @click="onClickSelectSection(section.id)">
+            <v-btn color="#EF7F4C" large :outlined="true"> Section {{ index + 1 }} </v-btn>
+          </div>
+        </div>
+      </div>
       <div
         class="bg-subColor border-orange-200 border border-solid rounded-xl shadow-sm font-semilight text-mainColor mr-2"
         v-for="(section, index) in sectionlist"
@@ -274,8 +286,7 @@ export default {
       });
       this.seeModal = false;
     },
-    copyQuestion(index) {
-    },
+    copyQuestion(index) {},
     deleteQuestion(id) {
       this.qlist = this.qlist.filter((e) => e.id !== id);
     },

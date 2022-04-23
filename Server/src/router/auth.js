@@ -4,6 +4,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const userService = require('../services/user.service');
 
+const cookieOption = {
+  maxAge: new Date() * 0.001 + 300,
+  domain: 'frontexam.azurewebsites.net',
+  sameSite: 'None',
+  secure: true,
+  httpOnly: true,
+};
+
 router.post('/login', (req, res) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return res.status(500).send(err);
@@ -95,62 +103,21 @@ router.get(
       return res
         .clearCookie('connect.sid')
         .status(401)
-        .redirect(`http://${process.env.FRONTHOST}:${process.env.FRONTPORT}/`);
+        .redirect(`${process.env.FRONTURL}`);
     }
     if (user.errMassage === false) {
       const token = jwt.sign(user, process.env.JWT_SECRET);
 
       return res
-        .cookie('token', token, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('uid', user.uid, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('firstname', user.firstname, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('surname', user.surname, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('email', user.email, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .cookie('type', user.type, {
-          maxAge: new Date() * 0.001 + 300,
-          domain: process.env.FRONTHOST,
-          secure: true,
-          sameSite: 'none',
-        })
-        .redirect(`http://${process.env.FRONTHOST}:${process.env.FRONTPORT}/`);
+        .cookie('token', token, cookieOption)
+        .cookie('uid', user.uid, cookieOption)
+        .cookie('firstname', user.firstname, cookieOption)
+        .cookie('surname', user.surname, cookieOption)
+        .cookie('email', user.email, cookieOption)
+        .cookie('type', user.type, cookieOption)
+        .redirect(process.env.FRONTURL);
     }
     return res.status(422).json(user);
-  },
-);
-
-router.get('/azure', passport.authenticate('azure_ad_oauth2'));
-
-router.get(
-  '/azure/callback',
-  passport.authenticate('azure_ad_oauth2', { session: false }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    res.status(200).send('OKKKKKKK');
   },
 );
 

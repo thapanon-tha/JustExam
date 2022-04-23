@@ -17,6 +17,7 @@
     "codemirror-editor-vue3": "^2.0.6",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
+    "jwt-decode": "^3.1.2",
     "katex": "^0.15.1",
     "quill-image-extend-module": "^1.1.2",
     "serve-static": "^1.14.1",

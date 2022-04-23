@@ -19,6 +19,7 @@ axios.interceptors.response.use(
   },
 );
 /* eslint-disable */
+axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = `Bearer ${$cookies.get('token')}`;
 /* eslint-enable */
 export default {
