@@ -46,7 +46,7 @@ const routes = [
     path: '/signup/student',
     name: 'StudentSignUp',
     component: () => import('@/views/StudentSignUp.vue'),
-    meta: { authorize: [] },
+    meta: { },
   },
 
   //
@@ -146,6 +146,7 @@ const routes = [
     component: () => import('@/views/Student/ExamChannelLobby.vue'),
     meta: { authorize: ['student'] },
   },
+  { path: '*', redirect: '/' },
 ];
 
 const router = new VueRouter({
