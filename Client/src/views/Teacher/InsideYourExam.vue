@@ -1,10 +1,12 @@
 <template>
   <div>
     <Header main="Edit Exam">
+      <!-- eslint-disable max-len -->
       <button
         @click="onClickBack"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
+        <!-- eslint-enable max-len -->
         Back
       </button>
     </Header>
@@ -19,6 +21,7 @@
       </div>
     </v-container>
     <div class="flex gap-10 mt-10 justify-center">
+      <!-- eslint-disable max-len -->
       <ActionButton
         class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-3 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
         name="Update"
@@ -31,6 +34,7 @@
         @on-click="onClickCancel()"
         :isLoading="loading"
       />
+      <!-- eslint-enable max-len -->
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import auth from '@/services/authentications';
 
 Vue.use(VueRouter);
@@ -161,12 +161,11 @@ router.beforeEach((to, from, next) => {
 
   if (authorize) {
     const token = auth.getToken();
-    let decoded;
     if (token === '') {
       // not logged in so redirect to login page with the return url
       return next({ path: '/login', query: { returnUrl: to.path } });
     }
-    decoded = jwt_decode(token);
+    const decoded = jwtDecode(token);
 
     // check if route is restricted by role
     if (authorize.length && !authorize.includes(decoded.type)) {
@@ -175,7 +174,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  next();
+  return next();
 });
 
 export default router;

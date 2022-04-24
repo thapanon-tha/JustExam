@@ -1,30 +1,31 @@
 <template>
   <div class="ml-72">
-    <div class="flex flex-row mt-5">
-      <div v-for="(section, index) in sectionlist" :key="index">
+    <div class="flex flex-row mt-5 justify-start ml-5">
+      <div
+        class="d-flex justify-start m-1"
+        v-for="(section, index) in sectionlist"
+        :key="index"
+      >
         <div
-          v-if="index + 1 === selectedSectionId"
-          class="bg-subColor border-orange-200 border border-solid rounded-xl shadow-sm font-semilight text-mainColor mr-2"
+          v-if="selectedSectionId === index + 1"
+          @click="onClickSelectSection(section.id)"
         >
-          <div class="flex flex-row" @click="onClickSelectSection(section.id)">
-            <div class="pt-3 pl-3 pr-3">
-              <p>Section {{ index + 1 }}</p>
-            </div>
-          </div>
+          <v-btn class="white--text" color="#EF7F4C" large :outlined="false">
+            Section {{ index + 1 }}
+          </v-btn>
         </div>
-        <div
-          v-if="index + 1 !== selectedSectionId"
-          class="bg-subColor border-orange-200 border border-solid rounded-xl shadow-sm font-semilight text mr-2"
-        >
-          <div class="flex flex-row" @click="onClickSelectSection(section.id)">
-            <div class="pt-3 pl-3 pr-3">
-              <p>Section {{ index + 1 }}</p>
-            </div>
-          </div>
+        <div v-else @click="onClickSelectSection(section.id)">
+          <v-btn color="#EF7F4C" large :outlined="true">
+            <div>Section {{ index + 1 }}</div>
+          </v-btn>
         </div>
       </div>
     </div>
-    <div class="flex flex-col w-screen gap-5 mt-5" v-for="item in questionList" :key="item.id">
+    <div
+      class="flex flex-col w-screen gap-5 mt-5"
+      v-for="item in questionList"
+      :key="item.id"
+    >
       <div class="bg-subColor border border-orange-200 rounded-xl w-4/6">
         <ScoreMultiple v-if="item.type === 'mc'" :value="item.questionData" />
         <ScoreShortAns v-if="item.type === 'sa'" :value="item.questionData" />
@@ -78,18 +79,26 @@ export default {
           sectionName: `Section ${v}`,
         }));
       }
-      this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
+      this.sectionlist.sort((a, b) => {
+        if (a.id > b.id) return 1;
+        if (b.id > a.id) return -1;
+        return 0;
+      });
+      // this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
     async callApi() {
       this.qlist = await api
         .getChannelQuestions(this.$route.params.cid, this.$route.params.ecid)
+        // eslint-disable-next-line
         .then(async (res) => await api.channelScoreMapper(res.data));
       this.sectionCalo();
     },
   },
   computed: {
     questionList() {
-      return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+      return this.qlist.filter(
+        (question) => question.sectionId === this.selectedSectionId,
+      );
     },
   },
   created() {
@@ -97,7 +106,7 @@ export default {
     this.$emit('update:qlist', this.qlist);
   },
   watch: {
-    qlist(newVal, oldVal) {
+    qlist() {
       this.$emit('update:qlist', this.qlist);
     },
   },
