@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.8"
 
 x-logging:
   &default-logging
@@ -8,21 +8,19 @@ x-logging:
       max-size: 100m
 
 services:
-  # db:
-  #   image: mariadb:10.5.10-focal
-  #   volumes:
-  #     - database:/var/lib/mysql
-  #   ports:
-  #     - 3306:3306
-  #   env_file: ./.env
-  #   networks:
-  #     - network
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #   restart: always
+  frontend:
+    image: "justexam.azurecr.io/frontend"
+    build: 
+      context: ./Client
+      args:
+        VUE_APP_API: https://je-backend.azurewebsites.net
+    container_name: frontend
+    environment:
+      TZ: Asia/Bangkok
+    ports:
+      - 4000:80
+    networks:
+      - network
 
   server:
     build: ./Server
@@ -37,39 +35,7 @@ services:
     networks:
       - network
     restart: always
-  
-  # redis:
-  #   container_name: redis
-  #   image: "redis:alpine"
-  #   networks:
-  #     - network
-  #   ports:
-  #     - "${redisPort}:${redisPort}"
-  #   restart: always
-  # nginx:
-  #   image: nginx:1.21.0-alpine
-  #   volumes:
-  #     - ./Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #   command: [ "nginx", "-g", "daemon off;" ]
-  #   # depends_on:
-  #   #   - client
-  #   networks:
-  #     - network
-  #   ports:
-  #     - "80:80"
-  # server:
-  #   build: ./Server
-  #   image: "jebuild.azurecr.io/server"
-  #   volumes:
-  #     - upload:/app/data/upload
-  #     - log:/app/log
-  #     - ./server/src:/app/src
-  #   # depends_on:
-  #   #   - db
-  #   env_file: ./.env
-  #   networks:
-  #     - network
-  #   restart: always
+
 
 volumes:
   database:

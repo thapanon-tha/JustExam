@@ -7,11 +7,13 @@
     <section class="box-border mt-28 ml-10 mr-32 mb-40 flex flex-col">
       <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
         <img src="@/assets/kid.svg" class="w-80 h-80" alt="book" />
+        <!-- eslint-disable max-len -->
         <ActionButton
           class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-white"
           name="Sign up with Google account"
           @on-click="onClickSignUpWithGoogle"
         />
+        <!-- eslint-enable max-len -->
       </v-container>
     </section>
     <v-snackbar v-model="snackbar" color="red accent-2" absolute centered top text outlined>
@@ -71,7 +73,7 @@ export default {
                 auth.setsurname(resp.data.surname);
                 auth.setuid(resp.data.uid);
                 auth.setemail(resp.data.email);
-                window.location.href = 'http://localhost:8080';
+                window.location.href = '/';
               }
               return resp.data;
             });
@@ -83,7 +85,7 @@ export default {
     },
     onClickSignUpWithGoogle() {
       // Integrate with API with form validator
-      window.location.href = 'http://localhost:3000/api/auth/google/createAccount?role=teacher';
+      window.location.href = `${process.env.VUE_APP_API}/api/auth/google/createAccount?role=teacher`;
     },
   },
 };

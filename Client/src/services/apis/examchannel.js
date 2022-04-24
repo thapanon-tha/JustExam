@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_HOST = 'http://localhost:3000';
+const BACKEND_HOST = process.env.VUE_APP_API;
 
 const getExamChannel = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/startExam`, { validateStatus: false });
 

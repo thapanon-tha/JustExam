@@ -7,7 +7,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const JWTStrategy = passportJWT.Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
+// const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
 const userService = require('../services/user.service');
 
 // LOCAL LOGIN AUTHENTICATION
@@ -18,47 +18,51 @@ const local = new LocalStrategy(
   },
   async (email, password, cb) => {
     // console.log(email, password);
-    let user = await userService.findByEmailLogin(email);
-    user = user?.dataValues;
-    if (user !== undefined) {
-      // console.log(user.provider);
-      if (user.provider !== 'Google') {
-        const result = bcrypt.compare(password, user?.password);
-        if (result) {
-          const Mockuser = {
-            uid: user.uid,
-            firstname: user.firstname,
-            surname: user.surname,
-            email: user.email,
-            type: user.type,
-            provider: 'justexam',
-          };
-          cb(null, Mockuser, { message: 'Logged In Successfull' });
+    try {
+      let user = await userService.findByEmailLogin(email);
+      user = user?.dataValues;
+      if (user !== undefined) {
+        // console.log(user.provider);
+        if (user.provider !== 'Google') {
+          const result = bcrypt.compare(password, user?.password);
+          if (result) {
+            const Mockuser = {
+              uid: user.uid,
+              firstname: user.firstname,
+              surname: user.surname,
+              email: user.email,
+              type: user.type,
+              provider: 'justexam',
+            };
+            cb(null, Mockuser, { message: 'Logged In Successfull' });
+          } else {
+            cb(null, false, { message: 'Incorrect password.' });
+          }
         } else {
-          cb(null, false, { message: 'Incorrect password.' });
+          cb(null, false, {
+            message: 'This email has alrady register by google account',
+          });
         }
       } else {
-        cb(null, false, {
-          message: 'This email has alrady register by google account',
-        });
+        cb(null, false, { message: 'Incorrect email' });
       }
-    } else {
-      cb(null, false, { message: 'Incorrect email' });
+    } catch (error) {
+      cb(null, false, { message: 'Error something worng' });
     }
   },
 );
 
-const azure = new AzureAdOAuth2Strategy(
-  {
-    clientID: process.env.OUTLOOK_CLIENT_ID,
-    clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
-    callbackURL: '/api/auth/azure/callback',
-  },
-  (accessToken, refresh_token, params, profile, done) => {
-    const waadProfile = jwt.decode(params.id_token);
-    done(null, waadProfile);
-  },
-);
+// const azure = new AzureAdOAuth2Strategy(
+//   {
+//     clientID: process.env.OUTLOOK_CLIENT_ID,
+//     clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
+//     callbackURL: '/api/auth/azure/callback',
+//   },
+//   (accessToken, refresh_token, params, profile, done) => {
+//     const waadProfile = jwt.decode(params.id_token);
+//     done(null, waadProfile);
+//   },
+// );
 
 const google = new GoogleStrategy(
   {
@@ -131,5 +135,5 @@ const JWT = new JWTStrategy(
 // GOOGLE API AUTHENTICATION
 passport.use(local);
 passport.use(google);
-passport.use(azure);
+// passport.use(azure);
 passport.use(JWT);

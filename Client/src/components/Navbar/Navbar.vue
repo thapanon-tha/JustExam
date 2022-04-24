@@ -2,7 +2,7 @@
   <div class="bg-subColor shadow-md flex flex-row justify-between h-16">
     <div class="flex flex-row">
       <img class="p-3 mr-8" src="@/assets/logo.svg" alt="logo" />
-      <NavButton name="Home" to="Home" v-if="!$store.getters.getIsAuth" />
+      <NavButton name="Home" to="Home" :borderRight="true" />
       <NavButton
         name="Tutorial"
         :borderLeft="true"
@@ -20,7 +20,7 @@
         name="Your exam"
         to="YourExam"
         :borderLeft="true"
-        :borderRight="true"
+        :borderRight="false"
         v-if="$store.getters.getIsAuth && $store.getters.getIsTeacher"
       />
       <NavButton

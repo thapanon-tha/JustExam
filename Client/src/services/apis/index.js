@@ -18,12 +18,13 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
+/* eslint-disable */
+axios.defaults.withCredentials = true;
 axios.defaults.headers.common.Authorization = `Bearer ${$cookies.get('token')}`;
-
+/* eslint-enable */
 export default {
   ...userAPI,
   ...examAPI,
   ...channelAPI,
-  ...examChannelAPI
+  ...examChannelAPI,
 };

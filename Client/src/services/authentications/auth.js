@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Warning !!! This should be implement with cookie method not localstroage
 const getToken = () => $cookies.get('token') || '';
 
