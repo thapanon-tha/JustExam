@@ -19,6 +19,10 @@ export default {
       type: String,
       default: '',
     },
+    disable: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {};

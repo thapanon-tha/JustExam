@@ -2,9 +2,13 @@
   <form>
     <div class="flex justify-center gap-40">
       <div class="flex flex-col gap-5">
-        <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
+        <h1 class="text-gray-700 font-semibold text-2xl">
+          Channel Information
+        </h1>
         <div>
-          <label class="form-label inline-block text-gray-700 font-semilight text-xl">
+          <label
+            class="form-label inline-block text-gray-700 font-semilight text-xl"
+          >
             Channel Title
           </label>
         </div>
@@ -20,7 +24,9 @@
           />
         </div>
         <div>
-          <label class="form-label inline-block text-gray-700 font-semilight text-xl">
+          <label
+            class="form-label inline-block text-gray-700 font-semilight text-xl"
+          >
             Channel Description
           </label>
         </div>
@@ -37,7 +43,9 @@
         </div>
         <div class="form-control">
           <div>
-            <label class="form-label inline-block mb-2 text-gray-700 font-semilight text-xl">
+            <label
+              class="form-label inline-block mb-2 text-gray-700 font-semilight text-xl"
+            >
               Schedule
             </label>
             <label
@@ -77,7 +85,6 @@
                   </div>
                 </div>
               </template>
-
               <v-date-picker
                 v-model="value.schedule"
                 @input="menu = false"
@@ -88,7 +95,9 @@
         </div>
         <div class="form-control">
           <div>
-            <label class="inline-block text-gray-700 font-semilight text-xl mb-3">
+            <label
+              class="inline-block text-gray-700 font-semilight text-xl mb-3"
+            >
               Time Duration
             </label>
             <label
@@ -111,7 +120,9 @@
                 min-width="290px"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <label class="inline-block text-gray-500 font-semilight text-sm mb-1 mr-1">
+                  <label
+                    class="inline-block text-gray-500 font-semilight text-sm mb-1 mr-1"
+                  >
                     Time Start:
                   </label>
                   <input
@@ -159,7 +170,9 @@
                 min-width="290px"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <label class="inline-block text-gray-500 font-semilight text-sm mb-1 mr-1">
+                  <label
+                    class="inline-block text-gray-500 font-semilight text-sm mb-1 mr-1"
+                  >
                     Time End:
                   </label>
                   <input
@@ -199,36 +212,92 @@
       </div>
       <div class="form-control">
         <div class="flex flex-col justify-center gap-5">
-          <h1 class="text-gray-700 font-semibold text-2xl mb-5">Exam setting</h1>
+          <h1 class="text-gray-700 font-semibold text-2xl mb-5">
+            Exam setting
+          </h1>
           <div>
-            <Checkbox3 textRight="Random sections" v-model="settingData.randomSec" />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.randomSec"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Random sections
+              </p>
+            </div>
           </div>
           <div>
-            <Checkbox3
-              textRight="Random questions in section"
-              v-model="settingData.randomQuestion"
-            />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.randomQuestion"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Random questions in section
+              </p>
+            </div>
           </div>
           <div>
-            <Checkbox3 textRight="Shuffle choices" v-model="settingData.shuffleChoices" />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.shuffleChoices"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Shuffle choices
+              </p>
+            </div>
           </div>
           <div>
-            <Checkbox3
-              textRight="Show correct answers after submit the exam"
-              v-model="settingData.showCAnswer"
-            />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.showCAnswer"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Show correct answers after submit the exam
+              </p>
+            </div>
           </div>
           <div>
-            <Checkbox3
-              textRight="Show total scores after submit the exam"
-              v-model="settingData.showTotalScore"
-            />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.showTotalScore"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Show total scores after submit the exam
+              </p>
+            </div>
           </div>
           <div>
-            <Checkbox3
-              textRight="Cannot submit the exam if there are missed answers"
-              v-model="settingData.cantSubmitEmpty"
-            />
+            <div class="flex">
+              <input
+                type="checkbox"
+                class="h-4 w-4 mt-1"
+                v-model="settingData.cantSubmitEmpty"
+                @change="onChange()"
+                disabled
+              />
+              <p class="text-gray-700 font-semilight text-xl w-auto ml-5">
+                Cannot submit the exam if there are missed answers
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -237,12 +306,10 @@
 </template>
 
 <script>
-import Checkbox3 from '@/components/Form/Checkbox3.vue';
 
 export default {
   name: 'EditChannelForm',
   components: {
-    Checkbox3,
   },
   props: ['value'],
   data() {
