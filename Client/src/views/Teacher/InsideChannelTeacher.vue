@@ -95,7 +95,7 @@
               <v-col cols="12" sm="6" md="12">
                 <v-text-field
                   label="Channel Title"
-                  v-model="channelInfo.title"
+                  v-model="channelInfoEdit.title"
                   required
                   color="#EF7F4C"
                 ></v-text-field>
@@ -103,7 +103,7 @@
               <v-col cols="12" sm="6" md="12">
                 <v-text-field
                   label="Channel Description"
-                  v-model="channelInfo.description"
+                  v-model="channelInfoEdit.description"
                   color="#EF7F4C"
                 ></v-text-field>
               </v-col>
@@ -209,19 +209,16 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="dialog = false">
-            Close
-          </v-btn>
-          <v-btn color="#EF7F4C" text @click="dialog = false">
-            Save
-          </v-btn>
+          <v-btn color="red" text @click="resetDateFormatt"> Close </v-btn>
+          <v-btn color="#EF7F4C" text @click="updateChannelDetail"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <Loading v-model="loading"></Loading>
   </div>
 </template>
 
@@ -232,6 +229,7 @@ import EditChannelForm from '@/components/Form/ChannelForm/EditChannelForm.vue';
 import CardAddExam from '@/components/Card/CardAddExam.vue';
 import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
 import api from '@/services/apis';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'InsideChannelTeacher',
@@ -241,6 +239,7 @@ export default {
     EditChannelForm,
     CardAddExam,
     CardSelectedExam,
+    Loading,
   },
   data() {
     return {
@@ -282,6 +281,7 @@ export default {
       schedule: '',
       startAt: '',
       endAt: '',
+      loading: false,
     };
   },
   methods: {
@@ -320,7 +320,6 @@ export default {
             ecid: this.channelInfo.examChannel.ecid,
           },
         })
-
         .catch(() => true);
     },
     async clickDeleteSelect() {
@@ -343,12 +342,9 @@ export default {
     closeModalAddExam() {
       this.showModal = false;
     },
-    async apiCall() {
-      this.channelsApiInfo = await api
-        .channelsDetail(this.$route.params.cid)
-        .then((res) => res);
-      this.channelInfo = await this.channelsApiInfo[0].data;
-      this.channelInfoEdit = this.channelInfo;
+    resetDateFormatt() {
+      this.dialog = false;
+      this.channelInfoEdit = { ...this.channelInfo };
       this.schedule = new Date(this.channelInfoEdit.schedule)
         .toISOString()
         .substr(0, 10);
@@ -360,6 +356,13 @@ export default {
       this.endAt = `${new Date(
         this.channelInfoEdit.endAt,
       ).getHours()}:${new Date(this.channelInfoEdit.endAt).getMinutes()}`;
+    },
+    async apiCall() {
+      this.channelsApiInfo = await api
+        .channelsDetail(this.$route.params.cid)
+        .then((res) => res);
+      this.channelInfo = await this.channelsApiInfo[0].data;
+      this.resetDateFormatt();
       if (
         this.channelInfo.examChannel !== undefined
         && this.channelInfo.examChannel !== null
@@ -379,6 +382,7 @@ export default {
         createDate: detail.createDate,
         updateDate: detail.updateDate,
       };
+      this.loading = true;
       const result = await api.connectExamtoChennal(data).then((res) => res);
       if (result.status === 200) {
         const examQuestioneList = await api
@@ -398,7 +402,51 @@ export default {
         } else {
           this.clickDeleteSelect();
         }
+        this.loading = false;
       }
+    },
+    convortTime(e) {
+      const str = e.split(':');
+      return str;
+    },
+    async updateChannelDetail() {
+      this.loading = true;
+      this.dialog = false;
+      const startT = this.convortTime(this.startAt);
+      const endT = this.convortTime(this.endAt);
+
+      const schedule = new Date(this.schedule);
+      const start = new Date(this.schedule);
+      const end = new Date(this.schedule);
+
+      start.setHours(parseInt(startT[0], 10));
+      start.setMinutes(parseInt(startT[1], 10));
+      start.setMilliseconds(0);
+
+      end.setHours(parseInt(endT[0], 10));
+      end.setMinutes(parseInt(endT[1], 10));
+      end.setMilliseconds(0);
+
+      const result = await api.channelUpdate(this.$route.params.cid, {
+        title: this.channelInfoEdit.title,
+        description: this.channelInfoEdit.description,
+        schedule: schedule,
+        startAt: start,
+        endAt: end,
+        releaseScoreFlag: this.channelInfo.releaseScoreFlag,
+      });
+
+      if(result.status===200){
+        this.snackbar = true;
+        this.text = `Success`
+        window.location.reload();
+      }else{
+        this.dialog = true;
+        this.snackbar = true;
+        this.text = `Error Can't Update Channel Detail`
+      }
+
+      this.loading = false;
     },
   },
   created() {

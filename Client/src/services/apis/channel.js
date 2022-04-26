@@ -12,6 +12,8 @@ const channelsDetail = (cid) => Promise.all([
 
 const createChannel = (data) => axios.post(`${BACKEND_HOST}/api/channels/`, { data }, { validateStatus: false });
 
+const channelUpdate = (cid,data) => axios.put(`${BACKEND_HOST}/api/channels/${cid}`, { data }, { validateStatus: false });
+
 const joinChannel = (cid, data) => axios.post(`${BACKEND_HOST}/api/channels/${cid}/members`, { data }, { validateStatus: false });
 
 const connectExamtoChennal = (data) => axios.post(`${BACKEND_HOST}/api/channels/${data.cid}/exams`, { data }, { validateStatus: false });
@@ -66,4 +68,5 @@ export default {
   createChannel,
   memberJoin,
   updateStudentScore,
+  channelUpdate,
 };
