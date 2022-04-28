@@ -10,7 +10,7 @@
     </Header>
     <div>
       <div class="ml-72 mt-10">
-        <p class="">Student: {{ studentName }}</p>
+        <p class="">Student: {{ memberDetail.user.firstname }} {{ memberDetail.user.surname }}</p>
         <p class="">Total score: {{ totalScore }} / {{ totalExamScore }}</p>
       </div>
       <GradeQuestionList v-model="questions" :loading="loading" />
@@ -53,6 +53,7 @@ export default {
       totalScore: 0,
       totalExamScore: 0,
       loading: false,
+      memberDetail: {},
       questions: [],
     };
   },
@@ -76,6 +77,7 @@ export default {
       const res = await api.updateStudentScore(this.$route.params.cid, data);
       if (res.status === 200) {
         this.loading = false;
+        this.callApi();
       }
       // console.log(res);
     },
@@ -91,8 +93,8 @@ export default {
         .then((e) => {
           if (e.status < 300) {
             this.loading = false;
-            this.questions = e.data;
-
+            this.questions = e.data[0];
+            this.memberDetail = e.data[1]
             this.questions = this.questions.map((e) => {
               if (e.answerQuestionScores.length === 0) {
                 return null;
@@ -104,6 +106,8 @@ export default {
             });
             this.questions;
             const arrayDump = [];
+            this.totalScore = 0;
+            this.totalExamScore = 0
             this.questions.forEach((element) => {
               if (element !== null) {
                 this.totalScore += parseInt(element.answerQuestionScores[0].pointReviceve);

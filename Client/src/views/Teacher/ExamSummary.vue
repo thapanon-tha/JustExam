@@ -1,6 +1,10 @@
 <template>
   <div class="mb-40">
-    <Header main="Exam channel" current="> Inside channel > Exam Summary" class="mb-10">
+    <Header
+      main="Exam channel"
+      current="> Inside channel > Exam Summary"
+      class="mb-10"
+    >
       <button
         @click="onClickBack"
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
@@ -10,18 +14,50 @@
       <button
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
-        Export score
+        <downloadexcel
+          v-if="!isLoading"
+          :data="this.channelsDetail.members"
+          :fields="json_fields"
+          :before-generate="startDownload"
+          :before-finish="finishDownload"
+          :name="`${channelsDetail.title}-${new Date(
+            Date.now() - new Date().getTimezoneOffset() * 60000,
+          )
+            .toISOString()
+            .substr(0, 10)}.xls`"
+        >
+          Export score
+        </downloadexcel>
       </button>
     </Header>
     <SummaryHead v-if="!isLoading" v-model="channelsDetail" />
-    <div v-if="!isLoading" class="ml-36 mt-10 w-5/6 p-2 border border-orange-300 rounded-xl text-center">
-      <SummaryTable @clickRespone="clickGradeExam" v-model="channelsDetail.members" />
+    <div
+      v-if="!isLoading"
+      class="ml-36 mt-10 w-5/6 p-2 border border-orange-300 rounded-xl text-center"
+    >
+      <SummaryTable
+        @clickRespone="clickGradeExam"
+        v-model="channelsDetail.members"
+      />
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      color="green"
+      absolute
+      centered
+      top
+      text
+      outlined
+      :timeout="timeout"
+    >
+      {{ text }}
+    </v-snackbar>
     <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
 <script>
+import downloadexcel from 'vue-json-excel';
 import Header from '@/components/Header/Header.vue';
 import SummaryTable from '@/components/Form/ChannelForm/SummaryTable.vue';
 import SummaryHead from '@/components/Form/ChannelForm/SummaryHead.vue';
@@ -35,26 +71,51 @@ export default {
     SummaryTable,
     SummaryHead,
     Loading,
+    downloadexcel,
   },
   data() {
     return {
+      snackbar: false,
+      text: '',
+      timeout: 1500,
       isLoading: true,
       channelsDetail: {},
+      json_fields: {
+        'Student Id': 'sid',
+        Name: 'name',
+        'Total Score': 'score',
+      },
     };
   },
   methods: {
+    startDownload() {
+      this.snackbar = true;
+      this.text = 'loading'
+    },
+    finishDownload() {
+      this.snackbar = true;
+      this.text = 'Download Success'
+    },
     onClickBack() {
       this.$router
-        .push({ name: 'InsideChannelTeacher', params: { cid: this.$route.params.cid } })
+        .push({
+          name: 'InsideChannelTeacher',
+          params: { cid: this.$route.params.cid },
+        })
         .catch(() => true);
     },
     clickGradeExam(mid) {
       this.$router
-        .push({ name: 'GradeStudentExam', params: { cid: this.$route.params.cid, mid } })
+        .push({
+          name: 'GradeStudentExam',
+          params: { cid: this.$route.params.cid, mid },
+        })
         .catch(() => true);
     },
     async callApi() {
-      const respones = await api.getMember(this.$route.params.cid).then((res) => res);
+      const respones = await api
+        .getMember(this.$route.params.cid)
+        .then((res) => res);
       this.channelsDetail = await api
         .channelsDetail(this.$route.params.cid)
         .then((res) => res[0].data);

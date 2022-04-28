@@ -81,6 +81,12 @@ const medthods = {
 
   async getByMid(mid) {
     return member.findOne({
+      include: [
+        {
+          model: user,
+          attributes: ['firstname', 'surname'],
+        },
+      ],
       where: { mid },
     });
   },

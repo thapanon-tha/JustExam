@@ -22,6 +22,9 @@ module.exports = {
   async getMemberAnswer(req, res) {
     const { cid, mid } = req.params;
     try {
+      const detail = await Member.getByMid(
+        mid
+      );
       const Exampaper = await examChannelService.queryExamPaperAndMemberAnswer(
         cid,
         mid,
@@ -56,8 +59,9 @@ module.exports = {
           return finalData;
         }),
       );
-      stdCode.querySuccess(Paper, res);
+      stdCode.querySuccess([Paper,detail], res);
     } catch (error) {
+      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
