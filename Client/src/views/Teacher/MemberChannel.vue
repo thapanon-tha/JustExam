@@ -8,7 +8,8 @@
         Back
       </button>
     </Header>
-    <MemberTable :members="members" />
+    <MemberTable v-if="!isLoaging" :members="members" />
+    <Loading v-if="isLoaging"></Loading>
   </div>
 </template>
 
@@ -16,25 +17,32 @@
 import Header from '@/components/Header/Header.vue';
 import MemberTable from '@/components/Form/ChannelForm/MemberTable.vue';
 import api from '@/services/apis';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'MemberChannel',
   components: {
     Header,
     MemberTable,
+    Loading,
   },
   data() {
     return {
+      isLoaging: false,
       members: [],
     };
   },
   methods: {
     onClickBack() {
       this.$router
-        .push({ name: 'InsideChannelTeacher', params: { cid: this.$route.params.cid } })
+        .push({
+          name: 'InsideChannelTeacher',
+          params: { cid: this.$route.params.cid },
+        })
         .catch(() => true);
     },
     async getMember(cid) {
+      this.isLoaging = true;
       const data = await api.getMember(cid).then((res) => res);
       if (data.status === 200) {
         this.members = data.data;
@@ -51,6 +59,7 @@ export default {
           name: `${e.user.firstname} ${e.user.surname}`,
         }));
       }
+      this.isLoaging = false;
     },
   },
   created() {

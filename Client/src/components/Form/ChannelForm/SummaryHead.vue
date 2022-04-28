@@ -22,10 +22,6 @@
       </div>
       <div class="mt-10">
         <div class="flex flex-row">
-          <p class="mr-5 font-semibold">Total score:</p>
-          <p class="mr-5 font-semilight">{{ summaryData.scoreTotal }}</p>
-        </div>
-        <div class="flex flex-row">
           <p class="mr-5 font-semibold">Max score:</p>
           <p class="mr-5 font-semilight">{{ summaryData.scoreMax }}</p>
         </div>

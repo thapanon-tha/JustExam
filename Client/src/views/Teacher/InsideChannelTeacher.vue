@@ -62,6 +62,7 @@
         @clickScore="clickScoreExam"
         @clickDelete="clickDeleteSelect"
         :detail="channelInfo.examChannel"
+        :disabled="disabled"
         v-if="showSelected"
       />
       <div class="relative">
@@ -213,7 +214,9 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red" text @click="resetDateFormatt"> Close </v-btn>
-          <v-btn color="#EF7F4C" text @click="updateChannelDetail"> Save </v-btn>
+          <v-btn color="#EF7F4C" text @click="updateChannelDetail">
+            Save
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -243,6 +246,7 @@ export default {
   },
   data() {
     return {
+      disabled: false,
       snackbar: false,
       showModal: false,
       showSelected: false,
@@ -349,7 +353,7 @@ export default {
         .toISOString()
         .substr(0, 10);
       this.startAt = `${new Date(this.channelInfoEdit.startAt).getHours()}:${
-        new Date(this.channelInfoEdit.startAt).getMinutes() > 10
+        new Date(this.channelInfoEdit.startAt).getMinutes() >= 10
           ? new Date(this.channelInfoEdit.startAt).getMinutes()
           : `0${new Date(this.channelInfoEdit.startAt).getMinutes()}`
       }`;
@@ -371,6 +375,12 @@ export default {
         this.showSelected = true;
       } else {
         this.showButton = true;
+      }
+      const date = new Date(this.channelInfo.startAt)
+      console.log(date);
+      console.log(date.getMinutes());
+      if (new Date() > date.setMinutes(date.getMinutes() - 5)) {
+        this.disabled = true;
       }
     },
     async connectChannel(detail) {
@@ -430,22 +440,21 @@ export default {
       const result = await api.channelUpdate(this.$route.params.cid, {
         title: this.channelInfoEdit.title,
         description: this.channelInfoEdit.description,
-        schedule: schedule,
+        schedule,
         startAt: start,
         endAt: end,
         releaseScoreFlag: this.channelInfo.releaseScoreFlag,
       });
 
-      if(result.status===200){
+      if (result.status === 200) {
         this.snackbar = true;
-        this.text = `Success`
+        this.text = `Success`;
         window.location.reload();
-      }else{
+      } else {
         this.dialog = true;
         this.snackbar = true;
-        this.text = `Error Can't Update Channel Detail`
+        this.text = `Error Can't Update Channel Detail`;
       }
-
       this.loading = false;
     },
   },

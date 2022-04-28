@@ -24,7 +24,7 @@
         v-if="$store.getters.getIsAuth && $store.getters.getIsTeacher"
       />
       <NavButton
-        name="Student channel"
+        name="Exam channel"
         to="ExamChannelStudent"
         v-if="$store.getters.getIsAuth && $store.getters.getIsStudent"
       />

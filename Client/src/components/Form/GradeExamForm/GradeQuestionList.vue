@@ -251,12 +251,6 @@ export default {
     };
   },
   methods: {
-    getClass(index) {
-      return {
-        'white--text': !(this.selectedSectionId === index + 1),
-        'black--text': this.selectedSectionId === index + 1,
-      };
-    },
     onClickSelectSection(id) {
       this.selectedSectionId = id;
     },

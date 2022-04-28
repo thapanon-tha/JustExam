@@ -2,7 +2,7 @@
   <div>
     <Header main="Your exam" current="> New exam">
       <button
-        @click="onClick('PreviewExam')"
+        @click="dialogPreview = true"
         class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
         Preview
@@ -26,10 +26,35 @@
         />
       </div>
 
+      <v-dialog v-model="dialogPreview" persistent fullscreen>
+        <v-card>
+          <v-toolbar dark color="#ef7f4c">
+            <v-toolbar-title>Preview Exam</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn dark text @click="dialogPreview = false">
+                <v-btn icon dark @click="dialogPreview = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <v-card-title></v-card-title>
+          <PreviewList v-model="questions"></PreviewList>
+          <v-card-actions>
+            <v-card-actions> </v-card-actions>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-dialog v-model="sheet" persistent width="290">
         <v-card max-width="290">
-          <v-card-title v-if="loaderOption.loading === true">Createing</v-card-title>
-          <v-card-title v-if="loaderOption.loading === false">Result</v-card-title>
+          <v-card-title v-if="loaderOption.loading === true"
+            >Createing</v-card-title
+          >
+          <v-card-title v-if="loaderOption.loading === false"
+            >Result</v-card-title
+          >
           <div class="d-flex align-center">
             <v-card-text class="d-flex align-center justify-center">
               <div v-if="loaderOption.loading === true">
@@ -40,11 +65,17 @@
                 >
                 </pulse-loader>
               </div>
-              <div v-if="createSuccess.status === true" class="d-flex align-center">
+              <div
+                v-if="createSuccess.status === true"
+                class="d-flex align-center"
+              >
                 <v-icon color="green" large> mdi-check-circle </v-icon>
                 <strong>{{ createSuccess.message }}</strong>
               </div>
-              <div v-if="createFail.status === true" class="d-flex align-center">
+              <div
+                v-if="createFail.status === true"
+                class="d-flex align-center"
+              >
                 <v-icon color="red" large> mdi-alert-circle </v-icon>
                 <strong>{{ createFail.message }}</strong>
               </div>
@@ -57,39 +88,43 @@
 </template>
 
 <script>
-import Header from "@/components/Header/Header.vue";
-import QuestionList from "@/components/Form/QuestionForm/QuestionList.vue";
-import ExamInfoForm from "@/components/Form/YourExamForm/ExamInfoForm.vue";
-import ActionButton from "@/components/Button/ActionButton.vue";
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import api from "@/services/apis";
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import Header from '@/components/Header/Header.vue';
+import QuestionList from '@/components/Form/QuestionForm/QuestionList.vue';
+import ExamInfoForm from '@/components/Form/YourExamForm/ExamInfoForm.vue';
+import ActionButton from '@/components/Button/ActionButton.vue';
+import PreviewList from '@/components/Form/PreviewForm/PreviewList.vue';
+
+import api from '@/services/apis';
 
 export default {
-  name: "NewExam",
+  name: 'NewExam',
   components: {
     QuestionList,
     ExamInfoForm,
     Header,
     ActionButton,
     PulseLoader,
+    PreviewList,
   },
   data() {
     return {
+      dialogPreview: false,
       sheet: false,
-      examInfo: { title: "", description: "" },
+      examInfo: { title: '', description: '' },
       createStatus: false,
       questions: [],
       createSuccess: {
         status: false,
-        message: "",
+        message: '',
       },
       createFail: {
         status: false,
-        message: "",
+        message: '',
       },
       loaderOption: {
-        size: "5vh",
-        color: "#ef7f4c",
+        size: '5vh',
+        color: '#ef7f4c',
         loading: false,
       },
     };
@@ -102,7 +137,7 @@ export default {
       this.$router.push({ name: pageName });
     },
     onClickCancel() {
-      this.$router.push({ name: "YourExam" }).catch(() => true);
+      this.$router.push({ name: 'YourExam' }).catch(() => true);
     },
     onClickCreate() {
       this.sheet = !this.sheet;
@@ -126,20 +161,20 @@ export default {
           if (questionsResp.status >= 200 && questionsResp.status < 300) {
             this.loaderOption.loading = false;
             this.createSuccess.status = true;
-            this.createSuccess.message = "created success";
+            this.createSuccess.message = 'created success';
             setTimeout(() => {
               this.createSuccess.status = false;
-              this.createSuccess.message = "";
+              this.createSuccess.message = '';
               this.sheet = false;
             }, 2000);
             setTimeout(() => {
-              this.$router.push({ name: "YourExam" }).catch(() => true);
+              this.$router.push({ name: 'YourExam' }).catch(() => true);
             }, 2500);
           } else {
-            throw new Error("Create Fail");
+            throw new Error('Create Fail');
           }
         } else {
-          throw new Error("Create Fail");
+          throw new Error('Create Fail');
         }
       } catch (e) {
         this.loaderOption.loading = false;

@@ -66,7 +66,7 @@
           />
         </div>
       </div>
-      <h1 class="mt-5 mb-1">Example</h1>
+      <h1 class="mt-5 mb-1">Test Case</h1>
       <div v-for="(item, index) in questionData.example" :key="item.id" class="mb-5">
         <div class="flex justify-start">
           <div class="shadow-sm border-mainColor border-l-4 mb-3">

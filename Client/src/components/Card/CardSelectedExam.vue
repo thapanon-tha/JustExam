@@ -13,14 +13,14 @@
             {{ detail.title }}
           </p>
         </div>
-        <div class="flex  justify-around ml-1 mr-1">
-          <v-icon big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickChange">
+        <div class="flex justify-around ml-1 mr-1">
+          <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickChange">
             change_circle
           </v-icon>
-          <v-icon big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickScore">
+          <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickScore">
             edit
           </v-icon>
-          <v-icon big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickDelete">
+          <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickDelete">
             delete
           </v-icon>
         </div>
@@ -35,7 +35,17 @@ export default {
     return {
     };
   },
-  props: ['detail'],
+  props: {
+    detail: {
+      type: Object,
+      default: {},
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  }
+  ,
   methods: {
     clickChange() {
       this.$emit('clickChange');

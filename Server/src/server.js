@@ -2,8 +2,6 @@ require('dotenv').config({ path: '../.env' });
 
 const express = require('express');
 
-//! assign to next time
-// const https = require('https');
 const cors = require('cors');
 /// ///////////////////////////////////////////
 const session = require('express-session');
