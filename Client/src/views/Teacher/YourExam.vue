@@ -18,12 +18,14 @@
         />
       </div>
     </div>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header.vue';
 import CardExam from '@/components/Card/CardExam.vue';
+import Loading from '@/components/Loading.vue';
 import api from '@/services/apis';
 
 export default {
@@ -31,9 +33,11 @@ export default {
   components: {
     CardExam,
     Header,
+    Loading,
   },
   data() {
     return {
+      isLoading: false,
       examsData: [],
     };
   },
@@ -51,9 +55,11 @@ export default {
       }
     },
     async getExam() {
+      this.isLoading = true;
       const data = await api.exams().then((res) => res);
       if (data.status === 200) {
         this.examsData = data.data;
+        this.isLoading = false;
       }
     },
   },

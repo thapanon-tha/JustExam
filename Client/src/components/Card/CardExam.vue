@@ -35,7 +35,7 @@
                   class="text-xs p-2
                   text-gray-700 hover:text-mainColor"
                 >
-                  Leave
+                  Delete
                 </div>
               </v-list>
             </v-menu>

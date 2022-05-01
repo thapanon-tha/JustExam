@@ -1,6 +1,7 @@
 <template>
   <div class="mb-60">
     <Header main="Exam channel" current="> Inside channel" class="mb-10">
+
       <button
         @click="onEditChannelInfo"
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
@@ -246,6 +247,7 @@ export default {
   },
   data() {
     return {
+      switch1: true,
       disabled: false,
       snackbar: false,
       showModal: false,
@@ -301,10 +303,12 @@ export default {
       this.text = 'Failed to copy Invite ID';
     },
     async onClickAddExam() {
+      this.loading = true;
       const Responses = await api.exams().then((res) => res);
       if (Responses.status >= 200 && Responses.status <= 299) {
         this.examlist = Responses.data;
         this.showModal = 1;
+        this.loading = false;
       }
     },
     clickSelectExam(examData) {
@@ -327,6 +331,7 @@ export default {
         .catch(() => true);
     },
     async clickDeleteSelect() {
+      this.loading = true;
       const res = await api
         .disconnectExamtoChennal(
           this.channelInfo.cid,
@@ -334,7 +339,9 @@ export default {
         )
         .then((res) => res);
       if (res.status === 200) {
-        window.location.reload();
+        this.showButton = true;
+        this.showSelected = false;
+        this.loading = false;
       }
     },
     onClickMember() {
@@ -362,6 +369,7 @@ export default {
       ).getHours()}:${new Date(this.channelInfoEdit.endAt).getMinutes()}`;
     },
     async apiCall() {
+      this.loading = true
       this.channelsApiInfo = await api
         .channelsDetail(this.$route.params.cid)
         .then((res) => res);
@@ -376,12 +384,11 @@ export default {
       } else {
         this.showButton = true;
       }
-      const date = new Date(this.channelInfo.startAt)
-      console.log(date);
-      console.log(date.getMinutes());
+      const date = new Date(this.channelInfo.startAt);
       if (new Date() > date.setMinutes(date.getMinutes() - 5)) {
         this.disabled = true;
       }
+      this.loading = false
     },
     async connectChannel(detail) {
       const data = {

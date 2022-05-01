@@ -24,7 +24,6 @@ module.exports = {
     let transaction;
     try {
       transaction = await db.sequelize.transaction();
-      await examChannel.deleteByCid(cid,transaction)
       const data = await examChannel.addExam(
         uid,
         cid,
@@ -40,6 +39,7 @@ module.exports = {
         throw Error('Something Worng');
       }
     } catch (error) {
+      console.log(error);
       await transaction.rollback();
       stdCode.Unexpected(error, res);
     }

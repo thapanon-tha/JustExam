@@ -3,32 +3,14 @@
     <Header main="Exam channel">
       <button
         @click="onClick('NewChannelTeacher')"
-        class="
-          mt-3
-          bg-white
-          border-orange-200 border border-solid
-          rounded-lg
-          px-8
-          py-3
-          font-semilight
-          text-mainColor
-        "
+        class="mt-3 bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-mainColor"
       >
         + New channel
       </button>
     </Header>
     <div class="flex justify-end mr-15 mt-5">
       <select
-        class="
-          border
-          rounded-md
-          border-solid border-mainColor border-opacity-40
-          bg-white
-          p-2
-          text-mainColor
-          font-semilight
-          text-sm text-center
-        "
+        class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2 text-mainColor font-semilight text-sm text-center"
       >
         <option
           v-for="(item, index) in sortlist"
@@ -50,6 +32,7 @@
         </div>
       </div>
     </div>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
@@ -57,16 +40,19 @@
 import Header from '@/components/Header/Header.vue';
 import CardChannel from '@/components/Card/CardChannel.vue';
 import api from '@/services/apis';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'ExamChannelTeacher',
   components: {
     Header,
     CardChannel,
+    Loading,
   },
   data() {
     return {
       channels: [],
+      isLoading: false,
       sortlist: [
         {
           name: 'Sort by uncoming',
@@ -87,7 +73,9 @@ export default {
       //
     },
     async getChannels() {
+      this.isLoading = true;
       this.channels = await api.channels().then((res) => res.data);
+      this.isLoading = false;
     },
   },
   mounted() {

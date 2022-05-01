@@ -1,8 +1,15 @@
 <template>
   <div class="flex flex-col justify-center">
     <div class="flex flex-row mt-5 justify-start ml-5">
-      <div class="d-flex justify-start m-1" v-for="(section, index) in sectionlist" :key="index">
-        <div v-if="selectedSectionId === index + 1" @click="onClickSelectSection(section.id)">
+      <div
+        class="d-flex justify-start m-1"
+        v-for="(section, index) in sectionlist"
+        :key="index"
+      >
+        <div
+          v-if="selectedSectionId === index + 1"
+          @click="onClickSelectSection(section.id)"
+        >
           <v-btn class="white--text" color="#EF7F4C" large :outlined="false">
             Section {{ index + 1 }}
             <v-icon
@@ -46,13 +53,25 @@
           :key="item.id"
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
-          <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10" v-if="showEditQuestion">
-            <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
-            <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
+          <div
+            class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10"
+            v-if="showEditQuestion"
+          >
+            <MultipleChoice
+              v-model="item.questionData"
+              v-if="item.type === 'mc'"
+            />
+            <ShortAnswer
+              v-model="item.questionData"
+              v-if="item.type === 'sa'"
+            />
             <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
             <TrueFalse v-model="item.questionData" v-if="item.type === 'tf'" />
             <Matching v-model="item.questionData" v-if="item.type === 'ma'" />
-            <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'" />
+            <CodingQuestion
+              v-model="item.questionData"
+              v-if="item.type === 'ca'"
+            />
             <div class="flex flex-col ml-10">
               <select
                 class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white px-8 py-3 text-mainColor font-semibold text-center"
@@ -75,11 +94,16 @@
                 @click="deleteQuestion(item.id)"
               >
                 <!-- eslint-enable max-len -->
-                <span class="material-icons mt-2 text-3xl"> delete_outline </span>
+                <span class="material-icons mt-2 text-3xl">
+                  delete_outline
+                </span>
               </button>
             </div>
           </div>
-          <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10" v-if="showSaveQuestion">
+          <div
+            class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10"
+            v-if="showSaveQuestion"
+          >
             <PreMultiple v-if="qlist.type === 'mc'" :value="prototype.mc" />
             <PreShortAns v-if="qlist.type === 'sa'" :value="prototype.sa" />
             <PreParagraph v-if="qlist.type === 'pa'" :value="prototype.pa" />
@@ -97,10 +121,12 @@
         <!-- eslint-enable max-len -->
       </div>
     </div>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
 import MultipleChoice from '@/components/Form/QuestionForm/MultipleChoice.vue';
 import ShortAnswer from '@/components/Form/QuestionForm/ShortAnswer.vue';
@@ -132,12 +158,14 @@ export default {
     PreCoding,
     PreTrueFalse,
     ActionButton,
+    Loading,
   },
   data() {
     return {
       showSaveQuestion: false,
       showEditQuestion: true,
       selectedSectionId: 1,
+      isLoading: false,
       sectionlist: [
         {
           id: 1,
@@ -292,9 +320,13 @@ export default {
       this.qlist[indexObject].questionData = this.prototype[type];
     },
     async callApi() {
-      const questionsApi = await api.examList(this.$route.params.eid).then((res) => res.data);
+      this.isLoading = true;
+      const questionsApi = await api
+        .examList(this.$route.params.eid)
+        .then((res) => res.data);
       this.qlist = api.reverse(questionsApi);
       this.sectionCalo();
+      this.isLoading = false;
     },
     sectionCalo() {
       const list = this.qlist.map((data) => data.sectionId);
@@ -321,7 +353,9 @@ export default {
   },
   computed: {
     questionList() {
-      return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+      return this.qlist.filter(
+        (question) => question.sectionId === this.selectedSectionId,
+      );
     },
   },
   watch: {

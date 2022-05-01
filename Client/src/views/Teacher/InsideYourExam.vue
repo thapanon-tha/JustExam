@@ -32,36 +32,37 @@
         class="ml-10 bg-white border-orange-200 border border-solid rounded-lg px-6 py-3 font-semilight text-mainColor hover:text-white hover:bg-mainColor"
         name="Update"
         @on-click="onClickUpdate()"
-        :isLoading="loading"
+        :isLoading="isLoading"
       />
       <ActionButton
         class="bg-white border-orange-200 border border-solid rounded-lg px-6 py-3 font-semilight text-grayColor hover:text-white hover:bg-mainColor"
         name="Cancle"
         @on-click="onClickCancel()"
-        :isLoading="loading"
+        :isLoading="isLoading"
       />
       <!-- eslint-enable max-len -->
     </div>
-          <v-dialog v-model="dialogPreview" persistent fullscreen>
-        <v-card>
-          <v-toolbar dark color="#ef7f4c">
-            <v-toolbar-title>Preview Exam</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn dark text @click="dialogPreview = false">
-                <v-btn icon dark @click="dialogPreview = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
+    <v-dialog v-model="dialogPreview" persistent fullscreen>
+      <v-card>
+        <v-toolbar dark color="#ef7f4c">
+          <v-toolbar-title>Preview Exam</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark text @click="dialogPreview = false">
+              <v-btn icon dark @click="dialogPreview = false">
+                <v-icon>mdi-close</v-icon>
               </v-btn>
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-card-title></v-card-title>
-          <PreviewList v-model="questions"></PreviewList>
-          <v-card-actions>
-            <v-card-actions> </v-card-actions>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-card-title></v-card-title>
+        <PreviewList v-model="questions"></PreviewList>
+        <v-card-actions>
+          <v-card-actions> </v-card-actions>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 <script>
@@ -70,6 +71,7 @@ import EditExamInfo from '@/components/Form/YourExamForm/EditExamInfo.vue';
 import EditQuestionList from '@/components/Form/QuestionForm/EditQuestionList.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
 import PreviewList from '@/components/Form/PreviewForm/PreviewList.vue';
+import Loading from '@/components/Loading.vue';
 
 import api from '@/services/apis';
 
@@ -81,12 +83,13 @@ export default {
     EditQuestionList,
     ActionButton,
     PreviewList,
+    Loading,
   },
   data() {
     return {
       dialogPreview: false,
-      loading: false,
       questions: [],
+      isLoading: false,
     };
   },
   methods: {
@@ -100,7 +103,7 @@ export default {
       this.questions = data;
     },
     async onClickUpdate() {
-      this.loading = true;
+      this.isLoading = true;
       const resultMap = api.examMapper(this.questions);
       const questionsResp = await api
         .updateQuestions(this.$route.params.eid, resultMap)
@@ -112,6 +115,7 @@ export default {
         this.$router.push({ name: 'YourExam' }).catch(() => true);
       } else {
         this.$router.go(this.$router.currentRoute);
+        this.isLoading = false;
       }
     },
   },

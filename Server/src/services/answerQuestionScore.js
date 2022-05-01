@@ -47,6 +47,18 @@ const medthods = {
       { transaction },
     );
   },
+
+  async autoGread(aqsid) {
+    await answerQuestionScore.findOne({
+      where: { aqsid },
+    });
+
+    // multimult choice
+
+    // t / f
+
+    // matching
+  },
 };
 
 module.exports = {
