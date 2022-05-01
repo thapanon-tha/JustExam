@@ -101,6 +101,7 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
@@ -109,6 +110,7 @@ import Header from '@/components/Header/Header.vue';
 import CardStudentChannel from '@/components/Card/CardStudentChannel.vue';
 import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
 import CardChannel from '@/components/Card/CardChannel.vue';
+import Loading from '@/components/Loading.vue';
 import api from '@/services/apis';
 
 export default {
@@ -118,9 +120,11 @@ export default {
     CardStudentChannel,
     CardSelectedExam,
     CardChannel,
+    Loading,
   },
   data() {
     return {
+      isLoading: false,
       inviteCode: '',
       channelsresult: {},
       studentID: '',
@@ -179,9 +183,11 @@ export default {
       if (response.status < 300) this.$router.push({ name: 'ExamChannelLobby', params: { cid: this.channelsresult.cid } }).catch(() => {});
     },
     async callapi() {
+      this.isLoading = true;
       const response = await api.channels().then((e) => e);
       if (response.status < 300) {
         this.channels = response.data;
+        this.isLoading = false;
       }
     },
   },

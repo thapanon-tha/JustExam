@@ -5,7 +5,9 @@
       <SignUpForm @on-submit="onSubmit" />
     </section>
     <section class="box-border mt-28 ml-10 mr-32 mb-40 flex flex-col">
-      <v-container class="bg-subColor border-orange-200 border-solid border rounded-lg text-center">
+      <v-container
+        class="bg-subColor border-orange-200 border-solid border rounded-lg text-center"
+      >
         <img src="@/assets/kid.svg" class="w-80 h-80" alt="book" />
         <!-- eslint-disable max-len -->
         <ActionButton
@@ -16,9 +18,18 @@
         <!-- eslint-enable max-len -->
       </v-container>
     </section>
-    <v-snackbar v-model="snackbar" color="red accent-2" absolute centered top text outlined>
+    <v-snackbar
+      v-model="snackbar"
+      color="red accent-2"
+      absolute
+      centered
+      top
+      text
+      outlined
+    >
       {{ text }}
     </v-snackbar>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
@@ -27,16 +38,19 @@ import SignUpForm from '@/components/Form/SignUpForm.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
 import api from '@/services/apis';
 import auth from '@/services/authentications';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'TeacherSignUp',
   components: {
     SignUpForm,
     ActionButton,
+    Loading,
   },
 
   data() {
     return {
+      isLoading: false,
       text: '',
       timeout: 2000,
       snackbar: false,
@@ -57,6 +71,7 @@ export default {
           this.text = 'password not match';
           this.snackbar = true;
         } else {
+          this.isLoading = true;
           await api
             .register({
               password: data.password,
@@ -74,9 +89,13 @@ export default {
                 auth.setuid(resp.data.uid);
                 auth.setemail(resp.data.email);
                 window.location.href = '/';
+              } else {
+                this.text = resp.data.message;
+                this.snackbar = true;
               }
               return resp.data;
             });
+          this.isLoading = false;
         }
       } else {
         this.text = 'please complete form';
