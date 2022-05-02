@@ -93,8 +93,24 @@ const medthods = {
 
   async deleteById(mid, cid, transaction) {
     return member.destroy({
-      where: { mid, cid },
+      where: { mid, cid, [Op.ne]: [{ uid }, { sid }] },
       transaction,
+    });
+  },
+
+  async getmemberAndScore(cid, ecid) {
+    return member.findAll({
+      where: { cid, rid: '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5' },
+      include: [
+        {
+          model: user,
+          attributes: ['email', 'firstname', 'surname'],
+        },
+        {
+          model: answerQuestionScore,
+          wgere: { ecid },
+        },
+      ],
     });
   },
 };

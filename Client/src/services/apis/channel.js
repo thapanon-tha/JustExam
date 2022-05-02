@@ -52,6 +52,8 @@ const updateRole = (data, cid, mid) => axios.put(
 const kickMember = (cid, mid) => axios.delete(`${BACKEND_HOST}/api/channels/${cid}/members/${mid}`, { validateStatus: false });
 const updateStudentScore = (cid, data) => axios.put(`${BACKEND_HOST}/api/channels/${cid}/answer`, { data }, { validateStatus: false });
 
+const sendemail = (cid) => axios.put(`${BACKEND_HOST}/api/channels/${cid}/sendmail`, { validateStatus: false });
+
 export default {
   channels,
   channelsDetail,
@@ -71,4 +73,5 @@ export default {
   updateStudentScore,
   channelUpdate,
   getMemberById,
+  sendemail,
 };

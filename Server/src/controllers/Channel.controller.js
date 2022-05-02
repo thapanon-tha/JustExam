@@ -1,3 +1,4 @@
+const nodemailer = require('nodemailer');
 const db = require('../models/db');
 const { redisClient } = require('../configs/redis.config');
 const Channel = require('../services/channel.service');
@@ -28,6 +29,14 @@ const randomQuestions = (e) => {
   }
 
   return final;
+};
+
+const getStandardDeviation = (array) => {
+  const n = array.length;
+  const mean = array.reduce((a, b) => a + b) / n;
+  return Math.sqrt(
+    array.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n,
+  );
 };
 
 module.exports = {
@@ -457,5 +466,53 @@ module.exports = {
     userSection.section = sectionList.filter((value) => value !== sectionName);
     await redisClient.set(uid, JSON.stringify(userSection));
     res.json(finalList);
+  },
+
+  async sendEmail(req, res) {
+    const { uid } = req.user;
+    const { cid } = req.params;
+    try {
+      console.log('ssssssss');
+      const channel = await channelService.getById(cid);
+      console.log(channel);
+      const member = await memberService.getmemberAndScore(cid, channel.ecid);
+      console.log(member);
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.JEemail,
+          pass: process.env.JEpassword,
+        },
+      });
+      const array = [];
+      const newMember = member.map((e) => ({
+        email: e.user.email,
+        name: `${e.user.firstname} ${e.user.surname}`,
+        score: e.answerQuestionScores.reduce(
+          (previousValue, currentValue) => previousValue + currentValue?.pointReviceve,
+          0,
+        ),
+      }));
+
+      const score = newMember.map((e) => e.score);
+      const scoreMax = Math.max(...score);
+      const scoreMin = Math.min(...score);
+      const scoreSD = getStandardDeviation(score);
+      const scoreMean = score.reduce((a, b) => a + b, 0) / score.length;
+      newMember.forEach((element) => {
+        const mailOptions = {
+          from: process.env.JEemail,
+          to: element.email,
+          subject: `${channel.title} - Your score has been release`,
+          html: `<h1>${channel.title}</h1><p>${element.name}</p><p>Your score is ${element.score}</p><p>Mean is ${scoreMean}</p><p>Max is ${scoreMax}</p><p>Min is ${scoreMin}</p><p>SD is ${scoreSD}</p>`,
+        };
+        console.log(mailOptions);
+        transporter.sendMail(mailOptions);
+      });
+
+      stdCode.querySuccess(array, res);
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
   },
 };

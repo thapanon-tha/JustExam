@@ -12,6 +12,12 @@
         Back
       </button>
       <button
+        @click="onClickReleaceScore"
+        class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
+      >
+        Releace Score
+      </button>
+      <button
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
         <downloadexcel
@@ -133,6 +139,14 @@ export default {
         this.isLoading = false;
       }
     },
+    async onClickReleaceScore(){
+      this.isLoading = true
+      const respones = await api
+        .sendemail(this.$route.params.cid)
+      if(respones.status ===200){
+        this.isLoading = false
+      }
+    }
   },
   created() {
     this.isLoading = true;

@@ -26,4 +26,8 @@ router.get('/:cid/startExam', controller.continue);
 // student member only
 router.post('/:cid/submitExam', controller.submitExam2);
 
+// owner(teacher) only
+router.put('/:cid/sendmail', controller.sendEmail);
+
+
 module.exports = router;
