@@ -205,9 +205,10 @@ const method = {
   },
   totf(data) {
     let correct = false;
-    if (data.value === true) {
+    if (data.answer[0].value === true) {
       correct = true;
     }
+    console.log(correct)
     const ret = {
       id: data.qid,
       type: 'tf',

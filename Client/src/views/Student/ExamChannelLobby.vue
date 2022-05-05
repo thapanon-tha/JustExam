@@ -9,7 +9,8 @@
           {{ channels.schedule | moment('Do  MMMM  YYYY') }}
         </v-row>
         <v-row class="justify-center m-2">
-          {{ channels.startAt | moment('H:mm') }} - {{ channels.endAt | moment('H:mm') }}
+          {{ channels.startAt | moment('H:mm') }} -
+          {{ channels.endAt | moment('H:mm') }}
         </v-row>
         <div v-if="showTime">
           <Countdown
@@ -27,12 +28,22 @@
             v-bind:text="text2"
           />
         </div>
-        <v-row class="justify-center m-2 text-xl">
-          This webside will save your answers to storage ( Only On This browser )
+        <v-row
+          class="justify-center m-2 text-xl"
+          v-if="channels.members[0].state === 'FINISH'"
+        >
+          <h1 class="text-red-500">you have finish this examination</h1>
         </v-row>
-        <v-row class="justify-center m-2 text-xl">
-          If you disconnect you rejoin to continue examination
-        </v-row>
+        <div v-else>
+          <v-row class="justify-center m-2 text-xl">
+            This webside will save your answers to storage ( Only On This
+            browser )
+          </v-row>
+          <v-row class="justify-center m-2 text-xl">
+            If you disconnect you rejoin to continue examination
+          </v-row>
+        </div>
+
         <v-row class="flex justify-center">
           <v-btn
             color="mainColor"
@@ -89,7 +100,10 @@ export default {
     },
     onClickStart() {
       this.$router
-        .push({ name: 'ExamChannelOnExam', params: { cid: this.$route.params.cid } })
+        .push({
+          name: 'ExamChannelOnExam',
+          params: { cid: this.$route.params.cid },
+        })
         .catch(() => {});
     },
     onClickLeaveChannel() {
@@ -99,12 +113,21 @@ export default {
       const now = new Date();
       const start = new Date(this.channels.startAt);
       const end = new Date(this.channels.endAt);
-      if (now > start && now < end ) {
+      if (
+        now > start
+        && now < end
+        && this.channels.members[0].state !== 'FINISH'
+      ) {
         this.isDisable = false;
+        this.isFinish = true;
+      } else {
+        this.isDisable = true;
       }
     },
     async callapi() {
-      const response = await api.channelsDetail(this.$route.params.cid).then((e) => e[0]);
+      const response = await api
+        .channelsDetail(this.$route.params.cid)
+        .then((e) => e[0]);
       if (response.status < 300) {
         this.channels = response.data;
         const now = new Date();
@@ -114,13 +137,19 @@ export default {
           this.startText = 'continue';
         }
         if (now > start && this.channels.members[0].state !== 'FINISH') {
-          this.isDisable = false;
+          console.log('1');
           this.isFinish = true;
+          this.isDisable = false;
         } else {
           this.isDisable = true;
           this.isFinish = false;
         }
         if (now > end) {
+          this.showTime = false;
+        } else {
+          this.showTime = true;
+        }
+        if (this.channels.members[0].state === 'FINISH') {
           this.showTime = false;
         }
       }

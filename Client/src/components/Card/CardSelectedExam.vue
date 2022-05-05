@@ -17,7 +17,7 @@
           <!-- <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickChange">
             change_circle
           </v-icon> -->
-          <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickScore">
+          <v-icon :disabled="false" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickScore">
             edit
           </v-icon>
           <v-icon :disabled="disabled" big color="white" class="rounded-full p-1 hover:bg-red-500" @click="clickDelete">

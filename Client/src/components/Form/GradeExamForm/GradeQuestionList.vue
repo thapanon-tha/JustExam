@@ -284,5 +284,8 @@ export default {
       this.sectionCalo();
     },
   },
+  created() {
+    this.sectionCalo()
+  },
 };
 </script>

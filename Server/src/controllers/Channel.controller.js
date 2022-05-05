@@ -394,6 +394,12 @@ module.exports = {
       } else {
         throw new Error('you are not member');
       }
+
+      // auto gread
+      answers = await Promise.all(
+        answers.map((e) => answerQuestionScoreService.autoGread(e)),
+      );
+      console.log(answers);
       await answerQuestionScoreService.createMany(answers, transaction);
       await transaction.commit();
       let examData = await redisClient.get(cidKey);
@@ -448,25 +454,25 @@ module.exports = {
       };
       res.json(responesPack);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
 
-  async submitExam(req, res) {
-    const { cid } = req.params;
-    const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940';
-    let exams = await redisClient.get(cid);
-    exams = JSON.parse(exams);
-    let userSection = await redisClient.get(uid);
-    userSection = JSON.parse(userSection);
-    const sectionList = userSection.section;
-    const sectionName = sectionList[Math.floor(Math.random() * sectionList.length)];
-    const finalList = exams.filter((exam) => exam.sectionName === sectionName);
-    userSection.section = sectionList.filter((value) => value !== sectionName);
-    await redisClient.set(uid, JSON.stringify(userSection));
-    res.json(finalList);
-  },
+  // async submitExam(req, res) {
+  //   const { cid } = req.params;
+  //   const uid = 'a7baa518-29cd-4ff1-ae2c-42ddeeb31940';
+  //   let exams = await redisClient.get(cid);
+  //   exams = JSON.parse(exams);
+  //   let userSection = await redisClient.get(uid);
+  //   userSection = JSON.parse(userSection);
+  //   const sectionList = userSection.section;
+  //   const sectionName = sectionList[Math.floor(Math.random() * sectionList.length)];
+  //   const finalList = exams.filter((exam) => exam.sectionName === sectionName);
+  //   userSection.section = sectionList.filter((value) => value !== sectionName);
+  //   await redisClient.set(uid, JSON.stringify(userSection));
+  //   res.json(finalList);
+  // },
 
   async sendEmail(req, res) {
     const { uid } = req.user;
