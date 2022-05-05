@@ -24,7 +24,8 @@ const local = new LocalStrategy(
       if (user !== undefined) {
         // console.log(user.provider);
         if (user.provider !== 'Google') {
-          const result = bcrypt.compare(password, user?.password);
+          const result = await bcrypt.compare(password, user?.hash);
+          console.log(result)
           if (result) {
             const Mockuser = {
               uid: user.uid,
@@ -47,6 +48,7 @@ const local = new LocalStrategy(
         cb(null, false, { message: 'Incorrect email' });
       }
     } catch (error) {
+      console.log(error)
       cb(null, false, { message: 'Error something worng' });
     }
   },

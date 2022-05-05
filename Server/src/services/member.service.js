@@ -98,6 +98,13 @@ const medthods = {
     });
   },
 
+  async deleteByUId(uid, cid, transaction) {
+    return member.destroy({
+      where: { uid, cid },
+      transaction,
+    });
+  },
+
   async getmemberAndScore(cid, ecid) {
     return member.findAll({
       where: { cid, rid: '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5' },

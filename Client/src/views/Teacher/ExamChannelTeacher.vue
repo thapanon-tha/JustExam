@@ -27,7 +27,7 @@
           <CardChannel
             v-bind:detail="box"
             @onClick="onClick('InsideChannelTeacher', box.cid)"
-            @clickDelete="onClickDeleteChannel()"
+            @clickDelete="onClickDeleteChannel(box.cid)"
           />
         </div>
       </div>
@@ -69,8 +69,12 @@ export default {
     onClick(pageName, cid) {
       this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
     },
-    onClickDeleteChannel() {
-      //
+    async onClickDeleteChannel(cid) {
+      await api.deleteChannel(cid).then((res) => {
+        if (res.status === 200) {
+          this.getChannels();
+        }
+      });
     },
     async getChannels() {
       this.isLoading = true;

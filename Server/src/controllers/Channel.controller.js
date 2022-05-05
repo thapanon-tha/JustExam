@@ -521,4 +521,23 @@ module.exports = {
       stdCode.Unexpected(error, res);
     }
   },
+
+  async leaveMember(req, res) {
+    const { cid } = req.params;
+    const { uid } = req.user;
+    let transaction;
+    try {
+      transaction = await db.sequelize.transaction();
+      const data = await memberService.deleteByUId(uid, cid, transaction);
+      if (data) {
+        await transaction.commit();
+        stdCode.Success(res);
+      } else {
+        throw Error("something wrong can't update");
+      }
+    } catch (error) {
+      if (transaction) await transaction.rollback();
+      stdCode.Unexpected(error, res);
+    }
+  },
 };
