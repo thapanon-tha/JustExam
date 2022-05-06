@@ -21,7 +21,7 @@
               </template>
               <v-list>
                 <div @click="clickDelete" class="p-2 text-xs text-gray-700 hover:text-mainColor">
-                  Leave
+                  Delete
                 </div>
               </v-list>
             </v-menu>

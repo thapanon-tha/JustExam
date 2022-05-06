@@ -29,5 +29,7 @@ router.post('/:cid/submitExam', controller.submitExam2);
 // owner(teacher) only
 router.put('/:cid/sendmail', controller.sendEmail);
 
+router.delete('/:cid/leave', controller.leaveMember);
+
 
 module.exports = router;

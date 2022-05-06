@@ -17,7 +17,7 @@
                 </v-icon>
               </template>
               <v-list>
-                <div class="px-1 text-sm bg-white border border-subColor rounded-md text-mainColor">
+                <div @click="clickLeave" class="px-1 text-sm bg-white border border-subColor rounded-md text-mainColor">
                   Leave
                 </div>
               </v-list>
