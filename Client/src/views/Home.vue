@@ -3,6 +3,7 @@
     <div v-for="topic in topics" :key="topic.id">
       <CardWithPicture
         :title="topic.title"
+        :image="topic.image"
         :subtitle="topic.description"
         :fullText="topic.fullText"
         to="Test"
@@ -37,21 +38,21 @@ export default {
           id: "teacher",
           title: "For Teacher",
           image:
-            "https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            "https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
           description: "All features for teacher on Just Exam.",
           imageLeft: true,
-          fullText: `Vue is a great framework and it has a couple of key concepts: Data binding,
-            events, components and reactivity - that should tell you something!`,
+          fullText: `Teachers can create an exam channel where the online exam will take place.
+          In the exam channel, teachers can set the date and time of the exam. They can also 
+          create the exam and add to the exam channel.`,
         },
         {
           id: "student",
           image:
-            "https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            "https://images.pexels.com/photos/4144144/pexels-photo-4144144.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
           title: "For Student",
-          description: "All features for student on Just Exam.",
+          description: "A feature for student on Just Exam.",
           imageLeft: false,
-          fullText: `Vue is a great framework and it has a couple of key concepts: Data binding,
-            events, components and reactivity - that should tell you something!`,
+          fullText: `Students can join the exam channel via an invite code and take an exam at the required date.`,
         },
       ],
     };
@@ -62,9 +63,6 @@ export default {
       topics2: this.topics2,
       topics3: this.topics3,
     };
-  },
-  methods: {
-    //
   },
   mounted() {
     //

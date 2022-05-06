@@ -3,14 +3,7 @@
     <div class="flex flex-row">
       <img class="p-3 mr-8" src="@/assets/logo.svg" alt="logo" />
       <NavButton name="Home" to="Home" :borderRight="true" />
-      <NavButton
-        name="Tutorial"
-        :borderLeft="true"
-        :borderRight="true"
-        to="Tutorial"
-        v-if="!$store.getters.getIsAuth"
-      />
-      <NavButton name="Contact Us" to="ContactUs" v-if="!$store.getters.getIsAuth" />
+      <NavButton name="Contact us" to="ContactUs" v-if="!$store.getters.getIsAuth" />
       <NavButton
         name="Exam channel"
         to="ExamChannelTeacher"

@@ -208,7 +208,7 @@ const method = {
     if (data.answer[0].value === true) {
       correct = true;
     }
-    console.log(correct)
+    console.log(correct);
     const ret = {
       id: data.qid,
       type: 'tf',

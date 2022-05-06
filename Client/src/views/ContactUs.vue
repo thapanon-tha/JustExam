@@ -1,49 +1,47 @@
 <template>
   <div>
     <v-container>
-      <v-row class="justify-center mb-6">
+      <v-row class="justify-center mb-28">
         <h1 class="font-light text-5xl text-center mt-15">Contact us</h1>
       </v-row>
-      <v-row>
-        <v-col class="flex justify-center" cols="4">
+      <v-row class="justify-center mb-6">
+        <v-col cols="2">
           <div>
-          <p class="justify-center">Thapanon Sodngam</p>
-          <p class="justify-center">Email: thapanon.sod@gmail.com</p>
+            <p>Thapanon Sodngam</p>
+            <p>thapanon.sod@gmail.com</p>
           </div>
         </v-col>
 
-        <v-col class="flex justify-center" cols="4">
+        <v-col cols="2">
           <div>
             <p>Thanaporn Cheenthada</p>
-            <p>Email: thanaporn.7209@mail.kmutt.ac.th</p>
+            <p>eye54067@hotmail.com</p>
           </div>
         </v-col>
 
-        <v-col class="flex justify-center" cols="4">
-          <div class="justify-center">
+        <v-col cols="2">
+          <div>
             <p>Rungwigrai Payakkanuwat</p>
-            <p>Email: newrung@gmail.com</p>
+            <p>newrung@gmail.com</p>
           </div>
         </v-col>
       </v-row>
     </v-container>
-
     <!-- <Loading v-model="loading"></Loading> -->
   </div>
 </template>
 
 <script>
-import Loading from '@/components/Loading.vue';
+// import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'ContactUs',
-  components: {
-    Loading,
-  },
+  // components: {
+  //   Loading,
+  // },
   data() {
     return {
-      loading: true,
-      //
+      // loading: true,
     };
   },
   mounted() {},

@@ -19,12 +19,6 @@ const routes = [
     meta: {},
   },
   {
-    path: '/tutorial',
-    name: 'Tutorial',
-    component: () => import('@/views/Tutorial.vue'),
-    meta: {},
-  },
-  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/LoginT.vue'),

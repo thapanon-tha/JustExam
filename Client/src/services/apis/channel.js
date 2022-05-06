@@ -12,7 +12,7 @@ const channelsDetail = (cid) => Promise.all([
 
 const createChannel = (data) => axios.post(`${BACKEND_HOST}/api/channels/`, { data }, { validateStatus: false });
 
-const channelUpdate = (cid,data) => axios.put(`${BACKEND_HOST}/api/channels/${cid}`, { data }, { validateStatus: false });
+const channelUpdate = (cid, data) => axios.put(`${BACKEND_HOST}/api/channels/${cid}`, { data }, { validateStatus: false });
 
 const joinChannel = (cid, data) => axios.post(`${BACKEND_HOST}/api/channels/${cid}/members`, { data }, { validateStatus: false });
 
@@ -39,7 +39,7 @@ const updateScore = (data, cid, ecid) => axios.put(
 );
 
 const getMember = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members`, { validateStatus: false });
-const getMemberById = (cid,mid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members/${mid}`, { validateStatus: false });
+const getMemberById = (cid, mid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members/${mid}`, { validateStatus: false });
 
 const memberJoin = (cid, data) => axios.post(`${BACKEND_HOST}/api/channels/${cid}/members`, { data }, { validateStatus: false });
 

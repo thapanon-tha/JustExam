@@ -1,33 +1,34 @@
 <template>
   <div class="flex justify-center">
     <div v-if=!imageLeft class="mr-60 my-10">
-        <div class="flex flex-row pt-20">
-          <h3 class="text-5xl font-medium text-mainColor">
-            {{ title[0] }}
-          </h3>
-          <h3 class="text-5xl font-medium text-gray-900">
-            {{ title.slice(1) }}
-          </h3>
+      <div class="flex flex-row pt-20">
+        <h3 class="text-5xl font-medium text-mainColor">
+          {{ title[0] }}
+        </h3>
+        <h3 class="text-5xl font-medium text-gray-900">
+          {{ title.slice(1) }}
+        </h3>
+      </div>
+      <div class="w-96 font-light whitespace-normal">
+        <div class="flex flex-row">
+          <p class="pt-10 font-sans text-mainColor">
+            {{ subtitle[0] }}&nbsp;
+          </p>
+          <p class="pt-10 font-sans break-words">
+            {{ subtitle.replace(subtitle.split(" ")[0], "") }}
+          </p>
         </div>
-        <div class="w-96 font-light whitespace-normal">
-          <div class="flex flex-row">
-            <p class="pt-10 font-sans text-mainColor">
-              {{ subtitle[0] }}&nbsp;
-            </p>
-            <p class="pt-10 font-sans break-words">
-              {{ subtitle.replace(subtitle.split(" ")[0], "") }}
-            </p>
-          </div>
-          <div >
-            <p class="font-sans" v-if=visible >{{ fullText }}</p>
-          </div>
+        <div >
+          <p class="font-sans" v-if=visible >{{ fullText }}</p>
         </div>
-        <button @click="onClick">
-          <div class="bg-subColor border-orange-200 border
-                      rounded-lg px-8 py-3 font-medium text-mainColor">
-            Read {{ visible ? 'less' : 'more' }}
-          </div>
-        </button>
+      </div>
+      <button @click="onClick">
+        <div class="bg-subColor border-orange-200 border
+                      rounded-lg px-8 py-3 font-medium text-mainColor"
+        >
+          Read {{ visible ? 'less' : 'more' }}
+        </div>
+      </button>
     </div>
     <div class="my-10">
       <img
@@ -37,33 +38,33 @@
       >
     </div>
     <div v-if=imageLeft class="ml-60 my-10">
-        <div class="flex flex-row pt-20">
-          <h3 class="text-5xl font-medium text-mainColor">
-            {{ title[0] }}
-          </h3>
-          <h3 class="text-5xl font-medium text-gray-900">
-            {{ title.slice(1) }}
-          </h3>
+      <div class="flex flex-row pt-20">
+        <h3 class="text-5xl font-medium text-mainColor">
+          {{ title[0] }}
+        </h3>
+        <h3 class="text-5xl font-medium text-gray-900">
+          {{ title.slice(1) }}
+        </h3>
+      </div>
+      <div class="w-96 font-light whitespace-normal">
+        <div class="flex flex-row">
+          <p class="pt-10 font-sans text-mainColor">
+            {{ subtitle.split(" ")[0] }}&nbsp;
+          </p>
+          <p class="pt-10 font-sans break-words">
+            {{ subtitle.replace(subtitle.split(" ")[0], "") }}
+          </p>
         </div>
-        <div class="w-96 font-light whitespace-normal">
-          <div class="flex flex-row">
-            <p class="pt-10 font-sans text-mainColor">
-              {{ subtitle.split(" ")[0] }}&nbsp;
-            </p>
-            <p class="pt-10 font-sans break-words">
-              {{ subtitle.replace(subtitle.split(" ")[0], "") }}
-            </p>
-          </div>
-          <div >
-            <p class="font-sans" v-if=visible>{{ fullText }}</p>
-          </div>
+        <div >
+          <p class="font-sans" v-if=visible>{{ fullText }}</p>
         </div>
-        <button @click="onClick">
-          <div class="bg-subColor border-orange-200 border
+      </div>
+      <button @click="onClick">
+        <div class="bg-subColor border-orange-200 border
                       rounded-lg px-8 py-3 font-medium text-mainColor">
-            Read {{ visible ? 'less' : 'more' }}
-          </div>
-        </button>
+          Read {{ visible ? 'less' : 'more' }}
+        </div>
+      </button>
     </div>
   </div>
 </template>
