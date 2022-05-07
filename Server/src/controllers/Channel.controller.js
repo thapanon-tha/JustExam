@@ -79,6 +79,22 @@ module.exports = {
     }
   },
 
+  async isTa(req, res) {
+    const { cid } = req.params;
+    const { uid } = req.user;
+    try {
+      const user = await memberService.findByCidAndUid(cid, uid);
+      let isTA = false;
+      if (!(user.rid === '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5')) {
+        isTA = true;
+      }
+
+      stdCode.querySuccess({ isTA }, res);
+    } catch (error) {
+      stdCode.Unexpected(error, res);
+    }
+  },
+
   async addChannel(req, res) {
     const {
       title, description, schedule, startAt, endAt,

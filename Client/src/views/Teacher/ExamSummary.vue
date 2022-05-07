@@ -12,6 +12,7 @@
         Back
       </button>
       <button
+        v-if="$cookies.get('type') === 'teacher'"
         @click="onClickReleaceScore"
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
@@ -103,12 +104,20 @@ export default {
       this.text = 'Download Success';
     },
     onClickBack() {
-      this.$router
-        .push({
-          name: 'InsideChannelTeacher',
-          params: { cid: this.$route.params.cid },
-        })
-        .catch(() => true);
+      if ($cookies.get('type') === 'teacher') {
+        this.$router
+          .push({
+            name: 'InsideChannelTeacher',
+            params: { cid: this.$route.params.cid },
+          })
+          .catch(() => true);
+      } else {
+        this.$router
+          .push({
+            name: 'ExamChannelStudent',
+          })
+          .catch(() => true);
+      }
     },
     clickGradeExam(mid) {
       this.$router

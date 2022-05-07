@@ -19,9 +19,25 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 /* eslint-disable */
 axios.defaults.withCredentials = true;
-axios.defaults.headers.common.Authorization = `Bearer ${$cookies.get('token')}`;
+axios.defaults.headers.common.Authorization = `Bearer ${getCookie('token')}`;
 /* eslint-enable */
 export default {
   ...userAPI,

@@ -12,7 +12,11 @@
       <select
         class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2 text-mainColor font-semilight text-sm text-center"
       >
-        <option v-for="(item, index) in sortlist" :key="index" :value="item.value">
+        <option
+          v-for="(item, index) in sortlist"
+          :key="index"
+          :value="item.value"
+        >
           {{ item.name }}
         </option>
       </select>
@@ -43,8 +47,12 @@
           </div>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="orange darken-1" text @click="dialog = false"> Cancel </v-btn>
-            <v-btn color="orange darken-1" text @click="searchChannel"> Join </v-btn>
+            <v-btn color="orange darken-1" text @click="dialog = false">
+              Cancel
+            </v-btn>
+            <v-btn color="orange darken-1" text @click="searchChannel">
+              Join
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -56,7 +64,10 @@
           <v-card-title class="text-h6"> Loading </v-card-title>
           <v-card-text>
             <div class="text-center">
-              <v-progress-circular indeterminate color="red"></v-progress-circular>
+              <v-progress-circular
+                indeterminate
+                color="red"
+              ></v-progress-circular>
             </div>
           </v-card-text>
         </v-card>
@@ -81,8 +92,12 @@
           </div>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="orange darken-1" text @click="dialog2 = false"> Cancel </v-btn>
-            <v-btn color="orange darken-1" text @click="joinChannel"> Join </v-btn>
+            <v-btn color="orange darken-1" text @click="dialog2 = false">
+              Cancel
+            </v-btn>
+            <v-btn color="orange darken-1" text @click="joinChannel">
+              Join
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -149,7 +164,17 @@ export default {
   },
   methods: {
     onClick(pageName, cid) {
-      this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
+      const index = this.channels.findIndex((e) => e.cid === cid);
+      if (
+        (this.
+        channels[index].members[0].rid
+          === '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5')
+      ) this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
+      else {
+        this.$router
+          .push({ name: 'ExamSummary', params: { cid } })
+          .catch(() => {});
+      }
     },
     onClickLeaveChannel() {
       //
@@ -180,9 +205,16 @@ export default {
           sid: this.studentID,
         })
         .then((e) => ({ ...e.data, status: e.status }));
-      if (response.status < 300) this.$router.push({ name: 'ExamChannelLobby', params: { cid: this.channelsresult.cid } }).catch(() => {});
+      if (response.status < 300) {
+        this.$router
+          .push({
+            name: 'ExamChannelLobby',
+            params: { cid: this.channelsresult.cid },
+          })
+          .catch(() => {});
+      }
     },
-    async onClickDeleteChannel(cid){
+    async onClickDeleteChannel(cid) {
       this.isLoading = true;
       await api.leaveChannel(cid).then((res) => {
         if (res.status === 200) {

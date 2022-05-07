@@ -61,6 +61,10 @@ export default {
         this.examsData = data.data;
         this.isLoading = false;
       }
+      if (data.status === 404) {
+        this.examsData = [];
+        this.isLoading = false;
+      }
     },
   },
   mounted() {

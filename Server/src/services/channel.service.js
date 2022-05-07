@@ -68,7 +68,7 @@ const medthods = {
     return Channel.findAll({
       include: {
         model: Member,
-        attributes: [],
+        attributes: ['rid'],
         where: { uid },
       },
     });

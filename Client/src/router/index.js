@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import jwtDecode from 'jwt-decode';
+import api from '@/services/apis';
 import auth from '@/services/authentications';
 
 Vue.use(VueRouter);
@@ -40,7 +41,7 @@ const routes = [
     path: '/signup/student',
     name: 'StudentSignUp',
     component: () => import('@/views/StudentSignUp.vue'),
-    meta: { },
+    meta: {},
   },
 
   //
@@ -72,13 +73,13 @@ const routes = [
     path: '/examchannel/:cid/summary',
     name: 'ExamSummary',
     component: () => import('@/views/Teacher/ExamSummary.vue'),
-    meta: { authorize: ['teacher'] },
+    meta: { authorize: ['teacher', 'TA'] },
   },
   {
     path: '/examchannel/:cid/member/:mid/feedback',
     name: 'GradeStudentExam',
     component: () => import('@/views/Teacher/GradeStudentExam.vue'),
-    meta: { authorize: ['teacher'] },
+    meta: { authorize: ['teacher', 'TA'] },
   },
   {
     path: '/examchannel/:cid/questions/:ecid/score-exam',
@@ -164,7 +165,16 @@ router.beforeEach((to, from, next) => {
     // check if route is restricted by role
     if (authorize.length && !authorize.includes(decoded.type)) {
       // role not authorised so redirect to home page
-      return next({ path: '/' });
+      if (!authorize.includes('TA')) {
+        return next({ path: '/' });
+      }
+    }
+    if (authorize.includes('TA')) {
+      api.isTA(to.params.cid).then((e) => {
+        if (e.data.isTA === false) {
+          return next({ path: '/' });
+        }
+      });
     }
   }
 
@@ -173,9 +183,9 @@ router.beforeEach((to, from, next) => {
 
 const DEFAULT_TITLE = 'JustExam';
 router.afterEach((to, from) => {
-    Vue.nextTick(() => {
-        document.title = to.meta.title || DEFAULT_TITLE;
-    });
+  Vue.nextTick(() => {
+    document.title = to.meta.title || DEFAULT_TITLE;
+  });
 });
 
 export default router;
