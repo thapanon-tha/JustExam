@@ -5,6 +5,9 @@ router.use('/:eid/questions', require('./Question'));
 // owner (teacher)
 router.get('/', controller.getAllExam);
 
+// owner B (teacher)
+router.get('/hub', controller.getAllHub);
+
 // teacher
 router.post('/', controller.addExam);
 
@@ -16,5 +19,7 @@ router.put('/:eid', controller.updateExam);
 
 // owner (teacher)
 router.delete('/:eid', controller.deleteExam);
+
+
 
 module.exports = router;

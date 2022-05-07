@@ -10,7 +10,10 @@
     </Header>
     <div>
       <div class="ml-72 mt-10">
-        <p class="">Student: {{ memberDetail.user.firstname }} {{ memberDetail.user.surname }}</p>
+        <p class="">
+          Student: {{ memberDetail.user.firstname }}
+          {{ memberDetail.user.surname }}
+        </p>
         <p class="">Total score: {{ totalScore }} / {{ totalExamScore }}</p>
       </div>
       <GradeQuestionList v-model="questions" :loading="loading" />
@@ -27,6 +30,18 @@
         @on-click="onClickCancel()"
       />
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      :color="sColor"
+      :timeout="2000"
+      absolute
+      centered
+      top
+      text
+      outlined
+    >
+      {{ sTest }}
+    </v-snackbar>
     <Loading v-model="loading"></Loading>
   </div>
 </template>
@@ -55,6 +70,9 @@ export default {
       loading: false,
       memberDetail: {},
       questions: [],
+      sColor: 'red',
+      sTest: '',
+      snackbar: false,
     };
   },
   methods: {
@@ -76,8 +94,15 @@ export default {
       });
       const res = await api.updateStudentScore(this.$route.params.cid, data);
       if (res.status === 200) {
+        this.snackbar = true;
+        this.sColor = 'green';
+        this.sTest = 'Success'
         this.loading = false;
         this.callApi();
+      }else{
+        this.snackbar = true;
+        this.sColor = 'red';
+        this.sTest = 'Fail'
       }
       // console.log(res);
     },
@@ -89,12 +114,15 @@ export default {
     async callApi() {
       this.loading = true;
       await api
-        .queryExamPaperAndMemberAnswer(this.$route.params.cid, this.$route.params.mid)
+        .queryExamPaperAndMemberAnswer(
+          this.$route.params.cid,
+          this.$route.params.mid,
+        )
         .then((e) => {
           if (e.status < 300) {
             this.loading = false;
             this.questions = e.data[0];
-            this.memberDetail = e.data[1]
+            this.memberDetail = e.data[1];
             this.questions = this.questions.map((e) => {
               if (e.answerQuestionScores.length === 0) {
                 return null;
@@ -107,10 +135,12 @@ export default {
             this.questions;
             const arrayDump = [];
             this.totalScore = 0;
-            this.totalExamScore = 0
+            this.totalExamScore = 0;
             this.questions.forEach((element) => {
               if (element !== null) {
-                this.totalScore += parseInt(element.answerQuestionScores[0].pointReviceve);
+                this.totalScore += parseInt(
+                  element.answerQuestionScores[0].pointReviceve,
+                );
                 this.totalExamScore += parseInt(element.point);
                 arrayDump.push(element);
               }

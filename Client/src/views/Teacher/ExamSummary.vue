@@ -96,11 +96,11 @@ export default {
   methods: {
     startDownload() {
       this.snackbar = true;
-      this.text = 'loading'
+      this.text = 'loading';
     },
     finishDownload() {
       this.snackbar = true;
-      this.text = 'Download Success'
+      this.text = 'Download Success';
     },
     onClickBack() {
       this.$router
@@ -138,15 +138,27 @@ export default {
         }));
         this.isLoading = false;
       }
-    },
-    async onClickReleaceScore(){
-      this.isLoading = true
-      const respones = await api
-        .sendemail(this.$route.params.cid)
-      if(respones.status ===200){
-        this.isLoading = false
+      if (respones.status === 404) {
+        this.isLoading = false;
+        this.snackbar = true;
+        this.text = 'No member in channel';
+        setTimeout(() => {
+          this.$router
+            .push({
+              name: 'InsideChannelTeacher',
+              params: { cid: this.$route.params.cid },
+            })
+            .catch(() => true);
+        }, 3000);
       }
-    }
+    },
+    async onClickReleaceScore() {
+      this.isLoading = true;
+      const respones = await api.sendemail(this.$route.params.cid);
+      if (respones.status === 200) {
+        this.isLoading = false;
+      }
+    },
   },
   created() {
     this.isLoading = true;

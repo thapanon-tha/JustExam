@@ -16,7 +16,6 @@ module.exports = async (req, serviceCallback, extraOption = {}) => {
   if (orderCol) queryParams.order = db.sequelize.literal(`${orderCol} ${orderDir}`);
 
   let result = await serviceCallback(queryParams, extraOption);
-
   if (Array.isArray(result.rows)) {
     const count = Array.isArray(result.count) ? result.count.length : result.count;
     result = {

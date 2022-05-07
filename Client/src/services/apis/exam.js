@@ -15,7 +15,7 @@ const deleteExams = (eid) => axios.delete(`${BACKEND_HOST}/api/exams/${eid}`, { 
 const createExams = async (examData) => axios.post(
   `${BACKEND_HOST}/api/exams`,
   {
-    data: { title: examData.title, description: examData.description },
+    data: { ...examData },
   },
   { validateStatus: false },
 );

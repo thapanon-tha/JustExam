@@ -104,7 +104,7 @@ export default {
     },
     onClickSignUpWithGoogle() {
       // Integrate with API with form validator
-      window.location.href = `${process.env.VUE_APP_API}/api/auth/google/createAccount?role=student`;
+      // window.location.href = `${process.env.VUE_APP_API}/api/auth/google/createAccount?role=student`;
     },
   },
 };

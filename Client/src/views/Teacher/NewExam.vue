@@ -111,7 +111,7 @@ export default {
     return {
       dialogPreview: false,
       sheet: false,
-      examInfo: { title: '', description: '' },
+      examInfo: { title: '', description: '', shareQ: false },
       createStatus: false,
       questions: [],
       createSuccess: {
@@ -144,12 +144,15 @@ export default {
       this.create();
     },
     async create() {
+      console.log(this.examInfo)
       this.loaderOption.loading = true;
       try {
-        const res = await api.createExams(this.examInfo).then((res2) => ({
-          ...res2.data,
-          status: res2.status,
-        }));
+        const res = await api
+          .createExams({ ...this.examInfo })
+          .then((res2) => ({
+            ...res2.data,
+            status: res2.status,
+          }));
         if (res.status === 201) {
           const resultMap = api.examMapper(this.questions);
           const questionsResp = await api

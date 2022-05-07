@@ -6,40 +6,32 @@
         name="Channel Title"
         type="text"
         placeholder="Search exam"
+        v-model="search"
       />
-      <button
-        class="mt-3 ml-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-2 font-semilight text-mainColor"
-      >
-        Search
-      </button>
     </Header>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
-      <div
-        v-if="showSetting"
-        class="w-auto bg-white border-2 border-orange-200 rounded-lg text-xs ml-52 absolute"
-      >
-        <div
-          class="p-1 border-b-2 border-orange-200 rounded-t-lg hover:bg-mainColor hover:text-white"
-        >
-          Edit Channel
-        </div>
-        <div class="p-1 rounded-b-lg hover:bg-mainColor hover:text-white">
-          Delete Channel
-        </div>
-      </div>
-      <div v-for="box in boxlist" :key="box">
-        <div class="w-60">
-          <CardHub />
+      <div v-for="box in exams.rows" :key="box.eid">
+        <div class="w-60" @click="goHub(box.eid)">
+          <CardHub :detail="box" />
         </div>
       </div>
     </div>
-    <div></div>
+    <!-- <div class="d-flex justify-center align-end mb-6 text-center">
+      <div class="mt-auto">
+        <v-pagination
+          v-model="page"
+          :length="Number(totalPage)"
+          :total-visible="7"
+        ></v-pagination>
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header.vue';
 import CardHub from '@/components/Card/CardHub.vue';
+import api from '@/services/apis';
 
 export default {
   name: 'ExamHubTeacher',
@@ -49,20 +41,41 @@ export default {
   },
   data() {
     return {
+      page: 1,
+      totalPage: 1,
+      totalRows: 1,
+      search: '',
       sort: '',
       boxlist: 5,
-      sortlist: [
-        {
-          name: 'Incoming exam',
-          value: 'comin',
-        },
-        {
-          name: 'Alphabetical',
-          value: 'alpha',
-        },
-      ],
+      exams: [],
     };
   },
   mounted() {},
+  methods: {
+    async callApi() {
+      api.examsHub(this.page, this.search).then((e) => {
+        this.exams = e.data;
+        this.page = e.currentPage;
+        this.totalPage = e.totalPage;
+        this.totalRows = e.totalRows;
+      });
+    },
+    goHub(eid) {
+      this.$router
+        .push({
+          name: 'Examhub',
+          params: { eid },
+        })
+        .catch(() => true);
+    },
+  },
+  created() {
+    this.callApi();
+  },
+  watch: {
+    search() {
+      this.callApi();
+    },
+  },
 };
 </script>

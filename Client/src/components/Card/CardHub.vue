@@ -1,28 +1,20 @@
 <template>
-  <div class="box-border h-40 w-72 rounded-xl text-white bg-navyColor"
-  >
-      <div class="flex flex-col">
-        <v-icon
-          @click="clickSet" class="flex justify-end mr-3 mt-3"
-          small
-          color="white"
-        >
-          settings
-        </v-icon>
-        <div class="h-32 w-42 p-2">
-          <h1 class="text-md font-semilight ml-2">Title</h1>
-          <h2 class="text-md font-semilight ml-2">Modified date</h2>
-          <h2 class="text-md font-semilight ml-2">Created date</h2>
-          <h2 class="text-md font-semilight ml-2">Creator</h2>
-        </div>
+  <button class="box-border h-40 w-72 rounded-xl text-white bg-navyColor hover:text-orange-500">
+    <div class="flex flex-col align-center">
+      <div class="h-32 w-42 p-2">
+        <h1 class="text-s font-semilight ml-2">Title {{ detail.title }}</h1>
+        <h2 class="text-s font-semilight ml-2">Modified: {{ detail.updatedAt | moment("D / MM / YYYY h:mm:ss a") }}</h2>
+        <h2 class="text-s font-semilight ml-2">Created: {{ detail.createdAt | moment("D / MM / YYYY h:mm:ss a") }}</h2>
+        <h2 class="text-s font-semilight ml-2">Creator {{ detail.name }}</h2>
       </div>
-  </div>
+    </div>
+  </button>
 </template>
 
 <script>
-
 export default {
   name: 'CardHub',
+  props: ['detail'],
   methods: {
     clickSet() {
       this.$emit('clickSet');

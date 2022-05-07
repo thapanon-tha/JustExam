@@ -93,7 +93,7 @@ const medthods = {
 
   async deleteById(mid, cid, transaction) {
     return member.destroy({
-      where: { mid, cid, [Op.ne]: [{ uid }, { sid }] },
+      where: { mid, cid },
       transaction,
     });
   },

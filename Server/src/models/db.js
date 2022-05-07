@@ -103,6 +103,13 @@ db.answerQuestionScore = require('./db/answerQuestionScore.model')(
   Sequelize,
 );
 
+db.user.hasMany(db.exam, {
+  foreignKey: { name: 'uid', field: 'uid' },
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
+});
+db.exam.belongsTo(db.user, { foreignKey: 'uid' });
+
 db.questionExamChannel.hasMany(db.answerQuestionScore, {
   foreignKey: { name: 'qecid', field: 'qecid' },
   onUpdate: 'CASCADE',
@@ -268,13 +275,6 @@ db.exam.hasMany(db.question, {
   onDelete: 'CASCADE',
 });
 db.question.belongsTo(db.exam, { foreignKey: 'eid' });
-
-db.user.hasMany(db.exam, {
-  foreignKey: { name: 'uid', field: 'uid' },
-  onUpdate: 'CASCADE',
-  onDelete: 'CASCADE',
-});
-db.exam.belongsTo(db.user, { foreignKey: 'uid' });
 
 db.category.hasMany(db.exam, {
   foreignKey: { name: 'ctid', field: 'ctid' },

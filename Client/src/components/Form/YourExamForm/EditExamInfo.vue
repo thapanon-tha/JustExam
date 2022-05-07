@@ -103,6 +103,13 @@ export default {
       this.isLoading = true;
       const data = await api.examDetail(this.$route.params.eid);
       if (data.status === 200) {
+        if(data.data[0].uid!==this.$cookies.get('uid')){
+          this.$router
+        .push({
+          name: 'YourExam',
+        })
+        .catch(() => true);
+        }
         this.examInfo.examTitle = data.data[0].title;
         this.examInfo.description = data.data[0].description;
         this.isLoading = false;

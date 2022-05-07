@@ -3,7 +3,11 @@
     <div class="flex flex-row">
       <img class="p-3 mr-8" src="@/assets/logo.svg" alt="logo" />
       <NavButton name="Home" to="Home" :borderRight="true" />
-      <NavButton name="Contact us" to="ContactUs" v-if="!$store.getters.getIsAuth" />
+      <NavButton
+        name="Contact us"
+        to="ContactUs"
+        v-if="!$store.getters.getIsAuth"
+      />
       <NavButton
         name="Exam channel"
         to="ExamChannelTeacher"
@@ -22,17 +26,25 @@
         v-if="$store.getters.getIsAuth && $store.getters.getIsStudent"
       />
       <!-- {{ $store.getters.getIsStudent }} -->
-      <!-- <NavButton
-        name='Exam hub'
-        to='ExamHubTeacher'
-        v-if='$store.getters.getIsAuth
-              && ($store.getters.getIsTeacher ||
-              $store.getters.getIsStudent)'
-      /> -->
+      <NavButton
+        name="Exam hub"
+        to="ExamHubTeacher"
+        :borderLeft="true"
+        :borderRight="false"
+        v-if="
+          $store.getters.getIsAuth &&
+          ($store.getters.getIsTeacher || $store.getters.getIsStudent)
+        "
+      />
     </div>
     <div class="flex flex-row-reverse">
       <NavButton name="Sign up" to="SignUp" v-if="!$store.getters.getIsAuth" />
-      <NavButton name="Login" :borderRight="true" to="Login" v-if="!$store.getters.getIsAuth" />
+      <NavButton
+        name="Login"
+        :borderRight="true"
+        to="Login"
+        v-if="!$store.getters.getIsAuth"
+      />
       <NavButtonAction
         name="Logout"
         :borderLeft="true"

@@ -1,6 +1,8 @@
 const Exam = require('../services/exam.service');
 const stdCode = require('./stdCode');
 const db = require('../models/db');
+const datatableHelper = require('./helper/dbHelper');
+const userService = require('../services/user.service');
 
 module.exports = {
   async addExam(req, res) {
@@ -38,6 +40,20 @@ module.exports = {
         await transaction.rollback();
       }
       stdCode.Unexpected(e, res);
+    }
+  },
+
+  async getAllHub(req, res) {
+    try {
+      const taskData = await datatableHelper(req, Exam.getAll);
+      const user = taskData.rows.map((element) => element.uid);
+
+      const users = await Promise.all(user.map((e)=>userService.findByUid(e)));
+      taskData.rows = taskData.rows.map((element,index) => ({...element.dataValues , name: `${users[index].firstname} ${users[index].surname}`}));
+      return res.json(taskData);
+    } catch (error) {
+      console.log(error);
+      return res.sendStatus(500);
     }
   },
 

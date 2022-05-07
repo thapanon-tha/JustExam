@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <button>
     <div class="flex flex-col">
       <label class="text-xl font-semilight truncate"> {{ detail.title }} </label>
       <div
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </button>
 </template>
 
 <script>

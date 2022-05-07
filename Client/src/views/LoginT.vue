@@ -90,7 +90,7 @@ export default {
       }
     },
     onClickLoginWithGoogle() {
-      window.location.href = `${process.env.VUE_APP_API}/api/auth/google`;
+      // window.location.href = `${process.env.VUE_APP_API}/api/auth/google`;
     },
   },
 };

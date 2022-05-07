@@ -10,6 +10,13 @@ const medthods = {
     });
   },
 
+  async findByUid(uid) {
+    return User.findOne({
+      attributes: ['firstname', 'surname'],
+      where: { uid },
+    });
+  },
+
   async findByEmailLogin(email) {
     return User.findOne({
       attributes: ['uid', 'firstname', 'surname',

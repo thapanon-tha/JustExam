@@ -10,7 +10,10 @@
     </Header>
     <v-container>
       <div>
-        <ScoreQuestionList v-model="questionsList" @update:qlist="updateQuestion" />
+        <ScoreQuestionList
+          v-model="questionsList"
+          @update:qlist="updateQuestion"
+        />
       </div>
     </v-container>
     <div class="flex gap-10 mt-10 justify-center">
@@ -39,12 +42,14 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 <script>
 import Header from '@/components/Header/Header.vue';
 import ScoreQuestionList from '@/components/Form/TotalScoreForm/ScoreQuestionList.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
+import Loading from '@/components/Loading.vue';
 import api from '@/services/apis';
 
 export default {
@@ -53,9 +58,11 @@ export default {
     Header,
     ScoreQuestionList,
     ActionButton,
+    Loading,
   },
   data() {
     return {
+      isLoading: false,
       examTitle: 'Exam Title Data',
       description: 'Exam Description Data',
       questionsList: [],
@@ -67,10 +74,14 @@ export default {
   methods: {
     onClickBack() {
       this.$router
-        .push({ name: 'InsideChannelTeacher', params: { cid: this.$route.params.cid } })
+        .push({
+          name: 'InsideChannelTeacher',
+          params: { cid: this.$route.params.cid },
+        })
         .catch(() => true);
     },
     async onClickSave() {
+      this.isLoading = true;
       const data = this.questionsList.map((data) => api.channelReverse(data));
       const response = await api
         .updateScore(data, this.$route.params.cid, this.$route.params.ecid)
@@ -81,13 +92,14 @@ export default {
         this.isSuccess = true;
         window.location.reload();
       } else {
+        this.isLoading = false;
         this.snackbarMessage = 'update score fail';
         this.isSuccess = true;
         this.snackbar = false;
       }
     },
     onClickCancel() {
-      window.location.reload();
+      this.onClickBack();
     },
     async updateQuestion(data) {
       this.questionsList = data;

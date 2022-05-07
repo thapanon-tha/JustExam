@@ -99,12 +99,6 @@ const routes = [
     meta: { authorize: ['teacher'] },
   },
   {
-    path: '/yourexam/new-exam/preview',
-    name: 'PreviewExam',
-    component: () => import('@/views/Teacher/PreviewExam.vue'),
-    meta: { authorize: ['teacher'] },
-  },
-  {
     path: '/yourexam/:eid',
     name: 'InsideYourExam',
     component: () => import('@/views/Teacher/InsideYourExam.vue'),
@@ -120,6 +114,12 @@ const routes = [
     path: '/examhub',
     name: 'ExamHubTeacher',
     component: () => import('@/views/Teacher/ExamHubTeacher.vue'),
+    meta: { authorize: ['teacher', 'student'] },
+  },
+  {
+    path: '/examhub/:eid',
+    name: 'Examhub',
+    component: () => import('@/views/Examhub.vue'),
     meta: { authorize: ['teacher', 'student'] },
   },
   {
@@ -169,6 +169,13 @@ router.beforeEach((to, from, next) => {
   }
 
   return next();
+});
+
+const DEFAULT_TITLE = 'JustExam';
+router.afterEach((to, from) => {
+    Vue.nextTick(() => {
+        document.title = to.meta.title || DEFAULT_TITLE;
+    });
 });
 
 export default router;
