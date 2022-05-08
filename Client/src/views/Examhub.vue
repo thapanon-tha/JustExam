@@ -12,7 +12,6 @@
     <v-snackbar
       v-model="snackbar"
       color="red accent-2"
-      absolute
       centered
       top
       text

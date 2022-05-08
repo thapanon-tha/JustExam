@@ -62,6 +62,17 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar
+      v-model="snackbar"
+      top
+      text
+      outlined
+      :multi-line="true"
+      :timeout="1000"
+      :color="snackbarColor"
+    >
+      {{ snackbarMessage }}
+    </v-snackbar>
     <Loading v-model="isLoading"></Loading>
   </div>
 </template>
@@ -87,12 +98,20 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
+      snackbarColor: 'green',
+      snackbarMessage: '',
       dialogPreview: false,
       questions: [],
       isLoading: false,
     };
   },
   methods: {
+    snacbarF(message, color) {
+      this.snackbar = true;
+      this.snackbarColor = color;
+      this.snackbarMessage = message;
+    },
     onClickBack() {
       this.$router.push({ name: 'YourExam' }).catch(() => true);
     },
@@ -112,8 +131,14 @@ export default {
           status: res2.status,
         }));
       if (questionsResp.status >= 200 && questionsResp.status <= 299) {
-        this.$router.push({ name: 'YourExam' }).catch(() => true);
+        this.snacbarF('update success', 'green');
+        this.isLoading = false;
+
+        setTimeout(() => {
+          this.$router.push({ name: 'YourExam' }).catch(() => true);
+        }, 1000);
       } else {
+        this.snacbarF('update fail', 'red');
         this.$router.go(this.$router.currentRoute);
         this.isLoading = false;
       }

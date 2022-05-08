@@ -121,6 +121,18 @@
         <!-- eslint-enable max-len -->
       </div>
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      centered
+      top
+      text
+      outlined
+      :multi-line="true"
+      :timeout="1000"
+      :color="snackbarColor"
+    >
+      {{ snackbarMessage }}
+    </v-snackbar>
     <Loading v-model="isLoading"></Loading>
   </div>
 </template>
@@ -162,6 +174,9 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
+      snackbarColor: '',
+      snackbarMessage: '',
       showSaveQuestion: false,
       showEditQuestion: true,
       selectedSectionId: 1,

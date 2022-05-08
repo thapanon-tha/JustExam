@@ -32,7 +32,7 @@
         <!-- eslint-enable max-len -->
       </v-container>
     </section>
-    <v-snackbar v-model="snackbar" color="red accent-2" absolute centered top text outlined>
+    <v-snackbar v-model="snackbar" color="red accent-2" centered top text outlined>
       {{ text }}
     </v-snackbar>
     <Loading v-model="isLoading"></Loading>

@@ -34,7 +34,6 @@
       v-model="snackbar"
       :color="sColor"
       :timeout="2000"
-      absolute
       centered
       top
       text

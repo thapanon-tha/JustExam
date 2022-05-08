@@ -50,7 +50,6 @@
     <v-snackbar
       v-model="snackbar"
       color="green"
-      absolute
       centered
       top
       text
