@@ -230,7 +230,6 @@ export default {
     event: 'input',
   },
   created() {
-    this.questionData.lang = 'python';
   },
 };
 </script>
