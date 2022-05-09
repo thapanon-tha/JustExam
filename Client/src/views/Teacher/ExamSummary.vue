@@ -103,6 +103,7 @@ export default {
       this.text = 'Download Success';
     },
     onClickBack() {
+      // eslint-disable-next-line
       if ($cookies.get('type') === 'teacher') {
         this.$router
           .push({

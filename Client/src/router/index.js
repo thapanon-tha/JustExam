@@ -174,6 +174,7 @@ router.beforeEach((to, from, next) => {
         if (e.data.isTA === false) {
           return next({ path: '/' });
         }
+        return next();
       });
     }
   }
@@ -182,7 +183,7 @@ router.beforeEach((to, from, next) => {
 });
 
 const DEFAULT_TITLE = 'JustExam';
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   Vue.nextTick(() => {
     document.title = to.meta.title || DEFAULT_TITLE;
   });

@@ -120,7 +120,6 @@
 <script>
 import Header from '@/components/Header/Header.vue';
 import CardStudentChannel from '@/components/Card/CardStudentChannel.vue';
-import CardSelectedExam from '@/components/Card/CardSelectedExam.vue';
 import CardChannel from '@/components/Card/CardChannel.vue';
 import Loading from '@/components/Loading.vue';
 import api from '@/services/apis';
@@ -130,7 +129,6 @@ export default {
   components: {
     Header,
     CardStudentChannel,
-    CardSelectedExam,
     CardChannel,
     Loading,
   },
@@ -216,7 +214,7 @@ export default {
       const response = await api.channels().then((e) => e);
       if (response.status < 300) {
         this.channels = response.data;
-        this.channelsAll = this.channels
+        this.channelsAll = this.channels;
         this.channelmenu(1);
         this.isLoading = false;
       }
@@ -229,7 +227,11 @@ export default {
           const date = new Date();
           const start = new Date(e.startAt);
           const end = new Date(e.endAt);
-          return start < date && end > date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+          return (
+            start < date
+            && end > date
+            && e.members[0].rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437'
+          );
         });
         this.channels.sort((a, b) => {
           const startA = new Date(a.endAt);
@@ -248,7 +250,10 @@ export default {
         this.channels = this.channelsAll.filter((e) => {
           const date = new Date();
           const end = new Date(e.endAt);
-          return end < date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+          return (
+            end < date
+            && e.members[0].rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437'
+          );
         });
         this.channels.sort((a, b) => {
           const startA = new Date(a.startAt);
@@ -261,7 +266,10 @@ export default {
         this.channels = this.channelsAll.filter((e) => {
           const date = new Date();
           const start = new Date(e.startAt);
-          return start > date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+          return (
+            start > date
+            && e.members[0].rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437'
+          );
         });
         this.channels.sort((a, b) => {
           const startA = new Date(a.startAt);
@@ -272,9 +280,9 @@ export default {
       }
 
       if (menu === 4) {
-        this.channels = this.channelsAll.filter((e) => {
-          return e.members[0].rid==='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
-        });
+        this.channels = this.channelsAll.filter(
+          (e) => e.members[0].rid === '3a7c4d99-c414-44b8-bdd8-d7d625a99437',
+        );
         this.channels.sort((a, b) => {
           const startA = new Date(a.startAt);
           const startB = new Date(b.startAt);

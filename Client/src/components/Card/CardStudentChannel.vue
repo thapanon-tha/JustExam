@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <button>
     <div class="flex flex-col">
       <div class="box-border h-40 w-72 rounded-xl text-white bg-navyColor">
         <div class="flex flex-col">
@@ -25,23 +25,23 @@
           </div>
           <div class="h-32 w-42 p-2 hover:text-orange-500" @click="onClick">
             <h1 class="font-semilight ml-2">{{ detail.title }}</h1>
-            <h1 class="text-xs font-semilight ml-2">teacher</h1>
             <div class="align-end">
               <h2 class="text-xs font-semilight ml-2">
                 {{ detail.schedule | moment('D / MM / YYYY') }}
               </h2>
-              <div class="flex flex-row">
+              <div>
                 <h2 class="text-xs font-semilight ml-2">
-                  {{ detail.startAt | moment('H:mm:ss') }}
+                  start {{ detail.startAt | moment('H:mm:ss') }}
                 </h2>
-                <h2 class="text-xs font-semilight ml-2">{{ detail.endAt | moment('H:mm:ss') }}</h2>
+                <h2 class="text-xs font-semilight ml-2">end {{ detail.endAt | moment('H:mm:ss') }}</h2>
               </div>
             </div>
+            <h1 class="text-xs font-semilight ml-2">Teacher: {{ `${detail.user.firstname} ${detail.user.surname}` }}</h1>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </button>
 </template>
 
 <script>

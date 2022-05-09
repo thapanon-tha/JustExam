@@ -131,10 +131,6 @@ export default {
     },
   },
   watch: {
-    channels(newVal, oldVal) {
-      if (newVal.length === 0) {
-      }
-    },
   },
   created() {
     this.getChannels();

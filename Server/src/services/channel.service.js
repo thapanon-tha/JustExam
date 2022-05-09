@@ -3,7 +3,7 @@ const db = require('../models/db');
 
 const Member = db.member;
 const Channel = db.channel;
-const { examChannel } = db;
+const { examChannel,user } = db;
 
 const medthods = {
   async create(
@@ -66,11 +66,15 @@ const medthods = {
 
   async getMember(uid) {
     return Channel.findAll({
-      include: {
+      include: [{
         model: Member,
         attributes: ['rid'],
         where: { uid },
       },
+      {
+        model: user,
+        attributes: ['firstname','surname'],
+      }],
     });
   },
 
