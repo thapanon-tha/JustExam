@@ -144,7 +144,6 @@ export default {
       this.create();
     },
     async create() {
-      console.log(this.examInfo)
       this.loaderOption.loading = true;
       try {
         const res = await api

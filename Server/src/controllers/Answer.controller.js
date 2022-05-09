@@ -55,8 +55,6 @@ module.exports = {
       transaction = await db.sequelize.transaction();
 
       const resp = await answerQuestionScore.updateMany(data, transaction);
-
-      // console.log(resp);
       await transaction.commit();
       stdCode.Success(res);
     } catch (error) {

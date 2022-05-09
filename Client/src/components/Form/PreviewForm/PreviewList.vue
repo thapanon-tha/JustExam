@@ -236,7 +236,6 @@ export default {
       this.selectedSectionId = id;
     },
     mappingCodeLanguage(numberCode) {
-      console.log(numberCode);
       const codeIndex = this.language.findIndex(
         (item) => item.id === numberCode,
       );

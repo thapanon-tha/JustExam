@@ -52,7 +52,6 @@ module.exports = {
       taskData.rows = taskData.rows.map((element,index) => ({...element.dataValues , name: `${users[index].firstname} ${users[index].surname}`}));
       return res.json(taskData);
     } catch (error) {
-      console.log(error);
       return res.sendStatus(500);
     }
   },

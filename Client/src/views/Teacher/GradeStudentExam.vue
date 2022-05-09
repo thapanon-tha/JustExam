@@ -103,7 +103,6 @@ export default {
         this.sColor = 'red';
         this.sTest = 'Fail'
       }
-      // console.log(res);
     },
     onClickCancel() {
       this.$router

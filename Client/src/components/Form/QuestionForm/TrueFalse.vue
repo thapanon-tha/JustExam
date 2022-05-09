@@ -12,11 +12,21 @@
         />
       </div>
     </div>
-    <div  class="flex flex-col ml-3" >
-      <div
-        class="flex flex-row mb-3"
-      >
-        <div class="ml-2" >
+    <div class="flex flex-col ml-3">
+      <div class="flex flex-row mb-3">
+        <v-radio-group class="ml-3" v-model="answer">
+          <v-radio
+            color="#EF7F4C"
+            v-for="item in [
+              { name: 'True', value: true },
+              { name: 'False', value: false },
+            ]"
+            :key="item.name"
+            :label="`${item.name}`"
+            :value="item.value"
+          ></v-radio>
+        </v-radio-group>
+        <!-- <div class="ml-2">
           <Checkbox2
             v-model="questionData.true"
             label="True"
@@ -31,7 +41,7 @@
             @onChange="onChange()"
             :onChangeFunc="onChange"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -50,6 +60,7 @@ export default {
   props: ['value'],
   data() {
     return {
+      answer: true,
       questionData: this.value,
     };
   },
@@ -62,8 +73,13 @@ export default {
     prop: 'value',
     event: 'input',
   },
-  created() {
+  created() {},
+  watch: {
+    answer(newVal, oldVal) {
+      this.questionData.true = newVal
+      this.questionData.false = !newVal
+      this.$emit('input', this.questionData);
+    },
   },
 };
-
 </script>

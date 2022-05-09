@@ -39,7 +39,6 @@ module.exports = {
         throw Error('Something Worng');
       }
     } catch (error) {
-      console.log(error);
       await transaction.rollback();
       stdCode.Unexpected(error, res);
     }

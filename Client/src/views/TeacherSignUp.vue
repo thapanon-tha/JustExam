@@ -58,8 +58,6 @@ export default {
 
   methods: {
     async onSubmit(data) {
-      // Integrate with API with form validator
-      // console.log('submit');
       if (
         data.password !== ''
         && data.email !== ''

@@ -85,7 +85,6 @@ const medthods = {
 
     // multi choice
     // 74fbc3a5-0217-4892-9aba-70b612fc1a0e
-    console.log(question)
     if( question.qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e' ){
       answer = answer.filter(e=> e !==null )
       let point = 0;
@@ -96,7 +95,6 @@ const medthods = {
           correct+=1
         }
         const index = answer.findIndex(i=> i === e.qamccid )
-      console.log(index)
         if(index > -1){
           point = point + e.pointQ
         }
@@ -105,7 +103,7 @@ const medthods = {
           Acorrect += 1
         }
       })
-      if(correct === Acorrect)point=question.point
+      if(correct === Acorrect && answer.length === correct) point=question.point
       resp = { ...element }
       resp.pointReviceve = point
     

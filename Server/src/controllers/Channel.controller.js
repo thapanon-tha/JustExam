@@ -376,7 +376,6 @@ module.exports = {
       await transaction.commit();
       res.json(responesPack);
     } catch (error) {
-      // console.log(error);
       await transaction.rollback();
       stdCode.Unexpected(error, res);
     }
@@ -415,7 +414,6 @@ module.exports = {
       answers = await Promise.all(
         answers.map((e) => answerQuestionScoreService.autoGread(e)),
       );
-      console.log(answers);
       await answerQuestionScoreService.createMany(answers, transaction);
       await transaction.commit();
       let examData = await redisClient.get(cidKey);
@@ -470,7 +468,6 @@ module.exports = {
       };
       res.json(responesPack);
     } catch (error) {
-      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
@@ -494,11 +491,8 @@ module.exports = {
     const { uid } = req.user;
     const { cid } = req.params;
     try {
-      console.log('ssssssss');
       const channel = await channelService.getById(cid);
-      console.log(channel);
       const member = await memberService.getmemberAndScore(cid, channel.ecid);
-      console.log(member);
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -528,7 +522,6 @@ module.exports = {
           subject: `${channel.title} - Your score has been release`,
           html: `<h1>${channel.title}</h1><p>${element.name}</p><p>Your score is ${element.score}</p><p>Mean is ${scoreMean}</p><p>Max is ${scoreMax}</p><p>Min is ${scoreMin}</p><p>SD is ${scoreSD}</p>`,
         };
-        console.log(mailOptions);
         transporter.sendMail(mailOptions);
       });
 

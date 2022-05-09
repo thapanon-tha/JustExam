@@ -14,7 +14,6 @@ module.exports = {
         stdCode.NotFound({ message: `Member in cid : ${cid} Not Found` }, res);
       }
     } catch (error) {
-      // console.log(error);
       stdCode.Unexpected(error, res);
     }
   },
@@ -61,7 +60,6 @@ module.exports = {
       );
       stdCode.querySuccess([Paper,detail], res);
     } catch (error) {
-      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },

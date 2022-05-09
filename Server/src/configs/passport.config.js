@@ -17,15 +17,12 @@ const local = new LocalStrategy(
     passwordField: 'password',
   },
   async (email, password, cb) => {
-    // console.log(email, password);
     try {
       let user = await userService.findByEmailLogin(email);
       user = user?.dataValues;
       if (user !== undefined) {
-        // console.log(user.provider);
         if (user.provider !== 'Google') {
           const result = await bcrypt.compare(password, user?.hash);
-          console.log(result)
           if (result) {
             const Mockuser = {
               uid: user.uid,
@@ -48,7 +45,6 @@ const local = new LocalStrategy(
         cb(null, false, { message: 'Incorrect email' });
       }
     } catch (error) {
-      console.log(error)
       cb(null, false, { message: 'Error something worng' });
     }
   },

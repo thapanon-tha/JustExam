@@ -75,7 +75,6 @@ router.post('/register', async (req, res) => {
       provider: user.provider,
     });
   } catch (error) {
-    // console.log(error);
     return res.status(500).json(error);
   }
 });
