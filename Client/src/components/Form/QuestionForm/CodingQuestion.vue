@@ -3,44 +3,37 @@
     <div class="flex justify-center mb-52">
       <div class="border-l-4 border-mainColor h-10">
         <QuillTextEditor
-          placeholder="Type code here"
+          placeholder="Type Question here"
           theme="snow"
           width="8/9"
           height="40"
-          v-model="questionData.code"
+          v-model="questionData.question"
           :onChangeFunc="onChange"
         />
       </div>
     </div>
     <div class="ml-3">
-      <div class="flex flex-row mb-3">
-        <div class="shadow-sm border-mainColor border-l-4">
-          <QuillTextEditor
-            :placeholder="`Question`"
-            theme="bubble"
-            width="96"
-            height="2/4"
-            v-model="questionData.question"
-            :onChangeFunc="onChange"
-          />
-        </div>
-        <select
-          class="border rounded-md border-solid border-mainColor border-opacity-40
-                bg-mainColor px-2 text-white font-semilight text-center ml-10"
-          id="lang"
-          name="lang"
-          v-model="questionData.lang"
-          :onChangeFunc="onChange"
+      <select
+        class="h-10 border rounded-md border-solid border-mainColor border-opacity-40 bg-mainColor px-2 text-white font-semilight text-center"
+        id="lang"
+        name="lang"
+        v-model="questionData.lang"
+        :onChangeFunc="onChangeLang()"
+      >
+        <option
+          v-for="(item, index) in language"
+          :key="index"
+          :value="item.value"
         >
-          <option disabled value="">Select Language</option>
-          <option
-            v-for="(item, index) in Langlist"
-            :key="index"
-            :value="item.value"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+          {{ item.name }}
+        </option>
+      </select>
+      <div class="flex flex-row mb-3">
+        <v-col cols="12" class="flex-grow-0 flex-shrink-0">
+          <div class="shadow-sm border-mainColor border-l-4">
+            <codemirror v-model="questionData.code" :options="cmOptions" />
+          </div>
+        </v-col>
       </div>
       <div class="flex justify-start">
         <div class="shadow-sm border-mainColor border-l-4 mb-3">
@@ -67,7 +60,11 @@
         </div>
       </div>
       <h1 class="mt-5 mb-1">Test Case</h1>
-      <div v-for="(item, index) in questionData.example" :key="item.id" class="mb-5">
+      <div
+        v-for="(item, index) in questionData.example"
+        :key="item.id"
+        class="mb-5"
+      >
         <div class="flex justify-start">
           <div class="shadow-sm border-mainColor border-l-4 mb-3">
             <QuillTextEditor
@@ -105,8 +102,7 @@
         </div>
       </div>
       <ActionButton
-        class="mt-3 bg-subColor border-orange-200 border border-solid rounded-lg px-3 py-2
-        font-semilight text-mainColor"
+        class="mt-3 bg-subColor border-orange-200 border border-solid rounded-lg px-3 py-2 font-semilight text-mainColor"
         name="+ Add an example"
         @on-click="addExample"
       />
@@ -115,57 +111,92 @@
 </template>
 
 <script>
+import { codemirror } from 'vue-codemirror';
 import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
+
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/ayu-mirage.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/clike/clike';
 
 export default {
   name: 'CodingQuestion',
   components: {
     QuillTextEditor,
     ActionButton,
+    codemirror,
   },
   props: ['value'],
   data() {
     return {
       questionData: this.value,
-      Langlist: [
+      language: [
+        {
+          name: 'Javascript',
+          mode: 'text/javascript',
+          id: 63,
+          value: 'javascript',
+        },
         {
           name: 'Python',
+          mode: 'python',
+          id: 71,
           value: 'python',
         },
         {
           name: 'C',
+          mode: 'text/x-csrc',
+          id: 50,
           value: 'c',
         },
         {
-          name: 'Java',
-          value: 'java',
-        },
-        {
-          name: 'Javascript',
-          value: 'javascript',
-        },
-        {
-          name: 'C++',
-          value: 'cpp',
-        },
-        {
           name: 'C#',
+          mode: 'text/x-csharp',
+          id: 51,
           value: 'csharp',
         },
         {
+          name: 'C++',
+          mode: 'text/x-c++src',
+          id: 54,
+          value: 'cpp',
+        },
+        {
+          name: 'Java',
+          mode: 'text/x-java',
+          id: 62,
+          value: 'java',
+        },
+        {
           name: 'Kotlin',
+          mode: 'text/x-kotlin',
+          id: 78,
           value: 'kotlin',
         },
         {
           name: 'Ruby',
+          mode: 'ruby',
+          id: 72,
           value: 'ruby',
         },
         {
-          name: 'Go',
+          name: 'Golang',
+          mode: 'go',
+          id: 60,
           value: 'go',
         },
       ],
+      cmOptions: {
+        tabSize: 2,
+        mode: 'python',
+        theme: 'ayu-mirage',
+        lineNumbers: true,
+        line: true,
+      },
     };
   },
   methods: {
@@ -182,12 +213,24 @@ export default {
     onChange() {
       this.$emit('input', this.questionData);
     },
+    onChangeLang() {
+      this.mappingCodeLanguage(this.questionData.lang);
+      this.$emit('input', this.questionData);
+    },
+    mappingCodeLanguage(numberCode) {
+      const codeIndex = this.language.findIndex(
+        (item) => item.value === numberCode,
+      );
+      this.cmOptions.mode = this.language[codeIndex].mode;
+      return this.language[codeIndex].name;
+    },
   },
   model: {
     prop: 'value',
     event: 'input',
   },
   created() {
+    this.questionData.lang = 'python';
   },
 };
 </script>
