@@ -272,7 +272,7 @@ export default {
         },
         tf: {
           question: '',
-          true: false,
+          true: true,
           false: false,
         },
         ma: {

@@ -60,7 +60,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      answer: true,
+      answer: this.value.true,
       questionData: this.value,
     };
   },

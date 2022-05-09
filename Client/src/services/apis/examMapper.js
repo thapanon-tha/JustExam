@@ -50,12 +50,16 @@ const method = {
       }));
     }
     if (question.type === 'tf') {
+      console.log(question.questionData)
       if (question.questionData.false === true) {
-        answer = [method.tf(question.questionData.false)];
+        console.log("FALSE")
+        answer = [method.tf(false)];
       }
       if (question.questionData.true === true) {
-        answer = [method.tf(question.questionData.true)];
+        console.log("TRUE")
+        answer = [method.tf(true)];
       }
+      console.log(answer)
     }
 
     return ({

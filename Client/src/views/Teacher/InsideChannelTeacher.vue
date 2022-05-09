@@ -1,7 +1,6 @@
 <template>
   <div class="mb-60">
     <Header main="Exam channel" current="> Inside channel" class="mb-10">
-
       <button
         @click="onEditChannelInfo"
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
@@ -76,16 +75,6 @@
         />
       </div>
     </v-container>
-
-    <v-snackbar v-model="snackbar">
-      {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -221,7 +210,18 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
+    <v-snackbar
+      v-model="snackbar"
+      centered
+      top
+      text
+      outlined
+      :multi-line="true"
+      :timeout="1000"
+      :color="snackbarColor"
+    >
+      {{ snackbarMessage }}
+    </v-snackbar>
     <Loading v-model="loading"></Loading>
   </div>
 </template>
@@ -247,14 +247,15 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
+      snackbarColor: '',
+      snackbarMessage: '',
       switch1: true,
       disabled: false,
-      snackbar: false,
       showModal: false,
       showSelected: false,
       showButton: true,
       examlist: [],
-      text: '',
       menu: false,
       menu1: false,
       menu2: false,
@@ -291,16 +292,19 @@ export default {
     };
   },
   methods: {
+    snacbarF(message, color) {
+      this.snackbar = true;
+      this.snackbarColor = color;
+      this.snackbarMessage = message;
+    },
     async onEditChannelInfo() {
       this.dialog = true;
     },
     onCopy(e) {
-      this.snackbar = true;
-      this.text = `copied: ${e.text}`;
+      this.snacbarF(`copied: ${e.text}`,'green')
     },
     onError(e) {
-      this.snackbar = true;
-      this.text = 'Failed to copy Invite ID';
+      this.snacbarF(`Failed to copy Invite ID`,'red')
     },
     async onClickAddExam() {
       this.loading = true;
@@ -309,7 +313,10 @@ export default {
         this.examlist = Responses.data;
         this.showModal = 1;
         this.loading = false;
+      } else if (Responses.status === 404) {
+        this.snacbarF('You have no Exam','red')
       }
+      this.loading = false;
     },
     clickSelectExam(examData) {
       this.connectChannel(examData);
@@ -369,7 +376,7 @@ export default {
       ).getHours()}:${new Date(this.channelInfoEdit.endAt).getMinutes()}`;
     },
     async apiCall() {
-      this.loading = true
+      this.loading = true;
       this.channelsApiInfo = await api
         .channelsDetail(this.$route.params.cid)
         .then((res) => res);
@@ -388,7 +395,7 @@ export default {
       if (new Date() > date.setMinutes(date.getMinutes() - 5)) {
         this.disabled = true;
       }
-      this.loading = false
+      this.loading = false;
     },
     async connectChannel(detail) {
       const data = {
@@ -416,6 +423,7 @@ export default {
         if (examQuestioneList.status === 201) {
           this.channelInfo.examChannel = result.data;
           this.showSelected = true;
+          this.clickScoreExam();
         } else {
           this.clickDeleteSelect();
         }
@@ -454,13 +462,11 @@ export default {
       });
 
       if (result.status === 200) {
-        this.snackbar = true;
-        this.text = `Success`;
+        this.snacbarF(`Success`,'green')
         window.location.reload();
       } else {
         this.dialog = true;
-        this.snackbar = true;
-        this.text = `Error Can't Update Channel Detail`;
+        this.snacbarF(`Error Can't Update Channel Detail`,'red')
       }
       this.loading = false;
     },
