@@ -254,7 +254,7 @@ export default {
           ],
         },
         ca: {
-          lang: '',
+          lang: 'python',
           code: '',
           question: '',
           input: '',

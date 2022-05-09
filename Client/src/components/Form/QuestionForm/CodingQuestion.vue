@@ -222,7 +222,6 @@ export default {
         (item) => item.value === numberCode,
       );
       this.cmOptions.mode = this.language[codeIndex].mode;
-      return this.language[codeIndex].name;
     },
   },
   model: {
