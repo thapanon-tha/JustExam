@@ -39,7 +39,7 @@
               v-if="!isEditing"
               class="ml-5"
               large
-              color="orange darken-2"
+              color="#EF7F4C"
             >
               settings
             </v-icon>

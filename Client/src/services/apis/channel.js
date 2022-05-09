@@ -72,6 +72,7 @@ const updateScore = (data, cid, ecid) => axios.put(
 const getMember = (cid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members`, {
   validateStatus: false,
 });
+
 const getMemberById = (cid, mid) => axios.get(`${BACKEND_HOST}/api/channels/${cid}/members/${mid}`, {
   validateStatus: false,
 });

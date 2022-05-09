@@ -137,7 +137,6 @@ export default {
           this.startText = 'continue';
         }
         if (now > start && this.channels.members[0].state !== 'FINISH') {
-          console.log('1');
           this.isFinish = true;
           this.isDisable = false;
         } else {
@@ -145,6 +144,7 @@ export default {
           this.isFinish = false;
         }
         if (now > end) {
+          this.isFinish = false;
           this.showTime = false;
         } else {
           this.showTime = true;

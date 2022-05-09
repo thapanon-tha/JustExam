@@ -8,19 +8,13 @@
         + New channel
       </button>
     </Header>
-    <div class="flex justify-end mr-15 mt-5">
-      <select
-        class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2 text-mainColor font-semilight text-sm text-center"
-      >
-        <option
-          v-for="(item, index) in sortlist"
-          :key="index"
-          :value="item.value"
-        >
-          {{ item.name }}
-        </option>
-      </select>
-    </div>
+    <v-container>
+      <v-tabs v-model="tap" color="#EF7F4C">
+        <v-tab href="#tab-1" v-if="disableTap" @click="channelmenu(1)">IN PROGRESS</v-tab>
+        <v-tab href="#tab-2" @click="channelmenu(3)">UP COMING</v-tab>
+        <v-tab href="#tab-3" @click="channelmenu(2)">FINISH</v-tab>
+      </v-tabs>
+    </v-container>
     <div class="grid grid-cols-4 gap-10 ml-40 mr-40 mt-10">
       <div v-for="box in channels" :key="box.cid">
         <div class="w-60">
@@ -52,7 +46,10 @@ export default {
   data() {
     return {
       channels: [],
+      channelsAll: [],
       isLoading: false,
+      disableTap: true,
+      tap: 0,
       sortlist: [
         {
           name: 'Sort by uncoming',
@@ -79,11 +76,65 @@ export default {
     async getChannels() {
       this.isLoading = true;
       this.channels = await api.channels().then((res) => res.data);
+      this.channelsAll = this.channels;
+      this.channelmenu(1);
       this.isLoading = false;
     },
+    channelmenu(menu) {
+      // inprogress
+      if (menu === 1) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const start = new Date(e.startAt);
+          const end = new Date(e.endAt);
+          return start < date && end > date;
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.endAt);
+          const startB = new Date(b.endAt);
+          return startB - startA;
+        });
+        this.channels.reverse();
+        if (this.channels.length === 0) {
+          this.tap = 0;
+          this.channelmenu(3);
+          this.disableTap = false;
+        }
+      }
+      // finish
+      if (menu === 2) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const end = new Date(e.endAt);
+          return end < date;
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.startAt);
+          const startB = new Date(b.startAt);
+          return startB - startA;
+        });
+      }
+      // upcumming
+      if (menu === 3) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const start = new Date(e.startAt);
+          return start > date;
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.startAt);
+          const startB = new Date(b.startAt);
+          return startB - startA;
+        });
+        this.channels.reverse();
+      }
+    },
   },
-  mounted() {
-    //
+  watch: {
+    channels(newVal, oldVal) {
+      if (newVal.length === 0) {
+      }
+    },
   },
   created() {
     this.getChannels();

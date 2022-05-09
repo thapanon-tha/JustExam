@@ -135,6 +135,7 @@ export default {
         .then((res) => res[0].data);
       if (respones.status < 300) {
         this.channelsDetail.members = respones.data.map((e) => ({
+          rid: e.rid,
           mid: e.mid,
           sid: e.sid,
           state: e.state,
@@ -144,21 +145,29 @@ export default {
             0,
           ),
         }));
+        this.channelsDetail.members = this.channelsDetail.members.filter(
+          (e) => e.rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437',
+        );
         this.isLoading = false;
+        this.noMember();
+        this.isLoading = true;
       }
       if (respones.status === 404) {
-        this.isLoading = false;
-        this.snackbar = true;
-        this.text = 'No member in channel';
-        setTimeout(() => {
-          this.$router
-            .push({
-              name: 'InsideChannelTeacher',
-              params: { cid: this.$route.params.cid },
-            })
-            .catch(() => true);
-        }, 3000);
+        this.noMember();
       }
+    },
+    noMember() {
+      this.isLoading = false;
+      this.snackbar = true;
+      this.text = 'No member in channel';
+      setTimeout(() => {
+        this.$router
+          .push({
+            name: 'InsideChannelTeacher',
+            params: { cid: this.$route.params.cid },
+          })
+          .catch(() => true);
+      }, 2000);
     },
     async onClickReleaceScore() {
       this.isLoading = true;

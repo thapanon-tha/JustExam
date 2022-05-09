@@ -8,19 +8,16 @@
         Join channel
       </button>
     </Header>
-    <div class="flex justify-end mr-15 mt-5">
-      <select
-        class="border rounded-md border-solid border-mainColor border-opacity-40 bg-white p-2 text-mainColor font-semilight text-sm text-center"
-      >
-        <option
-          v-for="(item, index) in sortlist"
-          :key="index"
-          :value="item.value"
+    <v-container>
+      <v-tabs v-model="tap" color="#EF7F4C">
+        <v-tab href="#tab-1" v-if="disableTap" @click="channelmenu(1)"
+          >IN PROGRESS</v-tab
         >
-          {{ item.name }}
-        </option>
-      </select>
-    </div>
+        <v-tab href="#tab-2" @click="channelmenu(3)">UP COMING</v-tab>
+        <v-tab href="#tab-3" @click="channelmenu(2)">FINISH</v-tab>
+        <v-tab href="#tab-4" @click="channelmenu(4)">TA</v-tab>
+      </v-tabs>
+    </v-container>
     <div class="grid grid-cols-4 gap-5 ml-40 mr-40 mt-10">
       <div v-for="box in channels" :key="box.id">
         <div class="w-60">
@@ -139,6 +136,9 @@ export default {
   },
   data() {
     return {
+      channelsAll: [],
+      disableTap: true,
+      tap: 0,
       isLoading: false,
       inviteCode: '',
       channelsresult: {},
@@ -150,25 +150,14 @@ export default {
       channels: [],
       isSuccess: 0,
       snackbarMessage: '',
-      sortlist: [
-        {
-          name: 'Sort by uncoming',
-          value: 'comin',
-        },
-        {
-          name: 'Sort by alphabet',
-          value: 'alpha',
-        },
-      ],
     };
   },
   methods: {
     onClick(pageName, cid) {
       const index = this.channels.findIndex((e) => e.cid === cid);
       if (
-        (this.
-        channels[index].members[0].rid
-          === '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5')
+        this.channels[index].members[0].rid
+        === '1297e88a-0d46-4f5d-a5bf-69ecbcc541b5'
       ) this.$router.push({ name: pageName, params: { cid } }).catch(() => {});
       else {
         this.$router
@@ -227,7 +216,71 @@ export default {
       const response = await api.channels().then((e) => e);
       if (response.status < 300) {
         this.channels = response.data;
+        this.channelsAll = this.channels
+        this.channelmenu(1);
         this.isLoading = false;
+      }
+    },
+
+    channelmenu(menu) {
+      // inprogress
+      if (menu === 1) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const start = new Date(e.startAt);
+          const end = new Date(e.endAt);
+          return start < date && end > date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.endAt);
+          const startB = new Date(b.endAt);
+          return startB - startA;
+        });
+        this.channels.reverse();
+        if (this.channels.length === 0) {
+          this.tap = 0;
+          this.channelmenu(3);
+          this.disableTap = false;
+        }
+      }
+      // finish
+      if (menu === 2) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const end = new Date(e.endAt);
+          return end < date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.startAt);
+          const startB = new Date(b.startAt);
+          return startB - startA;
+        });
+      }
+      // upcumming
+      if (menu === 3) {
+        this.channels = this.channelsAll.filter((e) => {
+          const date = new Date();
+          const start = new Date(e.startAt);
+          return start > date && e.members[0].rid!=='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.startAt);
+          const startB = new Date(b.startAt);
+          return startB - startA;
+        });
+        this.channels.reverse();
+      }
+
+      if (menu === 4) {
+        this.channels = this.channelsAll.filter((e) => {
+          return e.members[0].rid==='3a7c4d99-c414-44b8-bdd8-d7d625a99437';
+        });
+        this.channels.sort((a, b) => {
+          const startA = new Date(a.startAt);
+          const startB = new Date(b.startAt);
+          return startB - startA;
+        });
+        this.channels.reverse();
       }
     },
   },
