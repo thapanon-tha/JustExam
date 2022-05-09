@@ -150,8 +150,9 @@ export default {
           (e) => e.rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437',
         );
         this.isLoading = false;
-        this.noMember();
-        this.isLoading = true;
+        if(this.channelsDetail.members.length===0){
+          this.noMember();
+        }
       }
       if (respones.status === 404) {
         this.noMember();

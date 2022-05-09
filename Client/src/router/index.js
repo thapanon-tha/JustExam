@@ -144,6 +144,22 @@ const routes = [
   { path: '*', redirect: '/' },
 ];
 
+function getCookie(cname) {
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -169,7 +185,7 @@ router.beforeEach((to, from, next) => {
         return next({ path: '/' });
       }
     }
-    if (authorize.includes('TA')) {
+    if (authorize.includes('TA') && getCookie('type') === 'student') {
       api.isTA(to.params.cid).then((e) => {
         if (e.data.isTA === false) {
           return next({ path: '/' });
