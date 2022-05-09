@@ -8,12 +8,40 @@ x-logging:
       max-size: 100m
 
 services:
+  # frontend:
+  #   image: "justexam.azurecr.io/frontend"
+  #   build: 
+  #     context: ./Client
+  #     args:
+  #       VUE_APP_API: https://je-backend.azurewebsites.net
+  #   container_name: frontend
+  #   environment:
+  #     TZ: Asia/Bangkok
+  #   ports:
+  #     - 4000:80
+  #   networks:
+  #     - network
+
+  # server:
+  #   build: ./Server
+  #   image: "justexam.azurecr.io/server"
+  #   volumes:
+  #     - upload:/app/data/upload
+  #     - log:/app/log
+  #     - ./server/src:/app/src
+  #   env_file: ./.env
+  #   ports:
+  #     - $EXPOSE_PORT:$EXPOSE_PORT
+  #   networks:
+  #     - network
+  #   restart: always
+
   frontend:
-    image: "justexam.azurecr.io/frontend"
+    image: "registry.digitalocean.com/justexam/frontend"
     build: 
       context: ./Client
       args:
-        VUE_APP_API: https://je-backend.azurewebsites.net
+        VUE_APP_API: https://lobster-app-qndeh.ondigitalocean.app
     container_name: frontend
     environment:
       TZ: Asia/Bangkok
@@ -24,7 +52,7 @@ services:
 
   server:
     build: ./Server
-    image: "justexam.azurecr.io/server"
+    image: "registry.digitalocean.com/justexam/server"
     volumes:
       - upload:/app/data/upload
       - log:/app/log
