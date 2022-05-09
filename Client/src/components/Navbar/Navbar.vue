@@ -1,7 +1,7 @@
 <template>
   <div class="bg-subColor shadow-md flex flex-row justify-between h-16">
     <div class="flex flex-row">
-      <img class="p-3 mr-8" src="@/assets/logo.svg" alt="logo" />
+      <img class="p-3 mr-8" src="@/assets/logo.svg" @click="Home" alt="logo" />
       <NavButton name="Home" to="Home" :borderRight="true" />
       <NavButton
         name="Contact us"
@@ -69,6 +69,9 @@ export default {
     NavButtonAction,
   },
   methods: {
+    Home() {
+      this.$router.push({ name: 'Home' }).catch(() => {});
+    },
     onClick() {
       this.$store.dispatch({ type: 'doLogout' });
       this.$router.push({ name: 'Home' }).catch(() => {});
