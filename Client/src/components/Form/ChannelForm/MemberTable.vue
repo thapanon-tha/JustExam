@@ -101,7 +101,6 @@ export default {
       {
         text: 'Student ID',
         align: 'center',
-        sortable: false,
         value: 'sid',
       },
       {
@@ -112,7 +111,6 @@ export default {
       {
         text: 'Role',
         align: 'center',
-        sortable: false,
         value: 'role',
       },
       {

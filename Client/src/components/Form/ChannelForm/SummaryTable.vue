@@ -26,7 +26,6 @@ export default {
       {
         text: 'Score Feedback',
         align: 'center',
-        sortable: false,
         value: 'actions',
       },
       {
@@ -37,7 +36,6 @@ export default {
       {
         text: 'Student ID',
         align: 'center',
-        sortable: false,
         value: 'sid',
       },
       {

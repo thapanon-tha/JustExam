@@ -1,14 +1,23 @@
 <template>
   <v-container>
     <div class="flex">
-      <div class="d-flex justify-start m-1" v-for="(section, index) in sectionlist" :key="index">
-        <div v-if="selectedSectionId === index + 1" @click="onClickSelectSection(section.id)">
+      <div
+        class="d-flex justify-start m-1"
+        v-for="(section, index) in sectionlist"
+        :key="index"
+      >
+        <div
+          v-if="selectedSectionId === index + 1"
+          @click="onClickSelectSection(section.id)"
+        >
           <v-btn class="white--text" color="#EF7F4C" large :outlined="false">
             Section {{ index + 1 }}
           </v-btn>
         </div>
         <div v-else @click="onClickSelectSection(section.id)">
-          <v-btn color="#EF7F4C" large :outlined="true"> Section {{ index + 1 }} </v-btn>
+          <v-btn color="#EF7F4C" large :outlined="true">
+            Section {{ index + 1 }}
+          </v-btn>
         </div>
       </div>
     </div>
@@ -25,7 +34,11 @@
           </div>
           <!-------------------- Multiple-Choice Type -------------------->
           <div v-if="item.qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'">
-            <div class="ml-5" v-for="answer in item.answer" :key="answer.qamccid">
+            <div
+              class="ml-5"
+              v-for="answer in item.answer"
+              :key="answer.qamccid"
+            >
               <v-checkbox
                 v-if="
                   item.studentAnswer.findIndex(function (key) {
@@ -92,10 +105,11 @@
                       {{
                         item.studentAnswer
                           .filter((e) => e !== null)
-                          .find((element) => element.qamcid === answer.qamcid).value
+                          .find((element) => element.qamcid === answer.qamcid)
+                          .value
                       }}
                     </div>
-                    <div v-else   class="mt-3">---------------</div>
+                    <div v-else class="mt-3">---------------</div>
 
                     <!-- <div v-else class="mt-3">
                         <div v-if="textIndex === 1" class="mt-3">
@@ -125,6 +139,7 @@
           <!-------------------- Paragraph Type -------------------->
           <div v-else-if="item.qtid === '5edad656-83b9-4de0-ab94-f7d40cea3354'">
             <textarea
+              disabled
               class="m-5 w-full h-52 p-1 rounded-md resize-none focus:ring focus:ring-yellow-300 focus:outline-none"
               type="text"
               placeholder="Answer"
@@ -133,34 +148,53 @@
             />
           </div>
           <!-------------------- Codeing Type -------------------->
-          <div v-else-if="item.qtid === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c'" class="text-left">
+          <div
+            v-else-if="item.qtid === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c'"
+            class="text-left"
+          >
             <v-container>
               <v-row>
                 <v-col>
                   <div class="bg-gray-100 rounded-md shadow-md">
-                    <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+                    <div
+                      class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                    >
                       Example Input :
                     </div>
-                    <div v-html="item.answer[0].exInput" class="px-3 py-4"></div>
+                    <div
+                      v-html="item.answer[0].exInput"
+                      class="px-3 py-4"
+                    ></div>
                   </div>
                 </v-col>
                 <v-col>
                   <div class="bg-gray-100 rounded-md shadow-md">
-                    <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+                    <div
+                      class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                    >
                       Example Output :
                     </div>
-                    <div v-html="item.answer[0].exOutput" class="px-3 py-4"></div>
+                    <div
+                      v-html="item.answer[0].exOutput"
+                      class="px-3 py-4"
+                    ></div>
                   </div>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <div class="rounded-t-md" v-bind:style="{ backgroundColor: '#1f2430' }">
+                  <div
+                    class="rounded-t-md"
+                    v-bind:style="{ backgroundColor: '#1f2430' }"
+                  >
                     <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
                       Language :
                       {{ mappingCodeLanguage(item.answer[0].clid) }}
                     </p>
-                    <codemirror v-model="item.studentAnswer" :options="cmOptions" />
+                    <codemirror
+                      v-model="item.studentAnswer"
+                      :options="cmOptions"
+                    />
                   </div>
                 </v-col>
               </v-row>
@@ -241,6 +275,7 @@ export default {
         { name: 'Golang', mode: 'go', id: 60 },
       ],
       cmOptions: {
+        viewportMargin:50,
         tabSize: 2,
         mode: 'text/javascript',
         theme: 'ayu-mirage',
@@ -255,7 +290,9 @@ export default {
       this.selectedSectionId = id;
     },
     mappingCodeLanguage(numberCode) {
-      const codeIndex = this.language.findIndex((item) => item.id === numberCode);
+      const codeIndex = this.language.findIndex(
+        (item) => item.id === numberCode,
+      );
       this.cmOptions.mode = this.language[codeIndex].mode;
       return this.language[codeIndex].name;
     },
@@ -285,7 +322,7 @@ export default {
     },
   },
   created() {
-    this.sectionCalo()
+    this.sectionCalo();
   },
 };
 </script>
