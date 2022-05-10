@@ -29,17 +29,17 @@ export default {
           title: "Just Exam",
           image:
             "https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          description: "A Web Application For An Online Exam.",
+          description: "A web application for an online exam",
           imageLeft: false,
           fullText: `Just Exam is a web application for an online exam that helps a teacher \n
-             arrang an exam and helps a student take an exam remotely.`,
+             arrange an exam and helps a student take an exam remotely.`,
         },
         {
           id: "teacher",
           title: "For Teacher",
           image:
             "https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          description: "All features for teacher on Just Exam.",
+          description: "Features for teacher on Just Exam.",
           imageLeft: true,
           fullText: `Teachers can create an exam channel where the online exam will take place.
           In the exam channel, teachers can set the date and time of the exam. They can also 
@@ -50,7 +50,7 @@ export default {
           image:
             "https://images.pexels.com/photos/4144144/pexels-photo-4144144.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
           title: "For Student",
-          description: "A feature for student on Just Exam.",
+          description: "Features for student on Just Exam.",
           imageLeft: false,
           fullText: `Students can join the exam channel via an invite code and take an exam at the required date.`,
         },
