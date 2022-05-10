@@ -9,6 +9,8 @@ import VueQuillEditor from "vue-quill-editor";
 import VueTimepicker from 'vue2-timepicker';
 import VueCookies from 'vue-cookies'
 import VueClipboard from 'vue-clipboard2'
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 // require styles
 import 'vue2-timepicker/dist/VueTimepicker.css';
@@ -28,6 +30,7 @@ Vue.use(VuePortal, {
   name: "portal", // optional, use to rename component
 });
 
+Vue.use(katex);
 Vue.use(VueClipboard)
 Vue.use(VueCookies)
 Vue.use(require('vue-moment'));
