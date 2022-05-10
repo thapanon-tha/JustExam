@@ -78,7 +78,7 @@
               :onChangeFunc="onChange"
             />
           </div>
-          <div class="ml-20">
+          <div class="ml-20" v-if="index!==0">
             <ActionButton
               class="text-mainColor flex justify-end"
               name="x"

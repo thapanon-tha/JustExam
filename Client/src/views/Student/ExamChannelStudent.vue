@@ -225,6 +225,11 @@ export default {
           })
           .catch(() => {});
       }
+      else{
+        this.isSuccess = 0;
+        this.snackbar = true;
+        this.snackbarMessage = response.message;
+      }
     },
     async onClickDeleteChannel(cid) {
       this.isLoading = true;
