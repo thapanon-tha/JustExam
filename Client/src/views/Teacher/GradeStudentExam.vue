@@ -95,13 +95,13 @@ export default {
       if (res.status === 200) {
         this.snackbar = true;
         this.sColor = 'green';
-        this.sTest = 'Success'
+        this.sTest = 'Success';
         this.loading = false;
         this.callApi();
-      }else{
+      } else {
         this.snackbar = true;
         this.sColor = 'red';
-        this.sTest = 'Fail'
+        this.sTest = 'Fail';
       }
     },
     onClickCancel() {
@@ -134,7 +134,7 @@ export default {
             const arrayDump = [];
             this.totalScore = 0;
             this.totalExamScore = 0;
-            this.questions.forEach((element) => {
+            this.questions.forEach((element, index) => {
               if (element !== null) {
                 this.totalScore += parseInt(
                   element.answerQuestionScores[0].pointReviceve,
@@ -144,6 +144,17 @@ export default {
               }
             });
             this.questions = arrayDump;
+            this.questions = this.questions.map((e) => {
+              if (e.qtid === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c') {
+                const q = {
+                  ...e,
+                  playInput: '',
+                  playOutput: '',
+                };
+                return q;
+              }
+              return e;
+            });
           }
         });
     },

@@ -43,7 +43,6 @@
             If you disconnect you rejoin to continue examination
           </v-row>
         </div>
-
         <v-row class="flex justify-center">
           <v-btn
             color="mainColor"

@@ -102,7 +102,14 @@ const sendemail = (cid) => axios.put(`${BACKEND_HOST}/api/channels/${cid}/sendma
   validateStatus: false,
 });
 
+const playground = (data) => axios.post(
+  `${BACKEND_HOST}/api/playground`,
+  { ...data },
+  { validateStatus: false },
+);
+
 export default {
+  playground,
   channels,
   channelsDetail,
   joinChannel,

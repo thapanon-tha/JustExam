@@ -28,7 +28,7 @@
     >
       <v-card color="#FFFBFA">
         <v-card-text>
-          <div class="flex text-xl text-left">
+          <div class="flex text-xl text-left black--text">
             <span class="mr-2">{{ itemIndex + 1 }})</span>
             <span v-html="item.questionTopic"></span>
           </div>
@@ -161,10 +161,7 @@
                     >
                       Example Input :
                     </div>
-                    <div
-                      v-html="item.answer[0].exInput"
-                      class="px-3 py-4"
-                    ></div>
+                    <div v-html="item.answer[0].input" class="px-3 py-4"></div>
                   </div>
                 </v-col>
                 <v-col>
@@ -174,13 +171,11 @@
                     >
                       Example Output :
                     </div>
-                    <div
-                      v-html="item.answer[0].exOutput"
-                      class="px-3 py-4"
-                    ></div>
+                    <div v-html="item.answer[0].output" class="px-3 py-4"></div>
                   </div>
                 </v-col>
               </v-row>
+
               <v-row>
                 <v-col>
                   <div
@@ -194,6 +189,109 @@
                     <codemirror
                       v-model="item.studentAnswer"
                       :options="cmOptions"
+                    />
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <div class="flex justify-end">
+                    <v-btn
+                      :loading="isRunning"
+                      color="#EF7F4C"
+                      elevation="2"
+                      @click="running(item)"
+                      >Run</v-btn
+                    >
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col :cols="5">
+                  <div
+                    class="rounded-t-md"
+                    v-bind:style="{ backgroundColor: '#1f2430' }"
+                  >
+                    <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+                      input
+                    </p>
+                    <codemirror
+                      v-model="item.playInput"
+                      :options="{
+                        tabSize: 2,
+                        mode: cmOptions.mode,
+                        theme: 'ayu-mirage',
+                        line: true,
+                      }"
+                    />
+                  </div>
+                </v-col>
+                <v-col :cols="7">
+                  <div
+                    class="rounded-t-md"
+                    v-bind:style="{ backgroundColor: '#1f2430' }"
+                  >
+                    <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+                      output
+                    </p>
+                    <codemirror
+                      v-model="item.playOutput"
+                      :options="{
+                        tabSize: 2,
+                        mode: cmOptions.mode,
+                        theme: 'ayu-mirage',
+                        line: true,
+                        readOnly: true,
+                      }"
+                    />
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row
+                v-for="(testcase, testNo) in item.answer"
+                :key="testcase.qaccid"
+              >
+                <v-col cols="6">
+                  <div
+                    class="rounded-t-md"
+                    v-bind:style="{ backgroundColor: '#1f2430' }"
+                  >
+                    <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+                      Testcase Input {{ testNo + 1 }}
+                    </p>
+                    <codemirror
+                      :value="`${testcase.exInput.replace(
+                        /(<([^>]+)>)/gi,
+                        '',
+                      )}`"
+                      :options="{
+                        tabSize: 2,
+                        theme: 'ayu-mirage',
+                        line: true,
+                        readOnly: true,
+                      }"
+                    />
+                  </div>
+                </v-col>
+                <v-col cols="6">
+                  <div
+                    class="rounded-t-md"
+                    v-bind:style="{ backgroundColor: '#1f2430' }"
+                  >
+                    <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+                      Testcase Output {{ testNo + 1 }}
+                    </p>
+                    <codemirror
+                      :value="`${testcase.exOutput.replace(
+                        /(<([^>]+)>)/gi,
+                        '',
+                      )}`"
+                      :options="{
+                        tabSize: 2,
+                        theme: 'ayu-mirage',
+                        line: true,
+                        readOnly: true,
+                      }"
                     />
                   </div>
                 </v-col>
@@ -238,6 +336,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
+import api from '@/services/apis';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/ayu-mirage.css';
@@ -255,6 +354,7 @@ export default {
   props: ['value', 'loading'],
   data() {
     return {
+      isRunning: false,
       selectedSectionId: 1,
       questionData: this.value,
       sectionlist: [
@@ -275,7 +375,6 @@ export default {
         { name: 'Golang', mode: 'go', id: 60 },
       ],
       cmOptions: {
-        viewportMargin:50,
         tabSize: 2,
         mode: 'text/javascript',
         theme: 'ayu-mirage',
@@ -307,7 +406,22 @@ export default {
       }
       this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
-    preparedate() {},
+    running(item) {
+    this.isRunning = true;
+    const index = this.questionData.findIndex((e) => e.qecid === item.qecid);
+      api
+        .playground({
+          language_id: item.answer[0].clid,
+          code: item.studentAnswer,
+          input: item.playInput,
+        })
+        .then((e) => {
+          if (e.status === 200) {
+            this.questionData[index].playOutput = e.data.stdout;
+          }
+          this.isRunning = false;
+        });
+  },
   },
   computed: {
     questionList() {
@@ -324,5 +438,12 @@ export default {
   created() {
     this.sectionCalo();
   },
+
 };
 </script>
+
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>
