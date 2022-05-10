@@ -4,7 +4,7 @@
       <p class="text-center p-3">{{ textFinish }}</p>
       <template v-if="status !== 'sending'" v-slot:action="{ attrs }">
         <v-btn color="red" text @click="finish = false"> Close </v-btn>
-        <v-btn color="green" text v-bind="attrs" @click="onSubmit"> Continuous </v-btn>
+        <v-btn color="green" text v-bind="attrs" @click="onSubmit"> Continue </v-btn>
       </template>
     </v-snackbar>
     <div v-if="finish" class="h-full w-full fixed top-0 left-0 z-10 bg-black opacity-40" />
@@ -19,7 +19,7 @@
             >{{ section.current }} / {{ section.all }}</span
           >
         </div>
-        <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
+        <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" :activeAlert="true" />
       </div>
 
       <v-container class="mb-4">
@@ -342,7 +342,7 @@ export default {
         this.textFinish = `คุณยังไม่ได้ทำข้อสอบข้อที่ ${notFinish
           .map((value) => value + 1)
           .join(', ')}`;
-      } else this.onSubmit();
+      } else this.textFinish = 'คุณต้องการยืนยันการส่งคำตอบใช่หรือไม่';
     },
     onSubmit() {
       this.finish = true;
@@ -449,3 +449,9 @@ export default {
   watch: {},
 };
 </script>
+
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>

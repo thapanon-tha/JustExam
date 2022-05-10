@@ -30,7 +30,7 @@
         </div>
         <v-row
           class="justify-center m-2 text-xl"
-          v-if="channels.members[0].state === 'FINISH'"
+          v-if="channels.members[0].state === 'FINISH' && !isLoading"
         >
           <h1 class="text-red-500">you have finish this examination</h1>
         </v-row>
@@ -88,7 +88,9 @@ export default {
       isDisable: true,
       isFinish: false,
       showTime: true,
-      channels: {},
+      channels: {
+        members: [ {state: ''} ]
+      },
       text: 'Start In',
       text2: 'End In',
       startButton: 'start',
