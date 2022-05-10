@@ -2,8 +2,15 @@
   <div class="flex flex-col justify-center">
     <div class="flex flex-row mt-5 justify-start ml-5">
       <div class="flex">
-        <div class="d-flex justify-start m-1" v-for="(section, index) in sectionlist" :key="index">
-          <div v-if="selectedSectionId === index + 1" @click="onClickSelectSection(section.id)">
+        <div
+          class="d-flex justify-start m-1"
+          v-for="(section, index) in sectionlist"
+          :key="index"
+        >
+          <div
+            v-if="selectedSectionId === index + 1"
+            @click="onClickSelectSection(section.id)"
+          >
             <v-btn class="white--text" color="#EF7F4C" large :outlined="false">
               Section {{ index + 1 }}
               <v-icon
@@ -53,12 +60,21 @@
           class="bg-white border rounded-xl border-editorColor w-auto ml-20 mr-20 mt-10 shadow-md"
         >
           <div class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10">
-            <MultipleChoice v-model="item.questionData" v-if="item.type === 'mc'" />
-            <ShortAnswer v-model="item.questionData" v-if="item.type === 'sa'" />
+            <MultipleChoice
+              v-model="item.questionData"
+              v-if="item.type === 'mc'"
+            />
+            <ShortAnswer
+              v-model="item.questionData"
+              v-if="item.type === 'sa'"
+            />
             <Paragraph v-model="item.questionData" v-if="item.type === 'pa'" />
             <TrueFalse v-model="item.questionData" v-if="item.type === 'tf'" />
             <Matching v-model="item.questionData" v-if="item.type === 'ma'" />
-            <CodingQuestion v-model="item.questionData" v-if="item.type === 'ca'" />
+            <CodingQuestion
+              v-model="item.questionData"
+              v-if="item.type === 'ca'"
+            />
             <div class="flex flex-col ml-10">
               <!-- eslint-disable max-len -->
               <select
@@ -83,7 +99,9 @@
                 @click="deleteQuestion(item.id)"
               >
                 <!-- eslint-enable max-len -->
-                <span class="material-icons mt-2 text-3xl"> delete_outline </span>
+                <span class="material-icons mt-2 text-3xl">
+                  delete_outline
+                </span>
               </button>
             </div>
           </div>
@@ -309,7 +327,9 @@ export default {
   },
   computed: {
     questionList() {
-      return this.qlist.filter((question) => question.sectionId === this.selectedSectionId);
+      return this.qlist.filter(
+        (question) => question.sectionId === this.selectedSectionId,
+      );
     },
   },
   watch: {
