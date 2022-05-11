@@ -1,5 +1,12 @@
 <template>
   <div class="flex justify-end items-center">
+    <v-snackbar v-model="alert" :timeout="5000" :bottom="true" :right="true">
+      <p class="p-3 text-left">เหลือเวลาอีก 5 นาที</p>
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text @click="alert = false" v-bind="attrs"> Close </v-btn>
+      </template>
+    </v-snackbar>
+
     <div class="text-xl mr-5">
       <span class="text-bold text-red-500">{{ text }}</span>
     </div>
@@ -30,7 +37,8 @@ export default {
   props: {
     endTime: String,
     submit: Function,
-    text: String
+    text: String,
+    activeAlert: Boolean,
   },
   data: () => ({
     hours: 0,
@@ -38,6 +46,7 @@ export default {
     seconds: 0,
     loaded: false,
     finish: false,
+    alert: false,
     test: new Date().getTime() + 60000,
   }),
   methods: {
@@ -52,6 +61,10 @@ export default {
           this.submit();
           clearInterval(timer);
           return;
+        }
+
+        if (distance === 300000 && this.activeAlert) {
+          if (this.alert === false) this.alert = true
         }
 
         const days = Math.floor(distance / this._days);

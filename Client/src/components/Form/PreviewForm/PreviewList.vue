@@ -95,7 +95,13 @@
           <!-------------------- Short-Answer Type -------------------->
           <div v-else-if="item.type === 'sa'" class="flex justify-start">
             <input
-              class="m-5 w-52 p-1 rounded-md focus:ring focus:ring-yellow-300 focus:outline-none"
+              class="
+                m-5
+                w-52
+                p-1
+                rounded-md
+                focus:ring focus:ring-yellow-300 focus:outline-none
+              "
               type="text"
               placeholder="Answer"
               v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
@@ -105,7 +111,15 @@
           <!-------------------- Paragraph Type -------------------->
           <div v-else-if="item.type === 'pa'">
             <textarea
-              class="m-5 w-full h-52 p-1 rounded-md resize-none focus:ring focus:ring-yellow-300 focus:outline-none"
+              class="
+                m-5
+                w-full
+                h-52
+                p-1
+                rounded-md
+                resize-none
+                focus:ring focus:ring-yellow-300 focus:outline-none
+              "
               type="text"
               placeholder="Answer"
               v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
@@ -184,47 +198,47 @@
 </template>
 
 <script>
-import { codemirror } from 'vue-codemirror';
+import { codemirror } from "vue-codemirror";
 
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/ayu-mirage.css';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/python/python';
-import 'codemirror/mode/go/go';
-import 'codemirror/mode/ruby/ruby';
-import 'codemirror/mode/clike/clike';
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/ayu-mirage.css";
+import "codemirror/mode/javascript/javascript";
+import "codemirror/mode/python/python";
+import "codemirror/mode/go/go";
+import "codemirror/mode/ruby/ruby";
+import "codemirror/mode/clike/clike";
 
 export default {
-  name: 'PreviewList',
+  name: "PreviewList",
   components: {
     codemirror,
   },
-  props: ['value'],
+  props: ["value"],
   data() {
     return {
       selectedSectionId: 1,
       sectionlist: [
         {
           id: 1,
-          sectionName: 'Section 1',
+          sectionName: "Section 1",
         },
       ],
       qlist: [],
       language: [
-        { name: 'Javascript', mode: 'text/javascript', id: 'javascript' },
-        { name: 'Python', mode: 'python', id: 'python' },
-        { name: 'C', mode: 'text/x-csrc', id: 'c' },
-        { name: 'C#', mode: 'text/x-csharp', id: 'csharp' },
-        { name: 'C++', mode: 'text/x-c++src', id: 'cpp' },
-        { name: 'Java', mode: 'text/x-java', id: 'java' },
-        { name: 'Kotlin', mode: 'text/x-kotlin', id: 'kotlin' },
-        { name: 'Ruby', mode: 'ruby', id: 'ruby' },
-        { name: 'Golang', mode: 'go', id: 'go' },
+        { name: "Javascript", mode: "text/javascript", id: "javascript" },
+        { name: "Python", mode: "python", id: "python" },
+        { name: "C", mode: "text/x-csrc", id: "c" },
+        { name: "C#", mode: "text/x-csharp", id: "csharp" },
+        { name: "C++", mode: "text/x-c++src", id: "cpp" },
+        { name: "Java", mode: "text/x-java", id: "java" },
+        { name: "Kotlin", mode: "text/x-kotlin", id: "kotlin" },
+        { name: "Ruby", mode: "ruby", id: "ruby" },
+        { name: "Golang", mode: "go", id: "go" },
       ],
       cmOptions: {
         tabSize: 2,
-        mode: 'text/javascript',
-        theme: 'ayu-mirage',
+        mode: "text/javascript",
+        theme: "ayu-mirage",
         lineNumbers: true,
         line: true,
         readOnly: true,
@@ -237,7 +251,7 @@ export default {
     },
     mappingCodeLanguage(numberCode) {
       const codeIndex = this.language.findIndex(
-        (item) => item.id === numberCode,
+        (item) => item.id === numberCode
       );
       this.cmOptions.mode = this.language[codeIndex].mode;
       return this.language[codeIndex].name;
@@ -254,13 +268,13 @@ export default {
       this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
     matchCal(element) {
-      return element.map((e) => e.matchanswer.replace(/(<([^>]+)>)/gi, ''));
+      return element.map((e) => e.matchanswer.replace(/(<([^>]+)>)/gi, ""));
     },
   },
   computed: {
     questionList() {
       return this.qlist.filter(
-        (question) => question.sectionId === this.selectedSectionId,
+        (question) => question.sectionId === this.selectedSectionId
       );
     },
   },
@@ -277,3 +291,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>

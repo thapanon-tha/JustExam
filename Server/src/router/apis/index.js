@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const jwtChecker = require('../../middlewares/jwt');
 const channelController = require('../../controllers/Channel.controller')
+const compilerController = require('../../controllers/Compiler.controller')
+
 // * SUCCESS
 // TODO
 // ? INPROSESS
@@ -31,5 +33,8 @@ router.use('/roles',jwtChecker, require('./Role'));
 
 // *
 router.use('/optionTypes',jwtChecker, require('./OptionType'));
+
+// *
+router.post('/playground',jwtChecker, compilerController.playground);
 
 module.exports = router;

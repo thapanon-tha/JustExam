@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const userService = require('../services/user.service');
+const jwtChecker = require('../middlewares/jwt');
+const stdCode = require('../controllers/stdCode');
 
 const cookieOption = {
   maxAge: new Date() * 0.001 + 300,
@@ -24,6 +26,20 @@ router.post('/login', (req, res) => {
     }
     res.status(400).json(info);
   })(req, res);
+});
+
+router.post('/password', jwtChecker, async (req, res) => {
+  const { data } = req.body;
+  const { uid } = req.user;
+  try {
+    const hash = await bcrypt.hash(data.password, 10);
+    const user = await userService.findById(uid);
+    await user.update({ password: hash });
+    await user.save();
+    stdCode.Success(res);
+  } catch (error) {
+    stdCode.Unexpected(error, res);
+  }
 });
 
 router.post('/register', async (req, res) => {

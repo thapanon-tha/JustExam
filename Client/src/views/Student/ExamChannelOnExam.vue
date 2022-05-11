@@ -1,13 +1,24 @@
 <template>
   <div class="mb-52">
-    <v-snackbar v-model="finish" :height="200" :centered="true" :timeout="-1" :vertical="true">
+    <v-snackbar
+      v-model="finish"
+      :height="200"
+      :centered="true"
+      :timeout="-1"
+      :vertical="true"
+    >
       <p class="text-center p-3">{{ textFinish }}</p>
       <template v-if="status !== 'sending'" v-slot:action="{ attrs }">
         <v-btn color="red" text @click="finish = false"> Close </v-btn>
-        <v-btn color="green" text v-bind="attrs" @click="onSubmit"> Continuous </v-btn>
+        <v-btn color="green" text v-bind="attrs" @click="onSubmit">
+          Continue
+        </v-btn>
       </template>
     </v-snackbar>
-    <div v-if="finish" class="h-full w-full fixed top-0 left-0 z-10 bg-black opacity-40" />
+    <div
+      v-if="finish"
+      class="h-full w-full fixed top-0 left-0 z-10 bg-black opacity-40"
+    />
 
     <Header main="Exam channel" current="> On Exam" class="mb-5"> </Header>
 
@@ -19,7 +30,11 @@
             >{{ section.current }} / {{ section.all }}</span
           >
         </div>
-        <Countdown v-bind:endTime="time.endTime" v-bind:submit="onSubmit" />
+        <Countdown
+          v-bind:endTime="time.endTime"
+          v-bind:submit="onSubmit"
+          :activeAlert="true"
+        />
       </div>
 
       <v-container class="mb-4">
@@ -41,14 +56,21 @@
         <v-container>
           <v-row justify="center">
             <v-col cols="12">
-              <div class="py-10 px-40 border-2 border-mainColor drop-shadow-lg rounded-xl">
+              <div
+                class="py-10 px-40 border-2 border-mainColor drop-shadow-lg rounded-xl"
+              >
                 <div class="mb-5 flex text-lg text-left">
                   <span class="mr-2">{{ choice + 1 }})</span>
                   <span v-html="questionData[choice].questionTopic"></span>
                 </div>
 
                 <!-------------------- Matching Type -------------------->
-                <div v-if="questionData[choice].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'">
+                <div
+                  v-if="
+                    questionData[choice].qtid ===
+                    'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+                  "
+                >
                   <div
                     class="ml-3 flex justify-start items-start"
                     v-for="(item, index) in questionData[choice].answer"
@@ -66,7 +88,10 @@
                           <div class="w-64">
                             <v-select
                               :items="item.textA"
-                              :label="answer[choice].answer[index] || 'Select your Answer'"
+                              :label="
+                                answer[choice].answer[index] ||
+                                'Select your Answer'
+                              "
                               solo
                               v-model="answer[choice].answer[index]"
                               @change="storeData"
@@ -80,14 +105,19 @@
 
                 <!-------------------- Short-Answer Type -------------------->
                 <div
-                  v-else-if="questionData[choice].qtid === '5b3f9f23-bc46-4247-9e3d-3ebb5d5cd1c1'"
+                  v-else-if="
+                    questionData[choice].qtid ===
+                    '5b3f9f23-bc46-4247-9e3d-3ebb5d5cd1c1'
+                  "
                   class="flex justify-start"
                 >
                   <input
                     class="ml-3 w-52 p-1 rounded-md focus:ring focus:ring-yellow-300 focus:outline-none"
                     type="text"
                     placeholder="Answer"
-                    v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
+                    v-bind:style="{
+                      border: '1px solid rgba(245, 158, 11, 0.6)',
+                    }"
                     v-model="answer[choice].answer"
                     @input="storeData"
                   />
@@ -95,13 +125,18 @@
 
                 <!-------------------- Paragraph Type -------------------->
                 <div
-                  v-else-if="questionData[choice].qtid === '5edad656-83b9-4de0-ab94-f7d40cea3354'"
+                  v-else-if="
+                    questionData[choice].qtid ===
+                    '5edad656-83b9-4de0-ab94-f7d40cea3354'
+                  "
                 >
                   <textarea
                     class="ml-3 w-full h-52 p-1 rounded-md resize-none focus:ring focus:ring-yellow-300 focus:outline-none"
                     type="text"
                     placeholder="Answer"
-                    v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
+                    v-bind:style="{
+                      border: '1px solid rgba(245, 158, 11, 0.6)',
+                    }"
                     v-model="answer[choice].answer"
                     @input="storeData"
                   />
@@ -109,29 +144,36 @@
 
                 <!-------------------- Codeing Type -------------------->
                 <div
-                  v-else-if="questionData[choice].qtid === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c'"
+                  v-else-if="
+                    questionData[choice].qtid ===
+                    '7190c532-3ccc-4ed7-ae77-6ffd967bf87c'
+                  "
                   class="text-left"
                 >
                   <v-container>
                     <v-row>
                       <v-col>
                         <div class="bg-gray-100 rounded-md shadow-md">
-                          <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+                          <div
+                            class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                          >
                             Example Input :
                           </div>
                           <div
-                            v-html="questionData[choice].answer[0].exInput"
+                            v-html="questionData[choice].answer[0].input"
                             class="px-3 py-4"
                           ></div>
                         </div>
                       </v-col>
                       <v-col>
                         <div class="bg-gray-100 rounded-md shadow-md">
-                          <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+                          <div
+                            class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                          >
                             Example Output :
                           </div>
                           <div
-                            v-html="questionData[choice].answer[0].exOutput"
+                            v-html="questionData[choice].answer[0].output"
                             class="px-3 py-4"
                           ></div>
                         </div>
@@ -139,10 +181,19 @@
                     </v-row>
                     <v-row>
                       <v-col>
-                        <div class="rounded-t-md" v-bind:style="{ backgroundColor: '#1f2430' }">
-                          <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+                        <div
+                          class="rounded-t-md"
+                          v-bind:style="{ backgroundColor: '#1f2430' }"
+                        >
+                          <p
+                            class="px-4 py-2 bg-mainColor rounded-t-md text-white"
+                          >
                             Language :
-                            {{ mappingCodeLanguage(questionData[choice].answer[0].clid) }}
+                            {{
+                              mappingCodeLanguage(
+                                questionData[choice].answer[0].clid,
+                              )
+                            }}
                           </p>
                           <codemirror
                             v-model="answer[choice].answer"
@@ -152,12 +203,77 @@
                         </div>
                       </v-col>
                     </v-row>
+                    <v-row>
+                      <v-col>
+                        <div class="flex justify-end">
+                          <p class="px-4 py-2 align-end">
+                            ข้อสอบ coding ทุกข้อใช้ compiler ร่วมกัน
+                          </p>
+                          <v-btn
+                            :loading="isRunning"
+                            color="#EF7F4C"
+                            elevation="2"
+                            @click="
+                              running(
+                                questionData[choice].qecid,
+                                questionData[choice].answer[0].clid,
+                                answer[choice].answer,
+                              )
+                            "
+                            >Run</v-btn
+                          >
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col :cols="5">
+                        <div
+                          class="rounded-t-md"
+                          v-bind:style="{ backgroundColor: '#1f2430' }"
+                        >
+                          <p
+                            class="px-4 py-2 bg-mainColor rounded-t-md text-white"
+                          >
+                            input
+                          </p>
+                          <codemirror
+                            v-model="answer[choice].playInput"
+                            :options="cmOptions"
+                          />
+                        </div>
+                      </v-col>
+                      <v-col :cols="7">
+                        <div
+                          class="rounded-t-md"
+                          v-bind:style="{ backgroundColor: '#1f2430' }"
+                        >
+                          <p
+                            class="px-4 py-2 bg-mainColor rounded-t-md text-white"
+                          >
+                            output
+                          </p>
+                          <codemirror
+                            v-model="answer[choice].playOutput"
+                            :options="{
+                              tabSize: 2,
+                              mode: cmOptions.mode,
+                              theme: 'ayu-mirage',
+                              line: true,
+                              readOnly: true,
+                            }"
+                          />
+                        </div>
+                      </v-col>
+                    </v-row>
                   </v-container>
                 </div>
 
                 <!-------------------- Multiple-Choice Type -------------------->
                 <div
-                  v-else-if="questionData[choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'"
+                  v-else-if="
+                    questionData[choice].qtid ===
+                    '74fbc3a5-0217-4892-9aba-70b612fc1a0e'
+                  "
                 >
                   <div
                     class="ml-5"
@@ -178,7 +294,10 @@
 
                 <!-------------------- True/False Type -------------------->
                 <div
-                  v-else-if="questionData[choice].qtid === 'b3037171-640a-4077-bf17-10b23a52c386'"
+                  v-else-if="
+                    questionData[choice].qtid ===
+                    'b3037171-640a-4077-bf17-10b23a52c386'
+                  "
                 >
                   <v-radio-group class="ml-3" v-model="answer[choice].answer">
                     <v-radio
@@ -248,6 +367,9 @@ export default {
     codemirror,
   },
   data: () => ({
+    isRunning: false,
+    playInput: '',
+    playOutput: '',
     loading: false,
     questionData: [],
     time: {},
@@ -309,14 +431,30 @@ export default {
     autoFillAnswer() {
       if (this.answer[this.choice].answer === undefined) {
         if (
-          this.questionData[this.choice].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'
-          || this.questionData[this.choice].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+          this.questionData[this.choice].qtid
+            === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'
+          || this.questionData[this.choice].qtid
+            === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
         ) this.selectAnswer([null], this.questionData[this.choice].qecid);
         else this.selectAnswer('', this.questionData[this.choice].qecid);
+
+        if (
+          this.questionData[this.choice].qtid
+          === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c'
+        ) {
+          const arrayIndex = this.answer.findIndex(
+            (obj) => obj.qecid === this.questionData[this.choice].qecid,
+          );
+          this.answer[arrayIndex].answer = this.questionData[this.choice].answer[0].code;
+          this.answer[arrayIndex].playInput = '';
+          this.answer[arrayIndex].playOutput = '';
+        }
       }
     },
     mappingCodeLanguage(numberCode) {
-      const codeIndex = this.language.findIndex((item) => item.id === numberCode);
+      const codeIndex = this.language.findIndex(
+        (item) => item.id === numberCode,
+      );
       this.cmOptions.mode = this.language[codeIndex].mode;
       return this.language[codeIndex].name;
     },
@@ -342,7 +480,7 @@ export default {
         this.textFinish = `คุณยังไม่ได้ทำข้อสอบข้อที่ ${notFinish
           .map((value) => value + 1)
           .join(', ')}`;
-      } else this.onSubmit();
+      } else this.textFinish = 'คุณต้องการยืนยันการส่งคำตอบใช่หรือไม่';
     },
     onSubmit() {
       this.finish = true;
@@ -354,21 +492,32 @@ export default {
       // Fill answer for submit when this question no answer
       submitAnswer.forEach((item, index) => {
         if (item.answer === undefined) {
-          if (this.questionData[index].qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e') submitAnswer[index].answer = [null];
-          else if (this.questionData[index].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7') {
-            submitAnswer[index].answer = this.questionData[index].answer.map((value) => ({
-              qamcid: value.qamcid,
-              value: null,
-            }));
+          if (
+            this.questionData[index].qtid
+            === '74fbc3a5-0217-4892-9aba-70b612fc1a0e'
+          ) submitAnswer[index].answer = [null];
+          else if (
+            this.questionData[index].qtid
+            === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+          ) {
+            submitAnswer[index].answer = this.questionData[index].answer.map(
+              (value) => ({
+                qamcid: value.qamcid,
+                value: null,
+              }),
+            );
           } else submitAnswer[index].answer = '';
         } else if (
           item.answer !== undefined
-          && this.questionData[index].qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
+          && this.questionData[index].qtid
+            === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7'
         ) {
-          submitAnswer[index].answer = this.answer[index].answer.map((value, indexs) => ({
-            qamcid: this.questionData[index].answer[indexs].qamcid,
-            value,
-          }));
+          submitAnswer[index].answer = this.answer[index].answer.map(
+            (value, indexs) => ({
+              qamcid: this.questionData[index].answer[indexs].qamcid,
+              value,
+            }),
+          );
         }
       });
 
@@ -407,7 +556,10 @@ export default {
       this.questionData = data.questions;
 
       if (this.questionData.length === 0) {
-        this.$router.push({ name: 'ExamChannelLobby', params: { cid: this.$route.params.cid } });
+        this.$router.push({
+          name: 'ExamChannelLobby',
+          params: { cid: this.$route.params.cid },
+        });
       }
 
       this.questionData.forEach((item, index) => {
@@ -441,6 +593,22 @@ export default {
 
       return 'next';
     },
+    running(qecid, clid, code) {
+      this.isRunning = true;
+      const index = this.questionData.findIndex((e) => e.qecid === qecid);
+      api
+        .playground({
+          language_id: clid,
+          code,
+          input: this.answer[index].playInput,
+        })
+        .then((e) => {
+          if (e.status === 200) {
+            this.answer[index].playOutput = e.data.stdout;
+          }
+          this.isRunning = false;
+        });
+    },
   },
   created() {
     this.callApi();
@@ -449,3 +617,9 @@ export default {
   watch: {},
 };
 </script>
+
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>

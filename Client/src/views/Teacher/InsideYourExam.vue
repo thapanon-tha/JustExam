@@ -138,8 +138,11 @@ export default {
           this.$router.push({ name: 'YourExam' }).catch(() => true);
         }, 1000);
       } else {
-        this.snacbarF('update fail', 'red');
-        this.$router.go(this.$router.currentRoute);
+        if (questionsResp.status === 413) {
+          this.snacbarF('Image is too large', 'red');
+        } else {
+          this.snacbarF('update fail', 'red');
+        }
         this.isLoading = false;
       }
     },
