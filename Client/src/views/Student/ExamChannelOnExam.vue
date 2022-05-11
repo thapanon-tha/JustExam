@@ -8,7 +8,7 @@
       :vertical="true"
     >
       <p class="text-center p-3">{{ textFinish }}</p>
-      <template v-if="status !== 'sending'" v-slot:action="{ attrs }">
+      <template v-if="status !== 'Submitting'" v-slot:action="{ attrs }">
         <v-btn color="red" text @click="finish = false"> Close </v-btn>
         <v-btn color="green" text v-bind="attrs" @click="onSubmit">
           Continue
@@ -19,9 +19,7 @@
       v-if="finish"
       class="h-full w-full fixed top-0 left-0 z-10 bg-black opacity-40"
     />
-
     <Header main="Exam channel" current="> On Exam" class="mb-5"> </Header>
-
     <div v-if="loading" class="m-auto w-5/6">
       <div class="mb-8 flex justify-between items-center">
         <div class="text-2xl font-bold">
