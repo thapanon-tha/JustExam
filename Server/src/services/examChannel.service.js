@@ -139,18 +139,9 @@ const medthods = {
 
   async totalPointChannel(cid) {
     return examChannel.findAll({
-      attributes: [
-        [
-          db.sequelize.fn(
-            'SUM',
-            db.sequelize.col('questionExamChannels.point'),
-          ),
-          'totalPoint',
-        ],
-      ],
+      attributes: [],
       include: {
         model: questionExamChannel,
-        attributes: [],
       },
       where: { cid },
     });

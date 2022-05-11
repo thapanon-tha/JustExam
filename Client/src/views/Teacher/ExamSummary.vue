@@ -58,6 +58,19 @@
     >
       {{ text }}
     </v-snackbar>
+
+    <v-snackbar
+      v-model="snackbar2"
+      color="red"
+      centered
+      top
+      text
+      outlined
+      :timeout="timeout"
+    >
+      {{ text }}
+    </v-snackbar>
+
     <Loading v-model="isLoading"></Loading>
   </div>
 </template>
@@ -81,6 +94,7 @@ export default {
   },
   data() {
     return {
+      snackbar2: false,
       snackbar: false,
       text: '',
       timeout: 1500,
@@ -175,6 +189,11 @@ export default {
       this.isLoading = true;
       const respones = await api.sendemail(this.$route.params.cid);
       if (respones.status === 200) {
+        this.isLoading = false;
+      }
+      else {
+        this.snackbar2 = true;
+      this.text = 'fail';
         this.isLoading = false;
       }
     },
