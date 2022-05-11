@@ -11,15 +11,12 @@
       </div>
       <div class="w-96 font-light whitespace-normal">
         <div class="flex flex-row">
-          <p class="pt-10 font-sans text-mainColor">
-            {{ subtitle[0] }}&nbsp;
-          </p>
-          <p class="pt-10 font-sans break-words">
-            {{ subtitle.replace(subtitle.split(" ")[0], "") }}
+          <p class="pt-10 text-2xl font-sans font-medium text-gray-900">
+            {{ subtitle }}
           </p>
         </div>
         <div >
-          <p class="font-sans" v-if=visible >{{ fullText }}</p>
+          <p class="font-sans text-lg" v-if=visible >{{ fullText }}</p>
         </div>
       </div>
       <button @click="onClick">
@@ -48,15 +45,12 @@
       </div>
       <div class="w-96 font-light whitespace-normal">
         <div class="flex flex-row">
-          <p class="pt-10 font-sans text-mainColor">
-            {{ subtitle.split(" ")[0] }}&nbsp;
-          </p>
-          <p class="pt-10 font-sans break-words">
-            {{ subtitle.replace(subtitle.split(" ")[0], "") }}
+          <p class="pt-10 text-2xl font-sans font-medium text-gray-900">
+            {{ subtitle }}
           </p>
         </div>
         <div >
-          <p class="font-sans" v-if=visible>{{ fullText }}</p>
+          <p class="font-sans text-lg" v-if=visible>{{ fullText }}</p>
         </div>
       </div>
       <button @click="onClick">

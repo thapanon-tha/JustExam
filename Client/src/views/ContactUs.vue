@@ -22,7 +22,7 @@
         <v-col cols="2">
           <div>
             <p>Rungwigrai Payakkanuwat</p>
-            <p>newrung@gmail.com</p>
+            <p>rungwigrai.cn@mail.kmutt.ac.th</p>
           </div>
         </v-col>
       </v-row>
