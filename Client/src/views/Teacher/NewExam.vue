@@ -46,54 +46,30 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <v-dialog v-model="sheet" persistent width="290">
-        <v-card max-width="290">
-          <v-card-title v-if="loaderOption.loading === true"
-            >Createing</v-card-title
-          >
-          <v-card-title v-if="loaderOption.loading === false"
-            >Result</v-card-title
-          >
-          <div class="d-flex align-center">
-            <v-card-text class="d-flex align-center justify-center">
-              <div v-if="loaderOption.loading === true">
-                <pulse-loader
-                  :loading="loaderOption.loading"
-                  :color="loaderOption.color"
-                  :size="loaderOption.size"
-                >
-                </pulse-loader>
-              </div>
-              <div
-                v-if="createSuccess.status === true"
-                class="d-flex align-center"
-              >
-                <v-icon color="green" large> mdi-check-circle </v-icon>
-                <strong>{{ createSuccess.message }}</strong>
-              </div>
-              <div
-                v-if="createFail.status === true"
-                class="d-flex align-center"
-              >
-                <v-icon color="red" large> mdi-alert-circle </v-icon>
-                <strong>{{ createFail.message }}</strong>
-              </div>
-            </v-card-text>
-          </div>
-        </v-card>
-      </v-dialog>
     </v-container>
+    <v-snackbar
+      v-model="snackbar"
+      centered
+      top
+      text
+      outlined
+      :multi-line="true"
+      :timeout="2000"
+      :color="snackbarColor"
+    >
+      {{ snackbarMessage }}
+    </v-snackbar>
+    <Loading v-model="isLoading"></Loading>
   </div>
 </template>
 
 <script>
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import Header from '@/components/Header/Header.vue';
 import QuestionList from '@/components/Form/QuestionForm/QuestionList.vue';
 import ExamInfoForm from '@/components/Form/YourExamForm/ExamInfoForm.vue';
 import ActionButton from '@/components/Button/ActionButton.vue';
 import PreviewList from '@/components/Form/PreviewForm/PreviewList.vue';
+import Loading from '@/components/Loading.vue';
 
 import api from '@/services/apis';
 
@@ -104,29 +80,20 @@ export default {
     ExamInfoForm,
     Header,
     ActionButton,
-    PulseLoader,
     PreviewList,
+    Loading,
   },
   data() {
     return {
+      snackbar: false,
+      snackbarColor: '',
+      snackbarMessage: '',
+      isLoading: false,
       dialogPreview: false,
       sheet: false,
       examInfo: { title: '', description: '', shareQ: false },
       createStatus: false,
       questions: [],
-      createSuccess: {
-        status: false,
-        message: '',
-      },
-      createFail: {
-        status: false,
-        message: '',
-      },
-      loaderOption: {
-        size: '5vh',
-        color: '#ef7f4c',
-        loading: false,
-      },
     };
   },
   methods: {
@@ -140,11 +107,17 @@ export default {
       this.$router.push({ name: 'YourExam' }).catch(() => true);
     },
     onClickCreate() {
-      this.sheet = !this.sheet;
+      this.isLoading = true;
       this.create();
     },
+
+    snackbarF(message, color) {
+      this.snackbar = true;
+      this.snackbarMessage = message;
+      this.snackbarColor = color;
+    },
     async create() {
-      this.loaderOption.loading = true;
+      this.isLoading = true;
       try {
         const res = await api
           .createExams({ ...this.examInfo })
@@ -161,32 +134,28 @@ export default {
               status: res2.status,
             }));
           if (questionsResp.status >= 200 && questionsResp.status < 300) {
-            this.loaderOption.loading = false;
-            this.createSuccess.status = true;
-            this.createSuccess.message = 'created success';
-            setTimeout(() => {
-              this.createSuccess.status = false;
-              this.createSuccess.message = '';
-              this.sheet = false;
-            }, 2000);
+            this.isLoading = false;
+            this.snackbarF('create success', 'green');
             setTimeout(() => {
               this.$router.push({ name: 'YourExam' }).catch(() => true);
             }, 2500);
           } else {
-            throw new Error('Create Fail');
+            // delete
+            await api.deleteExams(res.eid);
+            if (questionsResp.status === 413) {
+              throw new Error('Image is too large');
+            } else {
+              throw new Error('Something wrong try again later');
+            }
           }
+        } else if (res.status === 422) {
+          throw new Error('exam title or description has empty');
         } else {
-          throw new Error('Create Fail');
+          throw new Error('Something wrong try again later');
         }
       } catch (e) {
-        this.loaderOption.loading = false;
-        this.createFail.status = true;
-        this.createFail.message = e;
-        setTimeout(() => {
-          this.createFail.status = false;
-          this.createFail.message = e;
-          this.sheet = false;
-        }, 2000);
+        this.isLoading = false;
+        this.snackbarF(e, 'red');
       }
     },
   },

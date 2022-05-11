@@ -72,7 +72,7 @@
                   :type="show1 ? 'text' : 'password'"
                   color="#EF7F4C"
                   name="input-10-1"
-                  label="Normal with hint text"
+                  label="new password"
                   hint="At least 8 characters"
                   counter
                   @click:append="show1 = !show1"
@@ -83,12 +83,11 @@
                   v-model="cPassword"
                   :rules="[rules.required, rules.min]"
                   :type="show1 ? 'text' : 'password'"
-                  label="confirm password"
+                  label="confirm new password"
                   color="#EF7F4C"
                 ></v-text-field>
               </v-col>
             </v-row>
-            <div v-if="password !== cPassword"></div>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -103,6 +102,14 @@
             color="#EF7F4C"
             text
             @click="updatePassword"
+          >
+            Save
+          </v-btn>
+          <v-btn
+            v-else
+            disabled
+            color="#EF7F4C"
+            text
           >
             Save
           </v-btn>

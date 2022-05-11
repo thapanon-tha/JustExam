@@ -596,12 +596,6 @@ export default {
     running(qecid, clid, code) {
       this.isRunning = true;
       const index = this.questionData.findIndex((e) => e.qecid === qecid);
-      console.log({
-        index,
-        language_id: clid,
-        code,
-        input: this.answer[index].playInput,
-      });
       api
         .playground({
           language_id: clid,

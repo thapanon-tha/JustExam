@@ -50,24 +50,20 @@ const method = {
       }));
     }
     if (question.type === 'tf') {
-      console.log(question.questionData)
       if (question.questionData.false === true) {
-        console.log("FALSE")
         answer = [method.tf(false)];
       }
       if (question.questionData.true === true) {
-        console.log("TRUE")
         answer = [method.tf(true)];
       }
-      console.log(answer)
     }
 
-    return ({
+    return {
       questionTopic: question.questionData.question,
       sectionName: question.sectionId,
       qtid: questionsType[question.type],
       questionAnswer: answer,
-    });
+    };
   },
   mc(data) {
     return {
@@ -76,26 +72,26 @@ const method = {
     };
   },
   sa(data) {
-    return ({ textA: data.keyans });
+    return { textA: data.keyans };
   },
   ma(data) {
-    return ({
+    return {
       textQ: data.subquestion,
       textA: data.matchanswer,
-    });
+    };
   },
   ca(data) {
-    return ({
+    return {
       code: data.code,
       input: data.input,
       exInput: data.xampleinput,
       output: data.output,
       exOutput: data.xampleoutput,
       clid: code[data.lang],
-    });
+    };
   },
   tf(data) {
-    return ({ value: data });
+    return { value: data };
   },
 
   convertToCLI(List) {
@@ -139,7 +135,7 @@ const method = {
         answers: ans,
       },
     };
-    return (ret);
+    return ret;
   },
   tosa(data) {
     const ans = data.answer.map((e) => ({
@@ -155,7 +151,7 @@ const method = {
         keylist: ans,
       },
     };
-    return (ret);
+    return ret;
   },
   topa(data) {
     const ret = {
@@ -167,7 +163,7 @@ const method = {
         answers: [],
       },
     };
-    return (ret);
+    return ret;
   },
   toma(data) {
     const ret = {
@@ -183,7 +179,7 @@ const method = {
         })),
       },
     };
-    return (ret);
+    return ret;
   },
   toca(data) {
     const ans = data.answer.map((e) => ({
@@ -205,7 +201,7 @@ const method = {
         example: ans,
       },
     };
-    return (ret);
+    return ret;
   },
   totf(data) {
     let correct = false;
@@ -222,7 +218,7 @@ const method = {
         false: !correct,
       },
     };
-    return (ret);
+    return ret;
   },
 };
 
