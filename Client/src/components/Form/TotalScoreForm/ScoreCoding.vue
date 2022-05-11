@@ -1,55 +1,77 @@
 <template>
   <div class="ml-15 mt-10 mr-15 mb-10">
-    <div class="mb-5">
-      <div>
-        <p class="font-semibold text-lg text-mainColor ml-2 text-right">
-          {{ questionData.lang }}
-        </p>
-        <p class="font-semibold text-lg">Question</p>
-      </div>
-      <div class="p-3 border-l-4 border-gray-300 break-words" v-html="questionData.question"></div>
-    </div>
-    <div class="mb-5">
-      <p class="font-semibold text-lg">Expected Input</p>
-      <div class="p-3 border-l-4 border-gray-300 break-words">
-        <p v-html="questionData.input"></p>
-      </div>
-    </div>
-    <div class="mb-5">
-      <p class="font-semibold text-lg">Expected Output</p>
-      <div class="p-3 border-l-4 border-gray-300 break-words">
-        <p v-html="questionData.output"></p>
-      </div>
-    </div>
-    <div>
-      <p class="font-semibold text-lg">Code</p>
-      <div class="mt-10 mb-10 shadow-md border-l-4 border-gray-300">
-        <QuillTextEditor
-          :placeholder="`Type code here`"
-          theme="bubble"
-          width="screen"
-          height="60"
-          v-model="questionData.code"
-          aria-disabled="true"
-        />
-      </div>
-    </div>
-    <p class="font-semibold text-lg">Example</p>
-    <div class="flex flex-row gap-10">
-      <p class="w-80 font-semibold">Testcase input</p>
-      <p class="w-80 font-semibold">Testcase output</p>
-    </div>
-    <div v-for="item in questionData.example" :key="item.id" class="mb-5">
-      <div class="flex flex-row gap-10">
-        <div class="w-80 break-words border-l-4 border-gray-300 p-2">
-          <p v-html="item.xampleinput"></p>
+    <v-row>
+      <v-col>
+        <div class="bg-gray-100 rounded-md shadow-md">
+          <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+            Example Input :
+          </div>
+          <div v-html="questionData.input" class="px-3 py-4"></div>
         </div>
-        <div class="w-80 break-words border-l-4 border-gray-300 p-2">
-          <p v-html="item.xampleoutput"></p>
+      </v-col>
+      <v-col>
+        <div class="bg-gray-100 rounded-md shadow-md">
+          <div class="p-2 text-sm bg-mainColor text-white rounded-t-md">
+            Example Output :
+          </div>
+          <div v-html="questionData.output" class="px-3 py-4"></div>
         </div>
-      </div>
-    </div>
-    <div class="flex justify-end">
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <div class="rounded-t-md" v-bind:style="{ backgroundColor: '#1f2430' }">
+          <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+            Language :
+            {{ questionData.lang }}
+          </p>
+          <codemirror v-model="questionData.code" :options="cmOptions" />
+        </div>
+      </v-col>
+    </v-row>
+    <v-row
+      v-for="(testcase, testNo) in questionData.example"
+      :key="testcase.id"
+    >
+      <v-col cols="6">
+        <div class="rounded-t-md" v-bind:style="{ backgroundColor: '#1f2430' }">
+          <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+            Testcase Input {{ testNo + 1 }}
+          </p>
+          <div class="px-3 py-4 rounded-t-md">
+            <codemirror
+              :value="`${testcase.xampleinput.replace(/(<([^>]+)>)/gi, '')}`"
+              :options="{
+                tabSize: 2,
+                theme: 'ayu-mirage',
+                line: true,
+                readOnly: true,
+              }"
+            />
+          </div>
+        </div>
+      </v-col>
+      <v-col cols="6">
+        <div class="rounded-t-md" v-bind:style="{ backgroundColor: '#1f2430' }">
+          <p class="px-4 py-2 bg-mainColor rounded-t-md text-white">
+            Testcase Output {{ testNo + 1 }}
+          </p>
+          <div class="px-3 py-4">
+            <codemirror
+              :value="`${testcase.xampleoutput.replace(/(<([^>]+)>)/gi, '')}`"
+              :options="{
+                tabSize: 2,
+                theme: 'ayu-mirage',
+                line: true,
+                readOnly: true,
+              }"
+            />
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+
+    <div class="flex justify-end mt-2">
       <input
         class="w-20 p-2 font-semilight text-center text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black focus:mainColor focus:border-opacity-100 focus:outline-none"
         type="number"
@@ -62,18 +84,62 @@
 </template>
 
 <script>
+import { codemirror } from 'vue-codemirror';
 import QuillTextEditor from '@/components/TextEditor/QuillTextEditor.vue';
+
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/ayu-mirage.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/clike/clike';
 
 export default {
   name: 'ScoreCoding',
   components: {
     QuillTextEditor,
+    codemirror,
   },
   props: ['value'],
   data() {
     return {
       questionData: this.value,
+      language: [
+        { name: 'Javascript', mode: 'text/javascript', id: 63 },
+        { name: 'Python', mode: 'python', id: 71 },
+        { name: 'C', mode: 'text/x-csrc', id: 50 },
+        { name: 'C#', mode: 'text/x-csharp', id: 51 },
+        { name: 'C++', mode: 'text/x-c++src', id: 54 },
+        { name: 'Java', mode: 'text/x-java', id: 62 },
+        { name: 'Kotlin', mode: 'text/x-kotlin', id: 78 },
+        { name: 'Ruby', mode: 'ruby', id: 72 },
+        { name: 'Golang', mode: 'go', id: 60 },
+      ],
+      cmOptions: {
+        tabSize: 2,
+        mode: 'text/javascript',
+        theme: 'ayu-mirage',
+        lineNumbers: true,
+        line: true,
+        readOnly: true,
+      },
     };
+  },
+  methods: {
+    mappingCodeLanguage(numberCode) {
+      const codeIndex = this.language.findIndex(
+        (item) => item.id === numberCode,
+      );
+      this.cmOptions.mode = this.language[codeIndex].mode;
+      return this.language[codeIndex].name;
+    },
   },
 };
 </script>
+
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>

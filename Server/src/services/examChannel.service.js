@@ -35,8 +35,8 @@ const medthods = {
     const questionAnswerCChannelsAtt = [
       'qaccid',
       'code',
-      'exInput',
-      'exOutput',
+      ['input','exInput'],
+      ['output','exOutput'],
       'clid',
     ];
     const questionAnswerMCChannelsAtt = ['qamccid', 'textA'];

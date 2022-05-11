@@ -26,14 +26,22 @@
       v-for="item in questionList"
       :key="item.id"
     >
-      <div class="bg-subColor border border-orange-200 rounded-xl w-4/6">
-        <ScoreMultiple v-if="item.type === 'mc'" :value="item.questionData" />
-        <ScoreShortAns v-if="item.type === 'sa'" :value="item.questionData" />
-        <ScoreParagraph v-if="item.type === 'pa'" :value="item.questionData" />
-        <ScoreTrueFalse v-if="item.type === 'tf'" :value="item.questionData" />
-        <ScoreMatching v-if="item.type === 'ma'" :value="item.questionData" />
-        <ScoreCoding v-if="item.type === 'ca'" :value="item.questionData" />
-      </div>
+      <v-container>
+        <div class="bg-subColor border border-orange-200 rounded-xl w-4/6">
+          <ScoreMultiple v-if="item.type === 'mc'" :value="item.questionData" />
+          <ScoreShortAns v-if="item.type === 'sa'" :value="item.questionData" />
+          <ScoreParagraph
+            v-if="item.type === 'pa'"
+            :value="item.questionData"
+          />
+          <ScoreTrueFalse
+            v-if="item.type === 'tf'"
+            :value="item.questionData"
+          />
+          <ScoreMatching v-if="item.type === 'ma'" :value="item.questionData" />
+          <ScoreCoding v-if="item.type === 'ca'" :value="item.questionData" />
+        </div>
+      </v-container>
     </div>
   </div>
 </template>

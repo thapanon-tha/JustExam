@@ -23,11 +23,11 @@
               </v-list>
             </v-menu>
           </div>
-          <div 
-            class="h-32 w-42 p-2 hover:text-orange-500 text-left text-clip overflow-hidden pb-2" 
+          <div
+            class="h-32 w-42 p-2 hover:text-orange-500 text-left text-clip overflow-hidden pb-2"
             @click="onClick"
           >
-            <h1 class="text-sm font-medium ml-2 pb-1">{{ detail.title }}</h1>
+            <h1 class="text-m text-orange-500 font-medium ml-2 pb-1">{{ detail.title }}</h1>
             <div class="align-end">
               <h2 class="text-xs font-semilight ml-2">
                 Exam date: {{ detail.schedule | moment('D / MM / YYYY') }}

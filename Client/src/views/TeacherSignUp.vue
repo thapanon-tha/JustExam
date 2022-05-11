@@ -10,11 +10,11 @@
       >
         <img src="@/assets/kid.svg" class="w-80 h-80" alt="book" />
         <!-- eslint-disable max-len -->
-        <ActionButton
+        <!-- <ActionButton
           class="mb-5 mt-5 bg-mainColor border-orange-200 border rounded-lg px-8 py-3 font-medium text-white"
           name="Sign up with Google account"
           @on-click="onClickSignUpWithGoogle"
-        />
+        /> -->
         <!-- eslint-enable max-len -->
       </v-container>
     </section>

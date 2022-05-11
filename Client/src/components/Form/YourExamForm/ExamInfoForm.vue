@@ -1,30 +1,30 @@
 /* eslint-disable object-shorthand */
 <template>
-  <div class="flex justify-center mt-10 mb-10">
-    <div>
-      <InputForm inputLabel="Exam Title" type="text" v-model="title" />
+  <div class="mt-10 mb-10 flex flex-col">
+    <div class="flex justify-center">
+      <div>
+        <InputForm inputLabel="Exam Title" type="text" v-model="title" />
+        <div class="mb-3">
+          <div
+            class="form-label inline-block text-gray-700 font-semilight text-xl"
+          >
+            <label>Publish Option</label>
+          </div>
+          <div>
+            <v-checkbox
+              color="#FB8C00"
+              v-model="shareQ"
+              hide-details
+              :label="`Share only questions to Examhub`"
+            ></v-checkbox>
+          </div>
+        </div>
+      </div>
       <InputForm
         inputLabel="Exam Description"
         type="text"
         v-model="description"
       />
-    </div>
-    <div class="">
-      <div class="mb-3">
-        <div
-          class="form-label inline-block mb-2 text-gray-700 font-semilight text-xl"
-        >
-          <label>Publish Option</label>
-        </div>
-        <div>
-          <v-checkbox
-            color="#FB8C00"
-            v-model="shareQ"
-            hide-details
-            :label="`Share only questions to Examhub`"
-          ></v-checkbox>
-        </div>
-      </div>
     </div>
   </div>
 </template>

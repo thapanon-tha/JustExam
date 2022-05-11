@@ -160,7 +160,7 @@
                             Example Input :
                           </div>
                           <div
-                            v-html="questionData[choice].answer[0].input"
+                            v-html="questionData[choice].answer[0].exInput"
                             class="px-3 py-4"
                           ></div>
                         </div>
@@ -173,7 +173,7 @@
                             Example Output :
                           </div>
                           <div
-                            v-html="questionData[choice].answer[0].output"
+                            v-html="questionData[choice].answer[0].exOutput"
                             class="px-3 py-4"
                           ></div>
                         </div>
@@ -207,7 +207,7 @@
                       <v-col>
                         <div class="flex justify-end">
                           <p class="px-4 py-2 align-end">
-                            ข้อสอบ coding ทุกข้อใช้ compiler ร่วมกัน
+                            All coding exams share a common compiler.
                           </p>
                           <v-btn
                             :loading="isRunning"
@@ -225,46 +225,46 @@
                         </div>
                       </v-col>
                     </v-row>
-                    <v-row>
-                      <v-col :cols="5">
-                        <div
-                          class="rounded-t-md"
-                          v-bind:style="{ backgroundColor: '#1f2430' }"
-                        >
-                          <p
-                            class="px-4 py-2 bg-mainColor rounded-t-md text-white"
-                          >
-                            input
-                          </p>
-                          <codemirror
-                            v-model="answer[choice].playInput"
-                            :options="cmOptions"
-                          />
-                        </div>
-                      </v-col>
-                      <v-col :cols="7">
-                        <div
-                          class="rounded-t-md"
-                          v-bind:style="{ backgroundColor: '#1f2430' }"
-                        >
-                          <p
-                            class="px-4 py-2 bg-mainColor rounded-t-md text-white"
-                          >
-                            output
-                          </p>
-                          <codemirror
-                            v-model="answer[choice].playOutput"
-                            :options="{
-                              tabSize: 2,
-                              mode: cmOptions.mode,
-                              theme: 'ayu-mirage',
-                              line: true,
-                              readOnly: true,
-                            }"
-                          />
-                        </div>
-                      </v-col>
-                    </v-row>
+                    <div class="rounded-t-md">
+                      <v-row>
+                        <v-col>
+                          <div class="bg-codebackground rounded-md shadow-md">
+                            <div
+                              class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                            >
+                              Input :
+                            </div>
+                            <div class="px-3 py-4">
+                              <codemirror
+                                v-model="answer[choice].playInput"
+                                :options="cmOptions"
+                              />
+                            </div>
+                          </div>
+                        </v-col>
+                        <v-col>
+                          <div class="bg-codebackground rounded-md shadow-md">
+                            <div
+                              class="p-2 text-sm bg-mainColor text-white rounded-t-md"
+                            >
+                              Output :
+                            </div>
+                            <div class="px-3 py-4">
+                              <codemirror
+                                v-model="answer[choice].playOutput"
+                                :options="{
+                                  tabSize: 2,
+                                  mode: cmOptions.mode,
+                                  theme: 'ayu-mirage',
+                                  line: true,
+                                  readOnly: true,
+                                }"
+                              />
+                            </div>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </v-container>
                 </div>
 

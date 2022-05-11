@@ -18,6 +18,7 @@ module.exports = {
         grayColor: '#3F454C',
         redColor: '#FF0000',
         navyColor: '#253850',
+        codebackground: '#1f2430',
       },
       width: {
         156: '72rem',
