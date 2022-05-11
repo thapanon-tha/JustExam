@@ -1,7 +1,7 @@
 <template>
   <button>
     <div class="flex flex-col">
-      <label class="text-xl font-semilight truncate"> {{ detail.title }} </label>
+      <label class="w-4/5 text-left text-xl font-medium text-clip overflow-hidden"> {{ detail.title }} </label>
       <div
         class="mt-1 box-border h-40 w-72 rounded-xl text-white bg-navyColor"
       >
@@ -40,9 +40,9 @@
               </v-list>
             </v-menu>
           </div>
-          <div class="h-32 w-42 p-2 hover:text-orange-500" @click="onClick">
+          <div class="h-32 w-42 p-2 hover:text-orange-500 text-left" @click="onClick">
             <h1
-              class="text-sm font-semilight ml-2 truncate"
+              class="text-sm font-semilight ml-2 text-ellipsis overflow-hidden"
             >
               {{ detail.description }}
             </h1>
