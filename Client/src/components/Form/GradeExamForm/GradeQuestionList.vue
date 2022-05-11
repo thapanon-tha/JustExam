@@ -39,27 +39,56 @@
               v-for="answer in item.answer"
               :key="answer.qamccid"
             >
-              <v-checkbox
-                v-if="
-                  item.studentAnswer.findIndex(function (key) {
-                    return key === answer.qamccid;
-                  }) >= 0
-                "
-                color="#FB8C00"
-                hide-details
-                :label="`${answer.textA.replace(/(<([^>]+)>)/gi, '')}`"
-                input-value="true"
-                value
-                disabled
-              ></v-checkbox>
-              <v-checkbox
-                v-else
-                color="#FB8C00"
-                hide-details
-                :label="`${answer.textA.replace(/(<([^>]+)>)/gi, '')}`"
-                value
-                disabled
-              ></v-checkbox>
+              <v-row>
+                <v-col md="auto">
+                  <v-checkbox
+                    color="#FB8C00"
+                    :label="`${answer.pointQ}`"
+                    off-icon
+                    disabled
+                  ></v-checkbox>
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-if="
+                      item.studentAnswer.findIndex(function (key) {
+                        return key === answer.qamccid;
+                      }) >= 0 && answer.correct
+                    "
+                    color="green"
+                    hide-details
+                    :label="`${answer.textA.replace(/(<([^>]+)>)/gi, '')}`"
+                    input-value="true"
+                    value
+                    readonly
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-if="
+                      item.studentAnswer.findIndex(function (key) {
+                        return key === answer.qamccid;
+                      }) >= 0 && !answer.correct
+                    "
+                    color="green"
+                    hide-details
+                    :label="`${answer.textA.replace(/(<([^>]+)>)/gi, '')}`"
+                    input-value="true"
+                    value
+                    disabled
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-if="
+                      item.studentAnswer.findIndex(function (key) {
+                        return key === answer.qamccid;
+                      }) === -1
+                    "
+                    color="#FB8C00"
+                    hide-details
+                    :label="`${answer.textA.replace(/(<([^>]+)>)/gi, '')}`"
+                    value
+                    disabled
+                  ></v-checkbox>
+                </v-col>
+              </v-row>
             </div>
           </div>
           <!-------------------- True/False Type -------------------->
@@ -407,8 +436,8 @@ export default {
       this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
     running(item) {
-    this.isRunning = true;
-    const index = this.questionData.findIndex((e) => e.qecid === item.qecid);
+      this.isRunning = true;
+      const index = this.questionData.findIndex((e) => e.qecid === item.qecid);
       api
         .playground({
           language_id: item.answer[0].clid,
@@ -421,7 +450,7 @@ export default {
           }
           this.isRunning = false;
         });
-  },
+    },
   },
   computed: {
     questionList() {
@@ -438,7 +467,6 @@ export default {
   created() {
     this.sectionCalo();
   },
-
 };
 </script>
 

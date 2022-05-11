@@ -50,7 +50,7 @@ const method = {
       }));
     }
     if (question.type === 'tf') {
-      console.log(question)
+      console.log(question);
       if (question.questionData.false === true) {
         answer = [method.tf(question.questionData.false)];
       }
@@ -103,7 +103,8 @@ const method = {
   tf(data) {
     return {
       qatfcid: data.id,
-      value: data };
+      value: data,
+    };
   },
 
   convertToScoreAdd(List) {
