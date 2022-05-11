@@ -22,7 +22,7 @@
       </button>
     </Header>
     <v-container class="lighten-5 flex justify-center gap-40">
-      <div class="w-4/6 ml-48">
+      <div class="w-4/6">
         <EditChannelForm v-model="channelInfo" />
       </div>
     </v-container>

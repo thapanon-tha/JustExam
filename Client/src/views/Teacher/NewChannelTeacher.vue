@@ -6,7 +6,7 @@
         <form class="ml-20">
           <div class="flex justify-center">
             <div class="flex-col gap-5">
-              <h1 class="text-gray-700 font-semibold text-2xl">Channel Information</h1>
+              <h1 class="text-gray-700 font-semibold text-2xl pb-5">Channel Information</h1>
               <div class="form-control">
                 <InputForm inputLabel="Channel Title" type="text" v-model="channelInfo.title" />
               </div>
@@ -133,7 +133,7 @@
       />
     </div> -->
     <v-container>
-      <div class="flex justify-center">
+      <div class="flex justify-center pt-10">
         <ActionButton
           class="bg-white border-orange-200 border border-solid rounded-lg px-8 py-3 font-semilight text-grayColor"
           name="Cancel"

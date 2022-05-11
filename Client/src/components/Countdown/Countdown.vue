@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-end items-center">
     <v-snackbar v-model="alert" :timeout="5000" :bottom="true" :right="true">
-      <p class="p-3 text-left">เหลือเวลาอีก 5 นาที</p>
+      <p class="p-3 text-left">You have {{ minutes }} minutes left</p>
       <template v-slot:action="{ attrs }">
         <v-btn color="red" text @click="alert = false" v-bind="attrs"> Close </v-btn>
       </template>
@@ -62,11 +62,13 @@ export default {
           clearInterval(timer);
           return;
         }
-
+        console.log(distance === 300000 && this.activeAlert);
         if (distance === 300000 && this.activeAlert) {
           if (this.alert === false) this.alert = true
         }
-
+        if (distance === 60000 && this.activeAlert) {
+          if (this.alert === false) this.alert = true
+        }
         const days = Math.floor(distance / this._days);
         const hours = Math.floor((distance % this._days) / this._hours);
         const minutes = Math.floor((distance % this._hours) / this._minutes);

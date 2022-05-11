@@ -111,6 +111,7 @@
           <!-------------------- Paragraph Type -------------------->
           <div v-else-if="item.type === 'pa'">
             <textarea
+              disabled
               class="
                 m-5
                 w-full

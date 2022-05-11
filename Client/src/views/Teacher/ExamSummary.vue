@@ -16,7 +16,7 @@
         @click="onClickReleaceScore"
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"
       >
-        Releace Score
+        Release score
       </button>
       <button
         class="mt-3 mr-3 bg-white border-orange-200 border border-solid rounded-lg px-4 py-3 font-semilight text-mainColor"

@@ -335,7 +335,7 @@
     </div>
 
     <div v-else>
-      <p class="text-center">กำลังโหลดคำถาม กรุณารอสักครู่</p>
+      <p class="text-center">Loading. Please wait.</p>
     </div>
   </div>
 </template>
@@ -477,15 +477,15 @@ export default {
       this.finish = true;
 
       if (notFinish.length > 0) {
-        this.textFinish = `คุณยังไม่ได้ทำข้อสอบข้อที่ ${notFinish
+        this.textFinish = `You've not finished the question no. ${notFinish
           .map((value) => value + 1)
           .join(', ')}`;
-      } else this.textFinish = 'คุณต้องการยืนยันการส่งคำตอบใช่หรือไม่';
+      } else this.textFinish = 'Do you confirm to submit?';
     },
     onSubmit() {
       this.finish = true;
-      this.textFinish = 'กำลังส่งคำตอบ';
-      this.status = 'sending';
+      this.textFinish = 'Submitting the answers.';
+      this.status = 'Submitting';
 
       const submitAnswer = this.answer;
 
@@ -528,7 +528,7 @@ export default {
           this.$router.push({ name: 'ExamChannelStudent' }).catch(() => {});
         } else if (res.status === 200) {
           localStorage.removeItem('justExam');
-          this.textFinish = 'ส่งคำตอบสำเร็จ กำลังโหลดข้อสอบชุดต่อไป';
+          this.textFinish = 'Submitted successful! Loading the next section.';
           this.loading = false;
 
           setTimeout(() => {
@@ -540,7 +540,7 @@ export default {
             });
           }, 1000);
         } else {
-          this.textFinish = 'ส่งคำตอบไม่สำเร็จ ลองใหม่อีกครั้ง';
+          this.textFinish = 'Failed to submit! Please try again.';
           this.status = '';
         }
       });
