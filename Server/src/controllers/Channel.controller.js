@@ -374,6 +374,11 @@ module.exports = {
         channel: channelDetail,
       };
       await transaction.commit();
+      if(examData.questions.length===0){
+        await redisClient.del(uidKey);
+        await redisClient.del(cidKey);
+      }
+
       res.json(responesPack);
     } catch (error) {
       await transaction.rollback();
