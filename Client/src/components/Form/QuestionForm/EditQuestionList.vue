@@ -100,17 +100,6 @@
               </button>
             </div>
           </div>
-          <div
-            class="flex flex-row justify-center mt-10 mb-10 ml-10 mr-10"
-            v-if="showSaveQuestion"
-          >
-            <PreMultiple v-if="qlist.type === 'mc'" :value="prototype.mc" />
-            <PreShortAns v-if="qlist.type === 'sa'" :value="prototype.sa" />
-            <PreParagraph v-if="qlist.type === 'pa'" :value="prototype.pa" />
-            <PreTrueFalse v-if="qlist.type === 'tf'" :value="prototype.tf" />
-            <PreMatching v-if="qlist.type === 'ma'" :value="prototype.ma" />
-            <PreCoding v-if="qlist.type === 'ca'" :value="prototype.ca" />
-          </div>
         </div>
         <!-- eslint-disable max-len -->
         <ActionButton
@@ -146,12 +135,6 @@ import Paragraph from '@/components/Form/QuestionForm/Paragraph.vue';
 import Matching from '@/components/Form/QuestionForm/Matching.vue';
 import TrueFalse from '@/components/Form/QuestionForm/TrueFalse.vue';
 import CodingQuestion from '@/components/Form/QuestionForm/CodingQuestion.vue';
-import PreMultiple from '@/components/Form/PreviewForm/PreMultiple.vue';
-import PreShortAns from '@/components/Form/PreviewForm/PreShortAns.vue';
-import PreParagraph from '@/components/Form/PreviewForm/PreParagraph.vue';
-import PreMatching from '@/components/Form/PreviewForm/PreMatching.vue';
-import PreCoding from '@/components/Form/PreviewForm/PreCoding.vue';
-import PreTrueFalse from '@/components/Form/PreviewForm/PreTrueFalse.vue';
 import api from '@/services/apis';
 
 export default {
@@ -163,12 +146,6 @@ export default {
     Matching,
     TrueFalse,
     CodingQuestion,
-    PreMultiple,
-    PreShortAns,
-    PreParagraph,
-    PreMatching,
-    PreCoding,
-    PreTrueFalse,
     ActionButton,
     Loading,
   },

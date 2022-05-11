@@ -50,6 +50,7 @@ const method = {
       }));
     }
     if (question.type === 'tf') {
+      console.log(question)
       if (question.questionData.false === true) {
         answer = [method.tf(question.questionData.false)];
       }
@@ -69,22 +70,28 @@ const method = {
   },
   mc(data) {
     return {
+      qamccid: data.id,
       textA: data.optionData,
       correct: data.correct,
       pointQ: parseInt(data.pointQ, 10),
     };
   },
   sa(data) {
-    return { textA: data.keyans };
+    return {
+      qasacid: data.id,
+      textA: data.keyans,
+    };
   },
   ma(data) {
     return {
+      qamcid: data.id,
       textQ: data.subquestion,
       textA: data.matchanswer,
     };
   },
   ca(data) {
     return {
+      qaccid: data.id,
       code: data.code,
       input: data.input,
       exInput: data.xampleinput,
@@ -94,7 +101,9 @@ const method = {
     };
   },
   tf(data) {
-    return { value: data };
+    return {
+      qatfcid: data.id,
+      value: data };
   },
 
   convertToScoreAdd(List) {

@@ -90,7 +90,7 @@ export default {
         this.snackbarMessage = 'success';
         this.snackbar = true;
         this.isSuccess = true;
-        window.location.reload();
+        // window.location.reload();
       } else {
         this.isLoading = false;
         this.snackbarMessage = 'update score fail';

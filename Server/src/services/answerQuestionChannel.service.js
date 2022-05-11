@@ -53,7 +53,7 @@ const medthods = {
     if (qtid === 'b3037171-640a-4077-bf17-10b23a52c386') {
       return questionAnswerTFChannel.create(
         {
-          value: data.value,
+          ...data,
           qecid,
         },
         { transaction },
@@ -62,13 +62,8 @@ const medthods = {
     if (qtid === '7190c532-3ccc-4ed7-ae77-6ffd967bf87c') {
       return questionAnswerCChannel.create(
         {
-          code: data.code,
-          input: data.input,
-          output: data.output,
-          exInput: data.exInput,
-          exOutput: data.exOutput,
+          ...data,
           qecid,
-          clid: data.clid,
         },
         { transaction },
       );
@@ -76,7 +71,7 @@ const medthods = {
     if (qtid === '5b3f9f23-bc46-4247-9e3d-3ebb5d5cd1c1') {
       return questionAnswerSAChannel.create(
         {
-          textA: data.textA,
+          ...data,
           qecid,
         },
         { transaction },
@@ -85,8 +80,7 @@ const medthods = {
     if (qtid === 'd284c3d2-e1d2-4b8b-94c6-58248fdf27e7') {
       return questionAnswerMChannel.create(
         {
-          textA: data.textA,
-          textQ: data.textQ,
+          ...data,
           qecid,
         },
         { transaction },
@@ -95,9 +89,7 @@ const medthods = {
     if (qtid === '74fbc3a5-0217-4892-9aba-70b612fc1a0e') {
       return questionAnswerMCChannel.create(
         {
-          textA: data.textA,
-          correct: data.correct,
-          pointQ: data.pointQ,
+          ...data,
           qecid,
         },
         { transaction },

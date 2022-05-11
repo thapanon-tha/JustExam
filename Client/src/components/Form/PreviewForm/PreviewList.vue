@@ -95,13 +95,7 @@
           <!-------------------- Short-Answer Type -------------------->
           <div v-else-if="item.type === 'sa'" class="flex justify-start">
             <input
-              class="
-                m-5
-                w-52
-                p-1
-                rounded-md
-                focus:ring focus:ring-yellow-300 focus:outline-none
-              "
+              class="m-5 w-52 p-1 rounded-md focus:ring focus:ring-yellow-300 focus:outline-none"
               type="text"
               placeholder="Answer"
               v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
@@ -112,15 +106,7 @@
           <div v-else-if="item.type === 'pa'">
             <textarea
               disabled
-              class="
-                m-5
-                w-full
-                h-52
-                p-1
-                rounded-md
-                resize-none
-                focus:ring focus:ring-yellow-300 focus:outline-none
-              "
+              class="m-5 w-full h-52 p-1 rounded-md resize-none focus:ring focus:ring-yellow-300 focus:outline-none"
               type="text"
               placeholder="Answer"
               v-bind:style="{ border: '1px solid rgba(245, 158, 11, 0.6)' }"
@@ -181,65 +167,51 @@
         </v-card-text>
       </v-card>
     </div>
-    <!-- <div
-      class="flex flex-col w-screen gap-5 mt-5"
-      v-for="item in questionList"
-      :key="item.id"
-    >
-      <div class="bg-subColor border border-orange-200 rounded-xl w-4/6">
-        <PreMultiple v-if="item.type === 'mc'" :value="item.questionData" />
-        <PreShortAns v-if="item.type === 'sa'" :value="item.questionData" />
-        <PreParagraph v-if="item.type === 'pa'" :value="item.questionData" />
-        <PreTrueFalse v-if="item.type === 'tf'" :value="item.questionData" />
-        <PreMatching v-if="item.type === 'ma'" :value="item.questionData" />
-        <PreCoding v-if="item.type === 'ca'" :value="item.questionData" />
-      </div>
-    </div> -->
   </v-container>
 </template>
 
 <script>
-import { codemirror } from "vue-codemirror";
+import { codemirror } from 'vue-codemirror';
 
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/ayu-mirage.css";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/mode/python/python";
-import "codemirror/mode/go/go";
-import "codemirror/mode/ruby/ruby";
-import "codemirror/mode/clike/clike";
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/ayu-mirage.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/clike/clike';
 
 export default {
-  name: "PreviewList",
+  name: 'PreviewList',
   components: {
     codemirror,
   },
-  props: ["value"],
+  props: ['value'],
   data() {
     return {
       selectedSectionId: 1,
       sectionlist: [
         {
           id: 1,
-          sectionName: "Section 1",
+          sectionName: 'Section 1',
         },
       ],
       qlist: [],
       language: [
-        { name: "Javascript", mode: "text/javascript", id: "javascript" },
-        { name: "Python", mode: "python", id: "python" },
-        { name: "C", mode: "text/x-csrc", id: "c" },
-        { name: "C#", mode: "text/x-csharp", id: "csharp" },
-        { name: "C++", mode: "text/x-c++src", id: "cpp" },
-        { name: "Java", mode: "text/x-java", id: "java" },
-        { name: "Kotlin", mode: "text/x-kotlin", id: "kotlin" },
-        { name: "Ruby", mode: "ruby", id: "ruby" },
-        { name: "Golang", mode: "go", id: "go" },
+        { name: 'Javascript', mode: 'text/javascript', id: 'javascript' },
+        { name: 'Python', mode: 'python', id: 'python' },
+        { name: 'C', mode: 'text/x-csrc', id: 'c' },
+        { name: 'C#', mode: 'text/x-csharp', id: 'csharp' },
+        { name: 'C++', mode: 'text/x-c++src', id: 'cpp' },
+        { name: 'Java', mode: 'text/x-java', id: 'java' },
+        { name: 'Kotlin', mode: 'text/x-kotlin', id: 'kotlin' },
+        { name: 'Ruby', mode: 'ruby', id: 'ruby' },
+        { name: 'Golang', mode: 'go', id: 'go' },
       ],
       cmOptions: {
         tabSize: 2,
-        mode: "text/javascript",
-        theme: "ayu-mirage",
+        mode: 'text/javascript',
+        theme: 'ayu-mirage',
         lineNumbers: true,
         line: true,
         readOnly: true,
@@ -252,7 +224,7 @@ export default {
     },
     mappingCodeLanguage(numberCode) {
       const codeIndex = this.language.findIndex(
-        (item) => item.id === numberCode
+        (item) => item.id === numberCode,
       );
       this.cmOptions.mode = this.language[codeIndex].mode;
       return this.language[codeIndex].name;
@@ -266,16 +238,17 @@ export default {
           sectionName: `Section ${v}`,
         }));
       }
+      // eslint-disable-next-line
       this.sectionlist.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
     },
     matchCal(element) {
-      return element.map((e) => e.matchanswer.replace(/(<([^>]+)>)/gi, ""));
+      return element.map((e) => e.matchanswer.replace(/(<([^>]+)>)/gi, ''));
     },
   },
   computed: {
     questionList() {
       return this.qlist.filter(
-        (question) => question.sectionId === this.selectedSectionId
+        (question) => question.sectionId === this.selectedSectionId,
       );
     },
   },
