@@ -2,7 +2,8 @@
   <button>
     <div class="flex flex-col">
       <label
-        class="w-4/5 text-orange-500 text-left text-xl font-medium text-ellipsis overflow-hidden"
+        class="text-orange-500 text-left text-xl font-medium text-truncate"
+        style="max-width: 285px;"
       >
         {{ detail.title }}
       </label>

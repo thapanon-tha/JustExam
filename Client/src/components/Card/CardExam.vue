@@ -1,7 +1,11 @@
 <template>
   <button>
     <div class="flex flex-col">
-      <label class="w-4/5 text-orange-600 text-left text-xl font-medium overflow-hidden"> {{ detail.title }} </label>
+      <label class="text-orange-600 text-left text-xl font-medium text-truncate"
+        style="max-width: 285px;"
+      > 
+        {{ detail.title }} 
+      </label>
       <div
         class="mt-1 box-border h-40 w-72 rounded-xl text-white bg-navyColor"
       >
