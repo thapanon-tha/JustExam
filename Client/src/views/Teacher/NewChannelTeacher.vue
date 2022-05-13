@@ -6,9 +6,15 @@
         <form class="ml-20">
           <div class="flex justify-center">
             <div class="flex-col gap-5">
-              <h1 class="text-gray-700 font-semibold text-2xl pb-5">Channel Information</h1>
+              <h1 class="text-gray-700 font-semibold text-2xl pb-5">
+                Channel Information
+              </h1>
               <div class="form-control">
-                <InputForm inputLabel="Channel Title" type="text" v-model="channelInfo.title" />
+                <InputForm
+                  inputLabel="Channel Title"
+                  type="text"
+                  v-model="channelInfo.title"
+                />
               </div>
               <div class="form-control">
                 <InputForm
@@ -22,7 +28,9 @@
               </div>
               <div class="form-control">
                 <div>
-                  <label class="inline-block text-gray-700 font-semilight text-xl mb-3 mt-3">
+                  <label
+                    class="inline-block text-gray-700 font-semilight text-xl mb-3 mt-3"
+                  >
                     Time Duration
                   </label>
                   <label
@@ -44,7 +52,9 @@
                         min-width="290px"
                       >
                         <template v-slot:activator="{ on, attrs }">
-                          <label class="inline-block text-gray-500 font-semilight text-sm mb-1">
+                          <label
+                            class="inline-block text-gray-500 font-semilight text-sm mb-1"
+                          >
                             Time Start
                           </label>
                           <input
@@ -79,7 +89,9 @@
                         min-width="290px"
                       >
                         <template v-slot:activator="{ on, attrs }">
-                          <label class="inline-block text-gray-500 font-semilight text-sm mb-1">
+                          <label
+                            class="inline-block text-gray-500 font-semilight text-sm mb-1"
+                          >
                             Time End
                           </label>
                           <input
@@ -128,7 +140,9 @@
     <v-snackbar v-model="snackbar">
       {{ text }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -243,7 +257,9 @@ export default {
           endAt: end,
         });
         if (result.status >= 200 && result.status < 300) {
-          this.$router.push({ name: 'ExamChannelTeacher' }).catch(() => true);
+          this.$router
+            .push({ name: 'InsideChannelTeacher', params: { cid: result.data.cid } })
+            .catch(() => true);
         } else {
           this.snackbar = true;
           this.text = `Create Channel Fail`;
