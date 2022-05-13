@@ -3,12 +3,11 @@
     <Header main="Exam channel"> </Header>
     <body>
       <v-container class="text-xl-h4" fluid>
-        <v-row class="justify-center m-2"> This examinations will begin </v-row>
-        <v-row class="justify-center m-2"> on the scheduled </v-row>
-        <v-row class="justify-center m-2">
+        <v-row class="justify-center m-2 text-xl"> This examination will begin on the schedule.</v-row>
+        <v-row class="justify-center m-2 text-xl font-medium">
           {{ channels.schedule | moment('Do  MMMM  YYYY') }}
         </v-row>
-        <v-row class="justify-center m-2">
+        <v-row class="justify-center m-2 text-xl font-medium">
           {{ channels.startAt | moment('H:mm') }} -
           {{ channels.endAt | moment('H:mm') }}
         </v-row>
@@ -32,15 +31,15 @@
           class="justify-center m-2 text-xl"
           v-if="channels.members[0].state === 'FINISH' && !isLoading"
         >
-          <h1 class="text-red-500">you have finish this examination</h1>
+          <h1 class="text-red-500">you have finished this examination.</h1>
         </v-row>
         <div v-else>
           <v-row class="justify-center m-2 text-xl">
-            This webside will save your answers to storage ( Only On This
+            This website will save your answers to the storage. ( Only on this
             browser )
           </v-row>
           <v-row class="justify-center m-2 text-xl">
-            If you disconnect you rejoin to continue examination
+            If you disconnect you can rejoin to continue the examination.
           </v-row>
         </div>
         <v-row class="flex justify-center">

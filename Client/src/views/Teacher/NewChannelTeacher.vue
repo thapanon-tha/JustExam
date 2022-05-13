@@ -22,7 +22,7 @@
               </div>
               <div class="form-control">
                 <div>
-                  <label class="inline-block text-gray-700 font-semilight text-xl mb-3">
+                  <label class="inline-block text-gray-700 font-semilight text-xl mb-3 mt-3">
                     Time Duration
                   </label>
                   <label
@@ -110,28 +110,6 @@
         </form>
       </div>
     </v-container>
-    <!-- <ActionButton
-      class="ml-48 mt-10 bg-white border-orange-200 border border-solid rounded-lg
-      px-6 py-4 font-semilight text-mainColor"
-      name="+ Add your exam"
-      @on-click="onClickAddExam"
-      v-if="showButton"
-    />
-    <CardSelectedExam
-      class="ml-48 mt-10"
-      @clickChange="clickChangeSelect"
-      @clickScore="clickScoreExam"
-      @clickDelete="clickDeleteSelect"
-      v-if="showSelected"
-    />
-    <div class="relative">
-      <CardAddExam
-        @clikClose="closeModalAddExam"
-        @clickSelect="clickSelectExam"
-        class="fixed top-52 left-96"
-        v-if="showModal"
-      />
-    </div> -->
     <v-container>
       <div class="flex justify-center pt-10">
         <ActionButton

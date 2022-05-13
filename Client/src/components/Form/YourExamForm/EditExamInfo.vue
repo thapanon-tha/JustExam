@@ -1,16 +1,25 @@
 <template>
   <div class="ml-52 mr-52">
     <div class="flex flex-wrap mt-10 bg-subColor border rounded-md w-auto">
-      <v-row>
         <v-col>
-          <div class="font-semibold text-md text-black mt-5 ml-5 mb-5">
+          <div class="font-semibold text-md text-black mt-3 ml-5 mb-5">
+            <div class="flex justify-end mr-3">
+              <v-icon
+                @click="isEditing = !isEditing"
+                v-if="!isEditing"
+                large
+                color="#EF7F4C"
+              >
+                settings
+              </v-icon>
+            </div>
             <div>
               <input
                 type="text"
                 ref="exam_title"
                 :value="examInfo.examTitle"
                 :disabled="!isEditing"
-                class="px-3 py-3 text-base font-semilight text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
+                class="w-11/12 mb-3 px-3 py-3 text-base font-semilight text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
                 :class="{ view: !isEditing }"
               />
             </div>
@@ -20,7 +29,7 @@
                 ref="exam_description"
                 :value="examInfo.description"
                 :disabled="!isEditing"
-                class="px-3 py-3 text-base font-semilight text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
+                class="w-11/12 px-3 py-3 text-base font-semilight text-gray-700 bg-white bg-clip-padding border border-solid border-mainColor border-opacity-40 rounded-md transition ease-in-out m-0 focus:text-black focus:bg-subColor focus:mainColor focus:border-opacity-100 focus:outline-none"
                 :class="{ view: !isEditing }"
               />
             </div>
@@ -32,25 +41,11 @@
             ></v-checkbox>
           </div>
         </v-col>
-        <v-col class="d-flex align-center mb-6">
-          <div>
-            <v-icon
-              @click="isEditing = !isEditing"
-              v-if="!isEditing"
-              class="ml-5"
-              large
-              color="#EF7F4C"
-            >
-              settings
-            </v-icon>
-          </div>
-        </v-col>
-      </v-row>
     </div>
     <v-dialog v-model="isEditing" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">Edit Exam Info</span>
+          <span class="text-h5">Edit Exam Information</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -74,7 +69,7 @@
             <v-row>
               <v-checkbox
                 v-model="shareQ"
-                :label="`Share only questions to Examhub`"
+                :label="`Share only questions to Exam hub`"
                 :disabled="!isEditing"
                 color="#EF7F4C"
               ></v-checkbox>

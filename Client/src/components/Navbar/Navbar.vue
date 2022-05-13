@@ -59,7 +59,7 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">Edit Your password</span>
+          <span class="text-h5">Edit Your Password</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -72,7 +72,7 @@
                   :type="show1 ? 'text' : 'password'"
                   color="#EF7F4C"
                   name="input-10-1"
-                  label="new password"
+                  label="New password"
                   hint="At least 8 characters"
                   counter
                   @click:append="show1 = !show1"
@@ -83,7 +83,7 @@
                   v-model="cPassword"
                   :rules="[rules.required, rules.min]"
                   :type="show1 ? 'text' : 'password'"
-                  label="confirm new password"
+                  label="Confirm new password"
                   color="#EF7F4C"
                 ></v-text-field>
               </v-col>
