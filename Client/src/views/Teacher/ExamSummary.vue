@@ -164,7 +164,7 @@ export default {
           (e) => e.rid !== '3a7c4d99-c414-44b8-bdd8-d7d625a99437',
         );
         this.isLoading = false;
-        if(this.channelsDetail.members.length===0){
+        if (this.channelsDetail.members.length === 0) {
           this.noMember();
         }
       }
@@ -190,10 +190,9 @@ export default {
       const respones = await api.sendemail(this.$route.params.cid);
       if (respones.status === 200) {
         this.isLoading = false;
-      }
-      else {
+      } else {
         this.snackbar2 = true;
-      this.text = 'fail';
+        this.text = 'Error something wrong';
         this.isLoading = false;
       }
     },

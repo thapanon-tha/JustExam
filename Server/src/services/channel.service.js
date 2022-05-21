@@ -68,13 +68,18 @@ const medthods = {
     return Channel.findAll({
       include: [{
         model: Member,
-        attributes: ['rid'],
+        attributes: ['rid','mid'],
         where: { uid },
       },
       {
         model: user,
         attributes: ['firstname','surname'],
-      }],
+      },
+      {
+        model: examChannel,
+        attributes: ['ecid'],
+        required: false
+      },],
     });
   },
 

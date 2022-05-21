@@ -3,7 +3,7 @@
     <div class="flex flex-col">
       <label
         class="text-orange-500 text-left text-xl font-medium text-truncate"
-        style="max-width: 285px;"
+        style="max-width: 285px"
       >
         {{ detail.title }}
       </label>
@@ -52,6 +52,9 @@
             <h1 class="text-xs font-semilight ml-2">
               Teacher: {{ `${detail.user.firstname} ${detail.user.surname}` }}
             </h1>
+            <div v-if="detail.score !== undefined" class="mt-1 text-right">
+              score : {{ detail.score.toFixed(2) }}
+            </div>
           </div>
         </div>
       </div>

@@ -98,9 +98,13 @@ const updateStudentScore = (cid, data) => axios.put(
   { validateStatus: false },
 );
 
-const sendemail = (cid) => axios.put(`${BACKEND_HOST}/api/channels/${cid}/sendmail`, {
-  validateStatus: false,
-});
+const sendemail = (cid) => axios.put(
+  `${BACKEND_HOST}/api/channels/${cid}/sendmail`,
+  { data: {} },
+  {
+    validateStatus: false,
+  },
+);
 
 const playground = (data) => axios.post(
   `${BACKEND_HOST}/api/playground`,

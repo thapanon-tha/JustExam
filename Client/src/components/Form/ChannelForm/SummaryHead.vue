@@ -9,11 +9,15 @@
         </div> -->
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">Exam start:</p>
-          <p class="mr-5 font-semilight">{{ detail.startAt | moment('D / MMMM / YYYY H:mm:ss') }}</p>
+          <p class="mr-5 font-semilight">
+            {{ detail.startAt | moment('D / MMMM / YYYY H:mm:ss') }}
+          </p>
         </div>
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">Exam end:</p>
-          <p class="mr-5 font-semilight">{{ detail.endAt | moment('D / MMMM / YYYY H:mm:ss') }}</p>
+          <p class="mr-5 font-semilight">
+            {{ detail.endAt | moment('D / MMMM / YYYY H:mm:ss') }}
+          </p>
         </div>
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">Total student:</p>
@@ -23,15 +27,21 @@
       <div class="mt-10">
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">Max score:</p>
-          <p class="mr-5 font-semilight">{{ summaryData.scoreMax }}</p>
+          <p class="mr-5 font-semilight">
+            {{ summaryData.scoreMax.toFixed(2) }}
+          </p>
         </div>
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">Min score:</p>
-          <p class="mr-5 font-semilight">{{ summaryData.scoreMin }}</p>
+          <p class="mr-5 font-semilight">
+            {{ summaryData.scoreMin.toFixed(2) }}
+          </p>
         </div>
         <div class="flex flex-row">
           <p class="mr-5 font-semibold">SD:</p>
-          <p class="mr-5 font-semilight">{{ summaryData.scoreSD }}</p>
+          <p class="mr-5 font-semilight">
+            {{ summaryData.scoreSD.toFixed(2) }}
+          </p>
         </div>
       </div>
     </div>
@@ -58,7 +68,9 @@ export default {
     getStandardDeviation(array) {
       const n = array.length;
       const mean = array.reduce((a, b) => a + b) / n;
-      return Math.sqrt(array.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+      return Math.sqrt(
+        array.map((x) => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n,
+      );
     },
     calcu() {
       const score = this.detail.members.map((e) => e.score);

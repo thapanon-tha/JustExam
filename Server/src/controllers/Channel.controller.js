@@ -67,8 +67,22 @@ module.exports = {
           }
         } else {
           const data = await Channel.getMember(uid);
+
           if (data) {
-            stdCode.querySuccess(data, res);
+            const data2 = await Promise.all(
+              data.map(async (e) => {
+                if (e.releaseScoreFlag) {
+                  const score = await answerQuestionScoreService.getMidAndECID(
+                    e.examChannel.ecid,
+                    e.members[0].mid,
+                  );
+                  e.dataValues.score = score;
+                  return e;
+                }
+                return e;
+              }),
+            );
+            stdCode.querySuccess(data2, res);
           } else {
             stdCode.NotFound({ message: 'Not Found' }, res);
           }
@@ -501,7 +515,8 @@ module.exports = {
       const totalPoint = pretotalPoint[0].dataValues.questionExamChannels.reduce(
         (previousValue, currentValue) => previousValue + currentValue?.point,
         0,
-      )
+      );
+      await channel.update({ releaseScoreFlag: 1 });
       const member = await memberService.getmemberAndScore(cid, channel.ecid);
       const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -742,11 +757,11 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;">Your score is ${element.score}</span></strong></p>
+    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;">Your score is ${element.score.toFixed(2)}</span></strong></p>
 <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
-<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong><span style="font-size: 14px; line-height: 19.6px;">Mean score is ${scoreMean}</span></strong></span></p>
+<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong><span style="font-size: 14px; line-height: 19.6px;">Mean score is ${scoreMean.toFixed(2)}</span></strong></span></p>
 <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
-<p style="font-size: 14px; line-height: 140%;"><strong><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;">SD is ${scoreSD}</span></strong></p>
+<p style="font-size: 14px; line-height: 140%;"><strong><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;">SD is ${scoreSD.toFixed(2)}</span></strong></p>
   </div>
 
       </td>
@@ -771,9 +786,9 @@ table, td { color: #000000; } </style>
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
     <p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>Total score is ${totalPoint}</strong></span></p>
 <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
-<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>Max score is ${scoreMax}</strong></span></p>
+<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>Max score is ${scoreMax.toFixed(2)}</strong></span></p>
 <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
-<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>Min score is ${scoreMin}</strong></span></p>
+<p style="font-size: 14px; line-height: 140%;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>Min score is ${scoreMin.toFixed(2)}</strong></span></p>
   </div>
 
       </td>
@@ -858,10 +873,9 @@ table, td { color: #000000; } </style>
         };
         transporter.sendMail(mailOptions);
       });
-
+      await channel.save();
       stdCode.querySuccess(array, res);
     } catch (error) {
-      console.log(error);
       stdCode.Unexpected(error, res);
     }
   },

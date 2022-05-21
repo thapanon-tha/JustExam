@@ -50,7 +50,6 @@ const method = {
       }));
     }
     if (question.type === 'tf') {
-      console.log(question);
       if (question.questionData.false === true) {
         answer = [method.tf(question.questionData.false)];
       }

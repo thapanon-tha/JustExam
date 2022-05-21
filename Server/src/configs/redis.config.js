@@ -10,7 +10,6 @@ let redisClient = null;
   });
 
   redisClient.on('error', (err) => {
-    console.log(err);
   });
   await redisClient.connect();
 })();
